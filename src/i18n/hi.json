@@ -1,0 +1,41 @@
+{
+  "Components": {
+    "Search": {
+      "searchAcrossYourChannel": "अपने चैनल पर खोजें"
+    }
+  },
+  "Layout": {
+    "Sidebar": {
+      "dashboard": "डैशबोर्ड",
+      "content": "सामग्री",
+      "analytics": "विश्लेषण",
+      "copyright": "कॉपीराइट",
+      "manageMovie": "मूवी का प्रबंधन करें",
+      "manageSeries": "शृंगार का प्रबंधन करें",
+      "socialLinking": "सामाजिक लिंकिंग",
+      "settings": "सेटिंग्स",
+      "askAnyQuestion": "कोई भी सवाल पूछें"
+    },
+    "Header": {
+      "uploadVideo": "वीडियो अपलोड करें",
+      "LanguageChanger": {
+        "searchLanguage": "भाषा खोजें"
+      }
+    },
+    "AppBar": {
+      "UserMenu": {
+        "profile": "प्रोफ़ाइल",
+        "switchAccount": "खाता बदलें",
+        "settings": "सेटिंग्स",
+        "logout": "लॉग आउट",
+        "appearance": "रूप",
+        "shareFeedback": "प्रतिक्रिया साझा करें"
+      },
+      "AppearanceMenu": {
+        "systemDefault": "सिस्टम डिफ़ॉल्ट",
+        "darkTheme": "डार्क थीम",
+        "lightTheme": "लाइट थीम"
+      }
+    }
+  }
+}

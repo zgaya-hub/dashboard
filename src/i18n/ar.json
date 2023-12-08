@@ -1,0 +1,41 @@
+{
+    "Components": {
+        "Search": {
+            "searchAcrossYourChannel": "البحث عبر قناتك"
+        }
+    },
+    "Layout": {
+        "Sidebar": {
+            "dashboard": "لوحة القيادة",
+            "content": "المحتوى",
+            "analytics": "تحليلات",
+            "copyright": "حقوق النشر",
+            "manageMovie": "إدارة الأفلام",
+            "manageSeries": "إدارة السلاسل",
+            "socialLinking": "ربط اجتماعي",
+            "settings": "الإعدادات",
+            "askAnyQuestion": "اسأل أي سؤال"
+        },
+        "Header": {
+            "uploadVideo": "تحميل الفيديو",
+            "LanguageChanger": {
+                "searchLanguage": "ابحث عن اللغة"
+            }
+        },
+        "AppBar": {
+            "UserMenu": {
+                "profile": "الملف الشخصي",
+                "switchAccount": "تبديل الحساب",
+                "settings": "الإعدادات",
+                "logout": "تسجيل الخروج",
+                "appearance": "المظهر",
+                "shareFeedback": "مشاركة التعليقات"
+            },
+            "AppearanceMenu": {
+                "systemDefault": "الافتراضي للنظام",
+                "darkTheme": "الوضع الليلي",
+                "lightTheme": "الوضع النهاري"
+            }
+        }
+    }
+}

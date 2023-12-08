@@ -1,0 +1,53 @@
+{
+  "Component": {
+    "Search": {
+      "searchAcrossYourChannel": "Search across your channel"
+    }
+  },
+  "Feature": {
+    "VideoUpload": {
+      "VideoUploadComponent": {
+        "dragAndDrop": "Drag and drop a video {{mediaType}} here",
+        "readyToShare": "Ready to upload? Just simple upload {{mediaType}} here"
+      }
+    }
+  },
+  "Layout": {
+    "Sidebar": {
+      "dashboard": "Dashboard",
+      "content": "Content",
+      "analytics": "Analytics",
+      "copyright": "Copyright",
+      "manageMovie": "Manage movies",
+      "manageSeries": "Manage series",
+      "socialLinking": "Social linking",
+      "settings": "Settings",
+      "askAnyQuestion": "Ask any question"
+    },
+    "AppHeader": {
+      "uploadVideo": "Upload video"
+    },
+    "AppBar": {
+      "UserMenu": {
+        "profile": "Profile",
+        "switchAccount": "Switch account",
+        "settings": "Settings",
+        "logout": "Logout",
+        "appearance": "Appearance",
+        "translation": "Translation",
+        "shareFeedback": "Share feedback"
+      },
+      "AppearanceMenu": {
+        "title": "Appearance",
+        "systemDefault": "System default",
+        "darkTheme": "Dark theme",
+        "lightTheme": "Light theme"
+      },
+      "TranslationMenu": {
+        "title": "Translation",
+        "search": "Search...",
+        "searchInputTooltip": "Search by language or country name"
+      }
+    }
+  }
+}
