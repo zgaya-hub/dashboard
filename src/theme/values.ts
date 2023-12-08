@@ -28,7 +28,7 @@ export const lightThemePalette: PaletteOptions = {
   text: {
     primary: "#050505",
     secondary: "#65676b",
-    disabled: ''
+    disabled: "",
   },
   divider: "#E7E8EF",
   background: {
@@ -132,6 +132,7 @@ export const typography: TypographyOptions = {
     fontSize: 20,
     fontWeight: 600,
   },
+  fontFamily: "'Montserrat', sans-serif",
 };
 
 export const radius: Theme["shape"] = {
@@ -156,5 +157,5 @@ export const sizing: SizingInterface = {
   md: 8,
   lg: 12,
   xl: 16,
-  menuWidth: (theme: Theme) => theme.spacing(40)
+  menuWidth: (theme: Theme) => theme.spacing(40),
 };

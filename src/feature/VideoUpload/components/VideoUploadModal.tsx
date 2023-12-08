@@ -26,18 +26,13 @@ export default function VideoUploadModal({ defaultSection, isVisible, onClose, o
   };
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
+    height: 'fit-content',
     ".MuiDialog-paperWidthXl": {
       width: "100%",
     },
     "& .MuiDialog-paperWidthXl": {
-      background: theme.color.bgBrand,
+      background: theme.palette.background.default,
     },
-  }));
-
-  const tabsStyle = useThemeStyles<SxProps>((theme) => ({
-    width: "100%",
-    position: "absolute",
-    top: theme.spacing(9),
   }));
 
   const renderSection = () => {
@@ -56,7 +51,7 @@ export default function VideoUploadModal({ defaultSection, isVisible, onClose, o
   return (
     <Dialog maxWidth="xl" sx={dialogBoxStyle} open={isVisible} headerText="Upload Videos" onClose={onClose} outareaClose={false}>
       <Divider />
-      <Tabs value={section} onChange={handleChange} centered sx={tabsStyle}>
+      <Tabs value={section} onChange={handleChange} centered>
         <Tab sx={tabStyle} label="Episode" value={VideoUploadSectionEnum.EPISODE} />
         <Tab sx={tabStyle} label="Movie" value={VideoUploadSectionEnum.MOVIE} />
         <Tab sx={tabStyle} label="Trailer" value={VideoUploadSectionEnum.TRAILER} />

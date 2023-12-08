@@ -27,7 +27,8 @@
     "react-i18next": "^13.5.0",
     "react-pro-sidebar": "^1.1.0-alpha.1",
     "react-resizable": "^3.0.5",
-    "react-router-dom": "^6.20.1"
+    "react-router-dom": "^6.20.1",
+    "react-swipeable-views": "^0.14.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",

@@ -31,7 +31,7 @@ export default function LayoutHeader() {
       <CssBaseline />
       <AppBar sx={appBarStyle}>
         <Toolbar sx={toolbarStyle}>
-          <Button startIcon={<UploadIcon />} onClick={handleOnClickUpload}>
+          <Button size="large" startIcon={<UploadIcon />} onClick={handleOnClickUpload}>
             {t("Layout.AppHeader.uploadVideo")}
           </Button>
         </Toolbar>

@@ -1,6 +1,5 @@
 import { Stack, SxProps } from "@mui/material";
 import Typography from "@/components/Typography";
-import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
@@ -17,16 +16,15 @@ interface VideoUploadComponentProps {
 export default function VideoUploadComponent({ mediaType, onVideoDrop, isLoading }: VideoUploadComponentProps) {
   const { t } = useTranslation();
 
-  const onDrop = useCallback(([video]: File[]) => {
+  const onDrop = ([video]: File[]) => {
     onVideoDrop(video);
-  }, []);
+  };
 
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.sizing.xxxl,
+    height: theme.spacing(80),
     gap: theme.sizing.md,
-    background: theme.palette.background.default,
   }));
 
   return (
@@ -38,7 +36,7 @@ export default function VideoUploadComponent({ mediaType, onVideoDrop, isLoading
             mediaType,
           })}
         </Typography>
-        <Typography color="primary">
+        <Typography color="secondary">
           {t("Feature.VideoUpload.VideoUploadComponent.readyToShare", {
             mediaType,
           })}

@@ -1,7 +1,7 @@
 import { ButtonProps as MuiButtonProps, Button as MuiButton, SxProps, CircularProgress } from "@mui/material";
 import Typography from "../Typography";
 
-interface ButtonProps extends Omit<MuiButtonProps, "size"> {
+interface ButtonProps extends MuiButtonProps {
   loading?: boolean;
 }
 

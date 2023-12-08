@@ -6,7 +6,7 @@ interface TooltipProps extends MuiTooltipProps {
   hoverDelay?: number;
 }
 
-export default function Tooltip({ hoverDelay = 1000, ...restProps }: TooltipProps) {
+export default function Tooltip({ hoverDelay = 2000, ...restProps }: TooltipProps) {
   const [isTooltipVisible, setTooltipVisible] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
