@@ -6,9 +6,11 @@ import UserMenu from "./UserMenu";
 import AppearanceMenu from "./AppearanceMenu";
 import TranslationMenu from "./TranslationMenu";
 import Avatar from "@/components/Avatar";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function UserAvatar() {
   const { imageUrl } = useUserDetail();
+  const { handleOnLogout } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [appearanceMenuAnchorEl, setAppearanceMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [translationMenuAnchorEl, setTranslationMenuAnchorEl] = useState<null | HTMLElement>(null);
@@ -45,10 +47,6 @@ export default function UserAvatar() {
 
   const handleOnSetting = () => {
     console.log("handleOnSetting");
-  };
-
-  const handleOnLogout = () => {
-    console.log("handleOnLogout");
   };
 
   const handleOnShareFeedback = () => {

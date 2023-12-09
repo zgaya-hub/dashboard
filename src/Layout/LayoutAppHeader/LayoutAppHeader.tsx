@@ -14,7 +14,7 @@ export default function LayoutHeader() {
   const { t } = useTranslation();
 
   const handleOnClickUpload = () => {
-    naviation.navigate("/video-upload");
+    naviation.navigate("/video-upload/movie");
   };
 
   const appBarStyle: SxProps = {

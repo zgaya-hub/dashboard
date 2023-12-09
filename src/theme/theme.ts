@@ -1,7 +1,7 @@
 // themes.ts
 
 import { createTheme } from "@mui/material";
-import { darkThemePalette, darkThemeShadows, lightThemePalette, lightThemeShadows, radius, sizing, typography } from "./values";
+import { components, darkThemePalette, darkThemeShadows, lightThemePalette, lightThemeShadows, radius, sizing, typography } from "./values";
 
 export const lightTheme = createTheme({
   palette: lightThemePalette,
@@ -9,6 +9,7 @@ export const lightTheme = createTheme({
   shape: radius,
   shadow: lightThemeShadows,
   sizing: sizing,
+  components: components,
 });
 
 export const darkTheme = createTheme({
@@ -17,4 +18,5 @@ export const darkTheme = createTheme({
   shape: radius,
   shadow: darkThemeShadows,
   sizing: sizing,
+  components: components,
 });

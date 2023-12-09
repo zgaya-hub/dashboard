@@ -19,7 +19,7 @@ export default function BottomAppBar() {
   const { toggleTheme } = useTheme();
 
   const handleOnClickUpload = () => {
-    naviation.navigate("/video-upload");
+    naviation.navigate("/video-upload/movie");
   };
 
   const appBarStyle = useThemeStyles<SxProps>((theme) => ({

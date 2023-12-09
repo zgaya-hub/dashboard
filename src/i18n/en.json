@@ -6,9 +6,20 @@
   },
   "Feature": {
     "VideoUpload": {
-      "VideoUploadComponent": {
-        "dragAndDrop": "Drag and drop a video {{mediaType}} here",
-        "readyToShare": "Ready to upload? Just simple upload {{mediaType}} here"
+      "MovieUploadModal": {
+        "headerText": "Upload movie",
+        "title": "Drag and drop a movie here",
+        "message": "Ready to upload? Just simple upload movie here"
+      },
+      "TrailerUploadModal": {
+        "headerText": "Upload trailer",
+        "title": "Drag and drop a trailer here",
+        "message": "Ready to upload? Just simple upload trailer here"
+      },
+      "EpisodeUploadModal": {
+        "headerText": "Upload episode",
+        "title": "Drag and drop a episode here",
+        "message": "Ready to upload? Just simple upload episode here"
       }
     }
   },
@@ -18,7 +29,7 @@
       "content": "Content",
       "analytics": "Analytics",
       "copyright": "Copyright",
-      "manageMovie": "Manage movies",
+      "manageMovie": "Manage Movies",
       "manageSeries": "Manage series",
       "socialLinking": "Social linking",
       "settings": "Settings",

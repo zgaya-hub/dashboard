@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 import SimpleTextInput, { SimpleTextInputProps } from "./SimpleTextInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import { SearchIcon } from "../icons";

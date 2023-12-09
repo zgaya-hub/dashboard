@@ -1,6 +1,7 @@
 import useSidebar from "@/context/Sidebar.context";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { PaperProps as MuiPaperProps, Paper as MuiPaper, SxProps } from "@mui/material";
+import { motion } from "framer-motion";
 
 interface PaperProps extends MuiPaperProps {}
 

@@ -1,6 +1,6 @@
 import React from "react";
 import IconButton from "@mui/material/IconButton";
-import { SvgIconProps, SxProps } from "@mui/material";
+import { SvgIconProps, SxProps, TooltipProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
@@ -26,13 +26,17 @@ import { default as MuiTimelineOutlinedIcon } from "@mui/icons-material/Timeline
 import { default as MuiTranslateIcon } from "@mui/icons-material/Translate";
 import { default as VideoLibraryOutlinedIcon } from "@mui/icons-material/VideoLibraryOutlined";
 import { default as MuiClearOutlinedIcon } from "@mui/icons-material/ClearOutlined";
+import Tooltip from "../Tooltip";
 
 interface IconWrapperProps extends SvgIconProps {
   onClick?: () => void;
+  disableRipple?: boolean;
+  tooltip?: string; // Add a new prop for tooltip text
+  tooltipPlacement?: TooltipProps["placement"]; // Placement prop for Tooltip component
 }
 
 const withIconWrapper = (WrappedIcon: React.ComponentType<IconWrapperProps>) => {
-  return ({ onClick, ...restProps }: IconWrapperProps) => {
+  return ({ onClick, disableRipple, tooltip, tooltipPlacement, ...restProps }: IconWrapperProps) => {
     const iconStyle = useThemeStyles<SxProps>((theme) => ({
       color: theme.palette.text.primary,
     }));
@@ -41,9 +45,11 @@ const withIconWrapper = (WrappedIcon: React.ComponentType<IconWrapperProps>) => 
 
     if (onClick) {
       return (
-        <IconButton onClick={onClick} color="inherit">
-          {renderIcon()}
-        </IconButton>
+        <Tooltip title={tooltip} placement={tooltipPlacement}>
+          <IconButton disableRipple={disableRipple} onClick={onClick} color="inherit">
+            {renderIcon()}
+          </IconButton>
+        </Tooltip>
       );
     }
 

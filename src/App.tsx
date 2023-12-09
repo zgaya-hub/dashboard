@@ -7,6 +7,7 @@ import { SidebarProvider } from "./context/Sidebar.context";
 import "./i18n";
 import { UserDetailProvider } from "./context/UserDetail.context";
 import { AuthContextProvider } from "./context/AuthContext";
+import {GqlErrorProvider} from "./context/GqlErrorContext";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,9 @@ function App() {
           <ThemeProvider>
             <SidebarProvider>
               <UserDetailProvider>
-                <MainStack />
+                <GqlErrorProvider>
+                  <MainStack />
+                </GqlErrorProvider>
               </UserDetailProvider>
             </SidebarProvider>
           </ThemeProvider>
