@@ -28,40 +28,17 @@ export default function UserMenu({ anchorEl, isVisible, onClose, onSwitchAccount
     width: theme.spacing(40),
   }));
 
-  const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void) => (
+  const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void, hasChevron: boolean = false) => (
     <MenuItem sx={menuItemStyle} onClick={onClick}>
       <ListItemIcon>{icon}</ListItemIcon>
       <Typography variant="h6" color="primary">
         {label}
       </Typography>
-    </MenuItem>
-  );
-
-  const appearanceMenuItem = (
-    <MenuItem sx={menuItemStyle} onClick={onAppearance}>
-      <ListItemIcon>
-        <MoonIcon />
-      </ListItemIcon>
-      <Typography variant="h6" color="primary">
-        {t("Layout.AppBar.UserMenu.appearance")}
-      </Typography>
-      <ListItemIcon sx={{ marginLeft: "auto" }}>
-        <ChevronRightIcon />
-      </ListItemIcon>
-    </MenuItem>
-  );
-
-  const languageMenuItem = (
-    <MenuItem sx={menuItemStyle} onClick={onTranslation}>
-      <ListItemIcon>
-        <TranslateIcon />
-      </ListItemIcon>
-      <Typography variant="h6" color="primary">
-        {t("Layout.AppBar.UserMenu.translation")}
-      </Typography>
-      <ListItemIcon sx={{ marginLeft: "auto" }}>
-        <ChevronRightIcon />
-      </ListItemIcon>
+      {hasChevron && (
+        <ListItemIcon sx={{ marginLeft: "auto" }}>
+          <ChevronRightIcon />
+        </ListItemIcon>
+      )}
     </MenuItem>
   );
 
@@ -75,8 +52,8 @@ export default function UserMenu({ anchorEl, isVisible, onClose, onSwitchAccount
       {createMenuItem(<SettingIcon />, t("Layout.AppBar.UserMenu.settings"), onSetting)}
       {createMenuItem(<LogoutIcon />, t("Layout.AppBar.UserMenu.logout"), onLogout)}
       <Divider />
-      {appearanceMenuItem}
-      {languageMenuItem}
+      {createMenuItem(<MoonIcon />, t("Layout.AppBar.UserMenu.appearance"), onAppearance, true)}
+      {createMenuItem(<TranslateIcon />, t("Layout.AppBar.UserMenu.translation"), onTranslation, true)}
       {createMenuItem(<FeedbackIcon />, t("Layout.AppBar.UserMenu.shareFeedback"), onShareFeedback)}
     </Menu>
   );

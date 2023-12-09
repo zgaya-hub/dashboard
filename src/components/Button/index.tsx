@@ -14,7 +14,7 @@ export default function Button({ variant = "outlined", children, loading, ...res
 
   return (
     <MuiButton variant={variant} disabled={loading} disableRipple sx={buttonStyle} {...restProps}>
-      {loading ? <CircularProgress size={15} /> : <Typography color={"primary"}>{children}</Typography>}
+      {loading ? <CircularProgress size={15} /> : children}
     </MuiButton>
   );
 }

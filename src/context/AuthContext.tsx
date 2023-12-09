@@ -45,6 +45,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, [state.authToken]);
 
   const handleOnLogout = (persistUser = false) => {
+    console.log("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+    
     if (!persistUser) {
       setState(defaultContextValue);
       setAuthenticationHeaders({});
@@ -54,8 +56,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   const handleOnAuthenticate = (authToken: string = "") => {
     setState({ ...defaultContextValue, authToken, isAuthenticated: true });
-    console.log(authToken, "");
-    
     handleOnSetItemInStorage("authToken", authToken!);
   };
 

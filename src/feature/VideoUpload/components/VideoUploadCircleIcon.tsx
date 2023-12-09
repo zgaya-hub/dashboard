@@ -3,12 +3,12 @@ import { CircularProgress, Stack } from "@mui/material";
 import { SxProps } from "@mui/system";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
-interface VideoUploadIconCircleProps {
+interface VideoUploadCircleIconProps {
   isLoading?: boolean;
   isDragActive?: boolean;
 }
 
-export default function VideoUploadIconCircle({ isLoading, isDragActive }: VideoUploadIconCircleProps) {
+export default function VideoUploadCircleIcon({ isLoading, isDragActive }: VideoUploadCircleIconProps) {
   const iconContainerStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(16),
     width: theme.spacing(16),

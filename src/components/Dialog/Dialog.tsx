@@ -8,25 +8,30 @@ interface DialogProps extends MuiDialogProps {
   headerHidden?: boolean;
   onClose?: () => void;
   outareaClose?: boolean;
-  isDraggable?: boolean; // New prop for making isDraggable optional
+  isDraggable?: boolean;
 }
 
-function PaperComponent(props: PaperProps & { isDraggable?: boolean }) {
-  if (props.isDraggable) {
-    return (
-      <Draggable handle="#isDraggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-        <Paper {...props} />
-      </Draggable>
-    );
-  } else {
-    return <Paper {...props} />;
-  }
+function PaperComponent({ ...restProps }: PaperProps) {
+  return (
+    <Draggable handle="#isDraggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...restProps} />
+    </Draggable>
+  );
 }
 
 export default function Dialog({ onClose, headerHidden = false, headerText, outareaClose = true, children, isDraggable = true, ...restProps }: DialogProps) {
+  if (isDraggable) {
+    return (
+      <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outareaClose ? onClose : () => {}} {...restProps}>
+        {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" isDragable={isDraggable} title={headerText} rightIcons={[<ClearIcon onClick={onClose} />]} /> : null}
+        {children}
+      </MuiDialog>
+    );
+  }
+
   return (
-    <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} isDraggable={isDraggable} />} onClose={outareaClose ? onClose : () => {}} {...restProps}>
-      {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" isDragable={isDraggable} title={headerText} rightIcons={[<ClearIcon onClick={onClose} />]} /> : null}
+    <MuiDialog onClose={outareaClose ? onClose : () => {}} {...restProps}>
+      {!headerHidden ? <DialogHeader title={headerText} rightIcons={[<ClearIcon onClick={onClose} />]} /> : null}
       {children}
     </MuiDialog>
   );

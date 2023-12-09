@@ -1,5 +1,5 @@
 type GetUploadVideoSignedUrlInput = {
-  MediaType: MovierMediaEnum;
+  MediaType: VideorMediaEnum;
   Width: number;
   Height: number;
   RunTime: number;
@@ -8,7 +8,7 @@ type GetUploadVideoSignedUrlInput = {
 };
 
 type GetUploadVideoSignedUrlOutput = {
-  MediaType: MovierMediaEnum;
+  MediaType: VideorMediaEnum;
   Width: number;
   Height: number;
   RunTime: number;

@@ -43,9 +43,9 @@ export default function LayoutSideBar() {
       },
       {
         icon: <PlaySquareIcon />,
-        label: t("Layout.Sidebar.manageMovie"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.manageMovie")),
-        isActive: activeItemLabel === t("Layout.Sidebar.manageMovie"),
+        label: t("Layout.Sidebar.manageVideo"),
+        onClick: () => setActiveItemLabel(t("Layout.Sidebar.manageVideo")),
+        isActive: activeItemLabel === t("Layout.Sidebar.manageVideo"),
       },
       {
         icon: <PlayDoubleIcon />,

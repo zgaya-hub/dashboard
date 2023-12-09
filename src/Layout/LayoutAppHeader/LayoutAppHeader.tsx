@@ -14,7 +14,7 @@ export default function LayoutHeader() {
   const { t } = useTranslation();
 
   const handleOnClickUpload = () => {
-    naviation.navigate("/video-upload");
+    naviation.navigate("/video-upload/movie");
   };
 
   const appBarStyle: SxProps = {
@@ -31,7 +31,7 @@ export default function LayoutHeader() {
       <CssBaseline />
       <AppBar sx={appBarStyle}>
         <Toolbar sx={toolbarStyle}>
-          <Button size="large" startIcon={<UploadIcon />} onClick={handleOnClickUpload}>
+          <Button startIcon={<UploadIcon />} onClick={handleOnClickUpload}>
             {t("Layout.AppHeader.uploadVideo")}
           </Button>
         </Toolbar>
