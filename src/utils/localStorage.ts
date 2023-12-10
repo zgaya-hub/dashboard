@@ -3,15 +3,9 @@ export async function handleOnSetItemInStorage(key: string, value: string) {
 }
 
 export async function handleOnRemoveItemFromStorage(key: string) {
-  try {
-    localStorage.removeItem(key);
-    return true; // Indicate successful removal
-  } catch (error) {
-    console.error('Error removing item from storage:', error);
-    return false; // Indicate failure
-  }
+  localStorage.removeItem(key);
+  return true;
 }
-
 
 export async function handleOnGetItemFromStorage(key: string) {
   const data = localStorage.getItem(key);

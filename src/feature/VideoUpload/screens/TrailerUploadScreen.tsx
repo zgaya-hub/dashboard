@@ -9,7 +9,6 @@ import { extractVideoMetadata, extractVideoUrl } from "metalyzer";
 import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
 import TrailerUploadModal from "../components/TrailerUploadModal";
 import Button from "@/components/Button";
-import { ChevronRightIcon } from "@/components/icons";
 
 export default function TrailerUploadScreen() {
   const [isTrailerUploadModalVisible, setIsTrailerUploadModalVisible] = useState(true);
@@ -21,7 +20,7 @@ export default function TrailerUploadScreen() {
     const result = await getUploadTrailerUrlMutateAsync({
       Height: trailerMetadata.videoHeight!,
       Width: trailerMetadata.videoWidth!,
-      MediaType: MovierMediaEnum.MOVIE,
+      MediaType: MovierMediaEnum.TRAILER,
       Mime: trailerMetadata.mimeType,
       RunTime: trailerMetadata.videoDuration,
       SizeInKb: trailerMetadata.fileSizeKB,

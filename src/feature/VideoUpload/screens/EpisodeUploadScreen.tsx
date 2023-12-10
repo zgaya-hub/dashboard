@@ -9,6 +9,7 @@ import { MovierMediaEnum } from "@/types/enum";
 import { extractVideoMetadata, extractVideoUrl } from "metalyzer";
 import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
 import EpisodeUploadModal from "../components/EpisodeUploadModal";
+import SeriesAndSeasonSelectComponent from "../components/SeriesAndSeasonSelectComponent";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
@@ -20,7 +21,7 @@ export default function EpisodeUploadScreen() {
     const result = await getUploadEpisodeUrlMutateAsync({
       Height: episodeMetadata.videoHeight!,
       Width: episodeMetadata.videoWidth!,
-      MediaType: MovierMediaEnum.MOVIE,
+      MediaType: MovierMediaEnum.EPISODE,
       Mime: episodeMetadata.mimeType,
       RunTime: episodeMetadata.videoDuration,
       SizeInKb: episodeMetadata.fileSizeKB,
@@ -43,6 +44,7 @@ export default function EpisodeUploadScreen() {
           Your browser does not support the video tag.
         </video>
       )}
+      <SeriesAndSeasonSelectComponent isVisible={true} />
       <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeDrop={handleOnEpisodeDrop} isLoading={isPending} />
       <LayoutAppBar />
       <LayoutAppHeader />

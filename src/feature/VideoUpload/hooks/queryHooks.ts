@@ -1,5 +1,5 @@
 import { gqlRequest } from "@/api/gqlRequest";
-import useGqlError from "@/context/GqlErrorContext";
+import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation } from "@tanstack/react-query";
 
 export function useGetUploadVideoSignedUrl() {
@@ -19,7 +19,7 @@ export function useGetUploadVideoSignedUrl() {
         { input }
       );
     },
-    onError: (error) => {
+    onError: (error: ErrorResponse) => {
       showGqlError(error);
     },
   });

@@ -1,4 +1,3 @@
-import React from "react";
 import { Snackbar as MuiSnackbar, SnackbarProps as MuiSnackbarProps, Alert as MuiAlert, AlertProps as MuiAlertProps, Button as MuiButton } from "@mui/material";
 
 interface SnackbarProps {
@@ -6,10 +5,9 @@ interface SnackbarProps {
   onClose: () => void;
   message: string;
   fullWidth?: boolean;
-  severity: "error" | "info" | "success" | "warning";
+  severity?: "error" | "info" | "success" | "warning";
   variant?: MuiAlertProps["variant"];
   horizontal?: "left" | "center" | "right";
-  onButton?: boolean;
 }
 
 interface SnackbarProps {
@@ -19,7 +17,7 @@ interface SnackbarProps {
   };
 }
 
-export default function Snackbar({ open, onClose, message, variant = "standard", severity = "error", muiProps, horizontal = "left", onButton }: SnackbarProps) {
+export default function Snackbar({ open, onClose, message, variant = "standard", severity = "error", muiProps, horizontal = "left" }: SnackbarProps) {
   const defaultSnackbarProps: MuiSnackbarProps = {
     autoHideDuration: 6000,
     onClose,
@@ -35,22 +33,7 @@ export default function Snackbar({ open, onClose, message, variant = "standard",
 
   return (
     <MuiSnackbar anchorOrigin={{ horizontal, vertical: "bottom" }} {...defaultSnackbarProps} open={open}>
-      <MuiAlert
-        {...defaultAlertProps}
-        action={
-          <MuiButton
-            size="small"
-            onClick={() => {
-              // Add your button click logic here
-              console.log("Button clicked!");
-            }}
-          >
-            Feedback
-          </MuiButton>
-        }
-      >
-        {message}
-      </MuiAlert>
+      <MuiAlert {...defaultAlertProps} sx={{maxWidth: 400}}>{message}</MuiAlert>
     </MuiSnackbar>
   );
 }

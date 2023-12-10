@@ -4,5 +4,5 @@ export enum MovierMediaEnum {
   EPISODE = "Episode",
   TRAILER = "Trailer",
   SHORT = "Short",
-  MOVIE = "Video",
+  MOVIE = "Movie",
 }

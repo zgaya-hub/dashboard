@@ -45,8 +45,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, [state.authToken]);
 
   const handleOnLogout = (persistUser = false) => {
-    console.log("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-    
     if (!persistUser) {
       setState(defaultContextValue);
       setAuthenticationHeaders({});

@@ -14,19 +14,13 @@ export const gqlRequest = async <Data,>(
   variables: Record<string, unknown>,
   customHeaders?: Headers // Optional parameter for custom headers
 ): Promise<Data> => {
-  try {
-    const client = new GraphQLClient(graphqlEndpoint, {
-      headers: {
-        ...authenticationHeaders,
-        ...customHeaders,
-      },
-    });
+  const client = new GraphQLClient(graphqlEndpoint, {
+    headers: {
+      ...authenticationHeaders,
+      ...customHeaders,
+    },
+  });
 
-    const data: Data = await client.request(query, variables);
-    return data;
-  } catch (error) {
-    console.log(JSON.stringify(error, null, 4));
-
-    throw new Error("Failed to fetch data");
-  }
+  const data: Data = await client.request(query, variables);
+  return data;
 };

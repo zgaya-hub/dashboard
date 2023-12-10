@@ -1,4 +1,4 @@
-import { Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps } from "@mui/material";
+import { DialogContent, Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps } from "@mui/material";
 import { ClearIcon } from "../icons";
 import DialogHeader from "./DialogHeader";
 import Draggable from "react-draggable";
@@ -32,7 +32,7 @@ export default function Dialog({ onClose, headerHidden = false, headerText, outa
   return (
     <MuiDialog onClose={outareaClose ? onClose : () => {}} {...restProps}>
       {!headerHidden ? <DialogHeader title={headerText} rightIcons={[<ClearIcon onClick={onClose} />]} /> : null}
-      {children}
+      <DialogContent>{children}</DialogContent>
     </MuiDialog>
   );
 }
