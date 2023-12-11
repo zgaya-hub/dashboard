@@ -4,7 +4,7 @@ import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { ShadowInterface, SizingInterface } from "./types";
 
 const commonShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
-const commonOverrides: ComponentsOverrides<Theme>['MuiButton'] = {
+const commonOverrides = {
   root: {
     fontSize: 15,
     fontWeight: 600,
@@ -106,6 +106,8 @@ export const darkThemePalette: PaletteOptions = {
 };
 
 export const typography: TypographyOptions = {
+  fontFamily: ["Roboto", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Arial", "sans-serif"].join(","),
+  fontSize: 15,
   h1: {
     fontSize: 36,
     fontWeight: 700,
@@ -149,7 +151,6 @@ export const typography: TypographyOptions = {
   overline: {
     fontSize: 10,
   },
-  fontFamily: "'Montserrat', sans-serif",
 };
 
 export const radius: Theme["shape"] = {

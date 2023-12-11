@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import Skeleton from "@mui/material/Skeleton";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { SxProps } from "@mui/material";
+import { CardMedia, SxProps } from "@mui/material";
 import Typography from "@/components/Typography";
-import { handleOnGetTextColorForBackground } from "./utils/getTextColorForBackground";
-import { handleOnGetImageBackgroundColor } from "@/utils/getImageBackgroundColor";
 
 interface ImageTitleSubtitleCardProps {
   image: string;
@@ -15,37 +12,22 @@ interface ImageTitleSubtitleCardProps {
 }
 
 export default function ImageTitleSubtitleCard({ image, title, subtitle, loading }: ImageTitleSubtitleCardProps) {
-  const [_textColor, setTextColor] = useState<"black" | "white">("black");
-
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     boxShadow: "none",
-    borderRadius: 0,
-    backgroundImage: `url(${image})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    height: theme.spacing(32),
-    padding: theme.spacing(1),
+    py: theme.spacing(2),
     display: "flex",
+    alignItems: "center",
     flexDirection: "column",
-    justifyContent: "end",
+    background: theme.palette.background.default,
   }));
 
-  useEffect(() => {
-    const getColor = async () => {
-      try {
-        const backgroundColor = await handleOnGetImageBackgroundColor(image);
-        const textColor = handleOnGetTextColorForBackground(backgroundColor ?? "");
-        setTextColor(textColor);
-      } catch (error) {
-        console.error("Error getting color:", error);
-      }
-    };
-
-    getColor();
-  }, [image]);
+  const cardMediaStyle = useThemeStyles<SxProps>((theme) => ({
+    borderRadius: theme.spacing(10),
+    height: theme.spacing(20),
+    width: theme.spacing(20),
+  }));
 
   if (loading) {
-    // Render skeleton when loading
     return (
       <Card sx={cardStyle}>
         <Skeleton variant="text" width="80%" />
@@ -54,15 +36,11 @@ export default function ImageTitleSubtitleCard({ image, title, subtitle, loading
     );
   }
 
-  // Render content when not loading
   return (
     <Card sx={cardStyle}>
-      <Typography color='primary' variant="h4">
-        {title}
-      </Typography>
-      <Typography color='primary'>
-        {subtitle}
-      </Typography>
+      <CardMedia sx={cardMediaStyle} component="img" alt="green iguana" image={image} />
+        <Typography variant="h5">{title}</Typography>
+        <Typography variant="body1">{subtitle}</Typography>
     </Card>
   );
 }

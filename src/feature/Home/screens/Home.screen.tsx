@@ -1,14 +1,14 @@
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
-import { AuthScreenPaper } from "@/components/Paper";
+import { AuthScreenPage } from "@/components/Page";
 
 export default function HomeScreen() {
   return (
-    <AuthScreenPaper>
+    <AuthScreenPage>
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />
-    </AuthScreenPaper>
+    </AuthScreenPage>
   );
 }

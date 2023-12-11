@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { ListItemIcon } from "@mui/material";
+import React, { useCallback, useMemo, useState } from "react";
+import { Divider, ListItemText } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { TranslateIcon } from "@/components/icons";
-import Typography from "@/components/Typography";
-import { MenuItem, Menu } from "@/components/Menu";
-import { SearchInput } from "@/components/Input";
+import { ClearIcon, SearchIcon, TranslateIcon } from "@/components/icons";
+import { MenuItem, Menu, MenuHeader } from "@/components/Menu";
+import { SearchInput } from "@/components/Form";
 
 interface TranslationMenuProps {
   anchorEl: null | HTMLElement;
@@ -19,45 +18,47 @@ interface Language {
   flag: string;
 }
 
-export default function TranslationMenu({ anchorEl, isVisible, onClose }: TranslationMenuProps) {
-  const { i18n } = useTranslation();
-  const { t } = useTranslation();
-
-  const [searchText, setSearchText] = useState<string>("");
-
-  const handleSearchChange = (searchText: string) => {
-    setSearchText(searchText);
-  };
-
-  const filteredLanguages = supportedLanguages.filter((lan) => lan.languageName.toLowerCase().includes(searchText.toLowerCase()) || lan.countryName.toLowerCase().includes(searchText.toLowerCase()));
-
-  const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void) => (
-    <MenuItem onClick={onClick}>
-      <ListItemIcon>{icon}</ListItemIcon>
-      <Typography variant="h6" color="primary">
-        {label}
-      </Typography>
-    </MenuItem>
-  );
-
-  return (
-    <Menu anchorEl={anchorEl} open={isVisible} onClose={onClose} headerText={t("Layout.AppBar.TranslationMenu.title")} onBack={onClose}>
-      <SearchInput
-        tooltip={t("Layout.AppBar.TranslationMenu.searchInputTooltip")}
-        fullWidth
-        size="small"
-        placeholder={t("Layout.AppBar.TranslationMenu.search")}
-        value={searchText}
-        onSearch={handleSearchChange}
-      />
-      {filteredLanguages.map((lan) => createMenuItem(<TranslateIcon />, `${lan.languageName} - ${lan.countryName}`, () => i18n.changeLanguage(lan.code)))}
-    </Menu>
-  );
-}
-
 const supportedLanguages: Language[] = [
   { code: "en", languageName: "English", countryName: "America", flag: "🇺🇸" },
   { code: "ar", languageName: "Arabic", countryName: "Palestine", flag: "🇵🇸" },
   { code: "hi", languageName: "Hindi", countryName: "India", flag: "🇮🇳" },
   { code: "ur", languageName: "Urdu", countryName: "Pakistan", flag: "🇵🇰" },
 ];
+
+const TranslationMenu: React.FC<TranslationMenuProps> = ({ anchorEl, isVisible, onClose }) => {
+  const { t, i18n } = useTranslation();
+  const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
+  const filteredLanguages = useMemo(() => {
+    return supportedLanguages.filter((language) => language.languageName.toLowerCase().includes(searchText.toLowerCase()) || language.countryName.toLowerCase().includes(searchText.toLowerCase()));
+  }, [searchText]);
+
+  const handleSearchChange = useCallback((text: string) => {
+    setSearchText(text);
+  }, []);
+
+  const handleOnToggleSearchInput = () => {
+    setIsSearchInputVisible(!isSearchInputVisible);
+    setSearchText("");
+  };
+
+  const renderHeader = <MenuHeader secondaryAction={isSearchInputVisible ? <ClearIcon onClick={handleOnToggleSearchInput} /> : <SearchIcon onClick={handleOnToggleSearchInput} />}>{!isSearchInputVisible ? <ListItemText>{t("Layout.AppBar.TranslationMenu.title")}</ListItemText> : <SearchInput size="small" onChange={handleSearchChange} />}</MenuHeader>;
+
+  const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void) => (
+    <MenuItem onClick={onClick}>
+      {icon}
+      <ListItemText>{label}</ListItemText>
+    </MenuItem>
+  );
+
+  return (
+    <Menu anchorEl={anchorEl} open={isVisible} onClose={onClose}>
+      {renderHeader}
+      <Divider />
+      {filteredLanguages.map((language) => createMenuItem(<TranslateIcon isListIcon />, `${language.languageName} - ${language.countryName}`, () => i18n.changeLanguage(language.code)))}
+    </Menu>
+  );
+};
+
+export default TranslationMenu;

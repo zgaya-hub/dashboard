@@ -1,14 +1,14 @@
 import Snackbar from "@/components/Snackbar";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useMemo } from "react";
 
 interface GqlError {
-  errorId?: string;
-  message: string;
-  date?: Date;
+  statusCode?: string;
+  message: string[];
+  error?: string;
 }
 
 interface GqlErrorContextProps {
-  showGqlError: (error: GqlError) => void;
+  showGqlError: (error: ErrorResponse) => void;
 }
 
 const GqlErrorContext = createContext<GqlErrorContextProps | undefined>(undefined);
@@ -20,8 +20,23 @@ interface GqlErrorProviderProps {
 export function GqlErrorProvider({ children }: GqlErrorProviderProps) {
   const [gqlError, setGqlError] = useState<GqlError | null>(null);
 
-  const showGqlError = (error: GqlError) => {
-    setGqlError(error);
+  const errorMessage = useMemo(() => {
+    if (Array.isArray(gqlError?.message)) {
+      return gqlError?.message[0];
+    } else {
+      return gqlError?.message;
+    }
+  }, [gqlError]);
+
+  const showGqlError = (error: ErrorResponse) => {
+    const err = error.errors[0];
+    setGqlError(err);
+
+    // Check if the error indicates a credential mismatch
+    if (err.message.includes("credential mismatch")) {
+      // Handle credential mismatch error here, e.g., show a loop
+      console.error("Credential mismatch error: ", err.message);
+    }
   };
 
   const handleClose = () => {
@@ -35,10 +50,11 @@ export function GqlErrorProvider({ children }: GqlErrorProviderProps) {
         fullWidth
         open={!!gqlError}
         onClose={handleClose}
-        message={gqlError?.message}
+        message={errorMessage}
         muiProps={{
           AlertProps: { onClose: handleClose },
         }}
+        severity={"error"}
       />
     </GqlErrorContext.Provider>
   );
@@ -52,4 +68,8 @@ export default function useGqlError(): GqlErrorContextProps {
   }
 
   return context;
+}
+
+export interface ErrorResponse {
+  errors: [GqlError];
 }

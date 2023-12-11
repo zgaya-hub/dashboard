@@ -1,12 +1,12 @@
 import { gqlRequest } from "@/api/gqlRequest";
-import useGqlError from "@/context/GqlErrorContext";
+import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation } from "@tanstack/react-query";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
-  return useMutation({
+  return  useMutation({
     mutationFn: async (input: GetUploadVideoSignedUrlInput) => {
-      return gqlRequest<GetUploadVideoSignedUrlOutput>(
+      return gqlRequest<{getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput}>(
         `
           mutation($input: GetUploadVideoSignedUrlInput!) {
             getUploadVideoSignedUrl(GetUploadVideoSignedUrlInput: $input) {
@@ -19,8 +19,8 @@ export function useGetUploadVideoSignedUrl() {
         { input }
       );
     },
-    onError: (error) => {
+    onError: (error: ErrorResponse) => {
       showGqlError(error);
     },
-  });
+  })
 }

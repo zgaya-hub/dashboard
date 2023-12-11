@@ -1,7 +1,6 @@
 import { SxProps } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Fragment } from "react";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
@@ -21,10 +20,9 @@ export default function LayoutHeader() {
     zIndex: 1,
   };
 
-  const toolbarStyle = useThemeStyles<SxProps>((theme) => ({
+  const toolbarStyle: SxProps = {
     justifyContent: "flex-end",
-    gap: theme.sizing.sm,
-  }));
+  };
 
   return (
     <Fragment>

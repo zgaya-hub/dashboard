@@ -8,10 +8,7 @@ type GetUploadVideoSignedUrlInput = {
 };
 
 type GetUploadVideoSignedUrlOutput = {
-  MediaType: VideorMediaEnum;
-  Width: number;
-  Height: number;
-  RunTime: number;
-  SizeInKb: number;
-  Mime: VideoMineType;
+  SignedUrl: string
+  SignedUrlKeyId: string
+  VideoId: string
 };

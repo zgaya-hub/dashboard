@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
-import { AuthScreenPaper } from "@/components/Paper";
+import { AuthScreenPage } from "@/components/Page";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
@@ -9,10 +9,10 @@ import { extractVideoMetadata, extractVideoUrl } from "metalyzer";
 import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
 import TrailerUploadModal from "../components/TrailerUploadModal";
 import Button from "@/components/Button";
-import { ChevronRightIcon } from "@/components/icons";
 
 export default function TrailerUploadScreen() {
   const [isTrailerUploadModalVisible, setIsTrailerUploadModalVisible] = useState(true);
+  const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
   const [trailerUrl, setTrailerUrl] = useState<string | null>(null);
   const { mutateAsync: getUploadTrailerUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
 
@@ -21,7 +21,7 @@ export default function TrailerUploadScreen() {
     const result = await getUploadTrailerUrlMutateAsync({
       Height: trailerMetadata.videoHeight!,
       Width: trailerMetadata.videoWidth!,
-      MediaType: MovierMediaEnum.MOVIE,
+      MediaType: MovierMediaEnum.TRAILER,
       Mime: trailerMetadata.mimeType,
       RunTime: trailerMetadata.videoDuration,
       SizeInKb: trailerMetadata.fileSizeKB,
@@ -35,8 +35,14 @@ export default function TrailerUploadScreen() {
     setIsTrailerUploadModalVisible(!isTrailerUploadModalVisible);
   };
 
+
+  const handleOnToggleFeedbackSideBar = () => {
+    setIsFeetbackSideBarVisible(!isFeetbackSideBarVisible);
+  };
+
+
   return (
-    <AuthScreenPaper>
+    <AuthScreenPage>
         <Button onClick={handleOnToggleTrailerUploadModal}>Upload</Button>
       {trailerUrl && (
         <video controls width="100%" height="600">
@@ -44,10 +50,10 @@ export default function TrailerUploadScreen() {
           Your browser does not support the video tag.
         </video>
       )}
-      <TrailerUploadModal isVisible={isTrailerUploadModalVisible} onClose={handleOnToggleTrailerUploadModal} onTrailerDrop={handleOnTrailerDrop} isLoading={isPending} />
+      <TrailerUploadModal onFeedback={handleOnToggleFeedbackSideBar} isVisible={isTrailerUploadModalVisible} onClose={handleOnToggleTrailerUploadModal} onTrailerDrop={handleOnTrailerDrop} isLoading={isPending} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />
-    </AuthScreenPaper>
+    </AuthScreenPage>
   );
 }

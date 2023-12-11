@@ -43,9 +43,9 @@ export default function LayoutSideBar() {
       },
       {
         icon: <PlaySquareIcon />,
-        label: t("Layout.Sidebar.manageVideo"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.manageVideo")),
-        isActive: activeItemLabel === t("Layout.Sidebar.manageVideo"),
+        label: t("Layout.Sidebar.manageMovie"),
+        onClick: () => setActiveItemLabel(t("Layout.Sidebar.manageMovie")),
+        isActive: activeItemLabel === t("Layout.Sidebar.manageMovie"),
       },
       {
         icon: <PlayDoubleIcon />,
@@ -84,7 +84,7 @@ export default function LayoutSideBar() {
   };
 
   const footerStyles = useThemeStyles<SxProps>((theme) => ({
-    paddingBottom: theme.sizing.md,
+    paddingBottom: theme.spacing(10)
   }));
 
   const sideBarBackground = useThemeStyles((theme) => theme.palette.background.default);
