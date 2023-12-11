@@ -38,8 +38,8 @@ export default function ImageTitleSubtitleCard({ image, title, subtitle, loading
 
   return (
     <Card sx={cardStyle}>
-      <CardMedia sx={cardMediaStyle} component="img" alt="green iguana" image={image} />
-        <Typography variant="h5">{title}</Typography>
+      <CardMedia sx={cardMediaStyle} component="img" image={image} />
+        <Typography variant="h4">{title}</Typography>
         <Typography variant="body1">{subtitle}</Typography>
     </Card>
   );

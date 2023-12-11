@@ -22,9 +22,11 @@ export default function VideoUploadCircleIcon({ isLoading, isDragActive }: Video
   }));
 
   if (isLoading) {
-    <Stack sx={iconContainerStyle} justifyContent="center" alignItems="center">
-      <CircularProgress size={150} color="inherit" />
-    </Stack>;
+    return (
+      <Stack sx={iconContainerStyle} justifyContent="center" alignItems="center">
+        <CircularProgress size={150} color="inherit" />
+      </Stack>
+    );
   }
 
   return (

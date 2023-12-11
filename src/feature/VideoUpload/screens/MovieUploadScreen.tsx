@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Stack } from "@mui/material";
 import Button from "@/components/Button";
 import { AuthScreenPage } from "@/components/Page";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
@@ -8,9 +7,14 @@ import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import { MovierMediaEnum } from "@/types/enum";
 import { extractVideoMetadata, extractVideoUrl } from "metalyzer";
 import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
-import MovieUploadModal from "../components/MovieUploadModal";
+import VideoUploadModal from "../components/VideoUploadModal";
+import useNavigation from "@/navigation/use-navigation";
+import { useTranslation } from "react-i18next";
 
 export default function MovieUploadScreen() {
+  const { t } = useTranslation();
+  const navigate = useNavigation();
+
   const [isMovieUploadModalVisible, setIsMovieUploadModalVisible] = useState(true);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
   const [movieUrl, setMovieUrl] = useState<string | null>(null);
@@ -28,7 +32,6 @@ export default function MovieUploadScreen() {
     });
 
     console.log(result);
-    
 
     setMovieUrl(await extractVideoUrl(movie));
     handleOnToggleMovieUploadModal();
@@ -42,6 +45,14 @@ export default function MovieUploadScreen() {
     setIsFeetbackSideBarVisible(!isFeetbackSideBarVisible);
   };
 
+  const handleOnLeftClick = () => {
+    navigate.navigate("/video-upload/trailer");
+  };
+
+  const handleOnRightClick = () => {
+    navigate.navigate("/video-upload/episode");
+  };
+
   return (
     <AuthScreenPage>
       <Button onClick={handleOnToggleMovieUploadModal}>Upload</Button>
@@ -52,7 +63,8 @@ export default function MovieUploadScreen() {
           Your browser does not support the video tag.
         </video>
       )}
-      <MovieUploadModal onFeedback={handleOnToggleFeedbackSideBar} isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onMovieDrop={handleOnMovieDrop} isLoading={isPending} />
+      {/* <MovieUploadModal onFeedback={handleOnToggleFeedbackSideBar} isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onMovieDrop={handleOnMovieDrop} isLoading={isPending} /> */}
+      <VideoUploadModal isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onVideoDrop={handleOnMovieDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} headerText={t("Feature.VideoUpload.MovieUploadModal.headerText")} title={t("Feature.VideoUpload.MovieUploadModal.title")} message={t("Feature.VideoUpload.MovieUploadModal.message")} onLeftIconClick={handleOnLeftClick} onRightIconClick={handleOnRightClick} leftTooltip={"Upload episode"} rightTooltip={"Upload trailer"} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />

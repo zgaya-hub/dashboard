@@ -6,7 +6,7 @@ interface DialogProps extends MuiDialogProps {
   headerText?: string;
   headerHidden?: boolean;
   onClose?: () => void;
-  outareaClose?: boolean;
+  outAreaClose?: boolean;
   isDraggable?: boolean;
 }
 
@@ -18,10 +18,10 @@ function PaperComponent({ ...restProps }: PaperProps) {
   );
 }
 
-export default function Dialog({ onClose, headerHidden = false, headerText, outareaClose = true, children, isDraggable = true, ...restProps }: DialogProps) {
+export default function Dialog({ onClose, headerHidden = false, headerText, outAreaClose = true, children, isDraggable = true, ...restProps }: DialogProps) {
   if (isDraggable) {
     return (
-      <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outareaClose ? onClose : () => {}} {...restProps}>
+      <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outAreaClose ? onClose : () => {}} {...restProps}>
         {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" isDragable={isDraggable} title={headerText} onClose={onClose} /> : null}
         {children}
       </MuiDialog>
@@ -29,7 +29,7 @@ export default function Dialog({ onClose, headerHidden = false, headerText, outa
   }
 
   return (
-    <MuiDialog onClose={outareaClose ? onClose : () => {}} {...restProps}>
+    <MuiDialog onClose={outAreaClose ? onClose : () => {}} {...restProps}>
       {!headerHidden ? <DialogHeader title={headerText} onClose={onClose} /> : null}
       <DialogContent>{children}</DialogContent>
     </MuiDialog>

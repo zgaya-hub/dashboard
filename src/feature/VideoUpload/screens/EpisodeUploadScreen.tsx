@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Stack } from "@mui/material";
 import Button from "@/components/Button";
 import { AuthScreenPage } from "@/components/Page";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
@@ -8,10 +7,14 @@ import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import { MovierMediaEnum } from "@/types/enum";
 import { extractVideoMetadata, extractVideoUrl } from "metalyzer";
 import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
-import EpisodeUploadModal from "../components/EpisodeUploadModal";
+import EpisodeUploadModal from "../components/VideoUploadModal";
 import SeriesAndSeasonSelectComponent from "../components/SeriesAndSeasonSelectComponent";
+import { useTranslation } from "react-i18next";
+import useNavigation from "@/navigation/use-navigation";
 
 export default function EpisodeUploadScreen() {
+  const { t } = useTranslation();
+  const navigate = useNavigation();
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
   const [episodeUrl, setEpisodeUrl] = useState<string | null>(null);
@@ -19,6 +22,7 @@ export default function EpisodeUploadScreen() {
 
   const handleOnEpisodeDrop = async (episode: File) => {
     const episodeMetadata = await extractVideoMetadata(episode);
+    setEpisodeUrl(await extractVideoUrl(episode));
     const result = await getUploadEpisodeUrlMutateAsync({
       Height: episodeMetadata.videoHeight!,
       Width: episodeMetadata.videoWidth!,
@@ -28,8 +32,6 @@ export default function EpisodeUploadScreen() {
       SizeInKb: episodeMetadata.fileSizeKB,
     });
 
-    setEpisodeUrl(await extractVideoUrl(episode));
-    handleOnToggleEpisodeUploadModal();
   };
 
   const handleOnToggleEpisodeUploadModal = () => {
@@ -39,6 +41,16 @@ export default function EpisodeUploadScreen() {
   const handleOnToggleFeedbackSideBar = () => {
     setIsFeetbackSideBarVisible(!isFeetbackSideBarVisible);
   };
+
+
+  const handleOnLeftClick = () => {
+    navigate.navigate("/video-upload/movie");
+  };
+
+  const handleOnRightClick = () => {
+    navigate.navigate("/video-upload/trailer");
+  };
+
 
   return (
     <AuthScreenPage>
@@ -50,7 +62,7 @@ export default function EpisodeUploadScreen() {
         </video>
       )}
       <SeriesAndSeasonSelectComponent isVisible={true} />
-      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
+      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onVideoDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} onLeftIconClick={handleOnLeftClick} onRightIconClick={handleOnRightClick} leftTooltip={"Upload movie"} rightTooltip={"Upload trailer"} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />

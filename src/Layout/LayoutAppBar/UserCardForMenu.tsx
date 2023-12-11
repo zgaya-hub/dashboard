@@ -23,7 +23,11 @@ export default function UserCardForMenu({ onClick, onLogout }: UserCardForMenuPr
       <ListItemAvatar>
         <Avatar sizes="small" src={imageUrl} sx={avatarStyle} />
       </ListItemAvatar>
-      <ListItemText primary={fullName} secondary={userName} tabIndex={10} />
+      <ListItemText primary={fullName} primaryTypographyProps={{
+        variant: 'h4',
+      }} secondary={userName} secondaryTypographyProps={{
+        variant: 'body1',
+      }} tabIndex={10} />
     </MenuHeader>
   );
 }

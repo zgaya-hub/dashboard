@@ -1,7 +1,7 @@
 import { PaletteOptions } from "@mui/material/styles/createPalette";
-import { ComponentsOverrides, Theme, ThemeOptions } from "@mui/material";
+import { Theme, ThemeOptions } from "@mui/material";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import { ShadowInterface, SizingInterface } from "./types";
+import { ShadowInterface } from "./types";
 
 const commonShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
 const commonOverrides = {
@@ -169,14 +169,14 @@ export const darkThemeShadows: ShadowInterface = {
   upward: `${commonShadow}, 0px -4px 8px rgba(0, 0, 0, 0.4)`,
 };
 
-export const sizing: SizingInterface = {
+/* export const sizing: SizingInterface = {
   xs: 2,
   sm: 4,
   md: 8,
   lg: 12,
   xl: 16,
   menuWidth: (theme: Theme) => theme.spacing(40),
-};
+}; */
 
 export const components: ThemeOptions["components"] = {
   MuiTab: {
