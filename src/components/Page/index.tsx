@@ -1,7 +1,6 @@
 import useSidebar from "@/context/Sidebar.context";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Paper, PaperProps } from "../Paper";
-import { SxProps } from "@mui/material";
+import { Paper, PaperProps, SxProps } from "@mui/material";
 
 interface AuthScreenPageProps extends PaperProps {}
 

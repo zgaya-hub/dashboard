@@ -8,9 +8,7 @@ interface AppBarProps extends Omit<MuiAppBarProps, "sx"> {
 
 export default function AppBar({ children, sx, ...restProps }: AppBarProps) {
   const appBarStyle = useThemeStyles<SxProps>((theme) => ({
-    position: "fixed",
     background: theme.palette.background.default,
-    boxShadow: theme.shadow.neutral,
     ...sx,
   }));
 

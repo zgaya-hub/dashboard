@@ -22,104 +22,26 @@ const commonOverrides = {
 export const lightThemePalette: PaletteOptions = {
   mode: "light",
   primary: {
-    main: "#4361EE",
-  },
-  secondary: {
-    main: "#899DFC",
-  },
-  error: {
-    main: "#FF0000",
-  },
-  success: {
-    main: "#4CAF50",
-  },
-  warning: {
-    main: "#FFC107",
-  },
-  info: {
-    main: "#2196F3",
-  },
-  text: {
-    primary: "#050505",
-    secondary: "#65676b",
-    disabled: "",
-  },
-  divider: "#E7E8EF",
-  background: {
-    paper: "#f0f2f5",
-    default: "#ffffff",
-  },
-  common: {
-    black: "#000000",
-    white: "#ffffff",
-  },
-  action: {
-    active: "#f0f2f5",
-    hover: "#f0f2f5",
-    selected: "#f0f2f5",
-    disabled: "#f0f2f5",
-    disabledBackground: "#f0f2f5",
-  },
+    main: '#1976d2',
+    light: '#42a5f5',
+    dark: '#1565c0',
+    contrastText: '#fff',
+  }
 };
 
 export const darkThemePalette: PaletteOptions = {
   mode: "dark",
   primary: {
-    main: "#4361EE",
-  },
-  secondary: {
-    main: "#899DFC",
-  },
-  error: {
-    main: "#FF0000",
-  },
-  success: {
-    main: "#4CAF50",
-  },
-  warning: {
-    main: "#FFC107",
-  },
-  info: {
-    main: "#2196F3",
-  },
-  text: {
-    primary: "#fefefe",
-    secondary: "#3a3b3e",
-    disabled: "#777",
-  },
-  divider: "#2C2F41",
-  background: {
-    paper: "#3A3B3C",
-    default: "#1f1f1f",
-  },
-  common: {
-    black: "#000000",
-    white: "#ffffff",
-  },
-  action: {
-    active: "#3A3B3C",
-    hover: "#3A3B3C",
-    selected: "#3A3B3C",
-    disabled: "#3A3B3C",
-    disabledBackground: "#3A3B3C",
-  },
+    main: '#1976d2',
+    light: '#42a5f5',
+    dark: '#1565c0',
+    contrastText: '#fff',
+  }
 };
 
 export const typography: TypographyOptions = {
   fontFamily: ["Roboto", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Arial", "sans-serif"].join(","),
   fontSize: 15,
-  h1: {
-    fontSize: 36,
-    fontWeight: 700,
-  },
-  h2: {
-    fontSize: 24,
-    fontWeight: 700,
-  },
-  h3: {
-    fontSize: 20,
-    fontWeight: 700,
-  },
   h4: {
     fontSize: 17,
     fontWeight: 600,
@@ -143,10 +65,6 @@ export const typography: TypographyOptions = {
   caption: {
     fontSize: 13,
     fontWeight: 400,
-  },
-  button: {
-    fontSize: 20,
-    fontWeight: 600,
   },
   overline: {
     fontSize: 10,
