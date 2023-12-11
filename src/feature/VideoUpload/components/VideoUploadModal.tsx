@@ -22,8 +22,6 @@ interface VideoUploadModalProps {
 
 export default function VideoUploadModal({ isVisible, onClose, onFeedback, onVideoDrop, isLoading, headerText, leftTooltip, message, onLeftIconClick, onRightIconClick, rightTooltip, title }: VideoUploadModalProps) {
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
-    height: "fit-content",
-    position: "relative",
     ".MuiDialog-paperWidthXl": {
       width: "70%",
       [theme.breakpoints.down("sm")]: {
@@ -41,7 +39,6 @@ export default function VideoUploadModal({ isVisible, onClose, onFeedback, onVid
       <Divider />
       <VideoUploadComponent onVideoDrop={onVideoDrop} isLoading={isLoading} message={message} title={title} />
       <Divider />
-
       <DialogActions>
         <FeedbackIcon onClick={onFeedback} />
       </DialogActions>

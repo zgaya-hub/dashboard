@@ -6,7 +6,7 @@ import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import { MovierMediaEnum } from "@/types/enum";
 import { extractVideoMetadata, extractVideoUrl } from "metalyzer";
-import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
+import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import VideoUploadModal from "../components/VideoUploadModal";
 import useNavigation from "@/navigation/use-navigation";
 import { useTranslation } from "react-i18next";
@@ -19,6 +19,7 @@ export default function MovieUploadScreen() {
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
   const [movieUrl, setMovieUrl] = useState<string | null>(null);
   const { mutateAsync: getUploadMovieUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
+  const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
 
   const handleOnMovieDrop = async (movie: File) => {
     const movieMetadata = await extractVideoMetadata(movie);
@@ -32,6 +33,8 @@ export default function MovieUploadScreen() {
     });
 
     console.log(result);
+
+    uploadVideoOnAwsS3MutateAsync({SignedUrl: result.getUploadVideoSignedUrl.SignedUrl, VideoBlob})
 
     setMovieUrl(await extractVideoUrl(movie));
     handleOnToggleMovieUploadModal();
