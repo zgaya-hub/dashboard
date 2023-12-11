@@ -1,10 +1,8 @@
 import { PaletteOptions } from "@mui/material/styles/createPalette";
-import { Theme, ThemeOptions } from "@mui/material";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { ShadowInterface } from "./types";
 
 const commonShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
-const commonOverrides = {
+/* const commonOverrides = {
   root: {
     fontSize: 15,
     fontWeight: 600,
@@ -18,27 +16,27 @@ const commonOverrides = {
     fontWeight: 600,
   },
 };
-
+ */
 export const lightThemePalette: PaletteOptions = {
   mode: "light",
-  primary: {
-    main: '#1976d2',
-    light: '#42a5f5',
-    dark: '#1565c0',
-    contrastText: '#fff',
-  }
+/*   primary: {
+    main: "#1976d2",
+    light: "#42a5f5",
+    dark: "#1565c0",
+    contrastText: "#fff",
+  }, */
 };
 
 export const darkThemePalette: PaletteOptions = {
   mode: "dark",
-  primary: {
-    main: '#1976d2',
-    light: '#42a5f5',
-    dark: '#1565c0',
-    contrastText: '#fff',
-  }
+ /*  primary: {
+    main: "#1976d2",
+    light: "#42a5f5",
+    dark: "#1565c0",
+    contrastText: "#fff",
+  }, */
 };
-
+/* 
 export const typography: TypographyOptions = {
   fontFamily: ["Roboto", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Arial", "sans-serif"].join(","),
   fontSize: 15,
@@ -70,10 +68,10 @@ export const typography: TypographyOptions = {
     fontSize: 10,
   },
 };
-
-export const radius: Theme["shape"] = {
+ */
+/* export const radius: Theme["shape"] = {
   borderRadius: 6,
-};
+}; */
 
 export const lightThemeShadows: ShadowInterface = {
   downward: `${commonShadow}, 0px 4px 8px rgba(0, 0, 0, 0.1)`,
@@ -87,16 +85,21 @@ export const darkThemeShadows: ShadowInterface = {
   upward: `${commonShadow}, 0px -4px 8px rgba(0, 0, 0, 0.4)`,
 };
 
-/* export const sizing: SizingInterface = {
-  xs: 2,
-  sm: 4,
-  md: 8,
-  lg: 12,
-  xl: 16,
-  menuWidth: (theme: Theme) => theme.spacing(40),
-}; */
-
-export const components: ThemeOptions["components"] = {
+/* export const space: SpaceInterface = {
+  none: '0px',
+  xxs: '2px',
+  xs: '4px',
+  s_nudge: '6px',
+  s: '8px',
+  m_nudge: '10px',
+  m: '12px',
+  l: '16px',
+  xl: '20px',
+  xxl: '24px',
+  xxxl: '32px',
+};
+ */
+/* export const components: ThemeOptions["components"] = {
   MuiTab: {
     styleOverrides: commonOverrides,
   },
@@ -104,3 +107,4 @@ export const components: ThemeOptions["components"] = {
     styleOverrides: commonOverrides,
   },
 };
+ */

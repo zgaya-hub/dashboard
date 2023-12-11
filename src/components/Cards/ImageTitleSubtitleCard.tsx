@@ -23,8 +23,9 @@ export default function ImageTitleSubtitleCard({ image, title, subtitle, loading
 
   const cardMediaStyle = useThemeStyles<SxProps>((theme) => ({
     borderRadius: theme.spacing(10),
-    height: theme.spacing(20),
-    width: theme.spacing(20),
+    height: theme.spacing(18),
+    width: theme.spacing(18),
+    mb: 1
   }));
 
   if (loading) {
@@ -39,8 +40,8 @@ export default function ImageTitleSubtitleCard({ image, title, subtitle, loading
   return (
     <Card sx={cardStyle}>
       <CardMedia sx={cardMediaStyle} component="img" image={image} />
-        <Typography variant="h4">{title}</Typography>
-        <Typography variant="body1">{subtitle}</Typography>
+        <Typography variant="h6">{title}</Typography>
+        <Typography variant="subtitle1">{subtitle}</Typography>
     </Card>
   );
 }

@@ -16,7 +16,7 @@ export default function DialogHeader({ title, onClose, sx, isDragable, ...restPr
     justifyContent: "space-between",
     alignItems: "center",
     cursor: isDragable ? "move" : "default",
-    fontSize: theme.typography.h3, 
+    fontSize: theme.typography.h5, 
     ...sx,
   }));
 

@@ -1,34 +1,33 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { SxProps } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import Fab from "@mui/material/Fab";
 import Stack from "@mui/material/Stack";
+
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import useTheme from "@/theme/Theme.context";
 import useSidebar from "@/context/Sidebar.context";
-import { MenuOpenIcon, MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
-import UserAvatar from "./UserAvatar";
 import useNavigation from "@/navigation/use-navigation";
 
+import { MenuOpenIcon, MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
+import UserAvatar from "./UserAvatar";
+import AppBar from "@/components/AppBar";
+import Fab from "@/components/Fab";
+
 export default function BottomAppBar() {
-  const naviation = useNavigation();
+  const navigation = useNavigation();
   const { toggleSidebar } = useSidebar();
   const { toggleTheme } = useTheme();
 
   const handleOnClickUpload = () => {
-    naviation.navigate("/video-upload/movie");
+    navigation.navigate("/video-upload/movie");
   };
 
-  const appBarStyle = useThemeStyles<SxProps>((theme) => ({
-    position: "fixed",
+  const appBarStyle: SxProps = {
     bottom: 0,
     top: "auto",
-    background: theme.palette.background.default,
-    boxShadow: theme.shadow.neutral,
-  }));
+  };
 
   const fabContainerStyle = useThemeStyles<SxProps>(() => ({
     position: "absolute",
@@ -38,15 +37,7 @@ export default function BottomAppBar() {
     marginX: "auto",
   }));
 
-  const fabItemStyle = useThemeStyles<SxProps>((theme) => ({
-    background: theme.palette.background.default,
-    boxShadow: 0,
-    border: `1px solid ${theme.palette.divider}`,
-    "&:hover": {
-      background: theme.palette.background.default,
-      boxShadow: 0,
-    },
-  }));
+ 
 
   return (
     <Fragment>
@@ -55,13 +46,13 @@ export default function BottomAppBar() {
         <Toolbar>
           <MenuOpenIcon onClick={toggleSidebar} />
           <Stack width="100%" justifyContent="center" direction="row" gap={3} alignItems="center" sx={fabContainerStyle}>
-            <Fab sx={fabItemStyle} onClick={handleOnClickUpload}>
+            <Fab onClick={handleOnClickUpload}>
               <UploadIcon />
             </Fab>
-            <Fab sx={fabItemStyle} onClick={toggleTheme}>
+            <Fab onClick={toggleTheme}>
               <MoonSunIcon />
             </Fab>
-            <Fab sx={fabItemStyle}>
+            <Fab>
               <SearchIcon />
             </Fab>
           </Stack>
