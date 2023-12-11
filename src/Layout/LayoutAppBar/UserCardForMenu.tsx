@@ -1,33 +1,29 @@
-import { Avatar, Stack, SxProps } from "@mui/material";
-import Typography from "@/components/Typography";
-import { ChevronRightIcon } from "@/components/icons";
+import { ListItemAvatar, ListItemText, SxProps } from "@mui/material";
+import { LogoutIcon } from "@/components/icons";
 import useUserDetail from "@/context/UserDetail.context";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { MenuHeader } from "@/components/Menu";
+import Avatar from "@/components/Avatar";
 
 interface UserCardForMenuProps {
   onClick: () => void;
+  onLogout: () => void;
 }
 
-export default function UserCardForMenu({ onClick }: UserCardForMenuProps) {
+export default function UserCardForMenu({ onClick, onLogout }: UserCardForMenuProps) {
   const { fullName, imageUrl, userName } = useUserDetail();
 
-  const avatarStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.spacing(8),
-    width: theme.spacing(8),
-  }));
+  const avatarStyle: SxProps = {
+    width: 56,
+    height: 56,
+    mr: 1,
+  };
 
   return (
-    <Stack direction={"row"} onClick={onClick} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
-      <Stack direction="row" alignItems="center" gap={1}>
-        <Avatar src={imageUrl} sx={avatarStyle} />
-        <Stack>
-          <Typography color="primary" variant="h4">
-            {fullName}
-          </Typography>
-          <Typography color="primary">{userName}</Typography>
-        </Stack>
-      </Stack>
-      <ChevronRightIcon />
-    </Stack>
+    <MenuHeader onClick={onClick} secondaryAction={<LogoutIcon onClick={onLogout} />}>
+      <ListItemAvatar>
+        <Avatar sizes="small" src={imageUrl} sx={avatarStyle} />
+      </ListItemAvatar>
+      <ListItemText primary={fullName} secondary={userName} tabIndex={10} />
+    </MenuHeader>
   );
 }

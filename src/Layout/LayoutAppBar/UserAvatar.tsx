@@ -1,6 +1,4 @@
 import React, { Fragment, useState } from "react";
-
-// import AppearanceMenu from "./AppearanceMenu";
 import useUserDetail from "@/context/UserDetail.context";
 import UserMenu from "./UserMenu";
 import AppearanceMenu from "./AppearanceMenu";

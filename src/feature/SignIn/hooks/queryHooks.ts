@@ -1,8 +1,8 @@
 import { gqlRequest } from "@/api/gqlRequest";
-import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
+import useGqlError from "@/context/GqlErrorContext";
 import { useMutation } from "@tanstack/react-query";
 
-export function useManagerLogin() {
+export function useManagerSignIn() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: ManagerSignInInput) => {
@@ -17,8 +17,8 @@ export function useManagerLogin() {
         { input }
       );
     },
-    onError: (error: ErrorResponse) => {
-      showGqlError(error);
+    onError: (error) => {
+      showGqlError(error.response);
     },
   });
 }

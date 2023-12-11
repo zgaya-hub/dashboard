@@ -1,12 +1,12 @@
-import { UnAuthScreenPaper } from "@/components/Paper";
+import { UnAuthScreenPage } from "@/components/Page";
 import SignInForm from "../components/SignInForm";
 import { SignInFormDataInterface } from "../types";
-import { useManagerLogin } from "../hooks/queryHooks";
+import { useManagerSignIn } from "../hooks/queryHooks";
 import { useAuthContext } from "@/context/AuthContext";
 
 export default function SignInInputScreen() {
   const { handleOnAuthenticate } = useAuthContext();
-  const { mutateAsync: managerLoginMutateAsync } = useManagerLogin();
+  const { mutateAsync: managerLoginMutateAsync } = useManagerSignIn();
 
   const handleOnCallSignIn = async (formData: SignInFormDataInterface) => {
     const result = await managerLoginMutateAsync(formData);
@@ -16,8 +16,8 @@ export default function SignInInputScreen() {
   };
 
   return (
-    <UnAuthScreenPaper>
+    <UnAuthScreenPage>
       <SignInForm onSubmit={handleOnCallSignIn} />
-    </UnAuthScreenPaper>
+    </UnAuthScreenPage>
   );
 }

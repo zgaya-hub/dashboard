@@ -1,6 +1,6 @@
 import React from "react";
 import { CssBaseline, Stack, Paper, Typography, Link } from "@mui/material";
-import {SimpleTextInput} from "@/components/Input";
+import { SimpleTextInput } from "@/components/Form";
 import Button from "@/components/Button";
 import { SignInFormDataInterface } from "../types";
 
@@ -25,8 +25,8 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
         Sign In to Facebook
       </Typography>
       <Stack component="form" noValidate onSubmit={handleSubmit} spacing={2}>
-        <SimpleTextInput margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus onChange={(e) => console.log(e.target.value)} />
-        <SimpleTextInput margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" onChange={(e) => console.log(e.target.value)} />
+        <SimpleTextInput id="email" label="Email Address" name="email" autoComplete="email" autoFocus />
+        <SimpleTextInput name="password" label="Password" type="password" id="password" autoComplete="current-password" />
         <Button type="submit" variant="contained" fullWidth>
           Sign In
         </Button>

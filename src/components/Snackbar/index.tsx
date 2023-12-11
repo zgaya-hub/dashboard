@@ -1,4 +1,4 @@
-import { Snackbar as MuiSnackbar, SnackbarProps as MuiSnackbarProps, Alert as MuiAlert, AlertProps as MuiAlertProps, Button as MuiButton } from "@mui/material";
+import { Snackbar as MuiSnackbar, SnackbarProps as MuiSnackbarProps, Alert as MuiAlert, AlertProps as MuiAlertProps } from "@mui/material";
 
 interface SnackbarProps {
   open: boolean;

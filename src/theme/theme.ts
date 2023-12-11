@@ -5,18 +5,15 @@ import { components, darkThemePalette, darkThemeShadows, lightThemePalette, ligh
 
 export const lightTheme = createTheme({
   palette: lightThemePalette,
-  typography: typography,
-  shape: radius,
   shadow: lightThemeShadows,
-  sizing: sizing,
-  components: components,
+  typography: typography,
+  // components: components,
 });
 
 export const darkTheme = createTheme({
   palette: darkThemePalette,
-  typography: typography,
-  shape: radius,
   shadow: darkThemeShadows,
-  sizing: sizing,
-  components: components,
+  typography: typography,
+  // components: components,
 });
+

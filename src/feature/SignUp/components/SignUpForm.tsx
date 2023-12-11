@@ -1,6 +1,6 @@
 import React from "react";
 import { CssBaseline, Stack, Paper, Typography, Link } from "@mui/material";
-import { SimpleTextInput } from "@/components/Input";
+import { SimpleTextInput } from "@/components/Form";
 import Button from "@/components/Button";
 import { SignUpFormDataInterface } from "../types";
 

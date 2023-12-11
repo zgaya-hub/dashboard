@@ -3,7 +3,6 @@ import Typography from "@/components/Typography";
 import { useDropzone } from "react-dropzone";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import VideoUploadCircleIcon from "./VideoUploadCircleIcon";
-import { useTranslation } from "react-i18next";
 
 interface VideoUploadComponentProps {
   onVideoDrop: (video: File) => void;
@@ -22,17 +21,17 @@ export default function VideoUploadComponent({ onVideoDrop, isLoading, message, 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(95),
     widht: theme.spacing(95),
-    gap: theme.sizing.md,
+    gap: theme.spacing(10),
   }));
 
   return (
     <Stack {...getRootProps()} justifyContent={"center"} alignItems={"center"} direction={"column"} sx={containerStyle}>
       <VideoUploadCircleIcon isLoading={isLoading} isDragActive={isDragActive} />
       <Stack alignItems={"center"} gap={1}>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h4">
           {title}
         </Typography>
-        <Typography color="secondary">{message}</Typography>
+        <Typography variant="body1">{message}</Typography>
       </Stack>
     </Stack>
   );

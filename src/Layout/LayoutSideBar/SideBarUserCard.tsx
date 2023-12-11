@@ -13,7 +13,7 @@ export function CollapsedSideBarUserCard() {
   const { imageUrl } = useUserDetail();
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
-    paddingTop: theme.sizing.xs,
+    paddingTop:theme.spacing(2)
   }));
 
   return (

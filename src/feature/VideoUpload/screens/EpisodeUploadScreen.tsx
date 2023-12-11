@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import Button from "@/components/Button";
-import { AuthScreenPaper } from "@/components/Paper";
+import { AuthScreenPage } from "@/components/Page";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
@@ -13,6 +13,7 @@ import SeriesAndSeasonSelectComponent from "../components/SeriesAndSeasonSelectC
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
+  const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
   const [episodeUrl, setEpisodeUrl] = useState<string | null>(null);
   const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
 
@@ -35,8 +36,12 @@ export default function EpisodeUploadScreen() {
     setIsEpisodeUploadModalVisible(!isEpisodeUploadModalVisible);
   };
 
+  const handleOnToggleFeedbackSideBar = () => {
+    setIsFeetbackSideBarVisible(!isFeetbackSideBarVisible);
+  };
+
   return (
-    <AuthScreenPaper>
+    <AuthScreenPage>
       <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
       {episodeUrl && (
         <video controls width="100%" height="600">
@@ -45,10 +50,10 @@ export default function EpisodeUploadScreen() {
         </video>
       )}
       <SeriesAndSeasonSelectComponent isVisible={true} />
-      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeDrop={handleOnEpisodeDrop} isLoading={isPending} />
+      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />
-    </AuthScreenPaper>
+    </AuthScreenPage>
   );
 }

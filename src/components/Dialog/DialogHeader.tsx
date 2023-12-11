@@ -1,36 +1,29 @@
-import { DialogTitle, DialogTitleProps, IconProps, SxProps } from "@mui/material";
-import { ReactElement } from "react";
-import Typography from "../Typography";
+import { DialogTitle, DialogTitleProps, SxProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { ClearIcon } from "../icons";
 
 interface DialogHeaderProps extends Omit<DialogTitleProps, "sx"> {
   title?: string;
-  rightIcons?: ReactElement<IconProps>[];
   isDragable?: boolean;
+  onClose?: () => void;
   sx?: SxProps;
 }
 
-export default function DialogHeader({ title, rightIcons = [], sx, isDragable, ...restProps }: DialogHeaderProps) {
+export default function DialogHeader({ title, onClose, sx, isDragable, ...restProps }: DialogHeaderProps) {
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
     background: theme.palette.background.default,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     cursor: isDragable ? "move" : "default",
+    fontSize: theme.typography.h3, 
     ...sx,
   }));
 
-  const titleStyle: SxProps = {
-    textAlign: "center",
-    flex: 1,
-  };
-
   return (
     <DialogTitle flexDirection={"row"} sx={containerStyle} {...restProps}>
-      <Typography variant="h3" sx={titleStyle} color={"primary"}>
-        {title}
-      </Typography>
-      {rightIcons.map((icon) => icon)}
+      {title}
+      <ClearIcon onClick={onClose} />
     </DialogTitle>
   );
 }

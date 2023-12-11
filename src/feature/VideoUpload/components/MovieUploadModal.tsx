@@ -1,20 +1,21 @@
-import { SxProps } from "@mui/material";
+import { DialogActions, Divider, SxProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import Divider from "@/components/Divider";
 import { Dialog } from "@/components/Dialog";
 import VideoUploadComponent from "./VideoUploadComponent";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import ScreenChangerComponent from "./ScreenChangerComponent";
+import { FeedbackIcon } from "@/components/icons";
 
 interface MovieUploadModalProps {
   isVisible: boolean;
   onClose: () => void;
+  onFeedback: () => void;
   onMovieDrop: (video: File) => void;
   isLoading: boolean;
 }
 
-export default function MovieUploadModal({ isVisible, onClose, onMovieDrop, isLoading }: MovieUploadModalProps) {
+export default function MovieUploadModal({ isVisible, onFeedback, onClose, onMovieDrop, isLoading }: MovieUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
 
@@ -45,6 +46,10 @@ export default function MovieUploadModal({ isVisible, onClose, onMovieDrop, isLo
       <ScreenChangerComponent onLeftClick={handleOnLeftClick} leftTooltip={"Upload trailer"} onRightClick={handleOnRightClick} rightTooltip={"Upload episode"} />
       <Divider />
       <VideoUploadComponent onVideoDrop={onMovieDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />;
+      <Divider />
+      <DialogActions>
+        <FeedbackIcon onClick={onFeedback} />
+      </DialogActions>
     </Dialog>
   );
 }
