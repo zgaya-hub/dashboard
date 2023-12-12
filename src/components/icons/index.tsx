@@ -1,7 +1,6 @@
 import React from "react";
-import IconButton from "@mui/material/IconButton";
-import { ListItemIcon, SvgIconProps, SxProps, TooltipProps } from "@mui/material";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import { ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
 import { default as MuiChevronRightOutlinedIcon } from "@mui/icons-material/ChevronRightOutlined";
@@ -26,6 +25,9 @@ import { default as MuiTimelineOutlinedIcon } from "@mui/icons-material/Timeline
 import { default as MuiTranslateIcon } from "@mui/icons-material/Translate";
 import { default as VideoLibraryOutlinedIcon } from "@mui/icons-material/VideoLibraryOutlined";
 import { default as MuiClearOutlinedIcon } from "@mui/icons-material/ClearOutlined";
+import { default as MuiFastForwardIcon } from "@mui/icons-material/FastForward";
+import { default as MuiPlayArrowIcon } from "@mui/icons-material/PlayArrow";
+import { default as MuiFastRewindIcon } from "@mui/icons-material/FastRewind";
 import Tooltip from "../Tooltip";
 
 interface IconWrapperProps extends SvgIconProps {
@@ -34,27 +36,20 @@ interface IconWrapperProps extends SvgIconProps {
   tooltip?: string; // Add a new prop for tooltip text
   tooltipPlacement?: TooltipProps["placement"]; // Placement prop for Tooltip component
   isListIcon?: boolean;
+  iconButtonProps?: IconButtonProps;
 }
 
 const withIconWrapper = (WrappedIcon: React.ComponentType<IconWrapperProps>) => {
-  return ({ onClick, disableRipple, isListIcon, tooltip, tooltipPlacement, ...restProps }: IconWrapperProps) => {
-    const iconStyle = useThemeStyles<SxProps>((theme) => ({
-      color: theme.palette.text.primary,
-    }));
-
-    const renderIcon = () => <WrappedIcon sx={iconStyle} {...restProps} />;
+  return ({ onClick, disableRipple, isListIcon, tooltip, tooltipPlacement, iconButtonProps, ...restProps }: IconWrapperProps) => {
+    const renderIcon = () => <WrappedIcon {...restProps} />;
 
     if (isListIcon) {
-      return (
-        <ListItemIcon>
-            {renderIcon()}
-        </ListItemIcon>
-      );
+      return <ListItemIcon>{renderIcon()}</ListItemIcon>;
     }
     if (onClick) {
       return (
         <Tooltip title={tooltip} placement={tooltipPlacement}>
-          <IconButton disableRipple={disableRipple} onClick={onClick} color="inherit">
+          <IconButton disableRipple={disableRipple} onClick={onClick} color="inherit" {...iconButtonProps}>
             {renderIcon()}
           </IconButton>
         </Tooltip>
@@ -89,3 +84,6 @@ export const SolidUploadIcon = withIconWrapper(MuiFileUploadIcon);
 export const AirplaneIcon = withIconWrapper(MuiAirplanemodeActiveIcon);
 export const ClearIcon = withIconWrapper(MuiClearOutlinedIcon);
 export const TranslateIcon = withIconWrapper(MuiTranslateIcon);
+export const FastForwardIcon = withIconWrapper(MuiFastForwardIcon);
+export const FastRewindIcon = withIconWrapper(MuiFastRewindIcon);
+export const PlayArrowIcon = withIconWrapper(MuiPlayArrowIcon);

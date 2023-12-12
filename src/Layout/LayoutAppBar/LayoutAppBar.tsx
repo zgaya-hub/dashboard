@@ -7,7 +7,6 @@ import Stack from "@mui/material/Stack";
 
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import useTheme from "@/theme/Theme.context";
-import useSidebar from "@/context/Sidebar.context";
 import useNavigation from "@/navigation/use-navigation";
 
 import { MenuOpenIcon, MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
@@ -17,7 +16,6 @@ import Fab from "@/components/Fab";
 
 export default function BottomAppBar() {
   const navigation = useNavigation();
-  const { toggleSidebar } = useSidebar();
   const { toggleTheme } = useTheme();
 
   const handleOnClickUpload = () => {
@@ -37,29 +35,24 @@ export default function BottomAppBar() {
     marginX: "auto",
   }));
 
- 
-
   return (
-    <Fragment>
+    <AppBar sx={appBarStyle}>
       <CssBaseline />
-      <AppBar sx={appBarStyle}>
-        <Toolbar>
-          <MenuOpenIcon onClick={toggleSidebar} />
-          <Stack width="100%" justifyContent="center" direction="row" gap={3} alignItems="center" sx={fabContainerStyle}>
-            <Fab onClick={handleOnClickUpload}>
-              <UploadIcon />
-            </Fab>
-            <Fab onClick={toggleTheme}>
-              <MoonSunIcon />
-            </Fab>
-            <Fab>
-              <SearchIcon />
-            </Fab>
-          </Stack>
-          <Box sx={{ flexGrow: 1 }} />
-          <UserAvatar />
-        </Toolbar>
-      </AppBar>
-    </Fragment>
+      <Toolbar>
+        <Stack width="100%" justifyContent="center" direction="row" gap={3} alignItems="center" sx={fabContainerStyle}>
+          <Fab onClick={handleOnClickUpload}>
+            <UploadIcon />
+          </Fab>
+          <Fab onClick={toggleTheme}>
+            <MoonSunIcon />
+          </Fab>
+          <Fab>
+            <SearchIcon />
+          </Fab>
+        </Stack>
+        <Box sx={{ flexGrow: 1 }} />
+        <UserAvatar />
+      </Toolbar>
+    </AppBar>
   );
 }

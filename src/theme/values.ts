@@ -19,22 +19,22 @@ const commonShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
  */
 export const lightThemePalette: PaletteOptions = {
   mode: "light",
-/*   primary: {
+  primary: {
     main: "#1976d2",
     light: "#42a5f5",
     dark: "#1565c0",
     contrastText: "#fff",
-  }, */
+  },
 };
 
 export const darkThemePalette: PaletteOptions = {
   mode: "dark",
- /*  primary: {
+  primary: {
     main: "#1976d2",
     light: "#42a5f5",
     dark: "#1565c0",
     contrastText: "#fff",
-  }, */
+  },
 };
 /* 
 export const typography: TypographyOptions = {

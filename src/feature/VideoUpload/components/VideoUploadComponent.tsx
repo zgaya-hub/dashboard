@@ -19,8 +19,7 @@ export default function VideoUploadComponent({ onVideoDrop, isLoading, message, 
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.spacing(95),
-    widht: theme.spacing(95),
+    height: "100%",
     gap: theme.spacing(10),
   }));
 
@@ -28,8 +27,8 @@ export default function VideoUploadComponent({ onVideoDrop, isLoading, message, 
     <Stack {...getRootProps()} justifyContent={"center"} alignItems={"center"} direction={"column"} sx={containerStyle}>
       <VideoUploadCircleIcon isLoading={isLoading} isDragActive={isDragActive} />
       <Stack alignItems={"center"} gap={1}>
-        <Typography variant="h4">{title}</Typography>
-        <Typography variant="body1">{message}</Typography>
+        <Typography variant="h6">{title}</Typography>
+        <Typography variant="body2">{message}</Typography>
       </Stack>
     </Stack>
   );

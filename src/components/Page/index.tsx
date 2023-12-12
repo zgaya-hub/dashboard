@@ -1,27 +1,13 @@
-import useSidebar from "@/context/Sidebar.context";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Paper, PaperProps, SxProps } from "@mui/material";
 
-interface AuthScreenPageProps extends PaperProps {}
+interface PageProps extends PaperProps {}
 
-export function AuthScreenPage({ children }: AuthScreenPageProps) {
-  const { isCollapsed } = useSidebar();
+export default function Page({ children }: PageProps) {
 
   const pageStyle = useThemeStyles<SxProps>((theme) => ({
     paddingY: theme.spacing(10),
-    paddingLeft: isCollapsed ? theme.spacing(20) : theme.spacing(34),
-    background: theme.palette.background.paper,
-    height: "100vh",
-    width: "100vw",
-  }));
-
-  return <Paper sx={pageStyle}>{children}</Paper>;
-}
-
-interface UnAuthScreenPageProps extends PaperProps {}
-
-export function UnAuthScreenPage({ children }: UnAuthScreenPageProps) {
-  const pageStyle = useThemeStyles<SxProps>((theme) => ({
+    paddingLeft: theme.spacing(12),
     background: theme.palette.background.paper,
     height: "100vh",
     width: "100vw",

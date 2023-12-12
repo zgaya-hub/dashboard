@@ -1,8 +1,8 @@
-import { UnAuthScreenPage } from "@/components/Page";
 import SignInForm from "../components/SignInForm";
 import { SignInFormDataInterface } from "../types";
 import { useManagerSignIn } from "../hooks/queryHooks";
 import { useAuthContext } from "@/context/AuthContext";
+import Page from "@/components/Page";
 
 export default function SignInInputScreen() {
   const { handleOnAuthenticate } = useAuthContext();
@@ -16,8 +16,8 @@ export default function SignInInputScreen() {
   };
 
   return (
-    <UnAuthScreenPage>
+    <Page>
       <SignInForm onSubmit={handleOnCallSignIn} />
-    </UnAuthScreenPage>
+    </Page>
   );
 }

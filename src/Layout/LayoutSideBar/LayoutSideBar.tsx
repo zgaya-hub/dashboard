@@ -2,7 +2,6 @@ import { Stack, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Menu, Sidebar } from "react-pro-sidebar";
 import SidebarItem, { SidebarItemProps } from "./SideBarItem";
-import useSidebar from "@/context/Sidebar.context";
 import { CollapsedSideBarUserCard, ExpandSideBarUserCard } from "./SideBarUserCard";
 import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon, QuestionAnswerIcon, SettingIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
@@ -25,7 +24,7 @@ function SideBarSection({ listItems }: SideBarSectionProps) {
 export default function LayoutSideBar() {
   const [activeItemLabel, setActiveItemLabel] = useState("");
   const { t } = useTranslation();
-  const { isCollapsed } = useSidebar();
+  const [isHovered, setIsHovered] = useState(false);
 
   const sections = {
     sidebar: [
@@ -84,16 +83,16 @@ export default function LayoutSideBar() {
   };
 
   const footerStyles = useThemeStyles<SxProps>((theme) => ({
-    paddingBottom: theme.spacing(10)
+    paddingBottom: theme.spacing(10),
   }));
 
   const sideBarBackground = useThemeStyles((theme) => theme.palette.background.default);
 
   return (
-    <Sidebar collapsed={isCollapsed} style={containerStyle} backgroundColor={sideBarBackground}>
+    <Sidebar collapsed={!isHovered} style={containerStyle} backgroundColor={sideBarBackground} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <Stack justifyContent={"space-between"} height={"100vh"}>
         <Stack gap={1}>
-          {isCollapsed ? <CollapsedSideBarUserCard /> : <ExpandSideBarUserCard />}
+          {!isHovered ? <CollapsedSideBarUserCard /> : <ExpandSideBarUserCard />}
           <SideBarSection listItems={sections.sidebar} />
         </Stack>
         <Stack sx={footerStyles}>

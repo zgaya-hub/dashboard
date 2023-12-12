@@ -5,9 +5,9 @@ import { GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVide
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
-  return  useMutation({
+  return useMutation({
     mutationFn: async (input: GetUploadVideoSignedUrlInput) => {
-      return gqlRequest<{getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput}>(
+      return gqlRequest<{ getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput }>(
         `
           mutation($input: GetUploadVideoSignedUrlInput!) {
             getUploadVideoSignedUrl(GetUploadVideoSignedUrlInput: $input) {
@@ -20,10 +20,10 @@ export function useGetUploadVideoSignedUrl() {
         { input }
       );
     },
-    onError: (error: ErrorResponse) => {
-      showGqlError(error);
+    onError: (error) => {
+      showGqlError(error.response);
     },
-  })
+  });
 }
 
 export function useUploadVideoOnAwsS3() {
@@ -31,18 +31,13 @@ export function useUploadVideoOnAwsS3() {
 
   return useMutation({
     mutationFn: async (input: UploadVideoOnAwsS3Input) => {
-      try {
-        // Upload the video to S3 using the signed URL
-        fetch(input.SignedUrl, {
-          method: 'PUT',
-          body: input.VideoBlob,
-          headers: {
-            'Content-Type': 'video/*',
-          },
-        });
-      } catch (error) {
-        showGqlError(error);
-      }
+      fetch(input.SignedUrl, {
+        method: "PUT",
+        body: input.VideoBlob,
+        headers: {
+          "Content-Type": "video/*",
+        },
+      });
     },
     onError: (error: ErrorResponse) => {
       showGqlError(error);

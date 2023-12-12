@@ -1,4 +1,4 @@
-import { UnAuthScreenPage } from "@/components/Page";
+import Page from "@/components/Page";
 import SignUpForm from "../components/SignUpForm";
 import { SignUpFormDataInterface } from "../types";
 import { useManagerSignIn } from "../hooks/queryHooks";
@@ -10,8 +10,8 @@ export default function SignUpInputScreen() {
     console.log(result);
   };
   return (
-    <UnAuthScreenPage>
+    <Page>
       <SignUpForm onSubmit={handleOnCallSignIn} />
-    </UnAuthScreenPage>
+    </Page>
   );
 }
