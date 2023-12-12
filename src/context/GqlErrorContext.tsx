@@ -28,15 +28,13 @@ export function GqlErrorProvider({ children }: GqlErrorProviderProps) {
     }
   }, [gqlError]);
 
+  console.log(errorMessage);
+  
+
   const showGqlError = (error: ErrorResponse) => {
+    
     const err = error.errors[0];
     setGqlError(err);
-
-    // Check if the error indicates a credential mismatch
-    if (err.message.includes("credential mismatch")) {
-      // Handle credential mismatch error here, e.g., show a loop
-      console.error("Credential mismatch error: ", err.message);
-    }
   };
 
   const handleClose = () => {
@@ -46,16 +44,7 @@ export function GqlErrorProvider({ children }: GqlErrorProviderProps) {
   return (
     <GqlErrorContext.Provider value={{ showGqlError }}>
       {children}
-      <Snackbar
-        fullWidth
-        open={!!gqlError}
-        onClose={handleClose}
-        message={errorMessage}
-        muiProps={{
-          AlertProps: { onClose: handleClose },
-        }}
-        severity={"error"}
-      />
+      <Snackbar open={!!gqlError} onClose={handleClose} message={errorMessage} AlertProps={{ onClose: handleClose }}/>
     </GqlErrorContext.Provider>
   );
 }

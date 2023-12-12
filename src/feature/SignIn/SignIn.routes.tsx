@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { SignInInputScreen } from "./screens";
 
 export type SignInRouteParams = {
-  "/signin": undefined;
+  "/sign-in": undefined;
 };
 
 const SignInRoutes = () => {

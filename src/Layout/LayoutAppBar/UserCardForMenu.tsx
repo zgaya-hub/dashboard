@@ -27,7 +27,7 @@ export default function UserCardForMenu({ onClick, onLogout }: UserCardForMenuPr
       <ListItemText primary={fullName} primaryTypographyProps={{
         variant: 'h6',
       }} secondary={userName} secondaryTypographyProps={{
-        variant: 'subtitle1',
+        variant: 'body2',
       }} />
     </MenuHeader>
   );

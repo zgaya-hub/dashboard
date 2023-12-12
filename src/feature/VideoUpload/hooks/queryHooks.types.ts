@@ -16,6 +16,6 @@ export type GetUploadVideoSignedUrlOutput = {
 };
 
 export type UploadVideoOnAwsS3Input = {
-  VideoBlob: string;
+  VideoBlob: Blob;
   SignedUrl: string;
 };
