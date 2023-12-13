@@ -5,16 +5,15 @@ import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import { MovierMediaEnum } from "@/types/enum";
-import { extractVideoMetadata } from "metalyzer";
-import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
-import SeriesAndSeasonSelectComponent from "../components/SeriesAndSeasonSelectComponent";
-import EpisodeUploadModal from "../components/EpisodeUploadModal";
-import SelectSeriesCard from "../components/SelectSeriesCard";
+import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
+import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
+import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
   const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
+  const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
 
   const handleOnEpisodeDrop = async (episode: File) => {
     const episodeMetadata = await extractVideoMetadata(episode);
@@ -26,6 +25,9 @@ export default function EpisodeUploadScreen() {
       RunTime: episodeMetadata.videoDuration,
       SizeInKb: episodeMetadata.fileSizeKB,
     });
+
+    const movieBlob = await convertVideoInBlob(episode)
+    uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.SignedUrl, VideoBlob: movieBlob });
   };
 
   const handleOnToggleEpisodeUploadModal = () => {
@@ -39,8 +41,6 @@ export default function EpisodeUploadScreen() {
   return (
     <Page>
       <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
-      <SelectSeriesCard />
-      {/* <SeriesAndSeasonSelectComponent isVisible={true} /> */}
       <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onVideoDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
       <LayoutAppBar />
       <LayoutAppHeader />

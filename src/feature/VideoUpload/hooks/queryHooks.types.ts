@@ -19,3 +19,8 @@ export type UploadVideoOnAwsS3Input = {
   VideoBlob: Blob;
   SignedUrl: string;
 };
+
+export type GetManagerSeriesWithImageAndBasicInfo = SeriesEntityType & {
+  mediaImage: MediaImageEntityType[];
+  mediaBasicInfo: MediaBasicInfoEntityType;
+};

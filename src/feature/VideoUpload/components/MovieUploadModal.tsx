@@ -2,11 +2,11 @@ import { DialogActions, Divider, SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
 import VideoUploadComponent from "./VideoUploadComponent";
-import ScreenChangerComponent from "./ScreenChangerComponent";
-import { FeedbackIcon } from "@/components/icons";
+import { FeedbackIcon, UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
+import Button from "@/components/Button";
 
 interface MovieUploadModalProps {
   isVisible: boolean;
@@ -22,11 +22,11 @@ export default function MovieUploadModal({ isVisible, onClose, onFeedback, onVid
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleOnLeftClick = () => {
+  const handleOnTrailer = () => {
     navigate.navigate("/video-upload/trailer");
   };
 
-  const handleOnRightClick = () => {
+  const handleOnEpisode = () => {
     navigate.navigate("/video-upload/episode");
   };
 
@@ -44,12 +44,19 @@ export default function MovieUploadModal({ isVisible, onClose, onFeedback, onVid
 
   return (
     <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.MovieUploadModal.headerText")} onClose={onClose} outAreaClose={false}>
-      <ScreenChangerComponent onLeftClick={handleOnLeftClick} leftTooltip={"Trailer"} onRightClick={handleOnRightClick} rightTooltip={"Episode"} />
       <Divider />
       <VideoUploadComponent onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />
       <Divider />
       <DialogActions>
-        <FeedbackIcon onClick={onFeedback} />
+        <Button onClick={onFeedback} variant="text">
+          <FeedbackIcon />
+        </Button>
+        <Button variant="outlined" onClick={handleOnTrailer} startIcon={<UploadIcon />}>
+          Trailer
+        </Button>
+        <Button variant="outlined" onClick={handleOnEpisode} startIcon={<UploadIcon />}>
+          Episode
+        </Button>
       </DialogActions>
     </Dialog>
   );

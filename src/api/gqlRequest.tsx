@@ -11,7 +11,7 @@ export function setAuthenticationHeaders(value: Headers) {
 
 export const gqlRequest = async <Data,>(
   query: string,
-  variables: Record<string, unknown>,
+  variables?: Record<string, unknown>,
   customHeaders?: Headers // Optional parameter for custom headers
 ): Promise<Data> => {
   const client = new GraphQLClient(graphqlEndpoint, {

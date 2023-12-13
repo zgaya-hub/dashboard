@@ -4,16 +4,16 @@ import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import { MovierMediaEnum } from "@/types/enum";
-import { extractVideoMetadata, extractVideoUrl } from "metalyzer";
-import { useGetUploadVideoSignedUrl } from "../hooks/queryHooks";
+import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
+import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import Button from "@/components/Button";
 import TrailerUploadModal from "../components/TrailerUploadModal";
 
 export default function TrailerUploadScreen() {
   const [isTrailerUploadModalVisible, setIsTrailerUploadModalVisible] = useState(true);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
-  const [trailerUrl, setTrailerUrl] = useState<string | null>(null);
   const { mutateAsync: getUploadTrailerUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
+  const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
 
   const handleOnTrailerDrop = async (trailer: File) => {
     const trailerMetadata = await extractVideoMetadata(trailer);
@@ -26,7 +26,8 @@ export default function TrailerUploadScreen() {
       SizeInKb: trailerMetadata.fileSizeKB,
     });
 
-    setTrailerUrl(await extractVideoUrl(trailer));
+    const movieBlob = await convertVideoInBlob(trailer);
+    uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.SignedUrl, VideoBlob: movieBlob });
     handleOnToggleTrailerUploadModal();
   };
 
@@ -41,19 +42,7 @@ export default function TrailerUploadScreen() {
   return (
     <Page>
       <Button onClick={handleOnToggleTrailerUploadModal}>Upload</Button>
-      {trailerUrl && (
-        <video controls width="100%" height="600">
-          <source src={trailerUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      )}
-      <TrailerUploadModal
-        isVisible={isTrailerUploadModalVisible}
-        onClose={handleOnToggleTrailerUploadModal}
-        onVideoDrop={handleOnTrailerDrop}
-        isLoading={isPending}
-        onFeedback={handleOnToggleFeedbackSideBar}
-      />
+      <TrailerUploadModal isVisible={isTrailerUploadModalVisible} onClose={handleOnToggleTrailerUploadModal} onVideoDrop={handleOnTrailerDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />

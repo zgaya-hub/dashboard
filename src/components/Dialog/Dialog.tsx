@@ -1,4 +1,4 @@
-import { DialogContent, Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps } from "@mui/material";
+import { Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps } from "@mui/material";
 import DialogHeader from "./DialogHeader";
 import Draggable from "react-draggable";
 
@@ -18,7 +18,7 @@ function PaperComponent({ ...restProps }: PaperProps) {
   );
 }
 
-export default function Dialog({ onClose, headerHidden = false, headerText, outAreaClose = true, children, isDraggable = true, ...restProps }: DialogProps) {
+export default function Dialog({ onClose, headerHidden = false, headerText, outAreaClose = true, children, isDraggable = false, ...restProps }: DialogProps) {
   if (isDraggable) {
     return (
       <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outAreaClose ? onClose : () => {}} {...restProps}>
@@ -31,7 +31,7 @@ export default function Dialog({ onClose, headerHidden = false, headerText, outA
   return (
     <MuiDialog onClose={outAreaClose ? onClose : () => {}} {...restProps}>
       {!headerHidden ? <DialogHeader title={headerText} onClose={onClose} /> : null}
-      <DialogContent>{children}</DialogContent>
+      {children}
     </MuiDialog>
   );
 }

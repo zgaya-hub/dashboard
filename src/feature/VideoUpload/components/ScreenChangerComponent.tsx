@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Stack, SxProps, Tooltip } from "@mui/material";
+import { Stack, SxProps } from "@mui/material";
 
 interface ScreenChangerComponentProps {
   onLeftClick: () => void;

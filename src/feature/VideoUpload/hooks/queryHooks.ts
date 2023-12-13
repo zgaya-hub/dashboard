@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
-import { useMutation } from "@tanstack/react-query";
-import { GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { GetManagerSeriesWithImageAndBasicInfo, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -42,5 +42,39 @@ export function useUploadVideoOnAwsS3() {
     onError: (error: ErrorResponse) => {
       showGqlError(error);
     },
+  });
+}
+
+export function useGetManagerSeriesWithImageAndBasicInfo() {
+  return useQuery({
+    queryKey: [""],
+    queryFn: async () => {
+      const s = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfo[] }>(
+        `
+          query{
+            getManagerSeriesWithImageAndBasicInfo{
+              ID
+              seriesIsFree
+              seriesPriceInDollar
+              mediaImage {
+                ID
+                mediaImageType
+                mediaImageUrl
+              }
+              mediaBasicInfo{
+                mediaPlotSummary
+                mediaReleaseDate
+                mediaTitle
+                ID
+              }
+            }
+          }
+        `
+      );
+      return s.getManagerSeriesWithImageAndBasicInfo;
+    },
+    /*   onError: (error) => {
+      showGqlError(error.response);
+    }, */
   });
 }

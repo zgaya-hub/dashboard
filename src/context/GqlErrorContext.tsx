@@ -1,9 +1,9 @@
 import Snackbar from "@/components/Snackbar";
-import { createContext, useContext, useState, ReactNode, useMemo } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface GqlError {
   statusCode?: string;
-  message: string[];
+  message: string;
   error?: string;
 }
 
@@ -20,19 +20,7 @@ interface GqlErrorProviderProps {
 export function GqlErrorProvider({ children }: GqlErrorProviderProps) {
   const [gqlError, setGqlError] = useState<GqlError | null>(null);
 
-  const errorMessage = useMemo(() => {
-    if (Array.isArray(gqlError?.message)) {
-      return gqlError?.message[0];
-    } else {
-      return gqlError?.message;
-    }
-  }, [gqlError]);
-
-  console.log(errorMessage);
-  
-
   const showGqlError = (error: ErrorResponse) => {
-    
     const err = error.errors[0];
     setGqlError(err);
   };
@@ -44,7 +32,7 @@ export function GqlErrorProvider({ children }: GqlErrorProviderProps) {
   return (
     <GqlErrorContext.Provider value={{ showGqlError }}>
       {children}
-      <Snackbar open={!!gqlError} onClose={handleClose} message={errorMessage} AlertProps={{ onClose: handleClose }}/>
+      <Snackbar open={!!gqlError} onClose={handleClose} message={gqlError?.message} AlertProps={{ onClose: handleClose }} />
     </GqlErrorContext.Provider>
   );
 }
