@@ -14,8 +14,8 @@ export default function UserCardForMenu({ onClick, onLogout }: UserCardForMenuPr
   const { fullName, imageUrl, userName } = useUserDetail();
 
   const avatarStyle = useThemeStyles<SxProps>( theme => ({
-    width: 64,
-    height: 64,
+    width: 56,
+    height: 56,
     marginRight: theme.spacing(1),  
   }))
 
@@ -25,9 +25,9 @@ export default function UserCardForMenu({ onClick, onLogout }: UserCardForMenuPr
         <Avatar sizes="small" src={imageUrl} sx={avatarStyle} />
       </ListItemAvatar>
       <ListItemText primary={fullName} primaryTypographyProps={{
-        variant: 'h6',
+        variant: "subtitle1",
       }} secondary={userName} secondaryTypographyProps={{
-        variant: 'body2',
+        variant: 'subtitle2',
       }} />
     </MenuHeader>
   );

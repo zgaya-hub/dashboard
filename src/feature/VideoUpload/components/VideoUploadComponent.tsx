@@ -27,7 +27,7 @@ export default function VideoUploadComponent({ onVideoDrop, isLoading, message, 
     <Stack {...getRootProps()} justifyContent={"center"} alignItems={"center"} direction={"column"} sx={containerStyle}>
       <VideoUploadCircleIcon isLoading={isLoading} isDragActive={isDragActive} />
       <Stack alignItems={"center"} gap={1}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="subtitle1">{title}</Typography>
         <Typography variant="body2">{message}</Typography>
       </Stack>
     </Stack>

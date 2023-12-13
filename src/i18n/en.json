@@ -20,6 +20,9 @@
         "headerText": "Upload episode",
         "title": "Drag and drop a episode here",
         "message": "Ready to upload? Just simple upload episode here"
+      },
+      "SeriesSelectComponent": {
+        "title": "Select or create a series"
       }
     }
   },

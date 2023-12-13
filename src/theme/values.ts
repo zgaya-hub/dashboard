@@ -1,5 +1,6 @@
 import { PaletteOptions } from "@mui/material/styles/createPalette";
 import { ShadowInterface } from "./types";
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 const commonShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
 /* const commonOverrides = {
@@ -36,39 +37,36 @@ export const darkThemePalette: PaletteOptions = {
     contrastText: "#fff",
   },
 };
-/* 
+
 export const typography: TypographyOptions = {
   fontFamily: ["Roboto", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Arial", "sans-serif"].join(","),
   fontSize: 15,
   h4: {
-    fontSize: 17,
-    fontWeight: 600,
+    fontWeight: 700,
   },
   h5: {
-    fontSize: 15,
     fontWeight: 600,
   },
   h6: {
-    fontSize: 15,
     fontWeight: 500,
   },
   body1: {
-    fontSize: 15,
+    fontWeight: 400,
+  },
+  body2: {
     fontWeight: 400,
   },
   subtitle1: {
-    fontSize: 13,
     fontWeight: 600,
   },
-  caption: {
-    fontSize: 13,
+  subtitle2: {
     fontWeight: 400,
   },
-  overline: {
-    fontSize: 10,
+  caption: {
+    fontWeight: 400,
   },
 };
- */
+
 /* export const radius: Theme["shape"] = {
   borderRadius: 6,
 }; */
