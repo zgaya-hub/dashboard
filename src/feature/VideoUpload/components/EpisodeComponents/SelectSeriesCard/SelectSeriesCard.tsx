@@ -2,10 +2,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { FastForwardIcon, FastRewindIcon, PlayArrowIcon } from "@/components/icons";
-import { ButtonBase, Stack, SxProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import SelectSeriesCardSkeleton from "./SelectSeriesCardSkeleton";
+import { SxProps } from "@mui/material";
 
 interface SelectSeriesCardProps {
   thumbnail: string;
@@ -15,24 +14,15 @@ interface SelectSeriesCardProps {
 
 export default function SelectSeriesCard({ thumbnail, title, isLoading }: SelectSeriesCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
-    display: "flex",
-    cursor: "pointer",
-    justifyContent: "space-between",
-    height: theme.spacing(20),
-    width: "100%",
-    bgcolor: 'red',
+    height: theme.sizing.large(theme),
+    width: theme.sizing.xlarge(theme),
     position: "relative",
   }));
 
-  const titleContainerStyle = useThemeStyles<SxProps>((theme) => ({
-    position: 'absolute',
-    rotate: '90deg',
-    right: 0,
-    bgcolor: 'red',
-    fontSize: theme.typography.subtitle2,
-    top: '50%',
-    transform: 'translateX(-10%)',
-
+  const cardImageStyle = useThemeStyles<SxProps>((theme) => ({
+    height: theme.sizing.medium(theme),
+    width: theme.sizing.xlarge(theme),
+    position: "relative",
   }));
 
   if (isLoading) {
@@ -41,9 +31,10 @@ export default function SelectSeriesCard({ thumbnail, title, isLoading }: Select
 
   return (
     <Card sx={cardStyle}>
-      {/* <Typography variant="body1">{title}</Typography> */}
-      <CardMedia component="img" sx={{ width: "100%" }} image={thumbnail} />
-      <Stack sx={titleContainerStyle}>{title}</Stack>
+      <CardMedia sx={cardImageStyle} component="img" image={thumbnail} />
+      <CardContent>
+        <Typography variant="subtitle1">{title}</Typography>
+      </CardContent>
     </Card>
   );
 }

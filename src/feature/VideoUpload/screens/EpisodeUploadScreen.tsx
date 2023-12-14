@@ -8,6 +8,7 @@ import { MovierMediaEnum } from "@/types/enum";
 import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
 import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
+import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
@@ -42,6 +43,7 @@ export default function EpisodeUploadScreen() {
     <Page>
       <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
       <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onVideoDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
+      <SelectSeriesAndSeasonModal isVisible={true} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />

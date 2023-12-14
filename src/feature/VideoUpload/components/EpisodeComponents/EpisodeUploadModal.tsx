@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
-import SelectSeriesAndSeasonComponent from "./SelectSeriesAndSeasonComponent";
 import VideoUploadComponent from "../VideoUploadComponent";
 
 interface EpisodeUploadModalProps {
@@ -47,7 +46,6 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, onV
     <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} onClose={onClose} outAreaClose={true}>
       <Divider />
       <DialogContent>
-        <SelectSeriesAndSeasonComponent />
         <VideoUploadComponent onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
       </DialogContent>
       <Divider />

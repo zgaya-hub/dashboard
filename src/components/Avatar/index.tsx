@@ -1,4 +1,5 @@
-import { AvatarProps as MuiAvatarProps, Avatar as MuiAvatar, IconButton, SxProps } from "@mui/material";
+import { AvatarProps as MuiAvatarProps, Avatar as MuiAvatar, SxProps } from "@mui/material";
+import IconButton from "../IconButton";
 
 interface AvatarProps extends Omit<MuiAvatarProps, "onClick" | "sx"> {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;

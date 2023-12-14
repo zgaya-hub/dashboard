@@ -49,32 +49,72 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
   return useQuery({
     queryKey: [""],
     queryFn: async () => {
-      const s = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfo[] }>(
-        `
-          query{
-            getManagerSeriesWithImageAndBasicInfo{
+      const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfo[] }>(
+        `query GetManagerSeriesWithImageAndBasicInfo {
+          getManagerSeriesWithImageAndBasicInfo {
+            ID
+            seriesIsFree
+            seriesPriceInDollar
+            mediaImage {
               ID
-              seriesIsFree
-              seriesPriceInDollar
-              mediaImage {
-                ID
-                mediaImageType
-                mediaImageUrl
-              }
-              mediaBasicInfo{
-                mediaPlotSummary
-                mediaReleaseDate
-                mediaTitle
-                ID
-              }
+              mediaImageType
+              mediaImageUrl
+            }
+            mediaBasicInfo {
+              mediaPlotSummary
+              mediaReleaseDate
+              mediaTitle
+              ID
             }
           }
-        `
+        }`
       );
-      return s.getManagerSeriesWithImageAndBasicInfo;
+      return result.getManagerSeriesWithImageAndBasicInfo;
     },
     /*   onError: (error) => {
       showGqlError(error.response);
     }, */
+  });
+}
+
+export function () {
+  return useQuery({
+    Key: [""],
+    Fn: async () => {
+      const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfo[] }>(
+        `
+        
+      }
+        `,
+        { input }        
+      );
+      return result.getManagerSeriesWithImageAndBasicInfo;
+    },
+  });
+}
+
+
+export function useGetSeasonBySeriesId() {
+  const { showGqlError } = useGqlError();
+  return useMutation({
+    mutationFn: async (Params: GetUploadVideoSignedUrlInput) => {
+      return gqlRequest<{ getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput }>(
+        `query GetSeasonBySeriesId($seriesId: ID!) {
+          getSeasonBySeriesId(GetSeasonBySeriesIdParams: { SeriesId: $seriesId }) {
+            ID
+            seasonNo
+            mediaBasicInfo {
+              mediaTitle
+              ID
+              mediaPlotSummary
+            }
+          }
+        }`,
+        { Params }
+      );
+    },
+    onError: (error) => {
+      showGqlError(error.response);
+    },
   });
 }

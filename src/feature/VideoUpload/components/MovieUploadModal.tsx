@@ -48,7 +48,7 @@ export default function MovieUploadModal({ isVisible, onClose, onFeedback, onVid
       <VideoUploadComponent onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />
       <Divider />
       <DialogActions>
-        <Button onClick={onFeedback} variant="text">
+      <Button onClick={onFeedback} variant="text">
           <FeedbackIcon />
         </Button>
         <Button variant="outlined" onClick={handleOnTrailer} startIcon={<UploadIcon />}>

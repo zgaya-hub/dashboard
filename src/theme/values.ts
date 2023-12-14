@@ -1,6 +1,7 @@
 import { PaletteOptions } from "@mui/material/styles/createPalette";
-import { ShadowInterface } from "./types";
+import { ShadowInterface, SizingInterface, SpaceInterface } from "./types";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { Theme } from "@mui/material";
 
 const commonShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
 /* const commonOverrides = {
@@ -83,20 +84,31 @@ export const darkThemeShadows: ShadowInterface = {
   upward: `${commonShadow}, 0px -4px 8px rgba(0, 0, 0, 0.4)`,
 };
 
-/* export const space: SpaceInterface = {
-  none: '0px',
-  xxs: '2px',
-  xs: '4px',
-  s_nudge: '6px',
-  s: '8px',
-  m_nudge: '10px',
-  m: '12px',
-  l: '16px',
-  xl: '20px',
-  xxl: '24px',
-  xxxl: '32px',
+export const space: SpaceInterface = {
+  none: "0px",
+  xxs: "2px",
+  xs: "4px",
+  s_nudge: "6px",
+  s: "8px",
+  m_nudge: "10px",
+  m: "12px",
+  l: "16px",
+  xl: "20px",
+  xxl: "24px",
+  xxxl: "32px",
 };
- */
+
+export const sizing: SizingInterface = {
+  tiny: (theme: Theme) => theme.spacing(4),
+  small: (theme: Theme) => theme.spacing(8),
+  standard: (theme: Theme) => theme.spacing(16),
+  medium: (theme: Theme) => theme.spacing(24),
+  large: (theme: Theme) => theme.spacing(32),
+  xlarge: (theme: Theme) => theme.spacing(48),
+  xxlarge: (theme: Theme) => theme.spacing(64),
+  custom: (theme: Theme) => theme.spacing(80),
+};
+
 /* export const components: ThemeOptions["components"] = {
   MuiTab: {
     styleOverrides: commonOverrides,
