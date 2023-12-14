@@ -1,6 +1,5 @@
 import { AirplaneIcon, SolidUploadIcon } from "@/components/icons";
-import { CircularProgress, Stack } from "@mui/material";
-import { SxProps } from "@mui/system";
+import { CircularProgress, Stack, SxProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 interface VideoUploadCircleIconProps {
@@ -16,8 +15,8 @@ export default function VideoUploadCircleIcon({ isLoading, isDragActive }: Video
   }));
 
   const iconStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.spacing(10),
-    width: theme.spacing(10),
+    height: theme.spacing(8),
+    width: theme.spacing(8),
     color: theme.palette.text.secondary,
   }));
 

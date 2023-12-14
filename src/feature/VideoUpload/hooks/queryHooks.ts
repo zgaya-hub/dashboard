@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetManagerSeriesWithImageAndBasicInfo, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { GetManagerSeriesWithImageAndBasicInfo, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -77,30 +77,13 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
   });
 }
 
-export function () {
-  return useQuery({
-    Key: [""],
-    Fn: async () => {
-      const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfo[] }>(
-        `
-        
-      }
-        `,
-        { input }        
-      );
-      return result.getManagerSeriesWithImageAndBasicInfo;
-    },
-  });
-}
-
-
 export function useGetSeasonBySeriesId() {
   const { showGqlError } = useGqlError();
   return useMutation({
-    mutationFn: async (Params: GetUploadVideoSignedUrlInput) => {
-      return gqlRequest<{ getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput }>(
-        `query GetSeasonBySeriesId($seriesId: ID!) {
-          getSeasonBySeriesId(GetSeasonBySeriesIdParams: { SeriesId: $seriesId }) {
+    mutationFn: async (param: GetSeasonBySeriesIdInput) => {
+      return gqlRequest<{ getUploadVideoSignedUrl: GetSeasonBySeriesIdOutput }>(
+        `query($param: GetSeasonBySeriesIdParams!) {
+          getSeasonBySeriesId(GetSeasonBySeriesIdParams: $param) {
             ID
             seasonNo
             mediaBasicInfo {
@@ -110,7 +93,7 @@ export function useGetSeasonBySeriesId() {
             }
           }
         }`,
-        { Params }
+        { param }
       );
     },
     onError: (error) => {

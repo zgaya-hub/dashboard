@@ -1,14 +1,14 @@
-import { Card, DialogActions, Divider, List, ListItem, Paper, Stack, SxProps } from "@mui/material";
+import { Card, DialogActions, Divider, List, ListItem, Paper, SxProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import SelectSeriesCard from "./SelectSeriesCard/SelectSeriesCard";
-import { useGetManagerSeriesWithImageAndBasicInfo } from "../../hooks/queryHooks";
+import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
 import { useState } from "react";
-import { GetManagerSeriesWithImageAndBasicInfo } from "../../hooks/queryHooks.types";
+import { GetManagerSeriesWithImageAndBasicInfo, GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
 import { useTranslation } from "react-i18next";
 import { AddIcon, ChevronLeftIcon, UploadIcon } from "@/components/icons";
 import { Dialog } from "@/components/Dialog";
 import Button from "@/components/Button";
 import useNavigation from "@/navigation/use-navigation";
+import { ImagePlusTitleCard } from "@/components/Cards";
 
 interface SelectSeriesAndSeasonModalProps {
   isVisible: boolean;
@@ -17,8 +17,16 @@ interface SelectSeriesAndSeasonModalProps {
 export default function SelectSeriesAndSeasonModal({ isVisible }: SelectSeriesAndSeasonModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
-  const [selectedItem, setSelectedItem] = useState<GetManagerSeriesWithImageAndBasicInfo | null>(null);
+  const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfo | null>(null);
+  const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput | null>(null);
   const { data: managerSeriesWithImageAndBasicInfo = [] } = useGetManagerSeriesWithImageAndBasicInfo();
+  const { mutateAsync: GetSeasonBySeriesIdMutateAsync } = useGetSeasonBySeriesId();
+
+  const handleOnClickSeries = async (series: GetManagerSeriesWithImageAndBasicInfo) => {
+    const result = await GetSeasonBySeriesIdMutateAsync({ SeriesId: series.ID });
+    setSelectedSeriesSeasons(result.getUploadVideoSignedUrl);
+    setSelectedSeries(series);
+  };
 
   const handleOnMovie = () => {
     navigate.navigate("/video-upload/movie");
@@ -29,13 +37,13 @@ export default function SelectSeriesAndSeasonModal({ isVisible }: SelectSeriesAn
   };
 
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
-    width: theme.sizing.xlarge(theme),
+    width: theme.spacing(48),
     position: "relative",
     boxShadow: "none",
   }));
 
   const listStyle = useThemeStyles<SxProps>((theme) => ({
-    maxHeight: theme.spacing(70),
+    maxHeight: theme.spacing(96),
     overflowY: "auto",
     "&::-webkit-scrollbar": {
       display: "none",
@@ -43,14 +51,20 @@ export default function SelectSeriesAndSeasonModal({ isVisible }: SelectSeriesAn
   }));
 
   const seasonList = (
-    <Paper sx={cardStyle}>
-      <Card sx={cardStyle}></Card>
-    </Paper>
+    <Card sx={cardStyle}>
+      <List sx={listStyle}>
+        {managerSeriesWithImageAndBasicInfo.map((series) => (
+          <ListItem key={series.ID} onClick={() => handleOnClickSeries(series)}>
+            <ImagePlusTitleCard thumbnail={"https://vsthemes.org/uploads/posts/workshop/286338453763faafe7751aa978304580.webp"} title={series.mediaBasicInfo.mediaTitle} />
+          </ListItem>
+        ))}
+      </List>
+    </Card>
   );
 
   const seasonListFooter = (
     <DialogActions>
-      <ChevronLeftIcon onClick={() => setSelectedItem(null)} />
+      <ChevronLeftIcon onClick={() => setSelectedSeries(null)} />
       <AddIcon onClick={() => {}} />
     </DialogActions>
   );
@@ -59,8 +73,8 @@ export default function SelectSeriesAndSeasonModal({ isVisible }: SelectSeriesAn
     <Card sx={cardStyle}>
       <List sx={listStyle}>
         {managerSeriesWithImageAndBasicInfo.map((series) => (
-          <ListItem key={series.ID} onClick={() => setSelectedItem(series)}>
-            <SelectSeriesCard isLoading={false} thumbnail={"https://thefridaytimes.com/digital_images/large/2022-08-01/what-would-be-different-if-imran-khan-returns-to-power-1687413390-6199.jpg"} title={series.mediaBasicInfo.mediaTitle} />
+          <ListItem key={series.ID} onClick={() => handleOnClickSeries(series)}>
+            <ImagePlusTitleCard thumbnail={"https://vsthemes.org/uploads/posts/workshop/286338453763faafe7751aa978304580.webp"} title={series.mediaBasicInfo.mediaTitle} />
           </ListItem>
         ))}
       </List>
@@ -80,11 +94,9 @@ export default function SelectSeriesAndSeasonModal({ isVisible }: SelectSeriesAn
   );
 
   return (
-    <Dialog onClose={() => setSelectedItem(null)} headerText={selectedItem ? selectedItem.mediaBasicInfo.mediaTitle : t("Feature.VideoUpload.SeriesSelectComponent.title")} hideCrossButton open={isVisible}>
-      <Divider />
-      {selectedItem ? seasonList : seriesList}
-      <Divider />
-      {selectedItem ? seasonListFooter : seriesListFooter}
+    <Dialog isDraggable onClose={() => setSelectedSeries(null)} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.mediaTitle : t("Feature.VideoUpload.SeriesSelectComponent.title")} hideCrossButton open={isVisible}>
+      {selectedSeries ? seasonList : seriesList}
+      {selectedSeries ? seasonListFooter : seriesListFooter}
     </Dialog>
   );
 }

@@ -2,7 +2,6 @@ import { DialogActions, Divider, SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
 import VideoUploadComponent from "./VideoUploadComponent";
-import ScreenChangerComponent from "./ScreenChangerComponent";
 import { FeedbackIcon, UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
@@ -34,7 +33,7 @@ export default function TrailerUploadModal({ isVisible, onClose, onFeedback, onV
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     ".MuiDialog-paperWidthXl": {
       [theme.breakpoints.up("md")]: {
-        height: theme.spacing(100),
+        height: theme.spacing(96),
         width: "100%",
       },
     },

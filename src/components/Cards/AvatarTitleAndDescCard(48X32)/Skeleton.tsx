@@ -6,7 +6,7 @@ export default function SelectSeriesCardSkeleton() {
     display: "flex",
     cursor: "pointer",
     justifyContent: "space-between",
-    height: theme.spacing(15),
+    height: theme.spacing(16),
     width: '100%',
   }));
 

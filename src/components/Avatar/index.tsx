@@ -1,18 +1,15 @@
-import { AvatarProps as MuiAvatarProps, Avatar as MuiAvatar, SxProps } from "@mui/material";
-import IconButton from "../IconButton";
+import { AvatarProps as MuiAvatarProps, Avatar as MuiAvatar, SxProps, IconButton } from "@mui/material";
 
-interface AvatarProps extends Omit<MuiAvatarProps, "onClick" | "sx"> {
+interface AvatarProps extends Omit<MuiAvatarProps, "onClick"> {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  sx?: SxProps;
 }
 
-export default function Avatar({ onClick, sx, ...restProps }: AvatarProps) {
+export default function Avatar({ onClick, ...restProps }: AvatarProps) {
   const avatarStyle: SxProps = {
     cursor: onClick ? "pointer" : "default",
-    ...sx,
   };
 
-  const renderAvatar = () => <MuiAvatar sx={avatarStyle} {...restProps} />;
+  const renderAvatar = () => <MuiAvatar sx={{ ...avatarStyle, ...restProps }} />;
 
   if (onClick) {
     return (

@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import { SxProps } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,10 +8,10 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import useTheme from "@/theme/Theme.context";
 import useNavigation from "@/navigation/use-navigation";
 
-import { MenuOpenIcon, MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
+import { MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
 import UserAvatar from "./UserAvatar";
 import AppBar from "@/components/AppBar";
-import Fab from "@/components/Fab";
+import { Fab } from "@mui/material";
 
 export default function BottomAppBar() {
   const navigation = useNavigation();

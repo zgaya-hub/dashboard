@@ -33,7 +33,7 @@ export default function MovieUploadModal({ isVisible, onClose, onFeedback, onVid
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     ".MuiDialog-paperWidthXl": {
       [theme.breakpoints.up("md")]: {
-        height: theme.spacing(100),
+        height: theme.spacing(96),
         width: "100%",
       },
     },

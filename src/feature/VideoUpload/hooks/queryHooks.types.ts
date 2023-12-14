@@ -24,3 +24,11 @@ export type GetManagerSeriesWithImageAndBasicInfo = SeriesEntityType & {
   mediaImage: MediaImageEntityType[];
   mediaBasicInfo: MediaBasicInfoEntityType;
 };
+
+export type GetSeasonBySeriesIdInput = {
+  SeriesId: string;
+};
+
+export type GetSeasonBySeriesIdOutput = SeasonEntityType & {
+  mediaBasicInfo: MediaBasicInfoEntityType;
+};

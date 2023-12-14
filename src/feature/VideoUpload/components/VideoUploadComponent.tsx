@@ -20,7 +20,7 @@ export default function VideoUploadComponent({ onVideoDrop, isLoading, message, 
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
     height: "100%",
-    gap: theme.spacing(10),
+    gap: theme.spacing(8),
   }));
 
   return (

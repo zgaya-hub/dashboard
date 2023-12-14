@@ -83,7 +83,7 @@ export default function LayoutSideBar() {
   };
 
   const footerStyles = useThemeStyles<SxProps>((theme) => ({
-    paddingBottom: theme.spacing(10),
+    paddingBottom: theme.spacing(8),
   }));
 
   const sideBarBackground = useThemeStyles((theme) => theme.palette.background.default);

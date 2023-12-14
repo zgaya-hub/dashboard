@@ -19,8 +19,8 @@ export default function ScreenChangerComponent({ leftTooltip, onLeftClick, onRig
   };
 
   const iconStyle = useThemeStyles<SxProps>((theme) => ({
-    width: theme.spacing(12),
-    height: theme.spacing(12),
+    width: theme.spacing(16),
+    height: theme.spacing(16),
   }));
 
   return (

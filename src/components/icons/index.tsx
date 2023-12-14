@@ -1,5 +1,5 @@
 import React from "react";
-import { ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
+import { IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
 import { default as MuiChevronRightOutlinedIcon } from "@mui/icons-material/ChevronRightOutlined";
@@ -28,7 +28,6 @@ import { default as MuiFastForwardIcon } from "@mui/icons-material/FastForward";
 import { default as MuiPlayArrowIcon } from "@mui/icons-material/PlayArrow";
 import { default as MuiFastRewindIcon } from "@mui/icons-material/FastRewind";
 import Tooltip from "../Tooltip";
-import IconButton, { IconButtonProps } from "../IconButton";
 
 interface IconWrapperProps extends SvgIconProps {
   onClick?: () => void;
