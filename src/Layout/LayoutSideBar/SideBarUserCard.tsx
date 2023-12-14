@@ -1,4 +1,4 @@
-import ImageTitleSubtitleCard from "@/components/Cards/ImageTitleSubtitleCard";
+import ImageCircleTitleSubtitleCard from "@/components/Cards/ImageCircleTitleSubtitleCard(32X32)/Card";
 import useUserDetail from "@/context/UserDetail.context";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Avatar, Stack, SxProps } from "@mui/material";
@@ -6,7 +6,7 @@ import { Avatar, Stack, SxProps } from "@mui/material";
 export function ExpandSideBarUserCard() {
   const { fullName, imageUrl, userName } = useUserDetail();
 
-  return <ImageTitleSubtitleCard image={imageUrl} title={fullName} subtitle={userName} />;
+  return <ImageCircleTitleSubtitleCard image={imageUrl} title={fullName} subtitle={userName} />;
 }
 
 export function CollapsedSideBarUserCard() {

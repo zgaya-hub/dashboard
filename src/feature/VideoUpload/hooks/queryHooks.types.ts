@@ -20,7 +20,15 @@ export type UploadVideoOnAwsS3Input = {
   SignedUrl: string;
 };
 
-export type GetManagerSeriesWithImageAndBasicInfo = SeriesEntityType & {
+export type GetManagerSeriesWithImageAndBasicInfoOutput = SeriesEntityType & {
   mediaImage: MediaImageEntityType[];
+  mediaBasicInfo: MediaBasicInfoEntityType;
+};
+
+export type GetSeasonBySeriesIdInput = {
+  SeriesId: string;
+};
+
+export type GetSeasonBySeriesIdOutput = SeasonEntityType & {
   mediaBasicInfo: MediaBasicInfoEntityType;
 };

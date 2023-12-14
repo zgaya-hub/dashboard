@@ -7,7 +7,7 @@ export interface MenuItemProps extends Omit<MuiMenuItemProps, "sx"> {
 
 export default function MenuItem({ children, sx, ...restProps }: MenuItemProps) {
   const menuItemStyle = useThemeStyles<SxProps>((theme) => ({
-    width: theme.spacing(40),
+    width: theme.spacing(48),
     background: theme.palette.background.default,
     cursor: "pointer",
     "&:hover": {

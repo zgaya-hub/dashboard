@@ -1,5 +1,5 @@
 import { Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps } from "@mui/material";
-import DialogHeader from "./DialogHeader";
+import DialogHeader, { DialogHeaderProps } from "./DialogHeader";
 import Draggable from "react-draggable";
 
 interface DialogProps extends MuiDialogProps {
@@ -8,6 +8,8 @@ interface DialogProps extends MuiDialogProps {
   onClose?: () => void;
   outAreaClose?: boolean;
   isDraggable?: boolean;
+  hideCrossButton?: boolean;
+  dialogHeaderProps?: DialogHeaderProps;
 }
 
 function PaperComponent({ ...restProps }: PaperProps) {
@@ -18,11 +20,11 @@ function PaperComponent({ ...restProps }: PaperProps) {
   );
 }
 
-export default function Dialog({ onClose, headerHidden = false, headerText, outAreaClose = true, children, isDraggable = false, ...restProps }: DialogProps) {
+export default function Dialog({ onClose, headerHidden = false, headerText, outAreaClose = true, children, isDraggable = false, hideCrossButton, dialogHeaderProps, ...restProps }: DialogProps) {
   if (isDraggable) {
     return (
       <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outAreaClose ? onClose : () => {}} {...restProps}>
-        {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" isDragable={isDraggable} title={headerText} onClose={onClose} /> : null}
+        {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" hideCrossButton={hideCrossButton} isDragable={isDraggable} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
         {children}
       </MuiDialog>
     );
@@ -30,7 +32,7 @@ export default function Dialog({ onClose, headerHidden = false, headerText, outA
 
   return (
     <MuiDialog onClose={outAreaClose ? onClose : () => {}} {...restProps}>
-      {!headerHidden ? <DialogHeader title={headerText} onClose={onClose} /> : null}
+      {!headerHidden ? <DialogHeader hideCrossButton={hideCrossButton} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
       {children}
     </MuiDialog>
   );

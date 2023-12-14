@@ -4,10 +4,10 @@ import Page from "@/components/Page";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
-import { MovierMediaEnum } from "@/types/enum";
-import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
-import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
+import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
+import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
+import { MovierMediaEnum } from "@/types/enum";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
@@ -26,7 +26,7 @@ export default function EpisodeUploadScreen() {
       SizeInKb: episodeMetadata.fileSizeKB,
     });
 
-    const movieBlob = await convertVideoInBlob(episode)
+    const movieBlob = await convertVideoInBlob(episode);
     uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.SignedUrl, VideoBlob: movieBlob });
   };
 

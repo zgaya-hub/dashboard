@@ -9,20 +9,27 @@
       "MovieUploadModal": {
         "headerText": "Upload movie",
         "title": "Drag and drop a movie here",
-        "message": "Ready to upload? Just simple upload movie here"
+        "message": "Ready to upload? Just simple upload movie here",
+        "trailer": "Trailer",
+        "episode": "Episode"
       },
       "TrailerUploadModal": {
         "headerText": "Upload trailer",
         "title": "Drag and drop a trailer here",
-        "message": "Ready to upload? Just simple upload trailer here"
+        "message": "Ready to upload? Just simple upload trailer here",
+        "movie": "Movie",
+        "episode": "Episode"
       },
       "EpisodeUploadModal": {
         "headerText": "Upload episode",
         "title": "Drag and drop a episode here",
-        "message": "Ready to upload? Just simple upload episode here"
+        "message": "Ready to upload? Just simple upload episode here",
+        "movie": "Movie",
+        "trailer": "Trailer"
       },
       "SeriesSelectComponent": {
-        "title": "Select or create a series"
+        "title": "Select or create a series",
+        "next": "Next"
       }
     }
   },

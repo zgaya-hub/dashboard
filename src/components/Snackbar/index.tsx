@@ -8,7 +8,7 @@ interface SnackbarProps extends MuiSnackbarProps {
 
 export default function Snackbar({ autoHideDuration = 5000, title, AlertProps, message, ...restProps }: SnackbarProps) {
   const defaultAlertProps: MuiAlertProps = {
-    variant: "standard",
+    variant: "filled",
     severity: "error",
     ...AlertProps,
   };

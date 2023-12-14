@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetManagerSeriesWithImageAndBasicInfo, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -49,32 +49,55 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
   return useQuery({
     queryKey: [""],
     queryFn: async () => {
-      const s = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfo[] }>(
-        `
-          query{
-            getManagerSeriesWithImageAndBasicInfo{
+      const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfoOutput[] }>(
+        `query GetManagerSeriesWithImageAndBasicInfo{
+          getManagerSeriesWithImageAndBasicInfo {
+            ID
+            seriesIsFree
+            seriesPriceInDollar
+            mediaImage {
               ID
-              seriesIsFree
-              seriesPriceInDollar
-              mediaImage {
-                ID
-                mediaImageType
-                mediaImageUrl
-              }
-              mediaBasicInfo{
-                mediaPlotSummary
-                mediaReleaseDate
-                mediaTitle
-                ID
-              }
+              mediaImageType
+              mediaImageUrl
+            }
+            mediaBasicInfo {
+              mediaPlotSummary
+              mediaReleaseDate
+              mediaTitle
+              ID
             }
           }
-        `
+        }`
       );
-      return s.getManagerSeriesWithImageAndBasicInfo;
+      return result.getManagerSeriesWithImageAndBasicInfo;
     },
     /*   onError: (error) => {
       showGqlError(error.response);
     }, */
+  });
+}
+
+export function useGetSeasonBySeriesId() {
+  const { showGqlError } = useGqlError();
+  return useMutation({
+    mutationFn: async (param: GetSeasonBySeriesIdInput) => {
+      return gqlRequest<{ getSeasonBySeriesId: GetSeasonBySeriesIdOutput[] }>(
+        `query($param: GetSeasonBySeriesIdParams!) {
+          getSeasonBySeriesId(GetSeasonBySeriesIdParams: $param) {
+            ID
+            seasonNo
+            mediaBasicInfo {
+              mediaTitle
+              ID
+              mediaPlotSummary
+            }
+          }
+        }`,
+        { param }
+      );
+    },
+    onError: (error) => {
+      showGqlError(error.response);
+    },
   });
 }
