@@ -42,22 +42,26 @@ export default function TrailerUploadModal({ isVisible, onClose, onFeedback, onV
     },
   }));
 
+  const dialogFooter = (
+    <DialogActions>
+      <Button onClick={onFeedback} variant="text">
+        <FeedbackIcon />
+      </Button>
+      <Button variant="outlined" onClick={handleOnEpisode} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.EpisodeUploadModal.episode")}
+      </Button>
+      <Button variant="outlined" onClick={handleOnMovie} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.EpisodeUploadModal.movie")}
+      </Button>
+    </DialogActions>
+  );
+
   return (
     <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.TrailerUploadModal.headerText")} onClose={onClose} outAreaClose={false}>
       <Divider />
       <VideoUploadComponent onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.TrailerUploadModal.message")} title={t("Feature.VideoUpload.TrailerUploadModal.title")} />
       <Divider />
-      <DialogActions>
-        <Button onClick={onFeedback} variant="text">
-          <FeedbackIcon />
-        </Button>
-        <Button variant="outlined" onClick={handleOnEpisode} startIcon={<UploadIcon />}>
-          Episode
-        </Button>
-        <Button variant="outlined" onClick={handleOnMovie} startIcon={<UploadIcon />}>
-          Movie
-        </Button>
-      </DialogActions>
+      {dialogFooter}
     </Dialog>
   );
 }

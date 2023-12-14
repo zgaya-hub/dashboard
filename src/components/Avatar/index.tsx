@@ -9,7 +9,7 @@ export default function Avatar({ onClick, ...restProps }: AvatarProps) {
     cursor: onClick ? "pointer" : "default",
   };
 
-  const renderAvatar = () => <MuiAvatar sx={{ ...avatarStyle, ...restProps }} />;
+  const renderAvatar = () => <MuiAvatar sx={avatarStyle} {...restProps} />;
 
   if (onClick) {
     return (

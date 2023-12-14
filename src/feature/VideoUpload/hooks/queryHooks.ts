@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetManagerSeriesWithImageAndBasicInfo, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -49,8 +49,8 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
   return useQuery({
     queryKey: [""],
     queryFn: async () => {
-      const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfo[] }>(
-        `query GetManagerSeriesWithImageAndBasicInfo {
+      const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfoOutput[] }>(
+        `query GetManagerSeriesWithImageAndBasicInfo{
           getManagerSeriesWithImageAndBasicInfo {
             ID
             seriesIsFree
@@ -81,7 +81,7 @@ export function useGetSeasonBySeriesId() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (param: GetSeasonBySeriesIdInput) => {
-      return gqlRequest<{ getUploadVideoSignedUrl: GetSeasonBySeriesIdOutput }>(
+      return gqlRequest<{ getSeasonBySeriesId: GetSeasonBySeriesIdOutput[] }>(
         `query($param: GetSeasonBySeriesIdParams!) {
           getSeasonBySeriesId(GetSeasonBySeriesIdParams: $param) {
             ID

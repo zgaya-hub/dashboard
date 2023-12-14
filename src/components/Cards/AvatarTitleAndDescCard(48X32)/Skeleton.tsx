@@ -1,14 +1,14 @@
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Skeleton, SxProps } from "@mui/material";
+import { Card, CardHeader, Skeleton, SxProps } from "@mui/material";
 
-export default function SelectSeriesCardSkeleton() {
-  const skeletonStyle = useThemeStyles<SxProps>((theme) => ({
-    display: "flex",
-    cursor: "pointer",
-    justifyContent: "space-between",
-    height: theme.spacing(16),
-    width: '100%',
+export default function AvatarTitleAndDescCardSkeleton() {
+  const cardStyle = useThemeStyles<SxProps>((theme) => ({
+    width: theme.spacing(48),
   }));
 
-  return <Skeleton variant="rectangular" sx={skeletonStyle} />;
+  return (
+    <Card sx={cardStyle}>
+      <CardHeader avatar={<Skeleton variant="circular" width={64} height={64} />} title={<Skeleton width={150} />} subheader={<Skeleton width={200} />} />
+    </Card>
+  );
 }

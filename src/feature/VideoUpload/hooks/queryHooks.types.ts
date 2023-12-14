@@ -20,7 +20,7 @@ export type UploadVideoOnAwsS3Input = {
   SignedUrl: string;
 };
 
-export type GetManagerSeriesWithImageAndBasicInfo = SeriesEntityType & {
+export type GetManagerSeriesWithImageAndBasicInfoOutput = SeriesEntityType & {
   mediaImage: MediaImageEntityType[];
   mediaBasicInfo: MediaBasicInfoEntityType;
 };

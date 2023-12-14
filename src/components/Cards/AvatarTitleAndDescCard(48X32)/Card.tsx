@@ -1,31 +1,40 @@
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { SxProps } from "@mui/material";
+import { CardHeader, SxProps } from "@mui/material";
 import { ReactNode } from "react";
+import Avatar from "@/components/Avatar";
 
 interface AvatarTitleAndDescCardProps {
   title: string;
   description: string;
   avatar: ReactNode;
+  action?: ReactNode;
 }
 
-export default function AvatarTitleAndDescCard({ avatar, title, description }: AvatarTitleAndDescCardProps) {
+export default function AvatarTitleAndDescCard({ avatar, title, description, action }: AvatarTitleAndDescCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(48),
   }));
 
-  const cardContentStyle = useThemeStyles<SxProps>((theme) => ({
+  const cardAvatarStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(8),
+    width: theme.spacing(8),
+    background: theme.palette.common.black,
+    color: theme.palette.common.white,
   }));
 
   return (
     <Card sx={cardStyle}>
-      <CardContent sx={cardContentStyle}>
-        <Typography variant="subtitle1">{title}</Typography>
-        <Typography variant="subtitle2">{description}</Typography>
-      </CardContent>
+      <CardHeader
+        avatar={
+          <Avatar sx={cardAvatarStyle} aria-label="recipe">
+            {avatar}
+          </Avatar>
+        }
+        title={title}
+        subheader={description}
+        action={action}
+      />
     </Card>
   );
 }

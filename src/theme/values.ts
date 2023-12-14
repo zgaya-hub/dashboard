@@ -66,11 +66,20 @@ export const components: ThemeOptions["components"] = {
       },
     },
   },
-  MuiDialogActions:{
+  MuiDialogActions: {
     styleOverrides: {
       root: {
-        background: 'white',
+        background: "white",
       },
     },
-  }
+  },
+  MuiList: {
+    styleOverrides: {
+      root: {
+        "&::-webkit-scrollbar": {
+          display: "none",
+        },
+      },
+    },
+  },
 };

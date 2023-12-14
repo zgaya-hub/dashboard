@@ -7,37 +7,28 @@ import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
 import VideoUploadComponent from "../VideoUploadComponent";
-import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../../hooks/queryHooks";
-import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
-import { MovierMediaEnum } from "@/types/enum";
+import SelectSeriesAndSeasonModal from "./SelectSeriesAndSeasonModal";
+import { useState } from "react";
 
 interface EpisodeUploadModalProps {
   isVisible: boolean;
   onClose: () => void;
   onFeedback: () => void;
+  onVideoDrop: (episode: File) => void;
+  isLoading: boolean;
 }
 
-export default function EpisodeUploadModal({ isVisible, onClose, onFeedback }: EpisodeUploadModalProps) {
+export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isLoading, onVideoDrop }: EpisodeUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
-  const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
+  const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
+  const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState<boolean>(true);
 
-  const handleOnEpisodeDrop = async (episode: File) => {
-    const episodeMetadata = await extractVideoMetadata(episode);
-    const result = await getUploadEpisodeUrlMutateAsync({
-      Height: episodeMetadata.videoHeight!,
-      Width: episodeMetadata.videoWidth!,
-      MediaType: MovierMediaEnum.EPISODE,
-      Mime: episodeMetadata.mimeType,
-      RunTime: episodeMetadata.videoDuration,
-      SizeInKb: episodeMetadata.fileSizeKB,
-    });
-
-    const movieBlob = await convertVideoInBlob(episode);
-    uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.SignedUrl, VideoBlob: movieBlob });
+  const handleOnSelectSeasonId = (seasonId: string) => {
+    setSelectedSeasonId(seasonId);
+    setIsSelectSeriesModalVisible(false);
   };
 
   const handleOnMovie = () => {
@@ -60,24 +51,29 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback }: E
     },
   }));
 
+  const dialogFooter = (
+    <DialogActions>
+      <Button onClick={onFeedback} variant="text">
+        <FeedbackIcon />
+      </Button>
+      <Button variant="outlined" onClick={handleOnMovie} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.EpisodeUploadModal.movie")}
+      </Button>
+      <Button variant="outlined" onClick={handleOnTrailer} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.EpisodeUploadModal.trailer")}
+      </Button>
+    </DialogActions>
+  );
+
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} onClose={onClose} outAreaClose={true}>
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} onClose={onClose} outAreaClose={false}>
       <Divider />
       <DialogContent>
-        <VideoUploadComponent onVideoDrop={handleOnEpisodeDrop} isLoading={isPending} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
+        <VideoUploadComponent isDisabled={!selectedSeasonId} onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
       </DialogContent>
       <Divider />
-      <DialogActions>
-        <Button onClick={onFeedback} variant="text">
-          <FeedbackIcon />
-        </Button>
-        <Button variant="outlined" onClick={handleOnMovie} startIcon={<UploadIcon />}>
-          Movie
-        </Button>
-        <Button variant="outlined" onClick={handleOnTrailer} startIcon={<UploadIcon />}>
-          Trailer
-        </Button>
-      </DialogActions>
+      {dialogFooter}
+      <SelectSeriesAndSeasonModal onNext={handleOnSelectSeasonId} isVisible={isSelectSeriesModalVisible} />
     </Dialog>
   );
 }

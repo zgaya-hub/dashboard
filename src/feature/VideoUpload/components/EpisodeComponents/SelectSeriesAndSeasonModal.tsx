@@ -1,102 +1,78 @@
-import { Card, DialogActions, Divider, List, ListItem, Paper, SxProps } from "@mui/material";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
 import { useState } from "react";
-import { GetManagerSeriesWithImageAndBasicInfo, GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
+import { DialogActions } from "@mui/material";
+import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
+import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
 import { useTranslation } from "react-i18next";
-import { AddIcon, ChevronLeftIcon, UploadIcon } from "@/components/icons";
+import { AddIcon, CachedIcon, ChevronLeftIcon, UploadIcon } from "@/components/icons";
 import { Dialog } from "@/components/Dialog";
 import Button from "@/components/Button";
 import useNavigation from "@/navigation/use-navigation";
-import { ImagePlusTitleCard } from "@/components/Cards";
+import SeasonListForSelection from "./SeasonListForSelection";
+import SeriesListForSelection from "./SeriesListForSelection";
 
 interface SelectSeriesAndSeasonModalProps {
   isVisible: boolean;
+  onNext: (seasonId: string) => void;
 }
 
-export default function SelectSeriesAndSeasonModal({ isVisible }: SelectSeriesAndSeasonModalProps) {
+export default function SelectSeriesAndSeasonModal({ isVisible, onNext }: SelectSeriesAndSeasonModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
-  const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfo | null>(null);
-  const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput | null>(null);
-  const { data: managerSeriesWithImageAndBasicInfo = [] } = useGetManagerSeriesWithImageAndBasicInfo();
-  const { mutateAsync: GetSeasonBySeriesIdMutateAsync } = useGetSeasonBySeriesId();
+  const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfoOutput | null>(null);
+  const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
+  const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput[]>([]);
+  const { data: managerSeries = [], refetch: refetchManagerSeries, isFetching: isManagerSeriesFetching } = useGetManagerSeriesWithImageAndBasicInfo();
+  const { mutateAsync: getSeasonBySeriesIdMutateAsync, isPending: isSeasonFetching } = useGetSeasonBySeriesId();
 
-  const handleOnClickSeries = async (series: GetManagerSeriesWithImageAndBasicInfo) => {
-    const result = await GetSeasonBySeriesIdMutateAsync({ SeriesId: series.ID });
-    setSelectedSeriesSeasons(result.getUploadVideoSignedUrl);
+  const handleOnFetchSeasons = async (series: GetManagerSeriesWithImageAndBasicInfoOutput) => {
     setSelectedSeries(series);
+    const result = await getSeasonBySeriesIdMutateAsync({
+      SeriesId: series.ID,
+    });
+    setSelectedSeriesSeasons(result.getSeasonBySeriesId);
   };
 
-  const handleOnMovie = () => {
+  const handleOnClearBothState = () => {
+    setSelectedSeasonId(null);
+    setSelectedSeries(null);
+  };
+
+  const handleOnMovieNavigation = () => {
     navigate.navigate("/video-upload/movie");
   };
 
-  const handleOnTrailer = () => {
+  const handleOnTrailerNavigation = () => {
     navigate.navigate("/video-upload/trailer");
   };
 
-  const cardStyle = useThemeStyles<SxProps>((theme) => ({
-    width: theme.spacing(48),
-    position: "relative",
-    boxShadow: "none",
-  }));
-
-  const listStyle = useThemeStyles<SxProps>((theme) => ({
-    maxHeight: theme.spacing(96),
-    overflowY: "auto",
-    "&::-webkit-scrollbar": {
-      display: "none",
-    },
-  }));
-
-  const seasonList = (
-    <Card sx={cardStyle}>
-      <List sx={listStyle}>
-        {managerSeriesWithImageAndBasicInfo.map((series) => (
-          <ListItem key={series.ID} onClick={() => handleOnClickSeries(series)}>
-            <ImagePlusTitleCard thumbnail={"https://vsthemes.org/uploads/posts/workshop/286338453763faafe7751aa978304580.webp"} title={series.mediaBasicInfo.mediaTitle} />
-          </ListItem>
-        ))}
-      </List>
-    </Card>
-  );
-
-  const seasonListFooter = (
+  const renderSeasonListFooter = () => (
     <DialogActions>
-      <ChevronLeftIcon onClick={() => setSelectedSeries(null)} />
+      <ChevronLeftIcon onClick={handleOnClearBothState} />
+      <CachedIcon loading={isSeasonFetching} onClick={() => handleOnFetchSeasons(selectedSeries)} />
       <AddIcon onClick={() => {}} />
+      <Button disabled={!selectedSeasonId} onClick={() => onNext(selectedSeasonId)}>
+        {t("Feature.VideoUpload.SeriesSelectComponent.next")}
+      </Button>
     </DialogActions>
   );
 
-  const seriesList = (
-    <Card sx={cardStyle}>
-      <List sx={listStyle}>
-        {managerSeriesWithImageAndBasicInfo.map((series) => (
-          <ListItem key={series.ID} onClick={() => handleOnClickSeries(series)}>
-            <ImagePlusTitleCard thumbnail={"https://vsthemes.org/uploads/posts/workshop/286338453763faafe7751aa978304580.webp"} title={series.mediaBasicInfo.mediaTitle} />
-          </ListItem>
-        ))}
-      </List>
-    </Card>
-  );
-
-  const seriesListFooter = (
+  const renderSeriesListFooter = () => (
     <DialogActions>
       <AddIcon onClick={() => {}} />
-      <Button variant="outlined" onClick={handleOnMovie} startIcon={<UploadIcon />}>
-        Movie
+      <CachedIcon loading={isManagerSeriesFetching} onClick={refetchManagerSeries} />
+      <Button variant="outlined" onClick={handleOnMovieNavigation} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.EpisodeUploadModal.movie")}
       </Button>
-      <Button variant="outlined" onClick={handleOnTrailer} startIcon={<UploadIcon />}>
-        Trailer
+      <Button variant="outlined" onClick={handleOnTrailerNavigation} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.EpisodeUploadModal.trailer")}
       </Button>
     </DialogActions>
   );
 
   return (
-    <Dialog isDraggable onClose={() => setSelectedSeries(null)} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.mediaTitle : t("Feature.VideoUpload.SeriesSelectComponent.title")} hideCrossButton open={isVisible}>
-      {selectedSeries ? seasonList : seriesList}
-      {selectedSeries ? seasonListFooter : seriesListFooter}
+    <Dialog onClose={() => setSelectedSeries(null)} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.mediaTitle : t("Feature.VideoUpload.SeriesSelectComponent.title")} hideCrossButton open={isVisible}>
+      {selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={(id) => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}
+      {selectedSeries ? renderSeasonListFooter() : renderSeriesListFooter()}
     </Dialog>
   );
 }
