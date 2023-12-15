@@ -8,9 +8,11 @@ import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadMod
 import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
 import { MovierMediaEnum } from "@/types/enum";
+import EpisodeCreateBasicInfoModal from "../components/EpisodeComponents/EpisodeCreateBasicInfoModal";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
+  const [isEpisodeCreateBasicInfoModalVisible, setIsEpisodeCreateBasicInfoModalVisible] = useState(false);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
   const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
@@ -26,12 +28,23 @@ export default function EpisodeUploadScreen() {
       SizeInKb: episodeMetadata.fileSizeKB,
     });
 
-    const movieBlob = await convertVideoInBlob(episode);
-    uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.SignedUrl, VideoBlob: movieBlob });
+    handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.SignedUrl);
+  };
+  
+
+  const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {
+    const episodeBlob = await convertVideoInBlob(episode);
+    await uploadVideoOnAwsS3MutateAsync({ SignedUrl: signedUrl, VideoBlob: episodeBlob });
+    handleOnToggleEpisodeUploadModal()
+    handleOnToggleEpisodeCreateBasicInfoModal()
   };
 
   const handleOnToggleEpisodeUploadModal = () => {
     setIsEpisodeUploadModalVisible(!isEpisodeUploadModalVisible);
+  };
+
+  const handleOnToggleEpisodeCreateBasicInfoModal = () => {
+    setIsEpisodeCreateBasicInfoModalVisible(!isEpisodeCreateBasicInfoModalVisible);
   };
 
   const handleOnToggleFeedbackSideBar = () => {
@@ -42,6 +55,7 @@ export default function EpisodeUploadScreen() {
     <Page>
       <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
       <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onVideoDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
+      <EpisodeCreateBasicInfoModal isVisible={isEpisodeCreateBasicInfoModalVisible}  onFeedback={handleOnToggleFeedbackSideBar} onCancel={handleOnToggleEpisodeCreateBasicInfoModal} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />

@@ -32,3 +32,18 @@ export type GetSeasonBySeriesIdInput = {
 export type GetSeasonBySeriesIdOutput = SeasonEntityType & {
   mediaBasicInfo: MediaBasicInfoEntityType;
 };
+
+export type CreateEpisodeInput = {
+  EpisodeNo: number;
+  SeasonId: string;
+  VideoId: string;
+  SignedUrlKeyId: string;
+  MediaImageId: string;
+  MediaBasicInfo: MediaBasicInfoInput;
+};
+
+export type MediaBasicInfoInput = {
+  Title: string
+  PlotSummary: string
+  ReleaseDate: number
+}

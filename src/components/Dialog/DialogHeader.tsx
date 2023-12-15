@@ -25,7 +25,7 @@ export default function DialogHeader({ title, onClose, sx, isDragable, leftIcon,
 
   return (
     <DialogTitle flexDirection={"row"} sx={containerStyle} {...restProps}>
-      {leftIcon}
+    {leftIcon}
       {title}
       {!hideCrossButton ? <ClearIcon onClick={onClose} /> : null}
     </DialogTitle>

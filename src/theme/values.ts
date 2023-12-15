@@ -10,10 +10,6 @@ export const lightThemePalette: PaletteOptions = {
     dark: "#1565c0",
     contrastText: "#fff",
   },
-  background: {
-    default: "#ffffff",
-    paper: "#f3f3f4ae",
-  },
 };
 
 export const darkThemePalette: PaletteOptions = {
@@ -63,13 +59,6 @@ export const components: ThemeOptions["components"] = {
     styleOverrides: {
       root: {
         borderRadius: "0",
-      },
-    },
-  },
-  MuiDialogActions: {
-    styleOverrides: {
-      root: {
-        background: "white",
       },
     },
   },

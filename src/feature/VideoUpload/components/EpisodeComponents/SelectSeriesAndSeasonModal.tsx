@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { DialogActions } from "@mui/material";
 import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
 import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
 import { useTranslation } from "react-i18next";
@@ -46,33 +45,32 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext }: Select
   };
 
   const renderSeasonListFooter = () => (
-    <DialogActions>
-      <ChevronLeftIcon onClick={handleOnClearBothState} />
-      <CachedIcon loading={isSeasonFetching} onClick={() => handleOnFetchSeasons(selectedSeries)} />
-      <AddIcon onClick={() => {}} />
+    <>
+      <ChevronLeftIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.back")} tooltipPlacement="top" onClick={handleOnClearBothState} />
+      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={() => {}} />
+      <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isSeasonFetching} onClick={() => handleOnFetchSeasons(selectedSeries)} />
       <Button disabled={!selectedSeasonId} onClick={() => onNext(selectedSeasonId)}>
-        {t("Feature.VideoUpload.SeriesSelectComponent.next")}
+        {t("Feature.VideoUpload.SelectSeriesAndSeasonModal.next")}
       </Button>
-    </DialogActions>
+    </>
   );
 
   const renderSeriesListFooter = () => (
-    <DialogActions>
-      <AddIcon onClick={() => {}} />
-      <CachedIcon loading={isManagerSeriesFetching} onClick={refetchManagerSeries} />
+    <>
+      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={() => {}} />
+      <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isManagerSeriesFetching} onClick={refetchManagerSeries} />
       <Button variant="outlined" onClick={handleOnMovieNavigation} startIcon={<UploadIcon />}>
-        {t("Feature.VideoUpload.EpisodeUploadModal.movie")}
+        {t("Feature.VideoUpload.SelectSeriesAndSeasonModal.movie")}
       </Button>
       <Button variant="outlined" onClick={handleOnTrailerNavigation} startIcon={<UploadIcon />}>
-        {t("Feature.VideoUpload.EpisodeUploadModal.trailer")}
+        {t("Feature.VideoUpload.SelectSeriesAndSeasonModal.trailer")}
       </Button>
-    </DialogActions>
+    </>
   );
 
   return (
-    <Dialog onClose={() => setSelectedSeries(null)} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.mediaTitle : t("Feature.VideoUpload.SeriesSelectComponent.title")} hideCrossButton open={isVisible}>
+    <Dialog dialogContentSx={{ padding: 0 }} onClose={() => setSelectedSeries(null)} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.mediaTitle : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")} hideCrossButton open={isVisible} dialogAction={selectedSeries ? renderSeasonListFooter() : renderSeriesListFooter()}>
       {selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={(id) => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}
-      {selectedSeries ? renderSeasonListFooter() : renderSeriesListFooter()}
     </Dialog>
   );
 }

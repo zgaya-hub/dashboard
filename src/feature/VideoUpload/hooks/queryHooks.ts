@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { CreateEpisodeInput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -71,9 +71,6 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
       );
       return result.getManagerSeriesWithImageAndBasicInfo;
     },
-    /*   onError: (error) => {
-      showGqlError(error.response);
-    }, */
   });
 }
 
@@ -94,6 +91,25 @@ export function useGetSeasonBySeriesId() {
           }
         }`,
         { param }
+      );
+    },
+    onError: (error) => {
+      showGqlError(error.response);
+    },
+  });
+}
+
+export function useCreateEpisode() {
+  const { showGqlError } = useGqlError();
+  return useMutation({
+    mutationFn: async (input: CreateEpisodeInput) => {
+      return gqlRequest<{ createEpisode: CommonSuccessOutput }>(
+        `mutation($input: CreateEpisodeInput!) {
+          createEpisode(CreateEpisodeInput: $input) {
+            isSuccess
+          }
+        }`,
+        { input }
       );
     },
     onError: (error) => {

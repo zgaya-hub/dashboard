@@ -32,10 +32,12 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isL
   };
 
   const handleOnMovie = () => {
+    setSelectedSeasonId(null);
     navigate.navigate("/video-upload/movie");
   };
 
   const handleOnTrailer = () => {
+    setSelectedSeasonId(null);
     navigate.navigate("/video-upload/trailer");
   };
 
@@ -52,27 +54,22 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isL
   }));
 
   const dialogFooter = (
-    <DialogActions>
+    <>
       <Button onClick={onFeedback} variant="text">
         <FeedbackIcon />
       </Button>
-      <Button variant="outlined" onClick={handleOnMovie} startIcon={<UploadIcon />}>
+      <Button onClick={handleOnMovie} startIcon={<UploadIcon />}>
         {t("Feature.VideoUpload.EpisodeUploadModal.movie")}
       </Button>
-      <Button variant="outlined" onClick={handleOnTrailer} startIcon={<UploadIcon />}>
+      <Button onClick={handleOnTrailer} startIcon={<UploadIcon />}>
         {t("Feature.VideoUpload.EpisodeUploadModal.trailer")}
       </Button>
-    </DialogActions>
+    </>
   );
 
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} onClose={onClose} outAreaClose={false}>
-      <Divider />
-      <DialogContent>
-        <VideoUploadComponent isDisabled={!selectedSeasonId} onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
-      </DialogContent>
-      <Divider />
-      {dialogFooter}
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
+      <VideoUploadComponent isDisabled={!selectedSeasonId} onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
       <SelectSeriesAndSeasonModal onNext={handleOnSelectSeasonId} isVisible={isSelectSeriesModalVisible} />
     </Dialog>
   );

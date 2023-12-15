@@ -27,9 +27,20 @@
         "movie": "Movie",
         "trailer": "Trailer"
       },
-      "SeriesSelectComponent": {
-        "title": "Select or create a series",
-        "next": "Next"
+      "EpisodeCreateBasicInfoModal": {
+        "headerText": "Add Basic Information",
+        "next": "Next",
+        "cancel": "Cancel"
+      },
+      "SelectSeriesAndSeasonModal": {
+        "headerText": "Select or create a series",
+        "next": "Next",
+        "trailer": "Trailer",
+        "movie": "Movie",
+        "addNewSeries": "Add new series",
+        "addNewSeason": "Add new season",
+        "refreshList": "Refrest list",
+        "back": "Back"
       }
     }
   },

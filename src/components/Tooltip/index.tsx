@@ -6,7 +6,7 @@ interface TooltipProps extends MuiTooltipProps {
   hoverDelay?: number;
 }
 
-export default function Tooltip({ hoverDelay = 100, ...restProps }: TooltipProps) {
+export default function Tooltip({ hoverDelay = 500, ...restProps }: TooltipProps) {
   const [isTooltipVisible, setTooltipVisible] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
@@ -19,5 +19,5 @@ export default function Tooltip({ hoverDelay = 100, ...restProps }: TooltipProps
     setTooltipVisible(false);
   };
 
-  return <MuiTooltip arrow {...restProps} open={isTooltipVisible} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />;
+  return <MuiTooltip {...restProps} open={isTooltipVisible} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />;
 }

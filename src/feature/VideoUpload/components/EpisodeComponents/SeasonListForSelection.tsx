@@ -16,6 +16,7 @@ export default function SeasonListForSelection({ seasons, selectedSeasonId, onSe
     width: theme.spacing(48),
     position: "relative",
     boxShadow: "none",
+    padding: 0
   }));
 
   const listStyle = useThemeStyles<SxProps>((theme) => ({

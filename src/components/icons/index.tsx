@@ -29,6 +29,7 @@ import { default as MuiPlayArrowIcon } from "@mui/icons-material/PlayArrow";
 import { default as MuiFastRewindIcon } from "@mui/icons-material/FastRewind";
 import { default as MuiCachedIcon } from "@mui/icons-material/CachedOutlined";
 import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/RadioButtonUnchecked";
+import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVert";
 import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonChecked";
 import Tooltip from "../Tooltip";
 
@@ -93,3 +94,4 @@ export const PlayArrowIcon = withIconWrapper(MuiPlayArrowIcon);
 export const CachedIcon = withIconWrapper(MuiCachedIcon);
 export const RadioButtonUncheckedIcon = withIconWrapper(MuiRadioButtonUncheckedIcon);
 export const RadioButtonCheckedIcon = withIconWrapper(MuiRadioButtonCheckedIcon);
+export const MoreVertIcon = withIconWrapper(MuiMoreVertIcon);

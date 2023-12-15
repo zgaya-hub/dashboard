@@ -12,7 +12,6 @@ interface SeriesListForSelectionProps {
 export default function SeriesListForSelection({ seriesList, onSelectedSeries, isLoading }: SeriesListForSelectionProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(48),
-    position: "relative",
     boxShadow: "none",
   }));
 

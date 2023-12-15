@@ -6,3 +6,7 @@ type EntityBaseType = {
   deleteAt: number;
   ID: string;
 };
+
+type CommonSuccessOutput = {
+  isSuccess: boolean;
+}

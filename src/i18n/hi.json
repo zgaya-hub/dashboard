@@ -1,7 +1,36 @@
 {
-  "Components": {
+  "Component": {
     "Search": {
-      "searchAcrossYourChannel": "अपने चैनल पर खोजें"
+      "searchAcrossYourChannel": "अपने चैनल में खोजें"
+    }
+  },
+  "Feature": {
+    "VideoUpload": {
+      "MovieUploadModal": {
+        "headerText": "मूवी अपलोड करें",
+        "title": "यहाँ एक मूवी ड्रैग और ड्रॉप करें",
+        "message": "तैयार हैं अपलोड करने के लिए? यहाँ बस मूवी अपलोड करें",
+        "trailer": "ट्रेलर",
+        "episode": "एपिसोड"
+      },
+      "TrailerUploadModal": {
+        "headerText": "ट्रेलर अपलोड करें",
+        "title": "यहाँ एक ट्रेलर ड्रैग और ड्रॉप करें",
+        "message": "तैयार हैं अपलोड करने के लिए? यहाँ बस ट्रेलर अपलोड करें",
+        "movie": "मूवी",
+        "episode": "एपिसोड"
+      },
+      "EpisodeUploadModal": {
+        "headerText": "एपिसोड अपलोड करें",
+        "title": "यहाँ एक एपिसोड ड्रैग और ड्रॉप करें",
+        "message": "तैयार हैं अपलोड करने के लिए? यहाँ बस एपिसोड अपलोड करें",
+        "movie": "मूवी",
+        "trailer": "ट्रेलर"
+      },
+      "SeriesSelectComponent": {
+        "title": "सीरीज़ चयन या बनाएँ",
+        "next": "आगे बढ़ें"
+      }
     }
   },
   "Layout": {
@@ -10,17 +39,14 @@
       "content": "सामग्री",
       "analytics": "विश्लेषण",
       "copyright": "कॉपीराइट",
-      "manageVideo": "मूवी का प्रबंधन करें",
-      "manageSeries": "शृंगार का प्रबंधन करें",
-      "socialLinking": "सामाजिक लिंकिंग",
+      "manageMovie": "मूवी प्रबंधन",
+      "manageSeries": "सीरीज प्रबंधन",
+      "socialLinking": "सोशल लिंकिंग",
       "settings": "सेटिंग्स",
-      "askAnyQuestion": "कोई भी सवाल पूछें"
+      "askAnyQuestion": "कोई सवाल पूछें"
     },
-    "Header": {
-      "uploadVideo": "वीडियो अपलोड करें",
-      "LanguageChanger": {
-        "searchLanguage": "भाषा खोजें"
-      }
+    "AppHeader": {
+      "uploadVideo": "वीडियो अपलोड करें"
     },
     "AppBar": {
       "UserMenu": {
@@ -28,13 +54,20 @@
         "switchAccount": "खाता बदलें",
         "settings": "सेटिंग्स",
         "logout": "लॉग आउट",
-        "appearance": "रूप",
+        "appearance": "आपेक्षिकता",
+        "translation": "अनुवाद",
         "shareFeedback": "प्रतिक्रिया साझा करें"
       },
       "AppearanceMenu": {
+        "title": "आपेक्षिकता",
         "systemDefault": "सिस्टम डिफ़ॉल्ट",
         "darkTheme": "डार्क थीम",
         "lightTheme": "लाइट थीम"
+      },
+      "TranslationMenu": {
+        "title": "अनुवाद",
+        "search": "खोजें...",
+        "searchInputTooltip": "भाषा या देश के नाम से खोजें"
       }
     }
   }
