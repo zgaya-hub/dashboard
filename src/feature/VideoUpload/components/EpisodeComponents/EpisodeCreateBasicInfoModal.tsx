@@ -1,11 +1,13 @@
-import { Box, SxProps, useMediaQuery } from "@mui/material";
+import { Box, Stack, SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
 import { useTranslation } from "react-i18next";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
 import { FeedbackIcon } from "@/components/icons";
-import { VideoDisplayCard } from "@/components/Cards";
+import EpisodeCardComponent from "./EpisodeCardComponent";
+import { TextInput } from "@/components/Form";
+import { useState } from "react";
 
 interface EpisodeCreateBasicInfoModalProps {
   isVisible: boolean;
@@ -18,6 +20,8 @@ export default function EpisodeCreateBasicInfoModal({ isVisible, onCancel, onNex
   const { t } = useTranslation();
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     ".MuiDialog-paperWidthXl": {
@@ -31,9 +35,12 @@ export default function EpisodeCreateBasicInfoModal({ isVisible, onCancel, onNex
     },
   }));
 
-  const handleOnClickMenuIcon = () => {
-    console.log("click");
-  };
+  const InputArea = (
+    <>
+      <TextInput onTextChange={setTitle} label="Title" />
+      <TextInput onTextChange={setDescription} label="description" multiline rows={5} />
+    </>
+  );
 
   const dialogFooter = (
     <>
@@ -51,9 +58,10 @@ export default function EpisodeCreateBasicInfoModal({ isVisible, onCancel, onNex
 
   return (
     <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeCreateBasicInfoModal.headerText")} onClose={onCancel} outAreaClose={false} dialogAction={dialogFooter}>
-      <Box>
-        <VideoDisplayCard onClickMenuIcon={handleOnClickMenuIcon} thumbnail={"https://wallpapercave.com/wp/wp5854947.jpg"} title={"Money heist black"} description={"Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."} />
-      </Box>
+      <Stack direction={"row"}>
+        <EpisodeCardComponent title={title} description={description} />
+        {InputArea}
+      </Stack>
     </Dialog>
   );
 }

@@ -16,30 +16,26 @@ interface VideoDisplayCardProps {
 export default function VideoDisplayCard({ thumbnail, title, description, onClickMenuIcon, avatarSrc }: VideoDisplayCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(48),
-    boxShadow: 'none'
+    boxShadow: "none",
   }));
 
   const cardImageStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(24),
   }));
 
-  const cardAvatarStyle = useThemeStyles<SxProps>((theme) => ({}));
-
-  console.log(title);
-
   return (
     <Card sx={cardStyle}>
       <CardMedia sx={cardImageStyle} component="img" image={thumbnail} />
       <CardHeader
-        avatar={<Avatar sx={cardAvatarStyle} aria-label="recipe" src={avatarSrc} />}
+        avatar={<Avatar src={avatarSrc} />}
         titleTypographyProps={{
           variant: "subtitle1",
         }}
         subheaderTypographyProps={{
           variant: "subtitle2",
         }}
-        title={title}
-        subheader={description.slice(0, 30)}
+        title={title.slice(0, 30)}
+        subheader={description.slice(0, 35)}
         action={<MoreVertIcon onClick={onClickMenuIcon} />}
       />
     </Card>

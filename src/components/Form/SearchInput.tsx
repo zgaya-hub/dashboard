@@ -19,10 +19,10 @@ export default function SearchInput({ onChange, sx, tooltip, ...restProps }: Sea
   };
 
   const inputStyle: SxProps = {
-    "& .MuiTextField-root": {
-      border: "none",
-      outline: 0,
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: 0,
     },
+    width: '100%',
     ...sx,
   };
 
