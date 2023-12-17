@@ -1,4 +1,4 @@
-import { DialogActions, Divider, SxProps, useMediaQuery } from "@mui/material";
+import { SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
 import VideoUploadComponent from "./VideoUploadComponent";

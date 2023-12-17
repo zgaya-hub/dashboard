@@ -20,21 +20,29 @@ export const darkThemePalette: PaletteOptions = {
     dark: "#1565c0",
     contrastText: "#090909",
   },
+  background: {
+    default: "#050505",
+    paper: "#141313ef",
+  },
 };
 
 export const typography: TypographyOptions = {
   fontFamily: ["Roboto", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Arial", "sans-serif"].join(","),
   fontSize: 15,
   h4: {
+    fontSize: 24,
     fontWeight: 700,
   },
   h5: {
+    fontSize: 20,
     fontWeight: 600,
   },
   h6: {
+    fontSize: 17,
     fontWeight: 500,
   },
   body1: {
+    fontSize: 15,
     fontWeight: 400,
   },
   body2: {
@@ -52,7 +60,7 @@ export const typography: TypographyOptions = {
 };
 
 // kindly use this types for spacing
-export const spacing = [1, 2, 4, 8, 16, 24, 32, 48, 64, 96];
+export const spacing = [1, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96];
 
 export const components: ThemeOptions["components"] = {
   MuiIconButton: {
@@ -69,6 +77,18 @@ export const components: ThemeOptions["components"] = {
           display: "none",
         },
       },
+    },
+  },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        background: "#ffffff",
+      },
+    },
+  },
+  MuiPaper: {
+    defaultProps: {
+      elevation: 1,
     },
   },
 };

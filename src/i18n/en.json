@@ -30,7 +30,12 @@
       "EpisodeCreateBasicInfoModal": {
         "headerText": "Add Basic Information",
         "next": "Next",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "imageUploadComponentTitle": "Simply drop a thumbnail here to upload"
+      },
+      "ImageUploadComponent": {
+        "dropItHere": "Drop it here",
+        "browseImage": "Browse image"
       },
       "SelectSeriesAndSeasonModal": {
         "headerText": "Select or create a series",

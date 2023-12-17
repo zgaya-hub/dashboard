@@ -22,13 +22,13 @@ export default function SearchInput({ onChange, sx, tooltip, ...restProps }: Sea
     "& .MuiOutlinedInput-notchedOutline": {
       border: 0,
     },
-    width: '100%',
     ...sx,
   };
 
   return (
     <Tooltip title={tooltip || ""}>
       <OutlinedInput
+        fullWidth
         {...restProps}
         sx={inputStyle}
         onChange={handleOnChange}
