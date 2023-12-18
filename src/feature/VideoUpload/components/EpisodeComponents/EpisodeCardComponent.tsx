@@ -20,7 +20,6 @@ export default function EpisodeCardComponent({ plotSummary, thumbnail, title }: 
   return (
     <Box sx={containerStyle}>
       <VideoDisplayCard onClickMenuIcon={handleOnClickMenuIcon} thumbnail={thumbnail} title={title} description={plotSummary}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, libero?
       </VideoDisplayCard>
     </Box>
   );

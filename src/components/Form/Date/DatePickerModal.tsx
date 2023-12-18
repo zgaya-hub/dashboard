@@ -1,11 +1,11 @@
-import { MobileDatePicker, MobileDatePickerProps } from "@mui/x-date-pickers";
+import { DatePicker, DatePickerProps } from "@mui/x-date-pickers";
 
-interface DatePickerModalProps extends MobileDatePickerProps<number> {
+interface DatePickerModalProps extends DatePickerProps<number> {
   fullWidth?: boolean;
   helperText?: string;
   error?: boolean;
 }
 
 export default function DatePickerModal({ fullWidth, helperText, error, ...restProps }: DatePickerModalProps) {
-  return <MobileDatePicker slotProps={{ textField: { fullWidth, helperText, error } }} {...restProps} />;
+  return <DatePicker slotProps={{ textField: { fullWidth, helperText, error } }} {...restProps} />;
 }

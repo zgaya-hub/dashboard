@@ -19,7 +19,6 @@ interface VideoDisplayCardProps {
 export default function VideoDisplayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNo }: VideoDisplayCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(32),
-    // boxShadow: "none",
   }));
 
   const cardImageContainerStyle = useThemeStyles<SxProps>((theme) => ({
@@ -34,7 +33,6 @@ export default function VideoDisplayCard({ thumbnail, children, title, descripti
 
   const cardContentStyle = useThemeStyles<SxProps>((theme) => ({
     padding: `${theme.spacing(1)} !important`,
-    bgcolor: "red",
   }));
 
   const cardAvatarStyle = useThemeStyles<SxProps>((theme) => ({
@@ -43,7 +41,7 @@ export default function VideoDisplayCard({ thumbnail, children, title, descripti
   }));
 
   const cardHeaderStyle = useThemeStyles<SxProps>((theme) => ({
-    bgColor: "green",
+    padding: `${theme.spacing(1)} !important`,
   }));
 
   const badgeStyle = useThemeStyles<SxProps>((theme) => ({

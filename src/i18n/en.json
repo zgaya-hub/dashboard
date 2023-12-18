@@ -31,7 +31,7 @@
         "headerText": "Add Basic Information",
         "next": "Next",
         "cancel": "Cancel",
-        "imageUploadComponentTitle": "Simply drop a thumbnail here to upload"
+        "imageUploadComponentTitle": "Drop a thumbnail"
       },
       "ImageUploadComponent": {
         "dropItHere": "Drop it here",
