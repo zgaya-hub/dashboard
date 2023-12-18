@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CreateEpisodeInput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { CreateEpisodeInput, CreateMediaImageInput, CreateMediaImageOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -107,6 +107,25 @@ export function useCreateEpisode() {
         `mutation($input: CreateEpisodeInput!) {
           createEpisode(CreateEpisodeInput: $input) {
             isSuccess
+          }
+        }`,
+        { input }
+      );
+    },
+    onError: (error) => {
+      showGqlError(error.response);
+    },
+  });
+}
+
+export function useCreateMediaImage() {
+  const { showGqlError } = useGqlError();
+  return useMutation({
+    mutationFn: async (input: CreateMediaImageInput) => {
+      return gqlRequest<{ createMediaImage: CreateMediaImageOutput }>(
+        `mutation($input: CreateMediaImageInput!) {
+          createMediaImage(CreateMediaImageInput: $input) {
+            mediaImageId
           }
         }`,
         { input }

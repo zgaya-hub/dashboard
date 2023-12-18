@@ -1,4 +1,4 @@
-import { DialogActions, DialogContent, Divider, SxProps, useMediaQuery } from "@mui/material";
+import { SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
 import { FeedbackIcon, UploadIcon } from "@/components/icons";
@@ -15,29 +15,27 @@ interface EpisodeUploadModalProps {
   onClose: () => void;
   onFeedback: () => void;
   onVideoDrop: (episode: File) => void;
+  onSelectSeasonId: (seasonId: string) => void;
   isLoading: boolean;
 }
 
-export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isLoading, onVideoDrop }: EpisodeUploadModalProps) {
+export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isLoading, onVideoDrop, onSelectSeasonId }: EpisodeUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
   const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState<boolean>(true);
 
   const handleOnSelectSeasonId = (seasonId: string) => {
-    setSelectedSeasonId(seasonId);
+    onSelectSeasonId(seasonId);
     setIsSelectSeriesModalVisible(false);
   };
 
   const handleOnMovie = () => {
-    setSelectedSeasonId(null);
     navigate.navigate("/video-upload/movie");
   };
 
   const handleOnTrailer = () => {
-    setSelectedSeasonId(null);
     navigate.navigate("/video-upload/trailer");
   };
 
@@ -69,7 +67,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isL
 
   return (
     <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
-      <VideoUploadComponent isDisabled={!selectedSeasonId} onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
+      <VideoUploadComponent isDisabled={isSelectSeriesModalVisible} onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
       <SelectSeriesAndSeasonModal onNext={handleOnSelectSeasonId} isVisible={isSelectSeriesModalVisible} />
     </Dialog>
   );

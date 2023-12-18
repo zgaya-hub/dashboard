@@ -1,4 +1,5 @@
 import { MovierMediaEnum } from "@/types/enum";
+import { MediaImageTypeEnum } from "../enum";
 
 export type GetUploadVideoSignedUrlInput = {
   MediaType: MovierMediaEnum;
@@ -9,28 +10,14 @@ export type GetUploadVideoSignedUrlInput = {
   Mime: string;
 };
 
-export type GetUploadVideoSignedUrlOutput = {
-  SignedUrl: string;
-  SignedUrlKeyId: string;
-  VideoId: string;
-};
-
 export type UploadVideoOnAwsS3Input = {
   VideoBlob: Blob;
   SignedUrl: string;
 };
 
-export type GetManagerSeriesWithImageAndBasicInfoOutput = SeriesEntityType & {
-  mediaImage: MediaImageEntityType[];
-  mediaBasicInfo: MediaBasicInfoEntityType;
-};
 
 export type GetSeasonBySeriesIdInput = {
   SeriesId: string;
-};
-
-export type GetSeasonBySeriesIdOutput = SeasonEntityType & {
-  mediaBasicInfo: MediaBasicInfoEntityType;
 };
 
 export type CreateEpisodeInput = {
@@ -43,7 +30,32 @@ export type CreateEpisodeInput = {
 };
 
 export type MediaBasicInfoInput = {
-  Title: string
-  PlotSummary: string
-  ReleaseDate: number
-}
+  Title: string;
+  PlotSummary: string;
+  ReleaseDate: number;
+};
+
+export type CreateMediaImageInput = {
+  MediaImageBase64: string;
+  MediaImageMime: string;
+  MediaImageType: MediaImageTypeEnum;
+};
+
+export type GetUploadVideoSignedUrlOutput = {
+  SignedUrl: string;
+  SignedUrlKeyId: string;
+  VideoId: string;
+};
+
+export type GetManagerSeriesWithImageAndBasicInfoOutput = SeriesEntityType & {
+  mediaImage: MediaImageEntityType[];
+  mediaBasicInfo: MediaBasicInfoEntityType;
+};
+
+export type GetSeasonBySeriesIdOutput = SeasonEntityType & {
+  mediaBasicInfo: MediaBasicInfoEntityType;
+};
+
+export type CreateMediaImageOutput = {
+  mediaImageId: string;
+};

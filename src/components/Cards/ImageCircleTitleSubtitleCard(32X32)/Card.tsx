@@ -1,7 +1,6 @@
 import Card from "@mui/material/Card";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { CardContent, CardMedia, SxProps } from "@mui/material";
-import Typography from "@/components/Typography";
+import { CardContent, CardMedia, SxProps, Typography } from "@mui/material";
 
 interface ImageCircleTitleSubtitleCardProps {
   image: string;

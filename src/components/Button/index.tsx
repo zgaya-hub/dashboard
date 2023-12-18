@@ -1,18 +1,13 @@
-import { ButtonProps as MuiButtonProps, Button as MuiButton, SxProps, CircularProgress } from "@mui/material";
+import { ButtonProps as MuiButtonProps, Button as MuiButton, CircularProgress } from "@mui/material";
 
 interface ButtonProps extends MuiButtonProps {
   loading?: boolean;
-  zeroPadding?: boolean;
 }
 
-export default function Button({ variant = "outlined", zeroPadding, children, loading, ...restProps }: ButtonProps) {
-  const buttonStyle: SxProps = {
-    padding: zeroPadding ? 0 : null,
-  };
-
+export default function Button({ variant = "outlined", children, loading, ...restProps }: ButtonProps) {
   return (
-    <MuiButton variant={variant} disabled={loading} sx={buttonStyle} {...restProps}>
-      {loading ? <CircularProgress size={15} /> : children}
+    <MuiButton variant={variant} disabled={loading} {...restProps} startIcon={loading ? <CircularProgress size={15} /> : null}>
+      {children}
     </MuiButton>
   );
 }

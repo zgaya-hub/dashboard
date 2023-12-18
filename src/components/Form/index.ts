@@ -1,2 +1,2 @@
 export { default as SearchInput } from "./SearchInput";
-export { default as SimpleTextInput } from "./SimpleTextInput";
+export { default as DatePickerModal } from "./Date/DatePickerModal";

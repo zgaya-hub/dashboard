@@ -1,5 +1,4 @@
-import { Stack, SxProps } from "@mui/material";
-import Typography from "@/components/Typography";
+import { Stack, SxProps, Typography } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import VideoUploadCircleIcon from "./VideoUploadCircleIcon";
@@ -30,7 +29,7 @@ export default function VideoUploadComponent({ onVideoDrop, isLoading, message, 
       <VideoUploadCircleIcon isLoading={isLoading} isDragActive={isDragActive} />
       <Stack alignItems={"center"} gap={1}>
         <Typography variant="subtitle1">{title}</Typography>
-        <Typography variant="body2">{message}</Typography>
+        <Typography variant="subtitle2">{message}</Typography>
       </Stack>
     </Stack>
   );
