@@ -1,7 +1,24 @@
-import React from 'react'
+import { InputAdornment, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from "@mui/material";
+import { ErrorIcon } from "../icons";
+import { UseFormRegister } from "react-hook-form";
 
-export default function TextField() {
+interface TextFieldProps extends Omit<MuiTextFieldProps, ""> {
+  register: UseFormRegister<any>;
+}
+
+export default function TextField({ register, name, ...restProps }: TextFieldProps) {
   return (
-    <div>TextField</div>
-  )
+    <MuiTextField
+      {...register(name!)}
+      name={name}
+      InputProps={{
+        endAdornment: restProps.error ? (
+          <InputAdornment position="end">
+            <ErrorIcon color="error" />
+          </InputAdornment>
+        ) : null,
+      }}
+      {...restProps}
+    />
+  );
 }

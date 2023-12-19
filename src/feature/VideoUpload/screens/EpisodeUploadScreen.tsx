@@ -6,22 +6,23 @@ import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
 import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
-import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata } from "metalyzer";
+import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata, extractThumbnailsFromVideo } from "metalyzer";
 import { MovierMediaEnum } from "@/types/enum";
-import EpisodeCreateBasicInfoModal, { BasicInfoFormFieldType } from "../components/EpisodeComponents/EpisodeCreateBasicInfoModal";
 import { MediaImageTypeEnum } from "../enum";
+import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
+import { BasicInfoFormFieldType } from "../components/EpisodeComponents/EpisodeCreateBasicInfoStep";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
-  const [isEpisodeCreateBasicInfoModalVisible, setIsEpisodeCreateBasicInfoModalVisible] = useState(false);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [mediaImageId, setMediaImageId] = useState("");
   const [selectedSeasonId, setSelectedSeasonId] = useState("");
-  const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending, data } = useGetUploadVideoSignedUrl();
+  const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState<boolean>(true);
+  const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending: isGetUploadEpisodeUrlLoading, data } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
-  const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisode } = useCreateEpisode();
+  const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisodeLoading } = useCreateEpisode();
 
   const handleOnEpisodeDrop = async (episode: File) => {
     const episodeMetadata = await extractVideoMetadata(episode);
@@ -34,10 +35,13 @@ export default function EpisodeUploadScreen() {
       SizeInKb: episodeMetadata.fileSizeKB,
     });
 
+    console.log("");
+    const thumbnail = await extractThumbnailsFromVideo(episode);
+    console.log(thumbnail, "");
+
+    setThumbnailUrl(thumbnail[0]);
     handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.SignedUrl);
   };
-
-  console.log(data?.getUploadVideoSignedUrl.SignedUrlKeyId);
 
   const handleOnCreateEpisode = (input: BasicInfoFormFieldType) => {
     createEpisodeMutateAsync({
@@ -54,28 +58,25 @@ export default function EpisodeUploadScreen() {
     });
   };
 
-  const handleOnThumbnailDrop = async (image: File) => {
+  const handleOnThumbnailSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     setThumbnailUrl(await extractImageUrl(image));
     const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.THUMBNAIL });
     setMediaImageId(result.createMediaImage.mediaImageId);
-    console.log(result);
   };
 
   const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {
     const episodeBlob = await convertVideoInBlob(episode);
     await uploadVideoOnAwsS3MutateAsync({ SignedUrl: signedUrl, VideoBlob: episodeBlob });
-    handleOnToggleEpisodeUploadModal();
-    handleOnToggleEpisodeCreateBasicInfoModal();
   };
 
   const handleOnToggleEpisodeUploadModal = () => {
     setIsEpisodeUploadModalVisible(!isEpisodeUploadModalVisible);
   };
 
-  const handleOnToggleEpisodeCreateBasicInfoModal = () => {
-    setIsEpisodeCreateBasicInfoModalVisible(!isEpisodeCreateBasicInfoModalVisible);
+  const handleOnToggleSelectSeriesModalVisible = () => {
+    setIsSelectSeriesModalVisible(!isEpisodeUploadModalVisible);
   };
 
   const handleOnToggleFeedbackSideBar = () => {
@@ -85,8 +86,9 @@ export default function EpisodeUploadScreen() {
   return (
     <Page>
       <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
-      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onVideoDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} onSelectSeasonId={(seasonId) => setSelectedSeasonId(seasonId)} />
-      <EpisodeCreateBasicInfoModal onThumbnailDrop={handleOnThumbnailDrop} isLoading={isCreateMediaImageLoading || isCreateEpisode} isVisible={isEpisodeCreateBasicInfoModalVisible} onFeedback={handleOnToggleFeedbackSideBar} onCancel={handleOnToggleEpisodeCreateBasicInfoModal} onSave={handleOnCreateEpisode} thumbnailSrc={thumbnailUrl} />
+      <EpisodeUploadModal uploadEpisodeProgress={60} isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading || isCreateEpisodeLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} />
+      {/* <EpisodeCreateBasicInfoModal onThumbnailDrop={handleOnThumbnailDrop} isLoading={isCreateMediaImageLoading || isCreateEpisode} isVisible={isEpisodeCreateBasicInfoModalVisible} onFeedback={handleOnToggleFeedbackSideBar} onCancel={handleOnToggleEpisodeCreateBasicInfoModal} onSave={handleOnCreateEpisode} thumbnailSrc={thumbnailUrl} /> */}
+      <SelectSeriesAndSeasonModal onNext={(seasonId) => setSelectedSeasonId(seasonId)} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModalVisible} />
       <LayoutAppBar />
       <LayoutAppHeader />
       <LayoutSideBar />

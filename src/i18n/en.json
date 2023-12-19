@@ -21,16 +21,15 @@
         "episode": "Episode"
       },
       "EpisodeUploadModal": {
-        "headerText": "Upload episode",
+        "uploadEpisode": "Upload episode",
+        "addBasicInformation": "Add Basic Information",
         "title": "Drag and drop a episode here",
         "message": "Ready to upload? Just simple upload episode here",
         "movie": "Movie",
-        "trailer": "Trailer"
-      },
-      "EpisodeCreateBasicInfoModal": {
-        "headerText": "Add Basic Information",
         "next": "Next",
+        "back": "Back",
         "cancel": "Cancel",
+        "trailer": "Trailer",
         "imageUploadComponentTitle": "Drop a thumbnail"
       },
       "ImageUploadComponent": {

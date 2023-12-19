@@ -1,35 +1,42 @@
-import { SxProps, useMediaQuery } from "@mui/material";
+import { DialogContent, MobileStepper, SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
-import { FeedbackIcon, UploadIcon } from "@/components/icons";
+import { ChevronLeftIcon, ChevronRightIcon, FeedbackIcon, UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
+import { useEffect, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
-import SelectSeriesAndSeasonModal from "./SelectSeriesAndSeasonModal";
-import { useState } from "react";
+import EpisodeCreateBasicInfoStep, { BasicInfoFormFieldType } from "./EpisodeCreateBasicInfoStep";
+import DialogAction from "@/components/Dialog/DialogAction";
 
 interface EpisodeUploadModalProps {
   isVisible: boolean;
   onClose: () => void;
   onFeedback: () => void;
-  onVideoDrop: (episode: File) => void;
-  onSelectSeasonId: (seasonId: string) => void;
+  onEpisodeSelect: (episode: File) => void;
+  onThumbnailSelect: (episode: File) => void;
+  onCreateEpisode: (input: BasicInfoFormFieldType) => void;
+  uploadEpisodeProgress: number;
   isLoading: boolean;
+  thumbnailUrl: string;
 }
 
-export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isLoading, onVideoDrop, onSelectSeasonId }: EpisodeUploadModalProps) {
+export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodeProgress, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState<boolean>(true);
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [isInitialCall, setIsInitialCall] = useState<boolean>(false);
 
-  const handleOnSelectSeasonId = (seasonId: string) => {
-    onSelectSeasonId(seasonId);
-    setIsSelectSeriesModalVisible(false);
-  };
+  useEffect(() => {
+    setIsInitialCall(true);
+    if (isInitialCall && !isLoading) {
+      handleNext();
+    }
+  }, [isLoading]);
 
   const handleOnMovie = () => {
     navigate.navigate("/video-upload/movie");
@@ -37,6 +44,20 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isL
 
   const handleOnTrailer = () => {
     navigate.navigate("/video-upload/trailer");
+  };
+
+  const handleNext = () => {
+    if (activeStep === 1) return;
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    if (activeStep === 0) return;
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleOnEpisodeSelect = (episode: File) => {
+    onEpisodeSelect(episode);
   };
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
@@ -50,6 +71,17 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isL
       background: theme.palette.background.default,
     },
   }));
+
+  const steps = [
+    {
+      label: t("Feature.VideoUpload.EpisodeUploadModal.uploadEpisode"),
+      step: <VideoUploadComponent onVideoSelect={handleOnEpisodeSelect} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} progress={uploadEpisodeProgress} />,
+    },
+    {
+      label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
+      step: <EpisodeCreateBasicInfoStep onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
+    },
+  ];
 
   const dialogFooter = (
     <>
@@ -66,9 +98,29 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, isL
   );
 
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.EpisodeUploadModal.headerText")} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
-      <VideoUploadComponent isDisabled={isSelectSeriesModalVisible} onVideoDrop={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />
-      <SelectSeriesAndSeasonModal onNext={handleOnSelectSeasonId} isVisible={isSelectSeriesModalVisible} />
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={steps[activeStep].label} onClose={onClose} outAreaClose={false}>
+      <DialogContent dividers>{steps[activeStep].step}</DialogContent>
+      <MobileStepper
+        variant="progress"
+        steps={2}
+        position="bottom"
+        draggable
+        activeStep={activeStep}
+        sx={{ width: "100%", flexGrow: 1 }}
+        nextButton={
+          <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
+            {t("Feature.VideoUpload.EpisodeUploadModal.next")}
+            <ChevronRightIcon />
+          </Button>
+        }
+        backButton={
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+            <ChevronLeftIcon />
+            {t("Feature.VideoUpload.EpisodeUploadModal.back")}
+          </Button>
+        }
+      />
+      <DialogAction children={dialogFooter} />
     </Dialog>
   );
 }

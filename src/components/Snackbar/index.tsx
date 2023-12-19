@@ -1,12 +1,14 @@
-import { Snackbar as MuiSnackbar, SnackbarProps as MuiSnackbarProps, Alert as MuiAlert, AlertProps as MuiAlertProps, AlertTitle } from "@mui/material";
+import { Snackbar as MuiSnackbar, SnackbarProps as MuiSnackbarProps, Alert as MuiAlert, AlertProps as MuiAlertProps } from "@mui/material";
 
 interface SnackbarProps extends MuiSnackbarProps {
   AlertProps?: MuiAlertProps;
-  message: string; // Add a message prop
-  title?: string; // Add a message prop
+  message: string;
+  title?: string;
+  vertical?: "top" | "bottom";
+  horizontal?: "left" | "center" | "right";
 }
 
-export default function Snackbar({ autoHideDuration = 5000, title, AlertProps, message, ...restProps }: SnackbarProps) {
+export default function Snackbar({ autoHideDuration = 5000, vertical = "bottom", horizontal = "left", title, AlertProps, message, ...restProps }: SnackbarProps) {
   const defaultAlertProps: MuiAlertProps = {
     variant: "filled",
     severity: "error",
@@ -14,9 +16,8 @@ export default function Snackbar({ autoHideDuration = 5000, title, AlertProps, m
   };
 
   return (
-    <MuiSnackbar autoHideDuration={autoHideDuration} {...restProps}>
-      <MuiAlert {...defaultAlertProps}>
-        {title ? <AlertTitle>{title}</AlertTitle> : null}
+    <MuiSnackbar anchorOrigin={{ vertical: vertical, horizontal }} autoHideDuration={autoHideDuration} {...restProps}>
+      <MuiAlert title={title} {...defaultAlertProps}>
         {message}
       </MuiAlert>
     </MuiSnackbar>

@@ -1,4 +1,4 @@
-import { DialogContent, Divider, Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps, SxProps } from "@mui/material";
+import { DialogContent, Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps, SxProps } from "@mui/material";
 import DialogHeader, { DialogHeaderProps } from "./DialogHeader";
 import Draggable from "react-draggable";
 import DialogAction, { DialogActionProps } from "./DialogAction";
@@ -30,7 +30,18 @@ export default function Dialog({ dialogContentSx, onClose, headerHidden = false,
     return (
       <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outAreaClose ? onClose : () => {}} {...restProps}>
         {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" hideCrossButton={hideCrossButton} isDragable={isDraggable} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
-        <DialogContent dividers sx={dialogContentSx}>{children}</DialogContent>
+        {dialogAction ? (
+          <>
+            <DialogContent dividers sx={dialogContentSx}>
+              {children}
+            </DialogContent>{" "}
+            :
+            <DialogAction children={dialogAction} {...dialogActionProps} />
+          </>
+        ) : (
+          children
+        )}
+        {children}
         {!dialogAction ? <DialogAction children={dialogAction} {...dialogActionProps} /> : null}
       </MuiDialog>
     );
@@ -39,8 +50,17 @@ export default function Dialog({ dialogContentSx, onClose, headerHidden = false,
   return (
     <MuiDialog onClose={outAreaClose ? onClose : () => {}} {...restProps}>
       {!headerHidden ? <DialogHeader hideCrossButton={hideCrossButton} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
-      <DialogContent dividers sx={dialogContentSx}>{children}</DialogContent>
-      {dialogAction ? <DialogAction children={dialogAction} {...dialogActionProps} /> : null}
+      {dialogAction ? (
+        <>
+          <DialogContent dividers sx={dialogContentSx}>
+            {children}
+          </DialogContent>{" "}
+          :
+          <DialogAction children={dialogAction} {...dialogActionProps} />
+        </>
+      ) : (
+        children
+      )}
     </MuiDialog>
   );
 }

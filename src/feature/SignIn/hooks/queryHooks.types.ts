@@ -1,8 +1,8 @@
-type ManagerSignInInput = {
+export type ManagerSignInInput = {
   email: string;
   password: string;
 };
 
-type ManagerSignInOutput = {
+export type ManagerSignInOutput = {
   managerSignIn: { token: string };
 };

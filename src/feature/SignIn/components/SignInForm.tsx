@@ -1,20 +1,30 @@
-import React from "react";
-import { CssBaseline, Stack, Paper, Typography, Link, TextField } from "@mui/material";
+import React, { CSSProperties } from "react";
+import { CssBaseline, Stack, Paper, Typography, Link } from "@mui/material";
 import Button from "@/components/Button";
-import { SignInFormDataInterface } from "../types";
+import { Form, TextField } from "@/components/Form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
+export interface SignInFormFieldType {
+  email: string;
+  password: string;
+}
 interface SignInFormProps {
-  onSubmit: (formData: SignInFormDataInterface) => void;
+  onSubmit: (formData: SignInFormFieldType) => void;
 }
 
 const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData: SignInFormDataInterface = {
-      email: event.currentTarget.email.value,
-      password: event.currentTarget.password.value,
-    };
-    onSubmit(formData);
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm<SignInFormFieldType>({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const handleOnSubmit = (data: SignInFormFieldType) => {
+    onSubmit(data);
   };
 
   return (
@@ -23,13 +33,13 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
       <Typography variant="h5" align="center" mb={2}>
         Sign In to Facebook
       </Typography>
-      <Stack component="form" noValidate onSubmit={handleSubmit} spacing={2}>
-        <TextField id="email" label="Email Address" name="email" autoComplete="email" autoFocus />
-        <TextField name="password" label="Password" type="password" id="password" autoComplete="current-password" />
+      <Form onSubmit={handleSubmit(handleOnSubmit)} rowGap={10}>
+        <TextField register={register} name="email" label="Email Address" error={!!errors.password} helperText={errors.email?.message} autoFocus />
+        <TextField register={register} name="password" type="password" error={!!errors.password} helperText={errors.password?.message} />
         <Button type="submit" variant="contained" fullWidth>
           Sign In
         </Button>
-      </Stack>
+      </Form>
       <Typography variant="body2" mt={2} textAlign="center">
         <Link href="#" color="primary">
           Forgot password?
@@ -40,3 +50,8 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
 };
 
 export default SignInForm;
+
+const validationSchema = yup.object().shape({
+  email: yup.string().required("Email is required"),
+  password: yup.string().required("Password is required"),
+});

@@ -8,7 +8,7 @@ const AuthenticatedRoutes = () => {
       <Routes>
         <Route path="home/*" Component={HomeRoutes} />
         <Route path="video-upload/*" Component={VideoUploadRoutes} />
-        <Route path="/*" Component={FourOFourRoutes} />
+        <Route path="*" Component={FourOFourRoutes} />
       </Routes>
   );
 };

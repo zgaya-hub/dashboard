@@ -1,28 +1,27 @@
-import Snackbar from "@/components/Snackbar";
 import { useAuthContext } from "@/context/AuthContext";
 import useNavigation from "@/navigation/use-navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 export default function FourOFourScreen() {
   const navigation = useNavigation();
   const { isAuthenticated } = useAuthContext();
-  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigation.navigate("/home");
-    } else {
-      navigation.navigate("/sign-in");
-    }
-  }, [isAuthenticated]);
+    const timer = setTimeout(() => {
+      if (isAuthenticated) {
+        navigation.navigate("/home");
+      } else {
+        navigation.navigate("/sign-in");
+      }
+    }, 1000);
 
-  const handleOnToggleSnackbar = () => {
-    setIsSnackbarVisible(!isSnackbarVisible);
-  };
+    return () => clearTimeout(timer);
+  }, [isAuthenticated, navigation]);
 
   return (
-    <>
-      <Snackbar open={isSnackbarVisible} onClose={handleOnToggleSnackbar} message={"Screen not found"} />
-    </>
+    <Backdrop open>
+      <CircularProgress color="inherit" />
+    </Backdrop>
   );
 }

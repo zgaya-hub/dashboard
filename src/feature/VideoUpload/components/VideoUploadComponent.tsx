@@ -4,16 +4,16 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import VideoUploadCircleIcon from "./VideoUploadCircleIcon";
 
 interface VideoUploadComponentProps {
-  onVideoDrop: (video: File) => void;
+  onVideoSelect: (video: File) => void;
   isLoading: boolean;
   title: string;
   message: string;
-  isDisabled?: boolean;
+  progress: number;
 }
 
-export default function VideoUploadComponent({ onVideoDrop, isLoading, message, title, isDisabled }: VideoUploadComponentProps) {
+export default function VideoUploadComponent({ onVideoSelect, isLoading, message, progress, title }: VideoUploadComponentProps) {
   const onDrop = ([video]: File[]) => {
-    onVideoDrop(video);
+    onVideoSelect(video);
   };
 
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
@@ -21,12 +21,12 @@ export default function VideoUploadComponent({ onVideoDrop, isLoading, message, 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
     height: "100%",
     gap: theme.spacing(8),
-    pointerEvents: isDisabled ? "none" : "all",
+    pointerEvents: isLoading ? "none" : "all",
   }));
 
   return (
     <Stack {...getRootProps()} justifyContent={"center"} alignItems={"center"} direction={"column"} sx={containerStyle}>
-      <VideoUploadCircleIcon isLoading={isLoading} isDragActive={isDragActive} />
+      <VideoUploadCircleIcon progress={progress} isLoading={isLoading} isDragActive={isDragActive} />
       <Stack alignItems={"center"} gap={1}>
         <Typography variant="subtitle1">{title}</Typography>
         <Typography variant="subtitle2">{message}</Typography>

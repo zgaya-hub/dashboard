@@ -1,7 +1,8 @@
 import React from "react";
-import { CssBaseline, Stack, Paper, Typography, Link, TextField } from "@mui/material";
+import { CssBaseline, Stack, Paper, Typography, Link } from "@mui/material";
 import Button from "@/components/Button";
 import { SignUpFormDataInterface } from "../types";
+import { TextField } from "@/components/Form";
 
 interface SignUpFormProps {
   onSubmit: (formData: SignUpFormDataInterface) => void;

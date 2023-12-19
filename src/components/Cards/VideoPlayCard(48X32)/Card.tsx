@@ -6,7 +6,7 @@ import { CardHeader, SxProps, Box, Stack, alpha, CardContent } from "@mui/materi
 import Avatar from "@/components/Avatar";
 import { MoreVertIcon } from "@/components/icons";
 
-interface VideoDisplayCardProps {
+interface VideoPlayCardProps {
   thumbnail: string;
   title: string;
   description: string;
@@ -16,7 +16,7 @@ interface VideoDisplayCardProps {
   children?: ReactNode;
 }
 
-export default function VideoDisplayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNo }: VideoDisplayCardProps) {
+export default function VideoPlayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNo }: VideoPlayCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(32),
   }));

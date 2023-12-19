@@ -60,7 +60,7 @@ export const typography: TypographyOptions = {
 };
 
 // kindly use this types for spacing
-export const spacing = ["1", "2", "4", "8", "12", "16", "18", "24", "32", "36", "48", "54", "64", "96"];
+export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 54, 64, 96];
 
 export const components: ThemeOptions["components"] = {
   MuiIconButton: {
