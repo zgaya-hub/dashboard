@@ -10,7 +10,8 @@ import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractIm
 import { MovierMediaEnum } from "@/types/enum";
 import { MediaImageTypeEnum } from "../enum";
 import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
-import { BasicInfoFormFieldType } from "../components/EpisodeComponents/EpisodeCreateBasicInfoStep";
+import { CreateEpisodeFormFieldType } from "../components/EpisodeComponents/EpisodeCreateStep";
+import { getVideoThumbnail } from "../components/EpisodeComponents/text";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
@@ -35,15 +36,12 @@ export default function EpisodeUploadScreen() {
       SizeInKb: episodeMetadata.fileSizeKB,
     });
 
-    console.log("");
-    const thumbnail = await extractThumbnailsFromVideo(episode);
-    console.log(thumbnail, "");
-
-    setThumbnailUrl(thumbnail[0]);
+    const thumbnail = await getVideoThumbnail(episode);
+    setThumbnailUrl(thumbnail!);
     handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.SignedUrl);
   };
 
-  const handleOnCreateEpisode = (input: BasicInfoFormFieldType) => {
+  const handleOnCreateEpisode = (input: CreateEpisodeFormFieldType) => {
     createEpisodeMutateAsync({
       EpisodeNo: input.episodeNo,
       MediaImageId: mediaImageId,
@@ -86,8 +84,8 @@ export default function EpisodeUploadScreen() {
   return (
     <Page>
       <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
-      <EpisodeUploadModal uploadEpisodeProgress={60} isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading || isCreateEpisodeLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} />
-      {/* <EpisodeCreateBasicInfoModal onThumbnailDrop={handleOnThumbnailDrop} isLoading={isCreateMediaImageLoading || isCreateEpisode} isVisible={isEpisodeCreateBasicInfoModalVisible} onFeedback={handleOnToggleFeedbackSideBar} onCancel={handleOnToggleEpisodeCreateBasicInfoModal} onSave={handleOnCreateEpisode} thumbnailSrc={thumbnailUrl} /> */}
+      <EpisodeUploadModal uploadEpisodeProgress={60} isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} isCreateEpisodeLoading={isCreateEpisodeLoading} />
+      {/* <EpisodeCreateModal onThumbnailDrop={handleOnThumbnailDrop} isLoading={isCreateMediaImageLoading || isCreateEpisode} isVisible={isEpisodeCreateModalVisible} onFeedback={handleOnToggleFeedbackSideBar} onCancel={handleOnToggleEpisodeCreateModal} onSave={handleOnCreateEpisode} thumbnailSrc={thumbnailUrl} /> */}
       <SelectSeriesAndSeasonModal onNext={(seasonId) => setSelectedSeasonId(seasonId)} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModalVisible} />
       <LayoutAppBar />
       <LayoutAppHeader />

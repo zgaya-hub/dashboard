@@ -5,7 +5,7 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 interface VideoUploadCircleIconProps {
   isLoading: boolean;
   isDragActive: boolean;
-  progress: number;
+  progress?: number;
 }
 
 export default function VideoUploadCircleIcon({ isLoading, isDragActive, progress }: VideoUploadCircleIconProps) {

@@ -18,10 +18,11 @@ import { default as MuiSearchIcon } from "@mui/icons-material/Search";
 import { default as SettingsInputSvideoOutlinedIcon } from "@mui/icons-material/SettingsInputSvideoOutlined";
 import { default as SlideshowOutlinedIcon } from "@mui/icons-material/SlideshowOutlined";
 import { default as MuiSpaceDashboardOutlinedIcon } from "@mui/icons-material/SpaceDashboardOutlined";
-import {default as MuiErrorOutlineIcon} from '@mui/icons-material/ErrorOutline';
+import { default as MuiErrorOutlineIcon } from "@mui/icons-material/ErrorOutline";
 import { default as MuiFileUploadIcon } from "@mui/icons-material/FileUpload";
 import { default as MuiSwitchAccountIcon } from "@mui/icons-material/SwitchAccountOutlined";
 import { default as MuiTimelineOutlinedIcon } from "@mui/icons-material/TimelineOutlined";
+import { default as MuiSaveIcon } from "@mui/icons-material/Save";
 import { default as MuiTranslateIcon } from "@mui/icons-material/Translate";
 import { default as VideoLibraryOutlinedIcon } from "@mui/icons-material/VideoLibraryOutlined";
 import { default as MuiClearOutlinedIcon } from "@mui/icons-material/ClearOutlined";
@@ -97,3 +98,4 @@ export const RadioButtonUncheckedIcon = withIconWrapper(MuiRadioButtonUncheckedI
 export const RadioButtonCheckedIcon = withIconWrapper(MuiRadioButtonCheckedIcon);
 export const MoreVertIcon = withIconWrapper(MuiMoreVertIcon);
 export const ErrorIcon = withIconWrapper(MuiErrorOutlineIcon);
+export const SaveIcon = withIconWrapper(MuiSaveIcon);

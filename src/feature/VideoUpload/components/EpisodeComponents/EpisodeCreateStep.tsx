@@ -1,4 +1,4 @@
-import { Grid, Hidden, Stack, SxProps } from "@mui/material";
+import { Hidden, Stack, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
 import { DatePickerModal, Form, TextField } from "@/components/Form";
@@ -9,23 +9,32 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ImageUploadComponent from "../ImageUploadComponent";
 import EpisodeCardComponent from "./EpisodeCardComponent";
 import Button from "@/components/Button";
+import { SaveIcon } from "@/components/icons";
+import { useEffect } from "react";
 
-export interface BasicInfoFormFieldType {
+export interface CreateEpisodeFormFieldType {
   title: string;
   plotSummary: string;
   episodeNo: number;
   releaseDate: number;
 }
 
-interface EpisodeCreateBasicInfoStepProps {
+interface EpisodeCreateStepProps {
   thumbnailSrc: string;
-  onSave: (fields: BasicInfoFormFieldType) => void;
+  onSave: (fields: CreateEpisodeFormFieldType) => void;
   onThumbnailSelect: (episode: File) => void;
   isLoading: boolean;
+  callSave: boolean;
 }
 
-export default function EpisodeCreateBasicInfoStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading }: EpisodeCreateBasicInfoStepProps) {
+export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, callSave }: EpisodeCreateStepProps) {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (callSave) {
+      handleSubmit(onSave)();
+    }
+  }, [callSave]);
 
   const {
     control,
@@ -33,7 +42,7 @@ export default function EpisodeCreateBasicInfoStep({ thumbnailSrc, onSave, onThu
     handleSubmit,
     register,
     watch,
-  } = useForm<BasicInfoFormFieldType>({
+  } = useForm<CreateEpisodeFormFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
@@ -41,16 +50,12 @@ export default function EpisodeCreateBasicInfoStep({ thumbnailSrc, onSave, onThu
     },
   });
 
-  const handleOnSubmit = (data: BasicInfoFormFieldType) => {
-    onSave(data);
-  };
-
   const inputContainerStyle = useThemeStyles<SxProps>((theme) => ({
     background: theme.palette.background.default,
   }));
 
   const InputArea = (
-    <Form onSubmit={handleSubmit(handleOnSubmit)} sx={inputContainerStyle} gap={2}>
+    <Form onSubmit={handleSubmit(onSave)} sx={inputContainerStyle} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth />
         <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date)} inputRef={field.ref} value={field.value} label="Release date" views={["year", "month"]} fullWidth />} />
@@ -63,11 +68,19 @@ export default function EpisodeCreateBasicInfoStep({ thumbnailSrc, onSave, onThu
   return (
     <Stack direction={"row"} gap={2} height={"100%"}>
       <Stack width={"100%"} gap={2}>
-        <Button> Reuse Previoud template</Button>
+        <Stack direction={"row"} justifyContent={"end"}>
+          <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.reUsePrevious")}</Button>
+        </Stack>
         {InputArea}
-        <Stack direction={"row"}gap={2} >
+        <Stack direction={"row"} gap={2}>
           <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
           <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
+        </Stack>
+        <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={2}>
+          <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.cancel")}</Button>
+          <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>
+            {t("Feature.VideoUpload.EpisodeUploadModal.next")}
+          </Button>
         </Stack>
       </Stack>
       <Hidden mdDown>

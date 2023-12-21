@@ -29,6 +29,8 @@
         "next": "Next",
         "back": "Back",
         "cancel": "Cancel",
+        "reUsePrevious": "Reuse previous",
+        "addAdditionalInformation": "Add additional information",
         "trailer": "Trailer",
         "imageUploadComponentTitle": "Drop a thumbnail"
       },

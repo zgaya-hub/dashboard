@@ -8,7 +8,7 @@ interface VideoUploadComponentProps {
   isLoading: boolean;
   title: string;
   message: string;
-  progress: number;
+  progress?: number;
 }
 
 export default function VideoUploadComponent({ onVideoSelect, isLoading, message, progress, title }: VideoUploadComponentProps) {

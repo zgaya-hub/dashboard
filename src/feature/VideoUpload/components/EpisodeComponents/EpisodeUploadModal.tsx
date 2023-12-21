@@ -8,8 +8,9 @@ import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
 import { useEffect, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
-import EpisodeCreateBasicInfoStep, { BasicInfoFormFieldType } from "./EpisodeCreateBasicInfoStep";
+import EpisodeCreateStep, { CreateEpisodeFormFieldType } from "./EpisodeCreateStep";
 import DialogAction from "@/components/Dialog/DialogAction";
+import EpisodeCreateAdditionalInfoStep from "./EpisodeCreateAdditionalInfoStep";
 
 interface EpisodeUploadModalProps {
   isVisible: boolean;
@@ -17,19 +18,21 @@ interface EpisodeUploadModalProps {
   onFeedback: () => void;
   onEpisodeSelect: (episode: File) => void;
   onThumbnailSelect: (episode: File) => void;
-  onCreateEpisode: (input: BasicInfoFormFieldType) => void;
+  onCreateEpisode: (input: CreateEpisodeFormFieldType) => void;
   uploadEpisodeProgress: number;
   isLoading: boolean;
+  isCreateEpisodeLoading: boolean;
   thumbnailUrl: string;
 }
 
-export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodeProgress, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
+export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodeProgress, isCreateEpisodeLoading, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isInitialCall, setIsInitialCall] = useState<boolean>(false);
+  const [shouldCallCreateEpisode, setShouldCallCreateEpisode] = useState<boolean>(false);
 
   useEffect(() => {
     setIsInitialCall(true);
@@ -47,7 +50,10 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
   };
 
   const handleNext = () => {
-    if (activeStep === 1) return;
+    if (activeStep === 2) return;
+    if (activeStep === 1) {
+      setShouldCallCreateEpisode(true);
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -79,7 +85,11 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
-      step: <EpisodeCreateBasicInfoStep onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
+      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isCreateEpisodeLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} callSave={shouldCallCreateEpisode} />,
+    },
+    {
+      label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),
+      step: <EpisodeCreateAdditionalInfoStep />,
     },
   ];
 
@@ -102,13 +112,13 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
       <DialogContent dividers>{steps[activeStep].step}</DialogContent>
       <MobileStepper
         variant="progress"
-        steps={2}
+        steps={3}
         position="bottom"
         draggable
         activeStep={activeStep}
         sx={{ width: "100%", flexGrow: 1 }}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
+          <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
             {t("Feature.VideoUpload.EpisodeUploadModal.next")}
             <ChevronRightIcon />
           </Button>

@@ -35,13 +35,11 @@ export default function Dialog({ dialogContentSx, onClose, headerHidden = false,
             <DialogContent dividers sx={dialogContentSx}>
               {children}
             </DialogContent>{" "}
-            :
             <DialogAction children={dialogAction} {...dialogActionProps} />
           </>
         ) : (
           children
         )}
-        {children}
         {!dialogAction ? <DialogAction children={dialogAction} {...dialogActionProps} /> : null}
       </MuiDialog>
     );
@@ -55,7 +53,6 @@ export default function Dialog({ dialogContentSx, onClose, headerHidden = false,
           <DialogContent dividers sx={dialogContentSx}>
             {children}
           </DialogContent>{" "}
-          :
           <DialogAction children={dialogAction} {...dialogActionProps} />
         </>
       ) : (
