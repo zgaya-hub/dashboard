@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
-import EpisodeCreateStep, { CreateEpisodeFormFieldType, EpisodeCreateStepRefInterface } from "./EpisodeCreateStep";
+import EpisodeCreateStep, { CreateEpisodeFormFieldType } from "./EpisodeCreateStep";
 import DialogAction from "@/components/Dialog/DialogAction";
 import EpisodeCreateAdditionalInfoStep from "./EpisodeCreateAdditionalInfoStep";
 
@@ -29,7 +29,6 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
-  const episodeCreateStepRef = useRef<EpisodeCreateStepRefInterface | null>(null);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isInitialCall, setIsInitialCall] = useState<boolean>(false);
@@ -51,10 +50,6 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
 
   const handleOnNext = () => {
     if (activeStep === 2) return;
-    if (episodeCreateStepRef.current) {
-      episodeCreateStepRef.current.save();
-    }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -86,7 +81,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
-      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isCreateEpisodeLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} ref={episodeCreateStepRef} />,
+      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isCreateEpisodeLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),
@@ -119,7 +114,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
         activeStep={activeStep}
         sx={{ width: "100%", flexGrow: 1 }}
         nextButton={
-          <Button size="small" onClick={handleOnNext} disabled={(activeStep === 2)}>
+          <Button size="small" onClick={handleOnNext} disabled={(activeStep > 0)}>
             {t("Feature.VideoUpload.EpisodeUploadModal.next")}
             <ChevronRightIcon />
           </Button>

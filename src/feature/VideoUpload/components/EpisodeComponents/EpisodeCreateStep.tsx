@@ -10,7 +10,6 @@ import ImageUploadComponent from "../ImageUploadComponent";
 import EpisodeCardComponent from "./EpisodeCardComponent";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
-import { Ref, forwardRef, useImperativeHandle } from "react";
 
 export interface CreateEpisodeFormFieldType {
   title: string;
@@ -26,11 +25,7 @@ interface EpisodeCreateStepProps {
   isLoading: boolean;
 }
 
-export interface EpisodeCreateStepRefInterface {
-  save: () => void;
-}
-
-const EpisodeCreateStep = forwardRef(function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading }: EpisodeCreateStepProps, ref: Ref<EpisodeCreateStepRefInterface>) {
+export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading }: EpisodeCreateStepProps) {
   const { t } = useTranslation();
 
   const {
@@ -47,12 +42,6 @@ const EpisodeCreateStep = forwardRef(function EpisodeCreateStep({ thumbnailSrc, 
       releaseDate: new Date().getTime(),
     },
   });
-
-  useImperativeHandle(ref, () => ({
-    save: () => handleSubmit(onSave)(),
-  }));
-
-  console.log(watch("releaseDate"));
 
   const inputContainerStyle = useThemeStyles<SxProps>((theme) => ({
     background: theme.palette.background.default,
@@ -93,8 +82,7 @@ const EpisodeCreateStep = forwardRef(function EpisodeCreateStep({ thumbnailSrc, 
       </Hidden>
     </Stack>
   );
-});
-export default EpisodeCreateStep;
+}
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
