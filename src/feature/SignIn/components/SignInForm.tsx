@@ -1,4 +1,3 @@
-import React, { CSSProperties } from "react";
 import { CssBaseline, Stack, Paper, Typography, Link } from "@mui/material";
 import Button from "@/components/Button";
 import { Form, TextField } from "@/components/Form";
@@ -12,9 +11,10 @@ export interface SignInFormFieldType {
 }
 interface SignInFormProps {
   onSubmit: (formData: SignInFormFieldType) => void;
+  isLoading: boolean;
 }
 
-const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
+export default function SignInForm({ onSubmit, isLoading }: SignInFormProps) {
   const {
     formState: { errors },
     handleSubmit,
@@ -33,10 +33,10 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
       <Typography variant="h5" align="center" mb={2}>
         Sign In to Facebook
       </Typography>
-      <Form onSubmit={handleSubmit(handleOnSubmit)} rowGap={10}>
+      <Form onSubmit={handleSubmit(handleOnSubmit)} rowGap={2}>
         <TextField register={register} name="email" label="Email Address" error={!!errors.password} helperText={errors.email?.message} autoFocus />
-        <TextField register={register} name="password" type="password" error={!!errors.password} helperText={errors.password?.message} />
-        <Button type="submit" variant="contained" fullWidth>
+        <TextField register={register} name="password" label="Password" type="password" error={!!errors.password} helperText={errors.password?.message} />
+        <Button loading={isLoading} type="submit" variant="contained" fullWidth>
           Sign In
         </Button>
       </Form>
@@ -47,9 +47,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
       </Typography>
     </Stack>
   );
-};
-
-export default SignInForm;
+}
 
 const validationSchema = yup.object().shape({
   email: yup.string().required("Email is required"),

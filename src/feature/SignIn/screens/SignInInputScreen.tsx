@@ -6,7 +6,7 @@ import { ManagerSignInInput } from "../hooks/queryHooks.types";
 
 export default function SignInInputScreen() {
   const { handleOnAuthenticate } = useAuthContext();
-  const { mutateAsync: managerLoginMutateAsync } = useManagerSignIn();
+  const { mutateAsync: managerLoginMutateAsync, isLoa } = useManagerSignIn();
 
   const handleOnSignIn = async (formData: ManagerSignInInput) => {
     const result = await managerLoginMutateAsync(formData);
@@ -17,7 +17,7 @@ export default function SignInInputScreen() {
 
   return (
     <Page>
-      <SignInForm onSubmit={handleOnSignIn} />
+      <SignInForm onSubmit={handleOnSignIn} isLoading={false} />
     </Page>
   );
 }
