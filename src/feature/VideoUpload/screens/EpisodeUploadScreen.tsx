@@ -11,7 +11,6 @@ import { MovierMediaEnum } from "@/types/enum";
 import { MediaImageTypeEnum } from "../enum";
 import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
 import { CreateEpisodeFormFieldType } from "../components/EpisodeComponents/EpisodeCreateStep";
-import { getVideoThumbnail } from "../components/EpisodeComponents/text";
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
@@ -20,7 +19,7 @@ export default function EpisodeUploadScreen() {
   const [mediaImageId, setMediaImageId] = useState("");
   const [selectedSeasonId, setSelectedSeasonId] = useState("");
   const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState<boolean>(true);
-  const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending: isGetUploadEpisodeUrlLoading, data } = useGetUploadVideoSignedUrl();
+  const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending: isGetUploadEpisodeUrlLoading, data: getUploadSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
   const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisodeLoading } = useCreateEpisode();
@@ -36,8 +35,8 @@ export default function EpisodeUploadScreen() {
       SizeInKb: episodeMetadata.fileSizeKB,
     });
 
-    const thumbnail = await getVideoThumbnail(episode);
-    setThumbnailUrl(thumbnail!);
+    const thumbnail = await extractThumbnailsFromVideo(episode);
+    setThumbnailUrl(thumbnail);
     handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.SignedUrl);
   };
 
@@ -46,8 +45,8 @@ export default function EpisodeUploadScreen() {
       EpisodeNo: input.episodeNo,
       MediaImageId: mediaImageId,
       SeasonId: selectedSeasonId,
-      SignedUrlKeyId: data?.getUploadVideoSignedUrl.SignedUrlKeyId!,
-      VideoId: data?.getUploadVideoSignedUrl.VideoId!,
+      SignedUrlKeyId: getUploadSignedUrlData?.getUploadVideoSignedUrl.SignedUrlKeyId,
+      VideoId: getUploadSignedUrlData?.getUploadVideoSignedUrl.VideoId,
       MediaBasicInfo: {
         PlotSummary: input.plotSummary,
         Title: input.title,

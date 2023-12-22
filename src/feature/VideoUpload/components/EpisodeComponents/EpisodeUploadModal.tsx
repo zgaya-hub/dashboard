@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
-import EpisodeCreateStep, { CreateEpisodeFormFieldType } from "./EpisodeCreateStep";
+import EpisodeCreateStep, { CreateEpisodeFormFieldType, EpisodeCreateStepRefInterface } from "./EpisodeCreateStep";
 import DialogAction from "@/components/Dialog/DialogAction";
 import EpisodeCreateAdditionalInfoStep from "./EpisodeCreateAdditionalInfoStep";
 
@@ -29,15 +29,15 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
+  const episodeCreateStepRef = useRef<EpisodeCreateStepRefInterface | null>(null);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isInitialCall, setIsInitialCall] = useState<boolean>(false);
-  const [shouldCallCreateEpisode, setShouldCallCreateEpisode] = useState<boolean>(false);
 
   useEffect(() => {
     setIsInitialCall(true);
     if (isInitialCall && !isLoading) {
-      handleNext();
+      handleOnNext();
     }
   }, [isLoading]);
 
@@ -49,15 +49,16 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
     navigate.navigate("/video-upload/trailer");
   };
 
-  const handleNext = () => {
+  const handleOnNext = () => {
     if (activeStep === 2) return;
-    if (activeStep === 1) {
-      setShouldCallCreateEpisode(true);
+    if (episodeCreateStepRef.current) {
+      episodeCreateStepRef.current.save();
     }
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleBack = () => {
+  const handleOnBack = () => {
     if (activeStep === 0) return;
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -85,7 +86,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
-      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isCreateEpisodeLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} callSave={shouldCallCreateEpisode} />,
+      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isCreateEpisodeLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} ref={episodeCreateStepRef} />,
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),
@@ -118,13 +119,13 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
         activeStep={activeStep}
         sx={{ width: "100%", flexGrow: 1 }}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
+          <Button size="small" onClick={handleOnNext} disabled={(activeStep === 2)}>
             {t("Feature.VideoUpload.EpisodeUploadModal.next")}
             <ChevronRightIcon />
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button size="small" onClick={handleOnBack} disabled={activeStep === 0}>
             <ChevronLeftIcon />
             {t("Feature.VideoUpload.EpisodeUploadModal.back")}
           </Button>

@@ -10,7 +10,7 @@ import ImageUploadComponent from "../ImageUploadComponent";
 import EpisodeCardComponent from "./EpisodeCardComponent";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
-import { useEffect } from "react";
+import { Ref, forwardRef, useImperativeHandle } from "react";
 
 export interface CreateEpisodeFormFieldType {
   title: string;
@@ -24,17 +24,14 @@ interface EpisodeCreateStepProps {
   onSave: (fields: CreateEpisodeFormFieldType) => void;
   onThumbnailSelect: (episode: File) => void;
   isLoading: boolean;
-  callSave: boolean;
 }
 
-export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, callSave }: EpisodeCreateStepProps) {
-  const { t } = useTranslation();
+export interface EpisodeCreateStepRefInterface {
+  save: () => void;
+}
 
-  useEffect(() => {
-    if (callSave) {
-      handleSubmit(onSave)();
-    }
-  }, [callSave]);
+const EpisodeCreateStep = forwardRef(function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading }: EpisodeCreateStepProps, ref: Ref<EpisodeCreateStepRefInterface>) {
+  const { t } = useTranslation();
 
   const {
     control,
@@ -46,9 +43,16 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
-      plotSummary: "",
+      plotSummary: DUMMY_PLOT_SUMMARY,
+      releaseDate: new Date().getTime(),
     },
   });
+
+  useImperativeHandle(ref, () => ({
+    save: () => handleSubmit(onSave)(),
+  }));
+
+  console.log(watch("releaseDate"));
 
   const inputContainerStyle = useThemeStyles<SxProps>((theme) => ({
     background: theme.palette.background.default,
@@ -57,10 +61,11 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
   const InputArea = (
     <Form onSubmit={handleSubmit(onSave)} sx={inputContainerStyle} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth />
-        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date)} inputRef={field.ref} value={field.value} label="Release date" views={["year", "month"]} fullWidth />} />
+        <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
+        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
+        <Button>1</Button>
       </Stack>
-      <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth />
+      <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />
     </Form>
   );
@@ -88,10 +93,13 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
       </Hidden>
     </Stack>
   );
-}
+});
+export default EpisodeCreateStep;
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.string().required("Release date is required"),
 });
+
+const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";
