@@ -77,6 +77,9 @@ dependencies:
   react-material-ui-carousel:
     specifier: ^3.4.2
     version: 3.4.2(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.15.1)(@mui/material@5.15.1)(@mui/system@5.15.1)(react-dom@18.2.0)(react@18.2.0)
+  react-popup:
+    specifier: ^0.11.2
+    version: 0.11.2(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
   react-pro-sidebar:
     specifier: 1.1.0-alpha.1
     version: 1.1.0-alpha.1(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
@@ -2155,6 +2158,10 @@ packages:
     resolution: {integrity: sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg==}
     dev: false
 
+  /keymaster@1.6.2:
+    resolution: {integrity: sha512-OvA/AALN8IDKKkTk2Z+bDrzs/SQao4lo/QPbwSdDvm+frxfiYiYCSn1aHFUypJY3SruAO1y/c771agBmTXqUtg==}
+    dev: false
+
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
     dependencies:
@@ -2554,6 +2561,19 @@ packages:
       '@mui/material': 5.15.1(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
       '@mui/system': 5.15.1(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.45)(react@18.2.0)
       framer-motion: 4.1.17(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-popup@0.11.2(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1KzaBI20eqhg0CUYJvkeobvS0NfAz73xpxXNJs6s8XKk13ypYD7VjxS1LMtOIQohkqL5GhkZqC978YvH39qUNw==}
+    peerDependencies:
+      prop-types: ^15.6.0
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      keymaster: 1.6.2
+      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false

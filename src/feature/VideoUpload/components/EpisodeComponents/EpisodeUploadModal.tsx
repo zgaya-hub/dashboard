@@ -21,11 +21,10 @@ interface EpisodeUploadModalProps {
   onCreateEpisode: (input: CreateEpisodeFormFieldType) => void;
   uploadEpisodeProgress: number;
   isLoading: boolean;
-  isCreateEpisodeLoading: boolean;
   thumbnailUrl: string;
 }
 
-export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodeProgress, isCreateEpisodeLoading, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
+export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodeProgress, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
@@ -81,7 +80,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
-      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isCreateEpisodeLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
+      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),
@@ -114,7 +113,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
         activeStep={activeStep}
         sx={{ width: "100%", flexGrow: 1 }}
         nextButton={
-          <Button size="small" onClick={handleOnNext} disabled={(activeStep > 0)}>
+          <Button size="small" onClick={handleOnNext} disabled={activeStep > 0}>
             {t("Feature.VideoUpload.EpisodeUploadModal.next")}
             <ChevronRightIcon />
           </Button>

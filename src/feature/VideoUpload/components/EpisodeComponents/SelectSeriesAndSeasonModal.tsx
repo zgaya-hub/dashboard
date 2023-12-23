@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
+import { useGetManagerSeries, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
 import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
 import { useTranslation } from "react-i18next";
 import { AddIcon, CachedIcon, ChevronLeftIcon, UploadIcon } from "@/components/icons";
@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import useNavigation from "@/navigation/use-navigation";
 import SeasonListForSelection from "./SeasonListForSelection";
 import SeriesListForSelection from "./SeriesListForSelection";
+import { MediaImageTypeEnum } from "../../enum";
 
 interface SelectSeriesAndSeasonModalProps {
   isVisible: boolean;
@@ -21,7 +22,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfoOutput | null>(null);
   const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
   const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput[]>([]);
-  const { data: managerSeries = [], refetch: refetchManagerSeries, isFetching: isManagerSeriesFetching } = useGetManagerSeriesWithImageAndBasicInfo();
+  const { data: managerSeries = [], refetch: refetchManagerSeries, isFetching: isManagerSeriesFetching } = useGetManagerSeries();
   const { mutateAsync: getSeasonBySeriesIdMutateAsync, isPending: isSeasonFetching } = useGetSeasonBySeriesId();
 
   const handleOnFetchSeasons = async (series: GetManagerSeriesWithImageAndBasicInfoOutput) => {

@@ -2,6 +2,7 @@ import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CreateEpisodeInput, CreateMediaImageInput, CreateMediaImageOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { MediaImageTypeEnum } from "../enum";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -45,13 +46,13 @@ export function useUploadVideoOnAwsS3() {
   });
 }
 
-export function useGetManagerSeriesWithImageAndBasicInfo() {
+export function useGetManagerSeries() {
   return useQuery({
     queryKey: [""],
     queryFn: async () => {
       const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfoOutput[] }>(
-        `query GetManagerSeriesWithImageAndBasicInfo{
-          getManagerSeriesWithImageAndBasicInfo {
+        `query GetManagerSeriesWithImageAndBasicInfo($input: GetManagerSeriesWithImageAndBasicInfoInput!) {
+          getManagerSeriesWithImageAndBasicInfo(GetManagerSeriesWithImageAndBasicInfoInput: $input) {
             ID
             seriesIsFree
             seriesPriceInDollar
@@ -67,7 +68,8 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
               ID
             }
           }
-        }`
+        }`,
+        { input: { MediaImageType: MediaImageTypeEnum.THUMBNAIL } }
       );
       return result.getManagerSeriesWithImageAndBasicInfo;
     },

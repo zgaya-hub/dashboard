@@ -11,6 +11,7 @@ import { MovierMediaEnum } from "@/types/enum";
 import { MediaImageTypeEnum } from "../enum";
 import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
 import { CreateEpisodeFormFieldType } from "../components/EpisodeComponents/EpisodeCreateStep";
+import NewWindow from 'react-new-window'
 
 export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
@@ -83,8 +84,11 @@ export default function EpisodeUploadScreen() {
   return (
     <Page>
       <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
-      <EpisodeUploadModal uploadEpisodeProgress={60} isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} isCreateEpisodeLoading={isCreateEpisodeLoading} />
+      <EpisodeUploadModal uploadEpisodeProgress={60} isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading || isCreateEpisodeLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} />
       {/* <EpisodeCreateModal onThumbnailDrop={handleOnThumbnailDrop} isLoading={isCreateMediaImageLoading || isCreateEpisode} isVisible={isEpisodeCreateModalVisible} onFeedback={handleOnToggleFeedbackSideBar} onCancel={handleOnToggleEpisodeCreateModal} onSave={handleOnCreateEpisode} thumbnailSrc={thumbnailUrl} /> */}
+      <NewWindow onOpen={() => console.log('hdjshdkjsa')} title="Upload Movie" h>
+        <Button>Close Window</Button>
+      </NewWindow>
       <SelectSeriesAndSeasonModal onNext={(seasonId) => setSelectedSeasonId(seasonId)} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModalVisible} />
       <LayoutAppBar />
       <LayoutAppHeader />
