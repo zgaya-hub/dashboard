@@ -1,5 +1,4 @@
 import { SxProps } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Stack from "@mui/material/Stack";
@@ -12,8 +11,9 @@ import { MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
 import UserAvatar from "./UserAvatar";
 import AppBar from "@/components/AppBar";
 import { Fab } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
-export default function BottomAppBar() {
+export default function LayoutAppBar() {
   const navigation = useNavigation();
   const { toggleTheme } = useTheme();
 
@@ -49,7 +49,7 @@ export default function BottomAppBar() {
             <SearchIcon />
           </Fab>
         </Stack>
-        <Box sx={{ flexGrow: 1 }} />
+        <Stack sx={{ flexGrow: 1 }} />
         <UserAvatar />
       </Toolbar>
     </AppBar>

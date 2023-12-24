@@ -1,23 +1,15 @@
-import { lazy, useState } from "react";
+import { useState } from "react";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
-import { LayoutAppBar } from "@/Layout/LayoutAppBar";
-import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
-import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata, extractThumbnailsFromVideo } from "metalyzer";
 import { MovierMediaEnum } from "@/types/enum";
 import { MediaImageTypeEnum } from "../enum";
 import { CreateEpisodeFormFieldType } from "../components/EpisodeComponents/EpisodeCreateStep";
-import { useTranslation } from "react-i18next";
-import { UploadIcon } from "@/components/icons";
-import useNavigation from "@/navigation/use-navigation";
 import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
 import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
 
 export default function EpisodeUploadScreen() {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
@@ -91,20 +83,11 @@ export default function EpisodeUploadScreen() {
     setIsSelectSeriesModalVisible(!isEpisodeUploadModalVisible);
   };
 
-  const appHeaderChildren = (
-    <Button onClick={() => navigation.navigate("/video-upload/trailer")} startIcon={<UploadIcon />}>
-      {t("Feature.VideoUpload.EpisodeUploadScreen.uploadTrailer")}
-    </Button>
-  );
-
   return (
     <Page>
       <Button onClick={handleOnToggleSelectSeriesModalVisible}>Upload</Button>
       <EpisodeUploadModal uploadEpisodeProgress={60} isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading || isCreateEpisodeLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} />
       <SelectSeriesAndSeasonModal onNext={handleOnNextSelectSeriesAndSeasonModal} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModalVisible} />
-      <LayoutAppBar />
-      <LayoutAppHeader children={appHeaderChildren} />
-      <LayoutSideBar />
     </Page>
   );
 }

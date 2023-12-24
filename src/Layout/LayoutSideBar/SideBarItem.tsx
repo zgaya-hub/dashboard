@@ -2,7 +2,7 @@ import { CSSProperties, cloneElement } from "react";
 import { ReactElement } from "react";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { MenuItem } from "react-pro-sidebar";
-import { Box, IconProps } from "@mui/material";
+import { IconProps, Stack } from "@mui/material";
 import Tooltip from "@/components/Tooltip";
 
 export interface SidebarItemProps {
@@ -38,7 +38,7 @@ export default function SidebarItem({ icon, label, onClick, isActive }: SidebarI
           fontSize: "small",
         })}
       >
-        {isActive ? <Box sx={activeLineStyle} /> : null}
+        {isActive ? <Stack sx={activeLineStyle} /> : null}
         {label}
       </MenuItem>
     </Tooltip>

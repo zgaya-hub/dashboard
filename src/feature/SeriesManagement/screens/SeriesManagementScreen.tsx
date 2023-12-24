@@ -1,31 +1,36 @@
-import { LayoutAppBar } from "@/Layout/LayoutAppBar";
-import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
-import { LayoutSideBar } from "@/Layout/LayoutSideBar";
+// import Button from "@/components/Button";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
-import { ErrorIcon } from "@/components/icons";
-import useNavigation from "@/navigation/use-navigation";
-import { useTranslation } from "react-i18next";
+import { getGridData } from "../mock";
+import { NoRecordFoundIllustration } from "@/assets/Illestrations";
+import DataGridPro from "@/components/DataGridPro/DataGridPro";
+// import { useDemoData } from '@mui/x-data-grid-generator';
 
 const SeriesManagementScreen = () => {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
+  // const { data, loading } = useDemoData({
+  // dataSet: "Employee",
+  // rowLength: 1000,
+  // treeData: { maxDepth: 2, groupingField: "name", averageChildren: 200 },
+  // });
 
-  const appHeaderChildren = (
-    <>
-      <Button>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
-      <Button onClick={() => navigation.navigate("/video-upload/episode")} startIcon={<ErrorIcon />}>
-        {t("Feature.SeriesManagement.SeriesManagementScreen.uploadEpisode")}
-      </Button>
-    </>
-  );
+  const columns = [
+    { field: "id", headerName: "ID", type: "string", width: 300 },
+    { field: "name", headerName: "Name", type: "string", width: 300 },
+    { field: "email", headerName: "Email", type: "string", width: 300 },
+    { field: "address", headerName: "Address", type: "string", width: 300 },
+    { field: "phone", headerName: "Phone", type: "string", width: 300 },
+    { field: "company", headerName: "Company", type: "string", width: 300 },
+  ];
+  // id: randUuid,
+  //     name: randFullName,
+  //     email: randEmail,
+  //     address: randAddress,
+  //     phone: randNumber,
+  //     company: randCompanyName,
 
   return (
     <Page>
-      <Button>Upload</Button>
-      <LayoutAppBar />
-      <LayoutAppHeader children={appHeaderChildren} />
-      <LayoutSideBar />
+      <DataGridPro /* loading={loading} {...data} */ columns={columns} rows={[]}  />
     </Page>
   );
 };

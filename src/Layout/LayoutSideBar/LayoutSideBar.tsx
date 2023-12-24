@@ -1,4 +1,4 @@
-import { Stack, SxProps } from "@mui/material";
+import { Box, Stack, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Menu, Sidebar, SubMenu } from "react-pro-sidebar";
 import SidebarItem, { SidebarItemProps } from "./SideBarItem";
@@ -7,6 +7,7 @@ import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon,
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { CSSProperties, useState } from "react";
 import useNavigation from "@/navigation/use-navigation";
+import { Outlet } from "react-router-dom";
 
 interface SideBarSectionProps {
   listItems: SidebarItemProps[];

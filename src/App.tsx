@@ -7,8 +7,9 @@ import "./i18n";
 import { UserDetailProvider } from "./context/UserDetail.context";
 import { AuthContextProvider } from "./context/AuthContext";
 import { GqlErrorProvider } from "./context/GqlErrorContext";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider, LicenseInfo as DatePickerLicenseInfo } from "@mui/x-date-pickers-pro";
+import { AdapterDateFns } from '@mui/x-date-pickers-pro/AdapterDateFns';
+import { LicenseInfo as DataGridLicenseInfo } from "@mui/x-data-grid-pro";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,6 +21,8 @@ const queryClient = new QueryClient({
   },
 });
 
+DataGridLicenseInfo.setLicenseKey('76c34ab47f811b623345476a6f326e4aTz01NzA5OSxFPTE3MDQ0NzYyNjQyODMsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
+DatePickerLicenseInfo.setLicenseKey('76c34ab47f811b623345476a6f326e4aTz01NzA5OSxFPTE3MDQ0NzYyNjQyODMsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
