@@ -12,10 +12,8 @@ import { CreateEpisodeFormFieldType } from "../components/EpisodeComponents/Epis
 import { useTranslation } from "react-i18next";
 import { UploadIcon } from "@/components/icons";
 import useNavigation from "@/navigation/use-navigation";
-
-// Lazy load components
-const EpisodeUploadModal = lazy(() => import("../components/EpisodeComponents/EpisodeUploadModal"));
-const SelectSeriesAndSeasonModal = lazy(() => import("../components/EpisodeComponents/SelectSeriesAndSeasonModal"));
+import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
+import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
 
 export default function EpisodeUploadScreen() {
   const { t } = useTranslation();
