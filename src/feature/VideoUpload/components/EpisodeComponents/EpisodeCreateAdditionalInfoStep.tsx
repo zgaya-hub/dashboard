@@ -4,9 +4,7 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 export interface CreateEpisodeFormFieldType {}
 
-interface EpisodeCreateAdditionalInfoStepProps {}
-
-export default function EpisodeCreateAdditionalInfoStep({}: EpisodeCreateAdditionalInfoStepProps) {
+export default function EpisodeCreateAdditionalInfoStep() {
   const inputContainerStyle = useThemeStyles<SxProps>((theme) => ({
     background: theme.palette.background.default,
   }));

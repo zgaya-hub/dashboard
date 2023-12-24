@@ -1,1 +1,1 @@
-const s = ""
+export const s = ""

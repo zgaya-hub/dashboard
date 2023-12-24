@@ -8,7 +8,6 @@ import Button from "@/components/Button";
 import useNavigation from "@/navigation/use-navigation";
 import SeasonListForSelection from "./SeasonListForSelection";
 import SeriesListForSelection from "./SeriesListForSelection";
-import { MediaImageTypeEnum } from "../../enum";
 
 interface SelectSeriesAndSeasonModalProps {
   isVisible: boolean;
@@ -48,7 +47,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
 
   const handleOnNext = () => {
     onNext(selectedSeasonId!);
-    onClose();
+    setSelectedSeries(null);
   };
 
   const handleOnClose = () => {

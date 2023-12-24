@@ -5,7 +5,19 @@
     }
   },
   "Feature": {
+    "Home": {
+      "HomeScreen": { "uploadMovie": "Upload movie" }
+    },
     "VideoUpload": {
+      "EpisodeUploadScreen": {
+        "uploadTrailer": "Upload trailer"
+      },
+      "MovieUploadScreen": {
+        "uploadEpisode": "Upload episode"
+      },
+      "TrailerUploadScreen": {
+        "uploadMovie": "Upload movie"
+      },
       "MovieUploadModal": {
         "headerText": "Upload movie",
         "title": "Drag and drop a movie here",
@@ -48,6 +60,13 @@
         "refreshList": "Refrest list",
         "back": "Back"
       }
+    },
+    "SeriesManagement":{
+      "SeriesManagementScreen": {
+        "createSeries": "Create series",
+        "createSeason": "Create season",
+        "uploadEpisode": "Upload episode"
+      }
     }
   },
   "Layout": {
@@ -58,7 +77,11 @@
       "copyright": "Copyright",
       "manageMovie": "Manage movies",
       "manageSeries": "Manage series",
+      "manageUpload": "Manage uploads",
       "socialLinking": "Social linking",
+      "uploadEpisode": "Upload episode",
+      "uploadMovie": "Upload movie",
+      "uploadTrailer": "Upload trailer",
       "settings": "Settings",
       "askAnyQuestion": "Ask any question"
     },

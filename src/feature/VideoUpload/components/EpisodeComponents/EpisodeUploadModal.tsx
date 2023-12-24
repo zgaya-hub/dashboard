@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { DialogContent, MobileStepper, SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";

@@ -1,9 +1,9 @@
 import { InputAdornment, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import { ErrorIcon } from "../icons";
-import { UseFormRegister } from "react-hook-form";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
 interface TextFieldProps extends Omit<MuiTextFieldProps, ""> {
-  register: UseFormRegister<any>;
+  register: UseFormRegister<FieldValues>;
 }
 
 export default function TextField({ register, name, ...restProps }: TextFieldProps) {

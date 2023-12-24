@@ -3,12 +3,14 @@ import { ReactElement } from "react";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { MenuItem } from "react-pro-sidebar";
 import { Box, IconProps } from "@mui/material";
+import Tooltip from "@/components/Tooltip";
 
 export interface SidebarItemProps {
   icon: ReactElement<IconProps>;
   label: string;
   onClick: () => void;
-  isActive?: boolean;
+  isActive: boolean;
+  childrens?: SidebarItemProps[];
 }
 
 export default function SidebarItem({ icon, label, onClick, isActive }: SidebarItemProps) {
@@ -28,15 +30,17 @@ export default function SidebarItem({ icon, label, onClick, isActive }: SidebarI
   }));
 
   return (
-    <MenuItem
-      style={containerStyle}
-      onClick={onClick}
-      icon={cloneElement(icon, {
-        fontSize: "small",
-      })}
-    >
-      {isActive ? <Box sx={activeLineStyle} /> : null}
-      {label}
-    </MenuItem>
+    <Tooltip title={label} placement="left">
+      <MenuItem
+        style={containerStyle}
+        onClick={onClick}
+        icon={cloneElement(icon, {
+          fontSize: "small",
+        })}
+      >
+        {isActive ? <Box sx={activeLineStyle} /> : null}
+        {label}
+      </MenuItem>
+    </Tooltip>
   );
 }

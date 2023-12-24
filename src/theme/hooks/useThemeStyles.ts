@@ -1,4 +1,3 @@
-import { SxProps } from "@mui/system";
 import useTheme from "../Theme.context";
 import { Theme } from "@mui/material/styles";
 

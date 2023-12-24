@@ -2,12 +2,14 @@ import { Route, Routes } from "react-router-dom";
 import HomeRoutes from "@/feature/Home/Home.routes";
 import VideoUploadRoutes from "@/feature/VideoUpload/VideoUpload.routes";
 import FourOFourRoutes from "@/feature/FourOFourScreen/FourOFourScreen.routes";
+import SeriesManagementRoutes from "@/feature/SeriesManagement/SeriesManagement.routes";
 
 const AuthenticatedRoutes = () => {
   return (
       <Routes>
         <Route path="home/*" Component={HomeRoutes} />
         <Route path="video-upload/*" Component={VideoUploadRoutes} />
+        <Route path="series-management/*" Component={SeriesManagementRoutes} />
         <Route path="*" Component={FourOFourRoutes} />
       </Routes>
   );

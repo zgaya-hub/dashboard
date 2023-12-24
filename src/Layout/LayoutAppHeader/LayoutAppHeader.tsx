@@ -1,21 +1,14 @@
 import { SxProps } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { Fragment } from "react";
-import Button from "@/components/Button";
-import { useTranslation } from "react-i18next";
-import { UploadIcon } from "@/components/icons";
-import useNavigation from "@/navigation/use-navigation";
+import { Fragment, ReactNode } from "react";
 import AppBar from "@/components/AppBar";
 
-export default function LayoutHeader() {
-  const naviation = useNavigation();
-  const { t } = useTranslation();
+interface LayoutHeaderProps {
+  children: ReactNode;
+}
 
-  const handleOnClickUpload = () => {
-    naviation.navigate("/video-upload/movie");
-  };
-
+export default function LayoutHeader({ children }: LayoutHeaderProps) {
   const appBarStyle: SxProps = {
     zIndex: 1,
   };
@@ -28,11 +21,7 @@ export default function LayoutHeader() {
     <Fragment>
       <CssBaseline />
       <AppBar sx={appBarStyle}>
-        <Toolbar sx={toolbarStyle}>
-          <Button startIcon={<UploadIcon />} onClick={handleOnClickUpload}>
-            {t("Layout.AppHeader.uploadVideo")}
-          </Button>
-        </Toolbar>
+        <Toolbar sx={toolbarStyle}>{children}</Toolbar>
       </AppBar>
     </Fragment>
   );

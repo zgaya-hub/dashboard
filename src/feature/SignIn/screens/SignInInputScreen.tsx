@@ -6,7 +6,7 @@ import { ManagerSignInInput } from "../hooks/queryHooks.types";
 
 export default function SignInInputScreen() {
   const { handleOnAuthenticate } = useAuthContext();
-  const { mutateAsync: managerLoginMutateAsync, isLoa } = useManagerSignIn();
+  const { mutateAsync: managerLoginMutateAsync } = useManagerSignIn();
 
   const handleOnSignIn = async (formData: ManagerSignInInput) => {
     const result = await managerLoginMutateAsync(formData);
