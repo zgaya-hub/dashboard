@@ -14,6 +14,7 @@ import { default as MuiMenuOpenOutlinedIcon } from "@mui/icons-material/MenuOpen
 import { default as MuiNightsStayOutlinedIcon } from "@mui/icons-material/NightsStayOutlined";
 import { default as QuestionAnswerOutlinedIcon } from "@mui/icons-material/QuestionAnswerOutlined";
 import { default as MuiAirplanemodeActiveIcon } from "@mui/icons-material/AirplanemodeActive";
+import {default as MuiDeleteIcon} from '@mui/icons-material/Delete';
 import { default as MuiSearchIcon } from "@mui/icons-material/Search";
 import { default as SettingsInputSvideoOutlinedIcon } from "@mui/icons-material/SettingsInputSvideoOutlined";
 import { default as SlideshowOutlinedIcon } from "@mui/icons-material/SlideshowOutlined";
@@ -99,3 +100,4 @@ export const RadioButtonCheckedIcon = withIconWrapper(MuiRadioButtonCheckedIcon)
 export const MoreVertIcon = withIconWrapper(MuiMoreVertIcon);
 export const ErrorIcon = withIconWrapper(MuiErrorOutlineIcon);
 export const SaveIcon = withIconWrapper(MuiSaveIcon);
+export const DeleteIcon = withIconWrapper(MuiDeleteIcon);

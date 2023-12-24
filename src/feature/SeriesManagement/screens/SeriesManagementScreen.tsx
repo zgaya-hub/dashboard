@@ -1,38 +1,42 @@
-// import Button from "@/components/Button";
-import Button from "@/components/Button";
 import Page from "@/components/Page";
-import { getGridData } from "../mock";
-import { NoRecordFoundIllustration } from "@/assets/Illestrations";
 import DataGridPro from "@/components/DataGridPro/DataGridPro";
-// import { useDemoData } from '@mui/x-data-grid-generator';
+import { useDemoData } from "@mui/x-data-grid-generator";
+import SeriesGridContextMenu from "../components/SeriesGridContextMenu";
+import Button from "@/components/Button";
+import { IconButton, Stack } from "@mui/material";
+import { AddIcon } from "@/components/icons";
+import { useTranslation } from "react-i18next";
+import { GridDeleteIcon, GridVisibilityOffIcon } from "@mui/x-data-grid-pro";
 
-const SeriesManagementScreen = () => {
-  // const { data, loading } = useDemoData({
-  // dataSet: "Employee",
-  // rowLength: 1000,
-  // treeData: { maxDepth: 2, groupingField: "name", averageChildren: 200 },
-  // });
+export default function SeriesManagementScreen() {
+  const { t } = useTranslation();
+  const handleEdit = () => {
+    // Implement your edit logic here
+    console.log("Edit clicked for row:");
+  };
 
-  const columns = [
-    { field: "id", headerName: "ID", type: "string", width: 300 },
-    { field: "name", headerName: "Name", type: "string", width: 300 },
-    { field: "email", headerName: "Email", type: "string", width: 300 },
-    { field: "address", headerName: "Address", type: "string", width: 300 },
-    { field: "phone", headerName: "Phone", type: "string", width: 300 },
-    { field: "company", headerName: "Company", type: "string", width: 300 },
-  ];
-  // id: randUuid,
-  //     name: randFullName,
-  //     email: randEmail,
-  //     address: randAddress,
-  //     phone: randNumber,
-  //     company: randCompanyName,
+  const handleDelete = () => {
+    // Implement your delete logic here
+    console.log("Delete clicked for row:");
+  };
+
+  const { data, loading } = useDemoData({
+    dataSet: "Employee",
+    rowLength: 10,
+  });
+
+  const tableHeader = (
+    <Stack gap={2} direction={"row"} mb={2} justifyContent={"end"}>
+      <IconButton>
+        <GridDeleteIcon />
+      </IconButton>
+      <Button>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
+    </Stack>
+  );
 
   return (
     <Page>
-      <DataGridPro /* loading={loading} {...data} */ columns={columns} rows={[]}  />
+      <DataGridPro headerChildren={tableHeader} loading={loading} rows={data.rows} columns={data.columns} pagination contextMenuComponent={(isOpen, onClose, anchorEl) => <SeriesGridContextMenu onEdit={handleEdit} onDelete={handleDelete} onClose={onClose} anchorEl={anchorEl} isOpen={isOpen} />} />
     </Page>
   );
-};
-
-export default SeriesManagementScreen;
+}
