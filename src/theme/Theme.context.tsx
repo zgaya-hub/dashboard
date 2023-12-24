@@ -1,6 +1,7 @@
 import { Theme, ThemeProvider as MuiThemeProvider } from "@mui/material";
 import { createContext, useContext, ReactNode, useState } from "react";
 import { lightTheme, darkTheme } from "./theme";
+import CssBaseline from "@mui/material/CssBaseline";
 
 interface ThemeContextProps {
   theme: Theme;
@@ -33,7 +34,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         toggleTheme,
       }}
     >
-      <MuiThemeProvider theme={currentTheme}>{children}</MuiThemeProvider>
+      <MuiThemeProvider theme={currentTheme}>
+        <CssBaseline />
+        {children}
+      </MuiThemeProvider>
     </ThemeContext.Provider>
   );
 }

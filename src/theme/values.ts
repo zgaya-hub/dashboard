@@ -1,6 +1,6 @@
 import { PaletteOptions } from "@mui/material/styles/createPalette";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import { ThemeOptions } from "@mui/material";
+import { ThemeOptions, alpha } from "@mui/material";
 
 export const lightThemePalette: PaletteOptions = {
   mode: "light",
@@ -8,7 +8,10 @@ export const lightThemePalette: PaletteOptions = {
     main: "#1976d2",
     light: "#42a5f5",
     dark: "#1565c0",
-    contrastText: "#fff",
+  },
+  background: {
+    default: "#ffffff",
+    paper: alpha("#edecec", 0.5),
   },
 };
 
@@ -18,11 +21,10 @@ export const darkThemePalette: PaletteOptions = {
     main: "#1976d2",
     light: "#42a5f5",
     dark: "#1565c0",
-    contrastText: "#090909",
   },
   background: {
-    default: "#050505",
-    paper: "#141313ef",
+    default: "#1c1b1b",
+    paper: alpha("#2b2929", 0.5),
   },
 };
 
@@ -62,7 +64,7 @@ export const typography: TypographyOptions = {
 // kindly use this types for spacing
 export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 54, 64, 96];
 
-export const components: ThemeOptions["components"] = {
+export const lightThemeComponents: ThemeOptions["components"] = {
   MuiIconButton: {
     styleOverrides: {
       root: {
@@ -83,6 +85,37 @@ export const components: ThemeOptions["components"] = {
     styleOverrides: {
       root: {
         background: "#ffffff",
+      },
+    },
+  },
+  MuiPaper: {
+    defaultProps: {
+      elevation: 1,
+    },
+  },
+};
+
+export const darkThemeComponents: ThemeOptions["components"] = {
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        borderRadius: "0",
+      },
+    },
+  },
+  MuiList: {
+    styleOverrides: {
+      root: {
+        "&::-webkit-scrollbar": {
+          display: "none",
+        },
+      },
+    },
+  },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        background: "#1c1b1b",
       },
     },
   },

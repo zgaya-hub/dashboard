@@ -1,31 +1,19 @@
-import { LayoutAppBar } from "@/Layout/LayoutAppBar";
-import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
-import { LayoutSideBar } from "@/Layout/LayoutSideBar";
-import Button from "@/components/Button";
+// import Button from "@/components/Button";
 import Page from "@/components/Page";
-import { ErrorIcon } from "@/components/icons";
-import useNavigation from "@/navigation/use-navigation";
-import { useTranslation } from "react-i18next";
+// import { DataGridPro } from "@mui/x-data-grid-pro";
+// import { useDemoData } from '@mui/x-data-grid-generator';
 
 const SeriesManagementScreen = () => {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
-
-  const appHeaderChildren = (
-    <>
-      <Button>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
-      <Button onClick={() => navigation.navigate("/video-upload/episode")} startIcon={<ErrorIcon />}>
-        {t("Feature.SeriesManagement.SeriesManagementScreen.uploadEpisode")}
-      </Button>
-    </>
-  );
+  // const { data, loading } = useDemoData({
+    // dataSet: "Employee",
+    // rowLength: 1000,
+    // treeData: { maxDepth: 2, groupingField: "name", averageChildren: 200 },
+  // });
 
   return (
     <Page>
-      <Button>Upload</Button>
-      <LayoutAppBar />
-      <LayoutAppHeader children={appHeaderChildren} />
-      <LayoutSideBar />
+      {/* <Button>Upload</Button>
+      <DataGridPro loading={loading} {...data} /> */}
     </Page>
   );
 };

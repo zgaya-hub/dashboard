@@ -89,9 +89,6 @@ dependencies:
   react-router-dom:
     specifier: ^6.21.1
     version: 6.21.1(react-dom@18.2.0)(react@18.2.0)
-  react-swipeable-views:
-    specifier: ^0.14.0
-    version: 0.14.0(react@18.2.0)
   react-youtube:
     specifier: ^10.1.0
     version: 10.1.0(react@18.2.0)
@@ -173,12 +170,6 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
-    dev: false
-
-  /@babel/runtime@7.0.0:
-    resolution: {integrity: sha512-7hGhzlcmg01CvH1EHdSPVXYX1aJ8KCEyz6I9xYIi/asDtzBPMyMhVibhM/K6g/5qnKBwjZtp10bNZIEFTRW1MA==}
-    dependencies:
-      regenerator-runtime: 0.12.1
     dev: false
 
   /@babel/runtime@7.23.6:
@@ -2154,10 +2145,6 @@ packages:
     hasBin: true
     dev: true
 
-  /keycode@2.2.1:
-    resolution: {integrity: sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg==}
-    dev: false
-
   /keymaster@1.6.2:
     resolution: {integrity: sha512-OvA/AALN8IDKKkTk2Z+bDrzs/SQao4lo/QPbwSdDvm+frxfiYiYCSn1aHFUypJY3SruAO1y/c771agBmTXqUtg==}
     dev: false
@@ -2492,17 +2479,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-event-listener@0.6.6(react@18.2.0):
-    resolution: {integrity: sha512-+hCNqfy7o9wvO6UgjqFmBzARJS7qrNoda0VqzvOuioEpoEXKutiKuv92dSz6kP7rYLmyHPyYNLesi5t/aH1gfw==}
-    peerDependencies:
-      react: ^16.3.0
-    dependencies:
-      '@babel/runtime': 7.23.6
-      prop-types: 15.8.1
-      react: 18.2.0
-      warning: 4.0.3
-    dev: false
-
   /react-fast-compare@2.0.4:
     resolution: {integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==}
     dev: false
@@ -2637,42 +2613,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /react-swipeable-views-core@0.14.0:
-    resolution: {integrity: sha512-0W/e9uPweNEOSPjmYtuKSC/SvKKg1sfo+WtPdnxeLF3t2L82h7jjszuOHz9C23fzkvLfdgkaOmcbAxE9w2GEjA==}
-    engines: {node: '>=6.0.0'}
-    dependencies:
-      '@babel/runtime': 7.0.0
-      warning: 4.0.3
-    dev: false
-
-  /react-swipeable-views-utils@0.14.0(react@18.2.0):
-    resolution: {integrity: sha512-W+fXBOsDqgFK1/g7MzRMVcDurp3LqO3ksC8UgInh2P/tKgb5DusuuB1geKHFc6o1wKl+4oyER4Zh3Lxmr8xbXA==}
-    engines: {node: '>=6.0.0'}
-    dependencies:
-      '@babel/runtime': 7.0.0
-      keycode: 2.2.1
-      prop-types: 15.8.1
-      react-event-listener: 0.6.6(react@18.2.0)
-      react-swipeable-views-core: 0.14.0
-      shallow-equal: 1.2.1
-    transitivePeerDependencies:
-      - react
-    dev: false
-
-  /react-swipeable-views@0.14.0(react@18.2.0):
-    resolution: {integrity: sha512-wrTT6bi2nC3JbmyNAsPXffUXLn0DVT9SbbcFr36gKpbaCgEp7rX/OFxsu5hPc/NBsUhHyoSRGvwqJNNrWTwCww==}
-    engines: {node: '>=6.0.0'}
-    peerDependencies:
-      react: ^15.3.0 || ^16.0.0 || ^17.0.0
-    dependencies:
-      '@babel/runtime': 7.0.0
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-swipeable-views-core: 0.14.0
-      react-swipeable-views-utils: 0.14.0(react@18.2.0)
-      warning: 4.0.3
-    dev: false
-
   /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
     peerDependencies:
@@ -2706,10 +2646,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
-
-  /regenerator-runtime@0.12.1:
-    resolution: {integrity: sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==}
     dev: false
 
   /regenerator-runtime@0.14.1:
@@ -2784,10 +2720,6 @@ packages:
     dependencies:
       lru-cache: 6.0.0
     dev: true
-
-  /shallow-equal@1.2.1:
-    resolution: {integrity: sha512-S4vJDjHHMBaiZuT9NPb616CSmLf618jawtv3sufLl6ivK8WocjAo58cXwbRV1cgqxH0Qbv+iUt6m05eqEa2IRA==}
-    dev: false
 
   /shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -2989,12 +2921,6 @@ packages:
   /void-elements@3.1.0:
     resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /warning@4.0.3:
-    resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==}
-    dependencies:
-      loose-envify: 1.4.0
     dev: false
 
   /webidl-conversions@3.0.1:

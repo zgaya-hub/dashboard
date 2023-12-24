@@ -1,5 +1,4 @@
 import { VideoPlayCard } from "@/components/Cards";
-import { Box } from "@mui/material";
 
 interface EpisodeCardComponentProps {
   title: string;
@@ -12,9 +11,5 @@ export default function EpisodeCardComponent({ plotSummary, thumbnail, title }: 
     console.log("click");
   };
 
-  return (
-    <Box>
-      <VideoPlayCard onClickMenuIcon={handleOnClickMenuIcon} thumbnail={thumbnail} title={title} description={plotSummary}></VideoPlayCard>
-    </Box>
-  );
+  return <VideoPlayCard onClickMenuIcon={handleOnClickMenuIcon} thumbnail={thumbnail} title={title} description={plotSummary}></VideoPlayCard>;
 }
