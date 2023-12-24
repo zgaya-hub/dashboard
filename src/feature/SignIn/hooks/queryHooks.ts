@@ -1,6 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError from "@/context/GqlErrorContext";
 import { useMutation } from "@tanstack/react-query";
+import { ManagerSignInInput, ManagerSignInOutput } from "./queryHooks.types";
 
 export function useManagerSignIn() {
   const { showGqlError } = useGqlError();

@@ -5,7 +5,19 @@
     }
   },
   "Feature": {
+    "Home": {
+      "HomeScreen": { "uploadMovie": "Upload movie" }
+    },
     "VideoUpload": {
+      "EpisodeUploadScreen": {
+        "uploadTrailer": "Upload trailer"
+      },
+      "MovieUploadScreen": {
+        "uploadEpisode": "Upload episode"
+      },
+      "TrailerUploadScreen": {
+        "uploadMovie": "Upload movie"
+      },
       "MovieUploadModal": {
         "headerText": "Upload movie",
         "title": "Drag and drop a movie here",
@@ -21,16 +33,17 @@
         "episode": "Episode"
       },
       "EpisodeUploadModal": {
-        "headerText": "Upload episode",
+        "uploadEpisode": "Upload episode",
+        "addBasicInformation": "Add Basic Information",
         "title": "Drag and drop a episode here",
         "message": "Ready to upload? Just simple upload episode here",
         "movie": "Movie",
-        "trailer": "Trailer"
-      },
-      "EpisodeCreateBasicInfoModal": {
-        "headerText": "Add Basic Information",
         "next": "Next",
+        "back": "Back",
         "cancel": "Cancel",
+        "reUsePrevious": "Reuse previous",
+        "addAdditionalInformation": "Add additional information",
+        "trailer": "Trailer",
         "imageUploadComponentTitle": "Drop a thumbnail"
       },
       "ImageUploadComponent": {
@@ -47,6 +60,13 @@
         "refreshList": "Refrest list",
         "back": "Back"
       }
+    },
+    "SeriesManagement":{
+      "SeriesManagementScreen": {
+        "createSeries": "Create series",
+        "createSeason": "Create season",
+        "uploadEpisode": "Upload episode"
+      }
     }
   },
   "Layout": {
@@ -57,7 +77,11 @@
       "copyright": "Copyright",
       "manageMovie": "Manage movies",
       "manageSeries": "Manage series",
+      "manageUpload": "Manage uploads",
       "socialLinking": "Social linking",
+      "uploadEpisode": "Upload episode",
+      "uploadMovie": "Upload movie",
+      "uploadTrailer": "Upload trailer",
       "settings": "Settings",
       "askAnyQuestion": "Ask any question"
     },

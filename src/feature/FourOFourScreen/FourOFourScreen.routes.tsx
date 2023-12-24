@@ -2,13 +2,13 @@ import { Route, Routes } from "react-router-dom";
 import { FourOFourScreen } from "./screens";
 
 export type FourOFourRouteParams = {
-  "/*": undefined;
+  "*": undefined;
 };
 
 const FourOFourRoutes = () => {
   return (
     <Routes>
-      <Route Component={FourOFourScreen} />
+      <Route path="*" Component={FourOFourScreen} />
     </Routes>
   );
 };

@@ -1,27 +1,33 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
-import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
 import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
-import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata } from "metalyzer";
+import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata, extractThumbnailsFromVideo } from "metalyzer";
 import { MovierMediaEnum } from "@/types/enum";
-import EpisodeCreateBasicInfoModal, { BasicInfoFormFieldType } from "../components/EpisodeComponents/EpisodeCreateBasicInfoModal";
 import { MediaImageTypeEnum } from "../enum";
+import { CreateEpisodeFormFieldType } from "../components/EpisodeComponents/EpisodeCreateStep";
+import { useTranslation } from "react-i18next";
+import { UploadIcon } from "@/components/icons";
+import useNavigation from "@/navigation/use-navigation";
+import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
+import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
 
 export default function EpisodeUploadScreen() {
+  const { t } = useTranslation();
+  const navigation = useNavigation();
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
-  const [isEpisodeCreateBasicInfoModalVisible, setIsEpisodeCreateBasicInfoModalVisible] = useState(false);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [mediaImageId, setMediaImageId] = useState("");
   const [selectedSeasonId, setSelectedSeasonId] = useState("");
-  const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending, data } = useGetUploadVideoSignedUrl();
+  const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState<boolean>(true);
+  const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending: isGetUploadEpisodeUrlLoading, data: getUploadSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
-  const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisode } = useCreateEpisode();
+  const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisodeLoading } = useCreateEpisode();
 
   const handleOnEpisodeDrop = async (episode: File) => {
     const episodeMetadata = await extractVideoMetadata(episode);
@@ -34,18 +40,18 @@ export default function EpisodeUploadScreen() {
       SizeInKb: episodeMetadata.fileSizeKB,
     });
 
+    const thumbnail = await extractThumbnailsFromVideo(episode);
+    setThumbnailUrl(thumbnail);
     handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.SignedUrl);
   };
 
-  console.log(data?.getUploadVideoSignedUrl.SignedUrlKeyId);
-
-  const handleOnCreateEpisode = (input: BasicInfoFormFieldType) => {
+  const handleOnCreateEpisode = (input: CreateEpisodeFormFieldType) => {
     createEpisodeMutateAsync({
       EpisodeNo: input.episodeNo,
       MediaImageId: mediaImageId,
       SeasonId: selectedSeasonId,
-      SignedUrlKeyId: data?.getUploadVideoSignedUrl.SignedUrlKeyId!,
-      VideoId: data?.getUploadVideoSignedUrl.VideoId!,
+      SignedUrlKeyId: getUploadSignedUrlData?.getUploadVideoSignedUrl.SignedUrlKeyId,
+      VideoId: getUploadSignedUrlData?.getUploadVideoSignedUrl.VideoId,
       MediaBasicInfo: {
         PlotSummary: input.plotSummary,
         Title: input.title,
@@ -54,41 +60,50 @@ export default function EpisodeUploadScreen() {
     });
   };
 
-  const handleOnThumbnailDrop = async (image: File) => {
+  const handleOnThumbnailSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     setThumbnailUrl(await extractImageUrl(image));
     const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.THUMBNAIL });
     setMediaImageId(result.createMediaImage.mediaImageId);
-    console.log(result);
   };
 
   const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {
     const episodeBlob = await convertVideoInBlob(episode);
     await uploadVideoOnAwsS3MutateAsync({ SignedUrl: signedUrl, VideoBlob: episodeBlob });
-    handleOnToggleEpisodeUploadModal();
-    handleOnToggleEpisodeCreateBasicInfoModal();
   };
 
   const handleOnToggleEpisodeUploadModal = () => {
     setIsEpisodeUploadModalVisible(!isEpisodeUploadModalVisible);
   };
 
-  const handleOnToggleEpisodeCreateBasicInfoModal = () => {
-    setIsEpisodeCreateBasicInfoModalVisible(!isEpisodeCreateBasicInfoModalVisible);
+  const handleOnToggleSelectSeriesModalVisible = () => {
+    setIsSelectSeriesModalVisible(!isEpisodeUploadModalVisible);
+    handleOnToggleEpisodeUploadModal();
   };
 
   const handleOnToggleFeedbackSideBar = () => {
     setIsFeetbackSideBarVisible(!isFeetbackSideBarVisible);
   };
 
+  const handleOnNextSelectSeriesAndSeasonModal = (seasonId: string) => {
+    setSelectedSeasonId(seasonId);
+    setIsSelectSeriesModalVisible(!isEpisodeUploadModalVisible);
+  };
+
+  const appHeaderChildren = (
+    <Button onClick={() => navigation.navigate("/video-upload/trailer")} startIcon={<UploadIcon />}>
+      {t("Feature.VideoUpload.EpisodeUploadScreen.uploadTrailer")}
+    </Button>
+  );
+
   return (
     <Page>
-      <Button onClick={handleOnToggleEpisodeUploadModal}>Upload</Button>
-      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onVideoDrop={handleOnEpisodeDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} onSelectSeasonId={(seasonId) => setSelectedSeasonId(seasonId)} />
-      <EpisodeCreateBasicInfoModal onThumbnailDrop={handleOnThumbnailDrop} isLoading={isCreateMediaImageLoading || isCreateEpisode} isVisible={isEpisodeCreateBasicInfoModalVisible} onFeedback={handleOnToggleFeedbackSideBar} onCancel={handleOnToggleEpisodeCreateBasicInfoModal} onSave={handleOnCreateEpisode} thumbnailSrc={thumbnailUrl} />
+      <Button onClick={handleOnToggleSelectSeriesModalVisible}>Upload</Button>
+      <EpisodeUploadModal uploadEpisodeProgress={60} isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading || isCreateEpisodeLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} />
+      <SelectSeriesAndSeasonModal onNext={handleOnNextSelectSeriesAndSeasonModal} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModalVisible} />
       <LayoutAppBar />
-      <LayoutAppHeader />
+      <LayoutAppHeader children={appHeaderChildren} />
       <LayoutSideBar />
     </Page>
   );

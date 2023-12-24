@@ -1,13 +1,14 @@
 import { AirplaneIcon, SolidUploadIcon } from "@/components/icons";
-import { CircularProgress, Stack, SxProps } from "@mui/material";
+import { CircularProgress, LinearProgress, Stack, SxProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 interface VideoUploadCircleIconProps {
-  isLoading?: boolean;
-  isDragActive?: boolean;
+  isLoading: boolean;
+  isDragActive: boolean;
+  progress?: number;
 }
 
-export default function VideoUploadCircleIcon({ isLoading, isDragActive }: VideoUploadCircleIconProps) {
+export default function VideoUploadCircleIcon({ isLoading, isDragActive, progress }: VideoUploadCircleIconProps) {
   const iconContainerStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(16),
     width: theme.spacing(16),
@@ -31,6 +32,7 @@ export default function VideoUploadCircleIcon({ isLoading, isDragActive }: Video
   return (
     <Stack sx={iconContainerStyle} justifyContent="center" alignItems="center">
       {isDragActive ? <AirplaneIcon sx={iconStyle} /> : <SolidUploadIcon sx={iconStyle} />}
+      {progress ? <LinearProgress variant="determinate" /> : null}
     </Stack>
   );
 }

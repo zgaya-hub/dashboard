@@ -6,7 +6,7 @@ import { CardHeader, SxProps, Box, Stack, alpha, CardContent } from "@mui/materi
 import Avatar from "@/components/Avatar";
 import { MoreVertIcon } from "@/components/icons";
 
-interface VideoDisplayCardProps {
+interface VideoPlayCardProps {
   thumbnail: string;
   title: string;
   description: string;
@@ -16,7 +16,11 @@ interface VideoDisplayCardProps {
   children?: ReactNode;
 }
 
-export default function VideoDisplayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNo }: VideoDisplayCardProps) {
+const truncateText = (text: string, maxLength: number): string => {
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+};
+
+export default function VideoPlayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNo }: VideoPlayCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(32),
   }));
@@ -63,7 +67,7 @@ export default function VideoDisplayCard({ thumbnail, children, title, descripti
           </Stack>
         ) : null}
       </Box>
-      <CardHeader sx={cardHeaderStyle} avatar={<Avatar sx={cardAvatarStyle} src={avatarSrc} />} title={title.slice(0, 30) + "..."} subheader={description.slice(0, 35) + "..."} action={<MoreVertIcon onClick={onClickMenuIcon} />} />
+      <CardHeader sx={cardHeaderStyle} avatar={<Avatar sx={cardAvatarStyle} src={avatarSrc} />} title={truncateText((title, 15))} subheader={truncateText(description, 18)} action={<MoreVertIcon onClick={onClickMenuIcon} />} />
       <CardContent sx={cardContentStyle}>{children}</CardContent>
     </Card>
   );

@@ -7,7 +7,7 @@ interface AuthContextProps {
   isAuthenticated: boolean;
   authToken: string | undefined;
   setAuthToken: (authToken: string) => void;
-  handleOnLogout: (persistUser?: boolean) => void;
+  handleOnLogout: () => void;
 }
 
 const defaultContextValue: AuthContextProps = {
@@ -44,12 +44,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     });
   }, [state.authToken]);
 
-  const handleOnLogout = (persistUser = false) => {
-    if (!persistUser) {
-      setState(defaultContextValue);
-      setAuthenticationHeaders({});
-      handleOnRemoveItemFromStorage("authToken");
-    }
+  const handleOnLogout = () => {
+    setState(defaultContextValue);
+    setAuthenticationHeaders({});
+    handleOnRemoveItemFromStorage("authToken");
   };
 
   const handleOnAuthenticate = (authToken: string = "") => {
@@ -66,7 +64,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     () => ({
       ...state,
       handleOnAuthenticate: handleOnAuthenticate,
-      handleOnLogout: handleOnLogout,
+      handleOnLogout,
       setAuthToken,
     }),
     [state]

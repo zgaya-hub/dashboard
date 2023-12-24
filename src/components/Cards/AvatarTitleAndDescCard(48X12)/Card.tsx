@@ -17,8 +17,8 @@ export default function AvatarTitleAndDescCard({ avatar, title, description, act
   }));
 
   const cardAvatarStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.spacing(6),
-    width: theme.spacing(6),
+    height: theme.spacing(8),
+    width: theme.spacing(8),
     background: theme.palette.common.black,
     color: theme.palette.common.white,
   }));

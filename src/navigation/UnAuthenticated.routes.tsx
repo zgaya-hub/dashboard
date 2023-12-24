@@ -6,7 +6,7 @@ const UnAuthenticatedRoutes = () => {
   return (
       <Routes>
         <Route path="sign-in/*" Component={SignInRoutes} />
-        <Route path="/*" Component={FourOFourRoutes} />
+        <Route path="*" Component={FourOFourRoutes} />
       </Routes>
   );
 };

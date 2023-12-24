@@ -14,7 +14,7 @@ export default function ImagePlusTitleCard({ thumbnail, title }: ImagePlusTitleC
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(48),
   }));
-
+  
   const cardImageStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(24),
   }));

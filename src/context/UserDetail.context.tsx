@@ -7,27 +7,16 @@ interface UserDetailContextProps {
   imageUrl: string;
 }
 
-const UserDetailContext = createContext<UserDetailContextProps | undefined>(
-  undefined
-);
+const UserDetailContext = createContext<UserDetailContextProps | undefined>(undefined);
 
 interface UserDetailProviderProps {
   children: ReactNode;
 }
 
 export function UserDetailProvider({ children }: UserDetailProviderProps) {
-  const [userDetails, setUserDetails] =
-    useState<UserDetailContextProps>(defaultUserDetails);
+  const [userDetails] = useState<UserDetailContextProps>(defaultUserDetails);
 
-  const toggleUserDetail = (details: UserDetailContextProps) => {
-    setUserDetails(details);
-  };
-
-  return (
-    <UserDetailContext.Provider value={{ ...userDetails }}>
-      {children}
-    </UserDetailContext.Provider>
-  );
+  return <UserDetailContext.Provider value={{ ...userDetails }}>{children}</UserDetailContext.Provider>;
 }
 
 export default function useUserDetail() {
