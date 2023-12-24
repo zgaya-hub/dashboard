@@ -1,4 +1,4 @@
-import { DatePicker, DatePickerProps } from "@mui/x-date-pickers";
+import { DatePicker, DatePickerProps } from "@mui/x-date-pickers-pro";
 
 interface DatePickerModalProps extends DatePickerProps<Date> {
   fullWidth?: boolean;

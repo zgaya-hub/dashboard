@@ -2,6 +2,11 @@
   "Component": {
     "Search": {
       "searchAcrossYourChannel": "Search across your channel"
+    },
+    "DataGridPro": {
+      "DataGridEmptyComponent": {
+        "message": "No rows found!"
+      }
     }
   },
   "Feature": {

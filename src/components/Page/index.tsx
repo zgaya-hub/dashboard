@@ -6,8 +6,7 @@ interface PageProps extends PaperProps {}
 export default function Page({ children }: PageProps) {
 
   const pageStyle = useThemeStyles<SxProps>((theme) => ({
-    paddingY: theme.spacing(12),
-    paddingLeft: theme.spacing(16),
+    padding: theme.spacing(16),
     background: theme.palette.background.paper,
     height: "100vh",
     width: "100vw",

@@ -1,6 +1,6 @@
 import { PaletteOptions } from "@mui/material/styles/createPalette";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import { ThemeOptions, alpha } from "@mui/material";
+import { ThemeOptions } from "@mui/material";
 
 export const lightThemePalette: PaletteOptions = {
   mode: "light",
@@ -8,10 +8,6 @@ export const lightThemePalette: PaletteOptions = {
     main: "#1976d2",
     light: "#42a5f5",
     dark: "#1565c0",
-  },
-  background: {
-    default: "#ffffff",
-    paper: alpha("#edecec", 0.5),
   },
 };
 
@@ -23,8 +19,8 @@ export const darkThemePalette: PaletteOptions = {
     dark: "#1565c0",
   },
   background: {
-    default: "#1c1b1b",
-    paper: alpha("#2b2929", 0.5),
+    default: "#171717",
+    paper: '#171717',
   },
 };
 
