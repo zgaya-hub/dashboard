@@ -12,10 +12,10 @@ export type VideoUploadRouteParams = {
 const VideoUploadRoutes = () => {
   return (
     <Routes>
-      <Route path="/" Component={UploadScreen} />
-      <Route path="/movie" Component={MovieUploadScreen} />
-      <Route path="/trailer" Component={TrailerUploadScreen} />
-      <Route path="/episode" Component={EpisodeUploadScreen} />
+      <Route path="" Component={UploadScreen} />
+      <Route path="movie" Component={MovieUploadScreen} />
+      <Route path="trailer" Component={TrailerUploadScreen} />
+      <Route path="episode" Component={EpisodeUploadScreen} />
     </Routes>
   );
 };

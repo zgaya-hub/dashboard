@@ -43,12 +43,8 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
     },
   });
 
-  const inputContainerStyle = useThemeStyles<SxProps>((theme) => ({
-    background: theme.palette.background.default,
-  }));
-
   const InputArea = (
-    <Form onSubmit={handleSubmit(onSave)} sx={inputContainerStyle} gap={2}>
+    <Form onSubmit={handleSubmit(onSave)} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
         <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
