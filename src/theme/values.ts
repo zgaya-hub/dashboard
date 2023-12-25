@@ -1,6 +1,7 @@
 import { PaletteOptions } from "@mui/material/styles/createPalette";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import { ThemeOptions } from "@mui/material";
+import { ThemeOptions,  } from "@mui/material";
+import shadows from "@mui/material/styles/shadows";
 
 export const lightThemePalette: PaletteOptions = {
   mode: "light",
@@ -9,6 +10,10 @@ export const lightThemePalette: PaletteOptions = {
     light: "#42a5f5",
     dark: "#1565c0",
   },
+  background: {
+    default: '#fff',
+    paper: '#ededed',
+  }
 };
 
 export const darkThemePalette: PaletteOptions = {
@@ -89,6 +94,13 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       elevation: 1,
     },
   },
+  MuiGrid: {
+    styleOverrides: {
+      root: {
+        boxShadow: shadows['1']
+      },
+    },
+  }
 };
 
 export const darkThemeComponents: ThemeOptions["components"] = {
@@ -119,5 +131,11 @@ export const darkThemeComponents: ThemeOptions["components"] = {
     defaultProps: {
       elevation: 1,
     },
-  },
+  }, MuiGrid: {
+    styleOverrides: {
+      root: {
+        boxShadow: shadows['1']
+      },
+    },
+  }
 };

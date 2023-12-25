@@ -43,7 +43,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
     },
   });
 
-  const InputArea = (
+  const renderForm = (
     <Form onSubmit={handleSubmit(onSave)} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
@@ -61,7 +61,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
         <Stack direction={"row"} justifyContent={"end"}>
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.reUsePrevious")}</Button>
         </Stack>
-        {InputArea}
+        {renderForm}
         <Stack direction={"row"} gap={2}>
           <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
           <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />

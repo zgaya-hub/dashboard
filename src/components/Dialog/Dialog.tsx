@@ -15,6 +15,7 @@ interface DialogProps extends MuiDialogProps {
   dialogActionProps?: DialogActionProps;
   dialogAction?: ReactNode;
   dialogContentSx?: SxProps;
+  dividers?: boolean;
 }
 
 function PaperComponent({ ...restProps }: PaperProps) {
@@ -25,14 +26,14 @@ function PaperComponent({ ...restProps }: PaperProps) {
   );
 }
 
-export default function Dialog({ dialogContentSx, onClose, headerHidden = false, headerText, dialogActionProps, dialogAction, outAreaClose = true, children, isDraggable = false, hideCrossButton, dialogHeaderProps, ...restProps }: DialogProps) {
+export default function Dialog({ dialogContentSx, onClose, headerHidden = false, dividers = true, headerText, dialogActionProps, dialogAction, outAreaClose = true, children, isDraggable = false, hideCrossButton, dialogHeaderProps, ...restProps }: DialogProps) {
   if (isDraggable) {
     return (
       <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outAreaClose ? onClose : () => {}} {...restProps}>
         {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" hideCrossButton={hideCrossButton} isDragable={isDraggable} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
         {dialogAction ? (
           <>
-            <DialogContent dividers sx={dialogContentSx}>
+            <DialogContent dividers={dividers} sx={dialogContentSx}>
               {children}
             </DialogContent>{" "}
             <DialogAction children={dialogAction} {...dialogActionProps} />
@@ -50,7 +51,7 @@ export default function Dialog({ dialogContentSx, onClose, headerHidden = false,
       {!headerHidden ? <DialogHeader hideCrossButton={hideCrossButton} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
       {dialogAction ? (
         <>
-          <DialogContent dividers sx={dialogContentSx}>
+          <DialogContent dividers={dividers} sx={dialogContentSx}>
             {children}
           </DialogContent>{" "}
           <DialogAction children={dialogAction} {...dialogActionProps} />

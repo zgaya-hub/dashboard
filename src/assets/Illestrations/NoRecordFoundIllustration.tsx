@@ -1,7 +1,7 @@
 export default function NoRecordFoundIllustration() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="100" viewBox="0 0 135 140" aria-hidden focusable="false">
-      <ellipse cx="67.797" cy="106.89" rx="67.797" ry="12.668" fill-opacity="0.8" fill="#f5f5f5" />
+      <ellipse cx="67.797" cy="106.89" rx="67.797" ry="12.668" fillOpacity="0.8" fill="#f5f5f5" />
       <path d="M122.034 69.674L98.109 40.229c-1.148-1.386-2.826-2.225-4.593-2.225h-51.44c-1.766 0-3.444.839-4.592 2.225L13.56 69.674v15.383h108.475V69.674z" fill="#aeb8c2" />
       <path d="M33.83 0h67.933a4 4 0 0 1 4 4v93.344a4 4 0 0 1-4 4H33.83a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" fill="#f5f5f7" />
       <path

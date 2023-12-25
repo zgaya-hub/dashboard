@@ -6,3 +6,8 @@ export enum MovierMediaEnum {
   SHORT = "Short",
   MOVIE = "Movie",
 }
+
+export enum MediaImageTypeEnum {
+  BACKDROP = "Backdrop",
+  THUMBNAIL = "Thumbnail",
+}

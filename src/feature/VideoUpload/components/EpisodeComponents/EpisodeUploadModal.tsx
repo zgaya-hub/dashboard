@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
 import EpisodeCreateStep, { CreateEpisodeFormFieldType } from "./EpisodeCreateStep";
 import DialogAction from "@/components/Dialog/DialogAction";
@@ -31,14 +31,14 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [isInitialCall, setIsInitialCall] = useState<boolean>(false);
 
-  useEffect(() => {
+  // TODO: this will need to be redirect to next tab i will work on it soon
+  /*   useEffect(() => {
     setIsInitialCall(true);
     if (isInitialCall && !isLoading) {
       handleOnNext();
     }
-  }, [isLoading]);
+  }, [isLoading]); */
 
   const handleOnMovie = () => {
     navigate.navigate("/video-upload/movie");

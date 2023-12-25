@@ -2,7 +2,7 @@ import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CreateEpisodeInput, CreateMediaImageInput, CreateMediaImageOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
-import { MediaImageTypeEnum } from "../enum";
+import { MediaImageTypeEnum } from "@/types/enum";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();

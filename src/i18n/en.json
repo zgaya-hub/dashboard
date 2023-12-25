@@ -7,10 +7,22 @@
       "DataGridEmptyComponent": {
         "message": "No rows found!"
       }
+    },
+    "Modals": {
+      "ConfirmationModal": {
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "title": "Are you sure",
+        "question": "Do you want to do this?"
+      }
     }
   },
   "Feature": {
     "VideoUpload": {
+      "EpisodeUploadScreen": {
+        "confirmationModalTitle": "Extract thumbnail",
+        "confirmationModalMessage": "Do you want to extract thumbnail for video"
+      },
       "MovieUploadModal": {
         "headerText": "Upload movie",
         "title": "Drag and drop a movie here",
