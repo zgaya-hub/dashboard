@@ -72,7 +72,7 @@
         "createSeason": "Create season",
         "uploadEpisode": "Upload episode"
       },
-      "SeriesBasicInformationForm": {
+      "SeriesCreateForm": {
         "addBasicInformation": "Add basic Info",
         "cancel": "Cancel",
         "save": "Save",

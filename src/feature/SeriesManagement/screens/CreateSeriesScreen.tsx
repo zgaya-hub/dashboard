@@ -3,27 +3,42 @@ import { useState } from "react";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { MediaImageTypeEnum } from "@/types/enum";
-import { Grid } from "@mui/material";
-import SeriesBasicInformationForm, { SeriesBasicInformationFormFieldType } from "../components/SeriesBasicInformationForm";
-import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
+import { CardMedia, Grid, SxProps } from "@mui/material";
+import SeriesCreateForm, { SeriesCreateFormFieldType } from "../components/SeriesCreateForm";
 import SeriesImageSelectComponent from "../components/SeriesImageSelectComponent";
-import { CircularProgress } from "@/components/ProgressBars";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
 
 export default function SeriesManagementScreen() {
-  const [thumbnailUrl, senBackDropUrl] = useState("");
+  const [backDropUrl, senBackDropUrl] = useState("");
   const [mediaImageId, setMediaImageId] = useState("");
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
 
+  const {
+    control,
+    formState: { errors },
+    register,
+  } = useForm<SeriesCreateFormFieldType>({
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      title: "",
+      plotSummary: DUMMY_PLOT_SUMMARY,
+      releaseDate: new Date().getTime(),
+    },
+  });
+
   const handleOnBackDropSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    senBackDropUrl(await extractImageUrl(image));
-    const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.THUMBNAIL });
+    const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.BACKDROP });
     setMediaImageId(result.createMediaImage.mediaImageId);
+    senBackDropUrl(await extractImageUrl(image));
   };
 
-  const handleOnCreateEpisode = (input: SeriesBasicInformationFormFieldType) => {
+  const handleOnCreateEpisode = (input: SeriesCreateFormFieldType) => {
     createSeriesMutateAsync({
       MediaImageId: mediaImageId,
       MediaBasicInfo: {
@@ -34,22 +49,34 @@ export default function SeriesManagementScreen() {
     });
   };
 
+  const cardMediaStyle = useThemeStyles<SxProps>((theme) => ({
+    height: "100%",
+    minHeight: theme.spacing(16),
+    backgroundSize: "contain",
+    backgroundPosition: "top",
+  }));
+
   return (
     <Page>
       <Grid container justifyContent={"space-between"} rowGap={4}>
         <Grid xs={12} item lg={5.9}>
-          <SeriesBasicInformationForm onSave={handleOnCreateEpisode} isLoading={isCreateSeriesLoading} />
-        </Grid>
-        <Grid xs={12} item lg={5.9}>
-          <SeriesAdditionalInformationForm onSave={handleOnCreateEpisode} isLoading={isCreateSeriesLoading} />
+          <SeriesCreateForm onSave={handleOnCreateEpisode} />
         </Grid>
         <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
           <Grid xs={12} item lg={5.9}>
             <SeriesImageSelectComponent onImageDrop={handleOnBackDropSelect} isLoading={isCreateMediaImageLoading} />
           </Grid>
+          <Grid xs={12} item lg={5.9}>
+            <CardMedia sx={cardMediaStyle} image={backDropUrl} />
+          </Grid>
         </Grid>
-        <Grid xs={12} container lg={5.9}></Grid>
       </Grid>
     </Page>
   );
 }
+
+const validationSchema = yup.object().shape({
+  title: yup.string().required("Title is required"),
+  plotSummary: yup.string().required("Plot summary is required"),
+  releaseDate: yup.string().required("Release date is required"),
+});

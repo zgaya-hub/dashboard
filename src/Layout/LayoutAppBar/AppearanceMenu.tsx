@@ -1,8 +1,8 @@
 import React from "react";
-import { ListItemText, Divider } from "@mui/material";
+import { ListItemText, Divider, Menu, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { LaptopIcon, LightModeIcon, MoonIcon } from "@/components/icons";
-import { MenuItem, Menu, MenuHeader } from "@/components/Menu";
+import { MenuHeader } from "@/components/Menu";
 
 interface AppearanceMenuProps {
   anchorEl: null | HTMLElement;

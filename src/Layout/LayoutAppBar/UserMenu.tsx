@@ -1,9 +1,8 @@
 import React from "react";
-import { ListItemText, Divider } from "@mui/material";
+import { ListItemText, Divider, MenuItem, Menu } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { ChevronRightIcon, FeedbackIcon, LogoutIcon, MoonIcon, SettingIcon, SwitchAccountIcon, TranslateIcon } from "@/components/icons";
 import UserCardForMenu from "./UserCardForMenu";
-import { Menu, MenuItem } from "@/components/Menu";
 
 interface UserMenuProps {
   anchorEl: null | HTMLElement;

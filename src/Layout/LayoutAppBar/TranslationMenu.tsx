@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Divider, ListItemText } from "@mui/material";
+import { Divider, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { ClearIcon, SearchIcon, TranslateIcon } from "@/components/icons";
-import { MenuItem, Menu, MenuHeader } from "@/components/Menu";
+import {  MenuHeader } from "@/components/Menu";
 import { SearchInput } from "@/components/Form";
 
 interface TranslationMenuProps {

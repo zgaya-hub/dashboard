@@ -1,15 +1,14 @@
-import { Hidden, Stack, SxProps } from "@mui/material";
+import { Hidden, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
 import { DatePickerModal, Form, TextField } from "@/components/Form";
 import { DevTool } from "@hookform/devtools";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ImageUploadComponent from "../ImageUploadComponent";
 import EpisodeCardComponent from "./EpisodeCardComponent";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
+import * as yup from "yup";
 
 export interface CreateEpisodeFormFieldType {
   title: string;
@@ -62,10 +61,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.reUsePrevious")}</Button>
         </Stack>
         {renderForm}
-        <Stack direction={"row"} gap={2}>
-          <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
-          <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
-        </Stack>
+        <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
         <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={2}>
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.cancel")}</Button>
           <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>

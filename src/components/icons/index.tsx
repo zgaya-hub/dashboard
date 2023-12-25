@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
+import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
 import { default as MuiChevronRightOutlinedIcon } from "@mui/icons-material/ChevronRightOutlined";
@@ -35,7 +35,6 @@ import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/Radi
 import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVert";
 import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonChecked";
 import Tooltip from "../Tooltip";
-import { CircularProgress } from "../ProgressBars";
 
 interface IconWrapperProps extends SvgIconProps {
   onClick?: () => void;

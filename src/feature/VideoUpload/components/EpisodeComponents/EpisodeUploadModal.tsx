@@ -20,12 +20,11 @@ interface EpisodeUploadModalProps {
   onEpisodeSelect: (episode: File) => void;
   onThumbnailSelect: (episode: File) => void;
   onCreateEpisode: (input: CreateEpisodeFormFieldType) => void;
-  uploadEpisodeProgress: number;
   isLoading: boolean;
   thumbnailUrl: string;
 }
 
-export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodeProgress, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
+export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
@@ -69,13 +68,12 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
         width: "100%",
       },
     },
-   
   }));
 
   const steps = [
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.uploadEpisode"),
-      step: <VideoUploadComponent onVideoSelect={handleOnEpisodeSelect} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} progress={uploadEpisodeProgress} />,
+      step: <VideoUploadComponent onVideoSelect={handleOnEpisodeSelect} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />,
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
@@ -102,8 +100,8 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
   );
 
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={steps[activeStep].label} onClose={onClose} outAreaClose={false}>
-      <DialogContent dividers>{steps[activeStep].step}</DialogContent>
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={steps[activeStep].label} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
+      {steps[activeStep].step}
       <MobileStepper
         variant="progress"
         steps={3}
@@ -124,7 +122,6 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
           </Button>
         }
       />
-      <DialogAction children={dialogFooter} />
     </Dialog>
   );
 }

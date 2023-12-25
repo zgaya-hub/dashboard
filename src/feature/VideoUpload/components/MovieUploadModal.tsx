@@ -58,7 +58,7 @@ export default function MovieUploadModal({ isVisible, onClose, onFeedback, onVid
 
   return (
     <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.MovieUploadModal.headerText")} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
-      <VideoUploadComponent onVideoSelect={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} progress={0} />
+      <VideoUploadComponent onVideoSelect={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />
     </Dialog>
   );
 }
