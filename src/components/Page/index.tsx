@@ -7,8 +7,9 @@ export default function Page({ children }: PageProps) {
 
   const pageStyle = useThemeStyles<SxProps>((theme) => ({
     padding: theme.spacing(12),
-    paddingLeft: theme.spacing(12),
-    paddingRight: theme.spacing(2),
+    // this 14 is oyut of the theme style
+    paddingLeft: theme.spacing(14),
+    paddingRight: theme.spacing(4),
     background: theme.palette.background.paper,
     height: "100vh",
     width: "100vw",

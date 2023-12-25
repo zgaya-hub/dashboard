@@ -1,28 +1,29 @@
 import Page from "@/components/Page";
-import CreateSeriesForm, { CreateSeriesFormFieldType } from "../components/CreateSeriesForm";
 import { useState } from "react";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { MediaImageTypeEnum } from "@/types/enum";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Box, SxProps } from "@mui/material";
-import Grid from "@/components/Tags/Grid";
+import { Grid } from "@mui/material";
+import SeriesBasicInformationForm, { SeriesBasicInformationFormFieldType } from "../components/SeriesBasicInformationForm";
+import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
+import SeriesImageSelectComponent from "../components/SeriesImageSelectComponent";
+import { CircularProgress } from "@/components/ProgressBars";
 
 export default function SeriesManagementScreen() {
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [thumbnailUrl, senBackDropUrl] = useState("");
   const [mediaImageId, setMediaImageId] = useState("");
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
 
-  const handleOnThumbnailSelect = async (image: File) => {
+  const handleOnBackDropSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    setThumbnailUrl(await extractImageUrl(image));
+    senBackDropUrl(await extractImageUrl(image));
     const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.THUMBNAIL });
     setMediaImageId(result.createMediaImage.mediaImageId);
   };
 
-  const handleOnCreateEpisode = (input: CreateSeriesFormFieldType) => {
+  const handleOnCreateEpisode = (input: SeriesBasicInformationFormFieldType) => {
     createSeriesMutateAsync({
       MediaImageId: mediaImageId,
       MediaBasicInfo: {
@@ -33,14 +34,21 @@ export default function SeriesManagementScreen() {
     });
   };
 
-  const formContainerStyle = useThemeStyles<SxProps>((theme) => ({}));
-
   return (
     <Page>
-      <Grid container elevation={0} variant="paper">
-        <Grid xs={12} md={6} sx={formContainerStyle} padding={4}>
-          <CreateSeriesForm thumbnailUrl={thumbnailUrl} onSave={handleOnCreateEpisode} onThumbnailSelect={handleOnThumbnailSelect} isLoading={isCreateSeriesLoading || isCreateMediaImageLoading} />
+      <Grid container justifyContent={"space-between"} rowGap={4}>
+        <Grid xs={12} item lg={5.9}>
+          <SeriesBasicInformationForm onSave={handleOnCreateEpisode} isLoading={isCreateSeriesLoading} />
         </Grid>
+        <Grid xs={12} item lg={5.9}>
+          <SeriesAdditionalInformationForm onSave={handleOnCreateEpisode} isLoading={isCreateSeriesLoading} />
+        </Grid>
+        <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
+          <Grid xs={12} item lg={5.9}>
+            <SeriesImageSelectComponent onImageDrop={handleOnBackDropSelect} isLoading={isCreateMediaImageLoading} />
+          </Grid>
+        </Grid>
+        <Grid xs={12} container lg={5.9}></Grid>
       </Grid>
     </Page>
   );

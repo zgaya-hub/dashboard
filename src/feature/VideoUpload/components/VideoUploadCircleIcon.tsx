@@ -1,6 +1,7 @@
 import { AirplaneIcon, SolidUploadIcon } from "@/components/icons";
-import { CircularProgress, LinearProgress, Stack, SxProps } from "@mui/material";
+import { LinearProgress, Stack, SxProps } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { CircularProgress } from "@/components/ProgressBars";
 
 interface VideoUploadCircleIconProps {
   isLoading: boolean;

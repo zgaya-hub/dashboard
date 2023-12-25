@@ -6,10 +6,9 @@ import { SxProps } from "@mui/material";
 
 interface DataGridProProps extends MuiDataGridProProps {
   contextMenuComponent?: (isOpen: boolean, onClose: () => void, anchorEl: HTMLElement) => ReactNode;
-  headerChildren?: ReactNode;
 }
 
-export default function DataGridPro({ slots, contextMenuComponent, headerChildren, ...restProps }: DataGridProProps) {
+export default function DataGridPro({ slots, contextMenuComponent, ...restProps }: DataGridProProps) {
   const [contextMenuAnchorEl, setContextMenuAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -19,15 +18,12 @@ export default function DataGridPro({ slots, contextMenuComponent, headerChildre
 
   const dataGridProStyle = useThemeStyles<SxProps>((theme) => ({
     background: theme.palette.background.default,
-    paddingX: theme.spacing(4),
     paddingY: theme.spacing(1),
-    minHeight: theme.spacing(64),
-    height: "auto",
+    height: theme.spacing(64),
   }));
 
   return (
     <Fragment>
-      {headerChildren}
       <MuiDataGridPro
         sx={dataGridProStyle}
         {...restProps}

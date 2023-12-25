@@ -1,27 +1,27 @@
 import Button from "@/components/Button";
 import { DatePickerModal, Form, TextField } from "@/components/Form";
+import Elevator from "@/components/Tags/Elevator";
 import { SaveIcon } from "@/components/icons";
 import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Paper, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 
-export interface CreateSeriesFormFieldType {
+export interface SeriesAdditionalInfoFormFieldType {
   title: string;
   plotSummary: string;
   releaseDate: number;
 }
 
-interface CreateSeriesFormProps {
-  onSave: (input: CreateSeriesFormFieldType) => void;
-  onThumbnailSelect: (thumbnail: File) => void;
+interface SeriesAdditionalInfoFormProps {
+  onSave: (input: SeriesAdditionalInfoFormFieldType) => void;
   isLoading: boolean;
-  thumbnailUrl: string;
 }
 
-export default function CreateSeriesForm({ onSave, isLoading }: CreateSeriesFormProps) {
+export default function SeriesAdditionalInformationForm({ onSave, isLoading }: SeriesAdditionalInfoFormProps) {
   const { t } = useTranslation();
 
   const {
@@ -29,7 +29,7 @@ export default function CreateSeriesForm({ onSave, isLoading }: CreateSeriesForm
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<CreateSeriesFormFieldType>({
+  } = useForm<SeriesAdditionalInfoFormFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
@@ -41,24 +41,25 @@ export default function CreateSeriesForm({ onSave, isLoading }: CreateSeriesForm
   const renderForm = (
     <Form onSubmit={handleSubmit(onSave)} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
-        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
+        <TextField register={register} name="title" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required />
+        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.releaseDate")} views={["year", "month"]} fullWidth />} />
       </Stack>
-      <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
+      <TextField register={register} name="plotSummary" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />
     </Form>
   );
 
   return (
-    <Stack gap={2}>
+    <Elevator padding={4} gap={2}>
+      <Typography variant="h5">{t("Feature.SeriesManagement.SeriesAdditionalInformationForm.addAdditionalInformation")}</Typography>
       {renderForm}
       <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={2}>
-        <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.cancel")}</Button>
+        <Button variant="text">{t("Feature.SeriesManagement.SeriesAdditionalInformationForm.cancel")}</Button>
         <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>
-          {t("Feature.VideoUpload.EpisodeUploadModal.next")}
+          {t("Feature.SeriesManagement.SeriesAdditionalInformationForm.save")}
         </Button>
       </Stack>
-    </Stack>
+    </Elevator>
   );
 }
 

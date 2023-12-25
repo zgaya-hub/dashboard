@@ -39,7 +39,7 @@
       },
       "EpisodeUploadModal": {
         "uploadEpisode": "Upload episode",
-        "addBasicInformation": "Add Basic Information",
+        "addBasicInformation": "Add basic Info",
         "title": "Drag and drop a episode here",
         "message": "Ready to upload? Just simple upload episode here",
         "movie": "Movie",
@@ -71,6 +71,25 @@
         "createSeries": "Create series",
         "createSeason": "Create season",
         "uploadEpisode": "Upload episode"
+      },
+      "SeriesBasicInformationForm": {
+        "addBasicInformation": "Add basic Info",
+        "cancel": "Cancel",
+        "save": "Save",
+        "plotSummary": "Plot summary",
+        "title": "Title",
+        "releaseDate": "Release Date"
+      },
+      "SeriesImageSelectComponent": {
+        "title": "Drop or select a backdrop image"
+      },
+      "SeriesAdditionalInformationForm": {
+        "addAdditionalInformation": "Add additional Info",
+        "cancel": "Cancel",
+        "save": "Save",
+        "plotSummary": "Plot summary",
+        "title": "Title",
+        "releaseDate": "Release Date"
       }
     }
   },
