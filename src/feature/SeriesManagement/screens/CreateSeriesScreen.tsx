@@ -4,24 +4,26 @@ import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metal
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { MediaImageTypeEnum } from "@/types/enum";
 import { CardMedia, Grid, SxProps } from "@mui/material";
-import SeriesCreateForm, { SeriesCreateFormFieldType } from "../components/SeriesCreateForm";
+import SeriesBasicInformationForm from "../components/SeriesBasicInformationForm";
 import SeriesImageSelectComponent from "../components/SeriesImageSelectComponent";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import { CreateSeriesFieldType } from "../types";
+import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
 
 export default function SeriesManagementScreen() {
   const [backDropUrl, senBackDropUrl] = useState("");
   const [mediaImageId, setMediaImageId] = useState("");
-  const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
+  const { mutateAsync: createSeriesMutateAsync } = useCreateSeries();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
 
   const {
     control,
     formState: { errors },
     register,
-  } = useForm<SeriesCreateFormFieldType>({
+  } = useForm<CreateSeriesFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
@@ -38,7 +40,7 @@ export default function SeriesManagementScreen() {
     senBackDropUrl(await extractImageUrl(image));
   };
 
-  const handleOnCreateEpisode = (input: SeriesCreateFormFieldType) => {
+  const handleOnCreateEpisode = (input: CreateSeriesFieldType) => {
     createSeriesMutateAsync({
       MediaImageId: mediaImageId,
       MediaBasicInfo: {
@@ -60,7 +62,7 @@ export default function SeriesManagementScreen() {
     <Page>
       <Grid container justifyContent={"space-between"} rowGap={4}>
         <Grid xs={12} item lg={5.9}>
-          <SeriesCreateForm onSave={handleOnCreateEpisode} />
+          <SeriesBasicInformationForm control={control} register={register} errors={errors} />
         </Grid>
         <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
           <Grid xs={12} item lg={5.9}>
@@ -69,6 +71,9 @@ export default function SeriesManagementScreen() {
           <Grid xs={12} item lg={5.9}>
             <CardMedia sx={cardMediaStyle} image={backDropUrl} />
           </Grid>
+        </Grid>
+        <Grid xs={12} item lg={5.9}>
+          <SeriesAdditionalInformationForm control={control} register={register} errors={errors} />
         </Grid>
       </Grid>
     </Page>
@@ -80,3 +85,5 @@ const validationSchema = yup.object().shape({
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.string().required("Release date is required"),
 });
+
+const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";

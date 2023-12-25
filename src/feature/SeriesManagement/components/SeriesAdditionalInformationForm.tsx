@@ -1,72 +1,39 @@
-import Button from "@/components/Button";
-import { DatePickerModal, Form, TextField } from "@/components/Form";
+import { DatePickerModal, TextField } from "@/components/Form";
 import Elevator from "@/components/Tags/Elevator";
-import { SaveIcon } from "@/components/icons";
 import { DevTool } from "@hookform/devtools";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Paper, Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import { Controller, useForm } from "react-hook-form";
+import { Control, Controller, FieldErrors, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import * as yup from "yup";
+import { CreateSeriesFieldType } from "../types";
+import { RadioGroupModal } from "@/components/Modals";
+import { useState } from "react";
 
-export interface SeriesAdditionalInfoFormFieldType {
-  title: string;
-  plotSummary: string;
-  releaseDate: number;
+interface SeriesAdditionalInformationFormProps {
+  register: UseFormRegister<CreateSeriesFieldType>;
+  control: Control<CreateSeriesFieldType>;
+  errors: FieldErrors<CreateSeriesFieldType>;
 }
 
-interface SeriesAdditionalInfoFormProps {
-  onSave: (input: SeriesAdditionalInfoFormFieldType) => void;
-  isLoading: boolean;
-}
-
-export default function SeriesAdditionalInformationForm({ onSave, isLoading }: SeriesAdditionalInfoFormProps) {
+export default function SeriesAdditionalInformationForm({ register, control, errors }: SeriesAdditionalInformationFormProps) {
   const { t } = useTranslation();
+  const [isCountryModalVisible, setIsCountryModalVisible] = useState(true);
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<SeriesAdditionalInfoFormFieldType>({
-    resolver: yupResolver(validationSchema),
-    defaultValues: {
-      title: "",
-      plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: new Date().getTime(),
-    },
-  });
-
-  const renderForm = (
-    <Form onSubmit={handleSubmit(onSave)} gap={2}>
-      <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="title" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required />
-        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.releaseDate")} views={["year", "month"]} fullWidth />} />
-      </Stack>
-      <TextField register={register} name="plotSummary" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
-      <DevTool control={control} />
-    </Form>
-  );
+  const handleOnToggleCountryModalVisible = () => {
+    setIsCountryModalVisible(!isCountryModalVisible);
+  };
 
   return (
     <Elevator padding={4} gap={2}>
       <Typography variant="h5">{t("Feature.SeriesManagement.SeriesAdditionalInformationForm.addAdditionalInformation")}</Typography>
-      {renderForm}
-      <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={2}>
-        <Button variant="text">{t("Feature.SeriesManagement.SeriesAdditionalInformationForm.cancel")}</Button>
-        <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>
-          {t("Feature.SeriesManagement.SeriesAdditionalInformationForm.save")}
-        </Button>
+      <Link onClick={handleOnToggleCountryModalVisible}>Open Country picker</Link>
+      {/* <Stack direction={{ md: "row", sm: "column" }} gap={2}>
+        <TextField register={register} name="title" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required />
+        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.releaseDate")} views={["year", "month"]} fullWidth />} />
       </Stack>
+      <TextField register={register} name="plotSummary" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
+      <DevTool control={control} /> */}
+      <RadioGroupModal isOpen={isCountryModalVisible} title="Choose country" onClose={handleOnToggleCountryModalVisible} />
     </Elevator>
   );
 }
-
-const validationSchema = yup.object().shape({
-  title: yup.string().required("Title is required"),
-  plotSummary: yup.string().required("Plot summary is required"),
-  releaseDate: yup.string().required("Release date is required"),
-});
-
-const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";

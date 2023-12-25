@@ -2,7 +2,6 @@ import { Dialog } from "@/components/Dialog";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { ReactNode } from "react";
-import { Stack } from "@mui/material";
 
 interface ConfirmationModalProps {
   isOpen: boolean;

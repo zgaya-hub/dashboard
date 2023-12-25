@@ -3,7 +3,6 @@ import DialogHeader, { DialogHeaderProps } from "./DialogHeader";
 import Draggable from "react-draggable";
 import DialogAction, { DialogActionProps } from "./DialogAction";
 import { ReactNode } from "react";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 interface DialogProps extends Omit<MuiDialogProps, "sx"> {
   headerText?: string;
