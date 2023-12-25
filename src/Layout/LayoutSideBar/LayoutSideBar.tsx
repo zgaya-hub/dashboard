@@ -49,7 +49,10 @@ export default function LayoutSideBar() {
       {
         icon: <DashboardIcon />,
         label: t("Layout.Sidebar.dashboard"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.dashboard")),
+        onClick: () => {
+          setActiveItemLabel(t("Layout.Sidebar.dashboard"));
+          navigation.navigate("/home");
+        },
         isActive: activeItemLabel === t("Layout.Sidebar.dashboard"),
       },
       {

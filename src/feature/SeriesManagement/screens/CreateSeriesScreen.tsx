@@ -5,8 +5,8 @@ import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metal
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { MediaImageTypeEnum } from "@/types/enum";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import Grid from "@mui/material/Grid";
-import { SxProps } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
+import Grid from "@/components/Tags/Grid";
 
 export default function SeriesManagementScreen() {
   const [thumbnailUrl, setThumbnailUrl] = useState("");
@@ -33,15 +33,12 @@ export default function SeriesManagementScreen() {
     });
   };
 
-  const formContainerStyle = useThemeStyles<SxProps>((theme) => ({
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(4),
-  }));
+  const formContainerStyle = useThemeStyles<SxProps>((theme) => ({}));
 
   return (
     <Page>
-      <Grid container>
-        <Grid xs={12} md={6} sx={formContainerStyle}>
+      <Grid container elevation={0} variant="paper">
+        <Grid xs={12} md={6} sx={formContainerStyle} padding={4}>
           <CreateSeriesForm thumbnailUrl={thumbnailUrl} onSave={handleOnCreateEpisode} onThumbnailSelect={handleOnThumbnailSelect} isLoading={isCreateSeriesLoading || isCreateMediaImageLoading} />
         </Grid>
       </Grid>

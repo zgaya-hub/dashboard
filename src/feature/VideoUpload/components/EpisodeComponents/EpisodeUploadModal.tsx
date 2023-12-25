@@ -69,9 +69,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, uploadEpisodePr
         width: "100%",
       },
     },
-    "& .MuiDialog-paperWidthXl": {
-      background: theme.palette.background.default,
-    },
+   
   }));
 
   const steps = [
