@@ -11,7 +11,6 @@ import { MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
 import UserAvatar from "./UserAvatar";
 import AppBar from "@/components/AppBar";
 import { Fab } from "@mui/material";
-import { Outlet } from "react-router-dom";
 
 export default function LayoutAppBar() {
   const navigation = useNavigation();

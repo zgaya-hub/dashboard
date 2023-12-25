@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@emotion/react':
-    specifier: ^11.11.1
+    specifier: ^11.11.3
     version: 11.11.3(@types/react@18.2.45)(react@18.2.0)
   '@emotion/styled':
     specifier: ^11.11.0
@@ -33,10 +33,10 @@ dependencies:
     specifier: ^7.1.1
     version: 7.1.1
   '@tanstack/react-query':
-    specifier: ^5.14.2
+    specifier: ^5.14.6
     version: 5.14.6(react@18.2.0)
   '@tanstack/react-query-devtools':
-    specifier: ^5.14.5
+    specifier: ^5.14.6
     version: 5.14.6(@tanstack/react-query@5.14.6)(react@18.2.0)
   '@types/node':
     specifier: ^20.10.5
@@ -63,8 +63,8 @@ dependencies:
     specifier: ^23.7.11
     version: 23.7.11
   metalyzer:
-    specifier: ^1.0.9
-    version: 1.0.9
+    specifier: ^1.0.10
+    version: 1.0.10
   pnpm:
     specifier: ^8.12.1
     version: 8.12.1
@@ -2374,8 +2374,8 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /metalyzer@1.0.9:
-    resolution: {integrity: sha512-gHHLK8m/Du6NxeBLzauouodvIRR5RY8yzRtgWdBG9WRFYBdWeZ/gIwhFOtU3+kNCTRI4uP07sDSTO3PqVo1CzQ==}
+  /metalyzer@1.0.10:
+    resolution: {integrity: sha512-j4bBYAu6HEnCO0r7kDhhTWctrHbnXNEjcXQxNNL6gVnYL1yspPhLN+fpkfv7XXUSZs+rjJQt8BP2FTpsXGp8og==}
     dev: false
 
   /micromatch@4.0.5:

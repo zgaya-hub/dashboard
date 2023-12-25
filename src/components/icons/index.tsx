@@ -1,5 +1,5 @@
 import React from "react";
-import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
+import { IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
 import { default as MuiChevronRightOutlinedIcon } from "@mui/icons-material/ChevronRightOutlined";
@@ -14,6 +14,7 @@ import { default as MuiMenuOpenOutlinedIcon } from "@mui/icons-material/MenuOpen
 import { default as MuiNightsStayOutlinedIcon } from "@mui/icons-material/NightsStayOutlined";
 import { default as QuestionAnswerOutlinedIcon } from "@mui/icons-material/QuestionAnswerOutlined";
 import { default as MuiAirplanemodeActiveIcon } from "@mui/icons-material/AirplanemodeActive";
+import { default as MuiDeleteIcon } from "@mui/icons-material/Delete";
 import { default as MuiSearchIcon } from "@mui/icons-material/Search";
 import { default as SettingsInputSvideoOutlinedIcon } from "@mui/icons-material/SettingsInputSvideoOutlined";
 import { default as SlideshowOutlinedIcon } from "@mui/icons-material/SlideshowOutlined";
@@ -34,6 +35,7 @@ import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/Radi
 import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVert";
 import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonChecked";
 import Tooltip from "../Tooltip";
+import { CircularProgress } from "../ProgressBars";
 
 interface IconWrapperProps extends SvgIconProps {
   onClick?: () => void;
@@ -99,3 +101,4 @@ export const RadioButtonCheckedIcon = withIconWrapper(MuiRadioButtonCheckedIcon)
 export const MoreVertIcon = withIconWrapper(MuiMoreVertIcon);
 export const ErrorIcon = withIconWrapper(MuiErrorOutlineIcon);
 export const SaveIcon = withIconWrapper(MuiSaveIcon);
+export const DeleteIcon = withIconWrapper(MuiDeleteIcon);

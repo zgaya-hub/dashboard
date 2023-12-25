@@ -1,38 +1,51 @@
-// import Button from "@/components/Button";
-import Button from "@/components/Button";
 import Page from "@/components/Page";
-import { getGridData } from "../mock";
-import { NoRecordFoundIllustration } from "@/assets/Illestrations";
 import DataGridPro from "@/components/DataGridPro/DataGridPro";
-// import { useDemoData } from '@mui/x-data-grid-generator';
+import SeriesGridContextMenu from "../components/SeriesGridContextMenu";
+import Button from "@/components/Button";
+import { Card, Stack, SxProps } from "@mui/material";
+import { useDemoData } from "@mui/x-data-grid-generator";
+import { useTranslation } from "react-i18next";
+import useNavigation from "@/navigation/use-navigation";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
-const SeriesManagementScreen = () => {
-  // const { data, loading } = useDemoData({
-  // dataSet: "Employee",
-  // rowLength: 1000,
-  // treeData: { maxDepth: 2, groupingField: "name", averageChildren: 200 },
-  // });
+export default function SeriesManagementScreen() {
+  const { t } = useTranslation();
+  const navigation = useNavigation();
 
-  const columns = [
-    { field: "id", headerName: "ID", type: "string", width: 300 },
-    { field: "name", headerName: "Name", type: "string", width: 300 },
-    { field: "email", headerName: "Email", type: "string", width: 300 },
-    { field: "address", headerName: "Address", type: "string", width: 300 },
-    { field: "phone", headerName: "Phone", type: "string", width: 300 },
-    { field: "company", headerName: "Company", type: "string", width: 300 },
-  ];
-  // id: randUuid,
-  //     name: randFullName,
-  //     email: randEmail,
-  //     address: randAddress,
-  //     phone: randNumber,
-  //     company: randCompanyName,
+  const { data, loading } = useDemoData({
+    dataSet: "Employee",
+    rowLength: 1000,
+    treeData: { maxDepth: 2, groupingField: "name", averageChildren: 200 },
+  });
+
+  const handleOnCreateSeriesClick = () => {
+    navigation.navigate("/series-management/create-series");
+  };
+
+  const handleOnEdit = () => {
+    console.log("Edit clicked for row:");
+  };
+
+  const handleOnDelete = () => {
+    console.log("Delete clicked for row:");
+  };
+
+  const cardStyle = useThemeStyles<SxProps>((theme) => ({
+    padding: theme.spacing(4),
+  }));
+
+  const tableHeader = (
+    <Stack gap={2} direction={"row"} mb={2} justifyContent={"end"}>
+      <Button onClick={handleOnCreateSeriesClick}>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
+    </Stack>
+  );
 
   return (
-    <Page>
-      <DataGridPro /* loading={loading} {...data} */ columns={columns} rows={[]}  />
+    <Page elevation={10}>
+      <Card sx={cardStyle}>
+        {tableHeader}
+        <DataGridPro {...data} loading={loading} pagination contextMenuComponent={(isOpen, onClose, anchorEl) => <SeriesGridContextMenu onEdit={handleOnEdit} onDelete={handleOnDelete} onClose={onClose} anchorEl={anchorEl} isOpen={isOpen} />} />
+      </Card>
     </Page>
   );
-};
-
-export default SeriesManagementScreen;
+}

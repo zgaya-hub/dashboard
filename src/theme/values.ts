@@ -9,6 +9,10 @@ export const lightThemePalette: PaletteOptions = {
     light: "#42a5f5",
     dark: "#1565c0",
   },
+  background: {
+    default: "#fff",
+    paper: "#ededed",
+  },
 };
 
 export const darkThemePalette: PaletteOptions = {
@@ -20,7 +24,7 @@ export const darkThemePalette: PaletteOptions = {
   },
   background: {
     default: "#171717",
-    paper: '#171717',
+    paper: "#171717",
   },
 };
 
@@ -84,11 +88,6 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
-  MuiPaper: {
-    defaultProps: {
-      elevation: 1,
-    },
-  },
 };
 
 export const darkThemeComponents: ThemeOptions["components"] = {
@@ -113,11 +112,6 @@ export const darkThemeComponents: ThemeOptions["components"] = {
       root: {
         background: "#1c1b1b",
       },
-    },
-  },
-  MuiPaper: {
-    defaultProps: {
-      elevation: 1,
     },
   },
 };

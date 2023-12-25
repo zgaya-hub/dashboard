@@ -1,27 +1,36 @@
+import { useState, useEffect } from "react";
+import { Backdrop } from "@mui/material";
+import { CircularProgress } from "@/components/ProgressBars";
 import { useAuthContext } from "@/context/AuthContext";
 import useNavigation from "@/navigation/use-navigation";
-import { useEffect } from "react";
-import { Backdrop, CircularProgress } from "@mui/material";
 
 export default function FourOFourScreen() {
   const navigation = useNavigation();
   const { isAuthenticated } = useAuthContext();
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isAuthenticated) {
-        navigation.navigate("/home");
-      } else {
-        navigation.navigate("/sign-in");
-      }
-    }, 1000);
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        const newProgress = prevProgress + 5;
+        if (newProgress === 100) {
+          clearInterval(interval);
+          if (isAuthenticated) {
+            navigation.navigate("/home");
+          } else {
+            navigation.navigate("/sign-in");
+          }
+        }
+        return newProgress;
+      });
+    }, 100);
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(interval);
   }, [isAuthenticated, navigation]);
 
   return (
     <Backdrop open>
-      <CircularProgress color="inherit" />
+      <CircularProgress value={progress} color="inherit" />
     </Backdrop>
   );
 }
