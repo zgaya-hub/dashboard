@@ -94,7 +94,6 @@ export const lightThemeComponents: ThemeOptions["components"] = {
     styleOverrides: {
       root: {
         width: 48 * 8,
-        padding: 2 * 8,
       },
     },
   },

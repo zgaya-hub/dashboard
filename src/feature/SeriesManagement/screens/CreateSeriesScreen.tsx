@@ -23,6 +23,8 @@ export default function SeriesManagementScreen() {
     control,
     formState: { errors },
     register,
+    setValue: setCreateSeriesFormValue,
+    watch: watchCreateSeriesFormValue
   } = useForm<CreateSeriesFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -73,7 +75,7 @@ export default function SeriesManagementScreen() {
           </Grid>
         </Grid>
         <Grid xs={12} item lg={5.9}>
-          <SeriesAdditionalInformationForm control={control} register={register} errors={errors} />
+          <SeriesAdditionalInformationForm control={control} register={register} errors={errors} setCreateSeriesFormValue={setCreateSeriesFormValue} watchCreateSeriesFormValue={watchCreateSeriesFormValue} />
         </Grid>
       </Grid>
     </Page>

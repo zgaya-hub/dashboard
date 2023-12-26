@@ -13,7 +13,7 @@ export default function SelectInput({ error, helperText, label, fullWidth, child
       <InputLabel id="demo-simple-select-label" error={error}>
         {label}
       </InputLabel>
-      <Select label={label} fullWidth={fullWidth} error={error} {...restProps}>
+      <Select label={label} fullWidth={fullWidth} error={error} {...restProps} value={"sdddd"}>
         {children}
       </Select>
       <FormHelperText error={error}>{helperText}</FormHelperText>

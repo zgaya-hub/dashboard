@@ -20,6 +20,7 @@ import { default as SettingsInputSvideoOutlinedIcon } from "@mui/icons-material/
 import { default as SlideshowOutlinedIcon } from "@mui/icons-material/SlideshowOutlined";
 import { default as MuiSpaceDashboardOutlinedIcon } from "@mui/icons-material/SpaceDashboardOutlined";
 import { default as MuiErrorOutlineIcon } from "@mui/icons-material/ErrorOutline";
+import { default as MuiCheckBoxOutlineBlank } from "@mui/icons-material/HideImage";
 import { default as MuiFileUploadIcon } from "@mui/icons-material/FileUpload";
 import { default as MuiSwitchAccountIcon } from "@mui/icons-material/SwitchAccountOutlined";
 import { default as MuiTimelineOutlinedIcon } from "@mui/icons-material/TimelineOutlined";
@@ -34,6 +35,8 @@ import { default as MuiCachedIcon } from "@mui/icons-material/CachedOutlined";
 import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/RadioButtonUnchecked";
 import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVert";
 import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonChecked";
+import { default as MuiSignalCellularAlt1BarIcon } from "@mui/icons-material/SignalCellularAlt1Bar";
+import { default as MuiDoneIcon } from "@mui/icons-material/Done";
 import Tooltip from "../Tooltip";
 
 interface IconWrapperProps extends SvgIconProps {
@@ -101,3 +104,5 @@ export const MoreVertIcon = withIconWrapper(MuiMoreVertIcon);
 export const ErrorIcon = withIconWrapper(MuiErrorOutlineIcon);
 export const SaveIcon = withIconWrapper(MuiSaveIcon);
 export const DeleteIcon = withIconWrapper(MuiDeleteIcon);
+export const SignalBarIcon = withIconWrapper(MuiSignalCellularAlt1BarIcon);
+export const DoneIcon = withIconWrapper(MuiDoneIcon);

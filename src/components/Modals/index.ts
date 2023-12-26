@@ -1,2 +1,2 @@
-export { default as RadioGroupModal } from "./RadioGroupModal";
+export { default as RadioGroupModal } from "./CountryPickerModal/CountryPickerModal";
 export { default as ConfirmationModal } from "./ConfirmationModal";

@@ -15,10 +15,14 @@
         "title": "Are you sure",
         "question": "Do you want to do this?"
       },
-      "RadioGroupModal" : {
+      "CountryPickerModal": {
         "cancel": "Cancel",
-        "ok": "Ok"
-        
+        "ok": "Ok",
+        "pickACountry": "Pick a country",
+        "searchPlaceholder": "Search by country name",
+        "CountryPickerEmptyComponent": {
+          "message": "No such country matches your search"
+        }
       }
     }
   },
@@ -92,7 +96,7 @@
         "addAdditionalInformation": "Add additional Info",
         "cancel": "Cancel",
         "save": "Save",
-        "plotSummary": "Plot summary",
+        "originCountry": "Origin country",
         "title": "Title",
         "releaseDate": "Release Date"
       }
@@ -135,8 +139,7 @@
       },
       "TranslationMenu": {
         "title": "Translation",
-        "search": "Search...",
-        "searchInputTooltip": "Search by language or country name"
+        "searchPlaceholder": "Search by country name..."
       }
     }
   },

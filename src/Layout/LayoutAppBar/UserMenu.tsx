@@ -1,7 +1,7 @@
 import React from "react";
 import { ListItemText, Divider, MenuItem, Menu } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { ChevronRightIcon, FeedbackIcon, LogoutIcon, MoonIcon, SettingIcon, SwitchAccountIcon, TranslateIcon } from "@/components/icons";
+import { ChevronRightIcon, FeedbackIcon, LogoutIcon, MoonIcon, SettingIcon, SignalBarIcon, SwitchAccountIcon, TranslateIcon } from "@/components/icons";
 import UserCardForMenu from "./UserCardForMenu";
 
 interface UserMenuProps {
@@ -24,7 +24,8 @@ export default function UserMenu({ anchorEl, isVisible, onClose, onSwitchAccount
     <MenuItem onClick={onClick}>
       {icon}
       <ListItemText>{label}</ListItemText>
-      {hasChevron && <ChevronRightIcon isListIcon />}
+      {hasChevron && <ChevronRightIcon onClick={() => {}} />}
+      {!hasChevron && <SignalBarIcon onClick={() => {}} />}
     </MenuItem>
   );
 

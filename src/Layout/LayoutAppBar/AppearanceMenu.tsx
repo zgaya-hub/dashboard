@@ -1,7 +1,7 @@
 import React from "react";
 import { ListItemText, Divider, Menu, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { LaptopIcon, LightModeIcon, MoonIcon } from "@/components/icons";
+import { LaptopIcon, LightModeIcon, MoonIcon, SignalBarIcon } from "@/components/icons";
 import { MenuHeader } from "@/components/Menu";
 
 interface AppearanceMenuProps {
@@ -17,6 +17,7 @@ export default function AppearanceMenu({ anchorEl, isVisible, onClose }: Appeara
     <MenuItem onClick={onClick}>
       {icon}
       <ListItemText>{label}</ListItemText>
+      <SignalBarIcon onClick={() => {}} />
     </MenuItem>
   );
 
