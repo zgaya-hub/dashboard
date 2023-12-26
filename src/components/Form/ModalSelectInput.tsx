@@ -1,17 +1,19 @@
 import { InputAdornment, TextField, TextFieldProps } from "@mui/material";
-import { SearchIcon } from "../icons";
+import { CaretDownIcon } from "../icons";
 
-interface ModalSelectInputProps extends Omit<TextFieldProps, ""> {}
+interface ModalSelectInputProps extends Omit<TextFieldProps, ""> {
+  isModalVisible?: boolean;
+}
 
-export default function ModalSelectInput({ ...restProps }: ModalSelectInputProps) {
+export default function ModalSelectInput({ value, isModalVisible, ...restProps }: ModalSelectInputProps) {
   return (
     <TextField
+      value={value}
+      InputLabelProps={{
+        shrink: !!value || isModalVisible,
+      }}
       InputProps={{
-        endAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
+        endAdornment: <InputAdornment position="end">{<CaretDownIcon />}</InputAdornment>,
       }}
       {...restProps}
     />

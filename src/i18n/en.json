@@ -19,7 +19,7 @@
         "cancel": "Cancel",
         "ok": "Ok",
         "pickACountry": "Pick a country",
-        "searchPlaceholder": "Search by country name",
+        "search": "Search",
         "CountryPickerEmptyComponent": {
           "message": "No such country matches your search"
         }
@@ -97,6 +97,7 @@
         "cancel": "Cancel",
         "save": "Save",
         "originCountry": "Origin country",
+        "originalLanguage": "Original language",
         "title": "Title",
         "releaseDate": "Release Date"
       }
@@ -139,7 +140,7 @@
       },
       "TranslationMenu": {
         "title": "Translation",
-        "searchPlaceholder": "Search by country name..."
+        "search": "Search"
       }
     }
   },

@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import { CreateSeriesScreen, SeriesManagementScreen } from "./screens";
+import { SeriesCreateScreen, SeriesManagementScreen } from "./screens";
 
 export type SeriesManagementRouteParams = {
   "/series-management": undefined;
-  "/series-management/create-series": undefined;
+  "/series-management/series-create": undefined;
 };
 
 const SeriesManagementRoutes = () => {
   return (
     <Routes>
       <Route path="" Component={SeriesManagementScreen} />
-      <Route path="/create-series" Component={CreateSeriesScreen} />
+      <Route path="/series-create" Component={SeriesCreateScreen} />
     </Routes>
   );
 };

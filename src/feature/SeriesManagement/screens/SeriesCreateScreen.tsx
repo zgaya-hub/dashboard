@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { CreateSeriesFieldType } from "../types";
 import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
 
-export default function SeriesManagementScreen() {
+export default function SeriesCreateScreen() {
   const [backDropUrl, senBackDropUrl] = useState("");
   const [mediaImageId, setMediaImageId] = useState("");
   const { mutateAsync: createSeriesMutateAsync } = useCreateSeries();
