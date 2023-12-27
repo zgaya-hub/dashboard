@@ -1,6 +1,6 @@
 import { ImagePlusTitleCard, ImagePlusTitleCardSkeleton } from "@/components/Cards";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Card, List, ListItem, SxProps } from "@mui/material";
+import { List, ListItem, SxProps } from "@mui/material";
 import { GetManagerSeriesWithImageAndBasicInfoOutput } from "../../hooks/queryHooks.types";
 
 interface SeriesListForSelectionProps {
@@ -10,11 +10,6 @@ interface SeriesListForSelectionProps {
 }
 
 export default function SeriesListForSelection({ seriesList, onSelectedSeries, isLoading }: SeriesListForSelectionProps) {
-  const cardStyle = useThemeStyles<SxProps>((theme) => ({
-    width: theme.spacing(48),
-    boxShadow: "none",
-  }));
-
   const listStyle = useThemeStyles<SxProps>((theme) => ({
     maxHeight: theme.spacing(96),
     overflowY: "auto",
@@ -22,27 +17,23 @@ export default function SeriesListForSelection({ seriesList, onSelectedSeries, i
 
   if (isLoading) {
     return (
-      <Card sx={cardStyle}>
-        <List sx={listStyle}>
-          {["", "", ""].map(() => (
-            <ListItem>
-              <ImagePlusTitleCardSkeleton />
-            </ListItem>
-          ))}
-        </List>
-      </Card>
+      <List sx={listStyle}>
+        {["", "", ""].map(() => (
+          <ListItem>
+            <ImagePlusTitleCardSkeleton />
+          </ListItem>
+        ))}
+      </List>
     );
   }
 
   return (
-    <Card sx={cardStyle}>
-      <List sx={listStyle}>
-        {seriesList.map((series) => (
-          <ListItem key={series.ID} onClick={() => onSelectedSeries(series)}>
-            <ImagePlusTitleCard thumbnail={series.mediaImage[0].mediaImageUrl} title={series.mediaBasicInfo.mediaTitle} />
-          </ListItem>
-        ))}
-      </List>
-    </Card>
+    <List sx={listStyle}>
+      {seriesList.map((series) => (
+        <ListItem key={series.ID} onClick={() => onSelectedSeries(series)}>
+          <ImagePlusTitleCard thumbnail={series.mediaImage[0].mediaImageUrl} title={series.mediaBasicInfo.mediaTitle} />
+        </ListItem>
+      ))}
+    </List>
   );
 }

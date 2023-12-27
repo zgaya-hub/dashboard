@@ -62,22 +62,38 @@ export const typography: TypographyOptions = {
 };
 
 // kindly use this types for spacing
-export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 54, 64, 96];
+// export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 54, 64, 96];
 
 export const lightThemeComponents: ThemeOptions["components"] = {
-  MuiIconButton: {
-    styleOverrides: {
-      root: {
-        borderRadius: "0",
-      },
-    },
-  },
   MuiList: {
     styleOverrides: {
       root: {
         "&::-webkit-scrollbar": {
           display: "none",
         },
+      },
+    },
+  },
+  MuiDialogContent: {
+    styleOverrides: {
+      root: {
+        background: "#ffffff",
+      },
+    },
+  },
+  MuiMenu: {
+    styleOverrides: {
+      root: {
+        "& .MuiMenu-list": {
+          background: "#ffffff",
+        },
+      },
+    },
+  },
+  MuiMenuItem: {
+    styleOverrides: {
+      root: {
+        width: 48 * 8,
       },
     },
   },
@@ -91,13 +107,6 @@ export const lightThemeComponents: ThemeOptions["components"] = {
 };
 
 export const darkThemeComponents: ThemeOptions["components"] = {
-  MuiIconButton: {
-    styleOverrides: {
-      root: {
-        borderRadius: "0",
-      },
-    },
-  },
   MuiList: {
     styleOverrides: {
       root: {
@@ -107,10 +116,43 @@ export const darkThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
+  MuiDialogContent: {
+    styleOverrides: {
+      root: {
+        background: "#1c1b1b",
+      },
+    },
+  },
+  MuiMenu: {
+    styleOverrides: {
+      root: {
+        "& .MuiMenu-list": {
+          background: "#1c1b1b",
+        },
+      },
+    },
+  },
+  MuiMenuItem: {
+    styleOverrides: {
+      root: {
+        width: 48 * 8,
+        padding: 2 * 8,
+      },
+    },
+  },
   MuiCard: {
     styleOverrides: {
       root: {
         background: "#1c1b1b",
+      },
+    },
+  },
+  MuiCircularProgress: {
+    styleOverrides: {
+      root: {
+        "& .MuiCircularProgress-circle": {
+          strokeLinecap: "round",
+        },
       },
     },
   },

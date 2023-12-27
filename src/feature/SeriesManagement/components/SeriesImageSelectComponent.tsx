@@ -3,7 +3,6 @@ import { useDropzone } from "react-dropzone";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
-import { CircularProgress } from "@/components/ProgressBars";
 
 interface SeriesImageSelectComponentProps {
   onImageDrop: (image: File) => void;
@@ -19,7 +18,8 @@ export default function SeriesImageSelectComponent({ onImageDrop, isLoading }: S
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.spacing(16),
+    minHeight: theme.spacing(16),
+    height: '100%',
     pointerEvents: isLoading ? "none" : "all",
     padding: theme.spacing(1),
   }));
@@ -35,7 +35,7 @@ export default function SeriesImageSelectComponent({ onImageDrop, isLoading }: S
         <UploadIcon fontSize="medium" />
         <Typography variant="body1">{t("Feature.SeriesManagement.SeriesImageSelectComponent.title")}</Typography>
       </Stack>
-      <LinearProgress value={50} variant="buffer" />
+      {isLoading ? <LinearProgress /> : null}
     </Card>
   );
 }

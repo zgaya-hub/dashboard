@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Backdrop } from "@mui/material";
-import { CircularProgress } from "@/components/ProgressBars";
+import { Backdrop, CircularProgress } from "@mui/material";
 import { useAuthContext } from "@/context/AuthContext";
 import useNavigation from "@/navigation/use-navigation";
 

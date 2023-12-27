@@ -1,4 +1,5 @@
-import { Menu, MenuItem } from "@/components/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 interface SeriesGridContextMenuProps {
   onEdit: () => void;

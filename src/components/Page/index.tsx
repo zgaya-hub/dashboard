@@ -11,7 +11,7 @@ export default function Page({ children }: PageProps) {
     paddingLeft: theme.spacing(14),
     paddingRight: theme.spacing(4),
     background: theme.palette.background.paper,
-    height: "100vh",
+    minHeight: "100vh",
     width: "100vw",
   }));
 

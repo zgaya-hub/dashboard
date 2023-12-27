@@ -19,7 +19,7 @@ export default function SeriesManagementScreen() {
   });
 
   const handleOnCreateSeriesClick = () => {
-    navigation.navigate("/series-management/create-series");
+    navigation.navigate("/series-management/series-create");
   };
 
   const handleOnEdit = () => {

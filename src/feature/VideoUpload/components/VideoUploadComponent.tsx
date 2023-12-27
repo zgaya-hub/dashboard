@@ -8,10 +8,9 @@ interface VideoUploadComponentProps {
   isLoading: boolean;
   title: string;
   message: string;
-  progress?: number;
 }
 
-export default function VideoUploadComponent({ onVideoSelect, isLoading, message, progress, title }: VideoUploadComponentProps) {
+export default function VideoUploadComponent({ onVideoSelect, isLoading, message, title }: VideoUploadComponentProps) {
   const onDrop = ([video]: File[]) => {
     onVideoSelect(video);
   };
@@ -26,7 +25,7 @@ export default function VideoUploadComponent({ onVideoSelect, isLoading, message
 
   return (
     <Stack {...getRootProps()} justifyContent={"center"} alignItems={"center"} direction={"column"} sx={containerStyle}>
-      <VideoUploadCircleIcon progress={progress} isLoading={isLoading} isDragActive={isDragActive} />
+      <VideoUploadCircleIcon isLoading={isLoading} isDragActive={isDragActive} />
       <Stack alignItems={"center"} gap={1}>
         <Typography variant="subtitle1">{title}</Typography>
         <Typography variant="subtitle2">{message}</Typography>

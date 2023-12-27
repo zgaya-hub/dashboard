@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
+import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
 import { default as MuiChevronRightOutlinedIcon } from "@mui/icons-material/ChevronRightOutlined";
@@ -20,11 +20,14 @@ import { default as SettingsInputSvideoOutlinedIcon } from "@mui/icons-material/
 import { default as SlideshowOutlinedIcon } from "@mui/icons-material/SlideshowOutlined";
 import { default as MuiSpaceDashboardOutlinedIcon } from "@mui/icons-material/SpaceDashboardOutlined";
 import { default as MuiErrorOutlineIcon } from "@mui/icons-material/ErrorOutline";
+import { default as MuiArrowDropDownIcon } from "@mui/icons-material/ArrowDropDown";
 import { default as MuiFileUploadIcon } from "@mui/icons-material/FileUpload";
 import { default as MuiSwitchAccountIcon } from "@mui/icons-material/SwitchAccountOutlined";
 import { default as MuiTimelineOutlinedIcon } from "@mui/icons-material/TimelineOutlined";
+import {default as MuiStreetviewOutlinedIcon} from '@mui/icons-material/StreetviewOutlined';
 import { default as MuiSaveIcon } from "@mui/icons-material/Save";
 import { default as MuiTranslateIcon } from "@mui/icons-material/Translate";
+import { default as MuiCancelOutlinedIcon } from "@mui/icons-material/CancelOutlined";
 import { default as VideoLibraryOutlinedIcon } from "@mui/icons-material/VideoLibraryOutlined";
 import { default as MuiClearOutlinedIcon } from "@mui/icons-material/ClearOutlined";
 import { default as MuiFastForwardIcon } from "@mui/icons-material/FastForward";
@@ -34,8 +37,9 @@ import { default as MuiCachedIcon } from "@mui/icons-material/CachedOutlined";
 import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/RadioButtonUnchecked";
 import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVert";
 import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonChecked";
+import { default as MuiSignalCellularAlt1BarIcon } from "@mui/icons-material/SignalCellularAlt1Bar";
+import { default as MuiDoneIcon } from "@mui/icons-material/Done";
 import Tooltip from "../Tooltip";
-import { CircularProgress } from "../ProgressBars";
 
 interface IconWrapperProps extends SvgIconProps {
   onClick?: () => void;
@@ -102,3 +106,8 @@ export const MoreVertIcon = withIconWrapper(MuiMoreVertIcon);
 export const ErrorIcon = withIconWrapper(MuiErrorOutlineIcon);
 export const SaveIcon = withIconWrapper(MuiSaveIcon);
 export const DeleteIcon = withIconWrapper(MuiDeleteIcon);
+export const SignalBarIcon = withIconWrapper(MuiSignalCellularAlt1BarIcon);
+export const DoneIcon = withIconWrapper(MuiDoneIcon);
+export const CaretDownIcon = withIconWrapper(MuiArrowDropDownIcon);
+export const ClearCircleIcon = withIconWrapper(MuiCancelOutlinedIcon);
+export const StreetViewIcon = withIconWrapper(MuiStreetviewOutlinedIcon);

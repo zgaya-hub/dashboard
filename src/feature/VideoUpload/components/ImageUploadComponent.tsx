@@ -1,15 +1,15 @@
-import { Card, Stack, SxProps, Typography } from "@mui/material";
+import { Card, LinearProgress, Stack, SxProps, Typography } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { UploadIcon } from "@/components/icons";
 
-interface ImageUploadComponentProps {
-  onImageDrop: (video: File) => void;
+interface SeriesImageSelectComponentProps {
+  onImageDrop: (image: File) => void;
+  isLoading: boolean;
   title: string;
-  isLoading?: boolean;
 }
 
-export default function ImageUploadComponent({ onImageDrop, title, isLoading }: ImageUploadComponentProps) {
+export default function SeriesImageSelectComponent({ onImageDrop, isLoading, title }: SeriesImageSelectComponentProps) {
   const onDrop = ([video]: File[]) => {
     onImageDrop(video);
   };
@@ -17,30 +17,24 @@ export default function ImageUploadComponent({ onImageDrop, title, isLoading }: 
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.spacing(14),
-    width: theme.spacing(24),
-    padding: theme.spacing(1),
+    height: theme.spacing(16),
+    width: theme.spacing(36),
     pointerEvents: isLoading ? "none" : "all",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    padding: theme.spacing(1),
   }));
 
   const dropzoneStyle = useThemeStyles<SxProps>((theme) => ({
-    border: isDragActive ? `2px dashed ${theme.palette.primary.main}` : "2px solid transparent",
-    width: "100%",
-    height: "100%",
-    borderRadius: theme.shape.borderRadius,
-    textAlign: "center",
+    border: isDragActive ? `2px dashed ${theme.palette.primary.main}` : "none",
     color: isDragActive ? theme.palette.primary.main : theme.palette.text.primary,
   }));
 
   return (
     <Card {...getRootProps()} sx={containerStyle}>
-      <Stack sx={dropzoneStyle} justifyContent={"center"} alignItems={"center"} gap={1}>
-        <UploadIcon />
-        <Typography variant="subtitle2">{title}</Typography>
+      <Stack alignItems={"center"} justifyContent={"center"} height={"100%"} sx={dropzoneStyle} gap={2}>
+        <UploadIcon fontSize="medium" />
+        <Typography>{title}</Typography>
       </Stack>
+      {isLoading ? <LinearProgress /> : null}
     </Card>
   );
 }

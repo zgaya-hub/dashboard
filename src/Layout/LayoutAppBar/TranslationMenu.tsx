@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Divider, ListItemText } from "@mui/material";
+import { Divider, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { ClearIcon, SearchIcon, TranslateIcon } from "@/components/icons";
-import { MenuItem, Menu, MenuHeader } from "@/components/Menu";
+import { ClearIcon, SearchIcon, SignalBarIcon, TranslateIcon } from "@/components/icons";
+import { MenuHeader } from "@/components/Menu";
 import { SearchInput } from "@/components/Form";
 
 interface TranslationMenuProps {
@@ -34,7 +34,7 @@ const TranslationMenu: React.FC<TranslationMenuProps> = ({ anchorEl, isVisible, 
     return supportedLanguages.filter((language) => language.languageName.toLowerCase().includes(searchText.toLowerCase()) || language.countryName.toLowerCase().includes(searchText.toLowerCase()));
   }, [searchText]);
 
-  const handleSearchChange = useCallback((text: string) => {
+  const handleOnSearchChange = useCallback((text: string) => {
     setSearchText(text);
   }, []);
 
@@ -43,12 +43,17 @@ const TranslationMenu: React.FC<TranslationMenuProps> = ({ anchorEl, isVisible, 
     setSearchText("");
   };
 
-  const renderHeader = <MenuHeader secondaryAction={isSearchInputVisible ? <ClearIcon onClick={handleOnToggleSearchInput} /> : <SearchIcon onClick={handleOnToggleSearchInput} />}>{!isSearchInputVisible ? <ListItemText>{t("Layout.AppBar.TranslationMenu.title")}</ListItemText> : <SearchInput size="small" onChange={handleSearchChange} />}</MenuHeader>;
+  const renderHeader = (
+    <MenuHeader secondaryAction={<SearchIcon onClick={handleOnToggleSearchInput} />}>
+      <ListItemText>{t("Layout.AppBar.TranslationMenu.title")}</ListItemText>
+    </MenuHeader>
+  );
 
   const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void) => (
     <MenuItem onClick={onClick}>
       {icon}
       <ListItemText>{label}</ListItemText>
+      <SignalBarIcon onClick={() => {}} />
     </MenuItem>
   );
 
@@ -56,6 +61,7 @@ const TranslationMenu: React.FC<TranslationMenuProps> = ({ anchorEl, isVisible, 
     <Menu anchorEl={anchorEl} open={isVisible} onClose={onClose}>
       {renderHeader}
       <Divider />
+      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Layout.AppBar.TranslationMenu.search")} /> : null}
       {filteredLanguages.map((language) => createMenuItem(<TranslateIcon isListIcon />, `${language.languageName} - ${language.countryName}`, () => i18n.changeLanguage(language.code)))}
     </Menu>
   );

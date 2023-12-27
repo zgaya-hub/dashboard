@@ -1,72 +1,66 @@
-import Button from "@/components/Button";
-import { DatePickerModal, Form, TextField } from "@/components/Form";
 import Elevator from "@/components/Tags/Elevator";
-import { SaveIcon } from "@/components/icons";
-import { DevTool } from "@hookform/devtools";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Paper, Typography } from "@mui/material";
-import Stack from "@mui/material/Stack";
-import { Controller, useForm } from "react-hook-form";
+import { Stack, Typography } from "@mui/material";
+import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import * as yup from "yup";
+import { CreateSeriesFieldType } from "../types";
+import { useState } from "react";
+import { CountriesEnum, LanguagiesEnum, MediaGenriesEnum } from "@/types/enum";
+import { ModalSelectInput } from "@/components/Form";
+import { CountryPickerModal, LanguagePickerModal, MediaGenrePickerModal } from "@/components/Modals";
+import SeriesStatusSelectComponent from "./SeriesStatusSelectComponent";
 
-export interface SeriesAdditionalInfoFormFieldType {
-  title: string;
-  plotSummary: string;
-  releaseDate: number;
+interface SeriesAdditionalInformationFormProps {
+  setCreateSeriesFormValue: UseFormSetValue<CreateSeriesFieldType>;
+  watchCreateSeriesFormValue: UseFormWatch<CreateSeriesFieldType>;
 }
 
-interface SeriesAdditionalInfoFormProps {
-  onSave: (input: SeriesAdditionalInfoFormFieldType) => void;
-  isLoading: boolean;
-}
-
-export default function SeriesAdditionalInformationForm({ onSave, isLoading }: SeriesAdditionalInfoFormProps) {
+export default function SeriesAdditionalInformationForm({ setCreateSeriesFormValue, watchCreateSeriesFormValue }: SeriesAdditionalInformationFormProps) {
   const { t } = useTranslation();
+  const [isCountryModalVisible, setIsCountryModalVisible] = useState(false);
+  const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
+  const [isMediaGenreModalVisible, setIsMediaGenreModalVisible] = useState(false);
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<SeriesAdditionalInfoFormFieldType>({
-    resolver: yupResolver(validationSchema),
-    defaultValues: {
-      title: "",
-      plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: new Date().getTime(),
-    },
-  });
+  const handleOnSelectCountry = (countrName: CountriesEnum) => {
+    setCreateSeriesFormValue("originCountry", countrName);
+    handleOnToggleCountryModalVisible();
+  };
 
-  const renderForm = (
-    <Form onSubmit={handleSubmit(onSave)} gap={2}>
-      <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="title" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required />
-        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.releaseDate")} views={["year", "month"]} fullWidth />} />
-      </Stack>
-      <TextField register={register} name="plotSummary" label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
-      <DevTool control={control} />
-    </Form>
-  );
+  const handleOnSelectMediaGenre = (mediaGenre: MediaGenriesEnum) => {
+    setCreateSeriesFormValue("mediaGenre", mediaGenre);
+    handleOnToggleMediaGenreModalVisible();
+  };
+
+  const handleOnSelectLanguage = (language: LanguagiesEnum) => {
+    setCreateSeriesFormValue("originalLanguage", language);
+    handleOnToggleLanguageModalVisible();
+  };
+
+  const handleOnToggleCountryModalVisible = () => {
+    setIsCountryModalVisible(!isCountryModalVisible);
+  };
+
+  const handleOnToggleMediaGenreModalVisible = () => {
+    setIsMediaGenreModalVisible(!isMediaGenreModalVisible);
+  };
+
+  const handleOnToggleLanguageModalVisible = () => {
+    setIsLanguageModalVisible(!isLanguageModalVisible);
+  };
 
   return (
     <Elevator padding={4} gap={2}>
       <Typography variant="h5">{t("Feature.SeriesManagement.SeriesAdditionalInformationForm.addAdditionalInformation")}</Typography>
-      {renderForm}
-      <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={2}>
-        <Button variant="text">{t("Feature.SeriesManagement.SeriesAdditionalInformationForm.cancel")}</Button>
-        <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>
-          {t("Feature.SeriesManagement.SeriesAdditionalInformationForm.save")}
-        </Button>
+      <Stack direction={{ md: "row", sm: "column" }} gap={2}>
+        <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.originCountry")} value={watchCreateSeriesFormValue("originCountry")} onClick={handleOnToggleCountryModalVisible} fullWidth />
+        <CountryPickerModal isOpen={isCountryModalVisible} onClose={handleOnToggleCountryModalVisible} onOk={handleOnSelectCountry} />
+        <ModalSelectInput isModalVisible={isLanguageModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.originalLanguage")} value={watchCreateSeriesFormValue("originalLanguage")} onClick={handleOnToggleLanguageModalVisible} fullWidth />
+        <LanguagePickerModal isOpen={isLanguageModalVisible} onClose={handleOnToggleLanguageModalVisible} onOk={handleOnSelectLanguage} />
+      </Stack>
+      <Stack direction={{ md: "row", sm: "column" }} gap={2}>
+        <ModalSelectInput isModalVisible={isMediaGenreModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.pickAGenre")} value={watchCreateSeriesFormValue("mediaGenre")} onClick={handleOnToggleMediaGenreModalVisible} fullWidth />
+        <MediaGenrePickerModal isOpen={isMediaGenreModalVisible} onClose={handleOnToggleMediaGenreModalVisible} onOk={handleOnSelectMediaGenre} />
+        <SeriesStatusSelectComponent setCreateSeriesFormValue={setCreateSeriesFormValue} watchCreateSeriesFormValue={watchCreateSeriesFormValue} />
       </Stack>
     </Elevator>
   );
 }
-
-const validationSchema = yup.object().shape({
-  title: yup.string().required("Title is required"),
-  plotSummary: yup.string().required("Plot summary is required"),
-  releaseDate: yup.string().required("Release date is required"),
-});
-
-const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";
