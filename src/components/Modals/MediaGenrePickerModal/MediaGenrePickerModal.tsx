@@ -5,26 +5,26 @@ import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import RadioGroup from "@mui/material/RadioGroup";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
-import { DoneIcon, SearchIcon, TranslateIcon } from "@/components/icons";
-import { languageListWithCode } from "@/mock/languageListWithCode";
+import { DoneIcon, SearchIcon, StreetViewIcon } from "@/components/icons";
 import { SearchInput } from "@/components/Form";
-import { LanguagiesEnum } from "@/types/enum";
-import { LanguagePickerEmptyComponent } from "..";
+import { MediaGenriesEnum } from "@/types/enum";
+import { MediaGenrePickerEmptyComponent } from "..";
+import { values } from "lodash";
 
-interface LanguagePickerModalProps {
+interface MediaGenrePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: LanguagiesEnum) => void;
+  onOk: (countrName: MediaGenriesEnum) => void;
 }
 
-export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguagePickerModalProps) {
+export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGenrePickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(LanguagiesEnum.URDU);
+  const [value, setValue] = useState(MediaGenriesEnum.ACTION);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-  const filteredLanguages = useMemo(() => {
-    return languageListWithCode.filter((language) => language.name.toLowerCase().includes(searchText.toLowerCase()));
+  const filteredMediaGenres = useMemo(() => {
+    return mediaGenreList.filter((language) => language.toLowerCase().includes(searchText.toLowerCase()));
   }, [searchText]);
 
   const handleOnSearchChange = useCallback((text: string) => {
@@ -60,29 +60,31 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
     <>
       <SearchIcon onClick={handleOnSearchInputVisible} />
       <Button onClick={handleOnClose} variant="text">
-        {t("Component.Modals.LanguagePickerModal.cancel")}
+        {t("Component.Modals.MediaGenrePickerModal.cancel")}
       </Button>
       <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Component.Modals.LanguagePickerModal.ok")}
+        {t("Component.Modals.MediaGenrePickerModal.ok")}
       </Button>
     </>
   );
 
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Component.Modals.LanguagePickerModal.pickALanguage")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
-      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Component.Modals.LanguagePickerModal.search")} /> : null}
+    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Component.Modals.MediaGenrePickerModal.pickAGenre")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
+      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Component.Modals.MediaGenrePickerModal.search")} /> : null}
       <RadioGroup value={value} onChange={handleOnChange}>
-        {filteredLanguages.map((language) => {
+        {filteredMediaGenres.map((mediaGenre) => {
           return (
-            <MenuItem onClick={() => setValue(language.name)}>
-              <TranslateIcon isListIcon />
-              <ListItemText>{language.name}</ListItemText>
-              <Radio value={language.name} />
+            <MenuItem onClick={() => setValue(mediaGenre)}>
+              <StreetViewIcon isListIcon />
+              <ListItemText>{mediaGenre}</ListItemText>
+              <Radio value={mediaGenre} />
             </MenuItem>
           );
         })}
-        {!filteredLanguages.length ? <LanguagePickerEmptyComponent height={36} /> : null}
+        {!filteredMediaGenres.length ? <MediaGenrePickerEmptyComponent height={36} /> : null}
       </RadioGroup>
     </Dialog>
   );
 }
+
+const mediaGenreList = values(MediaGenriesEnum);

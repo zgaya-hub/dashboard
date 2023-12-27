@@ -7,7 +7,7 @@ import Radio from "@mui/material/Radio";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { ListItemIcon, ListItemText, MenuItem, SxProps } from "@mui/material";
 import { DoneIcon, SearchIcon } from "@/components/icons";
-import { countryListWithFlag } from "@/mock/countryList";
+import { countryListWithFlag } from "@/mock/countryListWithFlag";
 import { SearchInput } from "@/components/Form";
 import { CountryPickerEmptyComponent } from "..";
 import { CountriesEnum } from "@/types/enum";
@@ -47,7 +47,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value as CountriesEnum);
+    setValue(event.target.value);
   };
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({

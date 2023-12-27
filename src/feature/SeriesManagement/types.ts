@@ -6,6 +6,6 @@ export interface CreateSeriesFieldType {
   releaseDate: number;
   originCountry: CountriesEnum;
   originalLanguage: LanguagiesEnum;
-  genre: MediaGenriesEnum;
-  status: MediaStatusEnum;
+  mediaGenre: MediaGenriesEnum;
+  mediaStatus: MediaStatusEnum;
 }

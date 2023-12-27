@@ -24,6 +24,7 @@ import { default as MuiArrowDropDownIcon } from "@mui/icons-material/ArrowDropDo
 import { default as MuiFileUploadIcon } from "@mui/icons-material/FileUpload";
 import { default as MuiSwitchAccountIcon } from "@mui/icons-material/SwitchAccountOutlined";
 import { default as MuiTimelineOutlinedIcon } from "@mui/icons-material/TimelineOutlined";
+import {default as MuiStreetviewOutlinedIcon} from '@mui/icons-material/StreetviewOutlined';
 import { default as MuiSaveIcon } from "@mui/icons-material/Save";
 import { default as MuiTranslateIcon } from "@mui/icons-material/Translate";
 import { default as MuiCancelOutlinedIcon } from "@mui/icons-material/CancelOutlined";
@@ -109,3 +110,4 @@ export const SignalBarIcon = withIconWrapper(MuiSignalCellularAlt1BarIcon);
 export const DoneIcon = withIconWrapper(MuiDoneIcon);
 export const CaretDownIcon = withIconWrapper(MuiArrowDropDownIcon);
 export const ClearCircleIcon = withIconWrapper(MuiCancelOutlinedIcon);
+export const StreetViewIcon = withIconWrapper(MuiStreetviewOutlinedIcon);

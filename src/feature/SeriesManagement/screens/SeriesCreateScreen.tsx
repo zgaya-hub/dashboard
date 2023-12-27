@@ -3,7 +3,7 @@ import { useState } from "react";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { MediaImageTypeEnum } from "@/types/enum";
-import { CardMedia, Grid, SxProps } from "@mui/material";
+import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
 import SeriesBasicInformationForm from "../components/SeriesBasicInformationForm";
 import SeriesImageSelectComponent from "../components/SeriesImageSelectComponent";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
@@ -12,11 +12,16 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { CreateSeriesFieldType } from "../types";
 import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
+import { Elevator } from "@/components/Tags";
+import Button from "@/components/Button";
+import { SaveIcon } from "@/components/icons";
+import { useTranslation } from "react-i18next";
 
 export default function SeriesCreateScreen() {
+  const { t } = useTranslation();
   const [backDropUrl, senBackDropUrl] = useState("");
   const [mediaImageId, setMediaImageId] = useState("");
-  const { mutateAsync: createSeriesMutateAsync } = useCreateSeries();
+  const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
 
   const {
@@ -24,7 +29,8 @@ export default function SeriesCreateScreen() {
     formState: { errors },
     register,
     setValue: setCreateSeriesFormValue,
-    watch: watchCreateSeriesFormValue
+    handleSubmit: handleOnSubmit,
+    watch: watchCreateSeriesFormValue,
   } = useForm<CreateSeriesFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -50,6 +56,12 @@ export default function SeriesCreateScreen() {
         Title: input.title,
         ReleaseDate: input.releaseDate,
       },
+      MediaAdditionalInfo: {
+        Genre: input.mediaGenre,
+        OriginalLanguage: input.originalLanguage,
+        OriginCountry: input.originCountry,
+        Status: input.mediaStatus,
+      },
     });
   };
 
@@ -60,9 +72,24 @@ export default function SeriesCreateScreen() {
     backgroundPosition: "top",
   }));
 
+  const pageHeader = (
+    <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
+      <Typography variant="h5">{t("Feature.SeriesManagement.SeriesCreateScreen.createASeries")}</Typography>
+      <Stack direction={"row"} gap={1}>
+        <Button variant="text">{t("Feature.SeriesManagement.SeriesCreateScreen.back")}</Button>
+        <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
+          {t("Feature.SeriesManagement.SeriesCreateScreen.save")}
+        </Button>
+      </Stack>
+    </Elevator>
+  );
+
   return (
     <Page>
       <Grid container justifyContent={"space-between"} rowGap={4}>
+        <Grid xs={12} item lg={12}>
+          {pageHeader}
+        </Grid>
         <Grid xs={12} item lg={5.9}>
           <SeriesBasicInformationForm control={control} register={register} errors={errors} />
         </Grid>
@@ -75,7 +102,7 @@ export default function SeriesCreateScreen() {
           </Grid>
         </Grid>
         <Grid xs={12} item lg={5.9}>
-          <SeriesAdditionalInformationForm control={control} register={register} errors={errors} setCreateSeriesFormValue={setCreateSeriesFormValue} watchCreateSeriesFormValue={watchCreateSeriesFormValue} />
+          <SeriesAdditionalInformationForm setCreateSeriesFormValue={setCreateSeriesFormValue} watchCreateSeriesFormValue={watchCreateSeriesFormValue} />
         </Grid>
       </Grid>
     </Page>

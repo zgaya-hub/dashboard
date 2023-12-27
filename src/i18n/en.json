@@ -21,7 +21,27 @@
         "pickACountry": "Pick a country",
         "search": "Search",
         "CountryPickerEmptyComponent": {
-          "message": "No such country matches your search"
+          "message": "No such country matches your search",
+          "addCountry": "Add country"
+        }
+      },
+      "LanguagePickerModal": {
+        "cancel": "Cancel",
+        "ok": "Ok",
+        "pickALanguage": "Pick a language",
+        "search": "Search",
+        "LanguagePickerEmptyComponent": {
+          "message": "No such language matches your search",
+          "addLanguage": "Add language"
+        }
+      },
+      "MediaGenrePickerModal": {
+        "cancel": "Cancel",
+        "ok": "Ok",
+        "pickAGenre": "Pick a genre",
+        "search": "Search",
+        "MediaGenrePickerEmptyComponent": {
+          "message": "No such genre matches your search"
         }
       }
     }
@@ -98,8 +118,15 @@
         "save": "Save",
         "originCountry": "Origin country",
         "originalLanguage": "Original language",
+        "pickAGenre": "Pick a genre",
         "title": "Title",
+        "selectStatus": "Select status",
         "releaseDate": "Release Date"
+      },
+      "SeriesCreateScreen": {
+        "createASeries": "Create a series",
+        "save": "Save",
+        "back": "Back"
       }
     }
   },

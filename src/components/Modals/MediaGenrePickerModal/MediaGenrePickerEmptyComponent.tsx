@@ -1,17 +1,16 @@
 import { NoRecordFoundIllustration } from "@/assets/Illestrations";
-import Button from "@/components/Button";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Box, SxProps, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-interface CountryPickerEmptyComponentProps {
+interface MediaGenrePickerEmptyComponentProps {
   message?: string;
   width?: number;
   height?: number;
   sx?: SxProps;
 }
 
-export default function CountryPickerEmptyComponent({ message, height, width, sx }: CountryPickerEmptyComponentProps) {
+export default function MediaGenrePickerEmptyComponent({ message, height, width, sx }: MediaGenrePickerEmptyComponentProps) {
   const { t } = useTranslation();
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
@@ -23,8 +22,7 @@ export default function CountryPickerEmptyComponent({ message, height, width, sx
   return (
     <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} sx={containerStyle}>
       <NoRecordFoundIllustration />
-      <Typography mb={2}>{message ?? t("Component.Modals.CountryPickerModal.CountryPickerEmptyComponent.message")}</Typography>
-      <Button variant="text" size="small">{t("Component.Modals.CountryPickerModal.CountryPickerEmptyComponent.addCountry")}</Button>
+      <Typography>{message ?? t("Component.Modals.MediaGenrePickerModal.MediaGenrePickerEmptyComponent.message")}</Typography>
     </Box>
   );
 }
