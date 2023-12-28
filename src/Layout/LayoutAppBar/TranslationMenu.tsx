@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Divider, ListItemText, Menu, MenuItem } from "@mui/material";
+import { Divider, ListItemText, Menu, MenuItem, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { ClearIcon, SearchIcon, SignalBarIcon, TranslateIcon } from "@/components/icons";
 import { MenuHeader } from "@/components/Menu";
 import { SearchInput } from "@/components/Form";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 interface TranslationMenuProps {
   anchorEl: null | HTMLElement;
@@ -43,6 +44,10 @@ const TranslationMenu: React.FC<TranslationMenuProps> = ({ anchorEl, isVisible, 
     setSearchText("");
   };
 
+  const menuItemStyle = useThemeStyles<SxProps>((theme) => ({
+    width: theme.spacing(48),
+  }));
+
   const renderHeader = (
     <MenuHeader secondaryAction={<SearchIcon onClick={handleOnToggleSearchInput} />}>
       <ListItemText>{t("Layout.AppBar.TranslationMenu.title")}</ListItemText>
@@ -50,7 +55,7 @@ const TranslationMenu: React.FC<TranslationMenuProps> = ({ anchorEl, isVisible, 
   );
 
   const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void) => (
-    <MenuItem onClick={onClick}>
+    <MenuItem onClick={onClick} sx={menuItemStyle}>
       {icon}
       <ListItemText>{label}</ListItemText>
       <SignalBarIcon onClick={() => {}} />

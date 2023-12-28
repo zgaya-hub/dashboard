@@ -1,7 +1,7 @@
 import { AvatarTitleAndDescCard, AvatarTitleAndDescCardSkeleton } from "@/components/Cards";
 import { RadioButtonCheckedIcon, RadioButtonUncheckedIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Card, List, ListItem, SxProps } from "@mui/material";
+import { List, ListItem, SxProps } from "@mui/material";
 import { GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
 
 interface SeasonListForSelectionProps {

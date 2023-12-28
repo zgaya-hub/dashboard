@@ -1,11 +1,17 @@
 {
-  "Component": {
+  "Components": {
     "Search": {
       "searchAcrossYourChannel": "Search across your channel"
     },
     "DataGridPro": {
       "DataGridEmptyComponent": {
         "message": "No rows found!"
+      }
+    },
+    "Form": {
+      "FileSelectInput": {
+        "dropItHere": "Drop it here",
+        "selectAFile": "Select a file"
       }
     },
     "Modals": {
@@ -103,8 +109,6 @@
       },
       "SeriesBasicInformationForm": {
         "addBasicInformation": "Add basic Info",
-        "cancel": "Cancel",
-        "save": "Save",
         "plotSummary": "Plot summary",
         "title": "Title",
         "releaseDate": "Release Date"
@@ -114,14 +118,23 @@
       },
       "SeriesAdditionalInformationForm": {
         "addAdditionalInformation": "Add additional Info",
-        "cancel": "Cancel",
-        "save": "Save",
         "originCountry": "Origin country",
         "originalLanguage": "Original language",
         "pickAGenre": "Pick a genre",
+        "selectStatus": "Select status"
+      },
+      "SeriesCreateScreen": {
+        "createASeries": "Create a series",
+        "save": "Save",
+        "back": "Back"
+      }
+    },
+    "QuickMediaManagement": {
+      "SeriesCreateForm": {
+        "plotSummary": "Plot summary",
         "title": "Title",
-        "selectStatus": "Select status",
-        "releaseDate": "Release Date"
+        "releaseDate": "Release Date",
+        "selectABackdropImage": "Select a backdrop image"
       },
       "SeriesCreateScreen": {
         "createASeries": "Create a series",

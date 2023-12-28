@@ -47,7 +47,7 @@ export type GetUploadVideoSignedUrlOutput = {
 };
 
 export type GetManagerSeriesWithImageAndBasicInfoOutput = SeriesEntityType & {
-  mediaImage: MediaImageEntityType[];
+  mediaImage: MediaImageEntityType;
   mediaBasicInfo: MediaBasicInfoEntityType;
 };
 

@@ -22,7 +22,7 @@ export default function MediaGenrePickerEmptyComponent({ message, height, width,
   return (
     <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} sx={containerStyle}>
       <NoRecordFoundIllustration />
-      <Typography>{message ?? t("Component.Modals.MediaGenrePickerModal.MediaGenrePickerEmptyComponent.message")}</Typography>
+      <Typography>{message ?? t("Components.Modals.MediaGenrePickerModal.MediaGenrePickerEmptyComponent.message")}</Typography>
     </Box>
   );
 }

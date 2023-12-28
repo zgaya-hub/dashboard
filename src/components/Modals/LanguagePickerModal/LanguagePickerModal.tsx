@@ -60,17 +60,17 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
     <>
       <SearchIcon onClick={handleOnSearchInputVisible} />
       <Button onClick={handleOnClose} variant="text">
-        {t("Component.Modals.LanguagePickerModal.cancel")}
+        {t("Components.Modals.LanguagePickerModal.cancel")}
       </Button>
       <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Component.Modals.LanguagePickerModal.ok")}
+        {t("Components.Modals.LanguagePickerModal.ok")}
       </Button>
     </>
   );
 
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Component.Modals.LanguagePickerModal.pickALanguage")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
-      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Component.Modals.LanguagePickerModal.search")} /> : null}
+    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.LanguagePickerModal.pickALanguage")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
+      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.LanguagePickerModal.search")} /> : null}
       <RadioGroup value={value} onChange={handleOnChange}>
         {filteredLanguages.map((language) => {
           return (

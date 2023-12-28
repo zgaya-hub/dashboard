@@ -6,6 +6,7 @@ import SeriesManagementRoutes from "@/feature/SeriesManagement/SeriesManagement.
 import { LayoutSideBar } from "@/Layout/LayoutSideBar";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
+import QuickMediaManagementRoutes from "@/feature/QuickMediaManagement/QuickMediaManagement.routes";
 
 const AuthenticatedRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AuthenticatedRoutes = () => {
         <Route path="video-upload/*" Component={VideoUploadRoutes} />
         <Route path="series-management/*" Component={SeriesManagementRoutes} />
       </Route>
+      <Route path="quick-media-management/*" Component={QuickMediaManagementRoutes} />
       <Route path="*" Component={FourOFourRoutes} />
     </Routes>
   );

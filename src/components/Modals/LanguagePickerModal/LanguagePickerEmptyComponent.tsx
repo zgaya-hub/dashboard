@@ -23,8 +23,8 @@ export default function LanguagePickerEmptyComponent({ message, height, width, s
   return (
     <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} sx={containerStyle}>
       <NoRecordFoundIllustration />
-      <Typography mb={2}>{message ?? t("Component.Modals.LanguagePickerModal.LanguagePickerEmptyComponent.message")}</Typography>
-      <Button variant="text" size="small">{t("Component.Modals.LanguagePickerModal.LanguagePickerEmptyComponent.addLanguage")}</Button>
+      <Typography mb={2}>{message ?? t("Components.Modals.LanguagePickerModal.LanguagePickerEmptyComponent.message")}</Typography>
+      <Button variant="text" size="small">{t("Components.Modals.LanguagePickerModal.LanguagePickerEmptyComponent.addLanguage")}</Button>
     </Box>
   );
 }

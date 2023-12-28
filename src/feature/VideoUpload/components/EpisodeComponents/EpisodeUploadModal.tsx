@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DialogContent, MobileStepper, SxProps, useMediaQuery } from "@mui/material";
+import { MobileStepper, SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
 import { ChevronLeftIcon, ChevronRightIcon, FeedbackIcon, UploadIcon } from "@/components/icons";
@@ -7,10 +7,9 @@ import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
-import { useState } from "react";
+import { Ref, forwardRef, useImperativeHandle, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
 import EpisodeCreateStep, { CreateEpisodeFormFieldType } from "./EpisodeCreateStep";
-import DialogAction from "@/components/Dialog/DialogAction";
 import EpisodeCreateAdditionalInfoStep from "./EpisodeCreateAdditionalInfoStep";
 
 interface EpisodeUploadModalProps {
@@ -21,13 +20,18 @@ interface EpisodeUploadModalProps {
   onThumbnailSelect: (episode: File) => void;
   onCreateEpisode: (input: CreateEpisodeFormFieldType) => void;
   isLoading: boolean;
+  isCreateMediaImageLoading: boolean;
   thumbnailUrl: string;
 }
 
-export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect }: EpisodeUploadModalProps) {
+export interface EpisodeUploadModalRef {
+  onNext: () => void;
+}
+
+const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, isCreateMediaImageLoading }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalForwardRef>) {
   const { t } = useTranslation();
-  const navigate = useNavigation();
   const { theme } = useTheme();
+  const navigate = useNavigation();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [activeStep, setActiveStep] = useState<number>(0);
 
@@ -38,6 +42,10 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, onC
       handleOnNext();
     }
   }, [isLoading]); */
+
+  useImperativeHandle(ref, () => ({
+    onNext: handleOnNext,
+  }));
 
   const handleOnMovie = () => {
     navigate.navigate("/video-upload/movie");
@@ -77,7 +85,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, onC
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
-      step: <EpisodeCreateStep onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
+      step: <EpisodeCreateStep isCreateMediaImageLoading={isCreateMediaImageLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),
@@ -124,4 +132,6 @@ export default function EpisodeUploadModal({ isVisible, onClose, onFeedback, onC
       />
     </Dialog>
   );
-}
+});
+
+export default EpisodeUploadModal;

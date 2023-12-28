@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
 import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata, extractThumbnailFromVideo } from "metalyzer";
 import { MediaImageTypeEnum, MovierMediaEnum } from "@/types/enum";
-import { CreateEpisodeFormFieldType } from "../components/EpisodeComponents/EpisodeCreateStep";
-import EpisodeUploadModal from "../components/EpisodeComponents/EpisodeUploadModal";
-import SelectSeriesAndSeasonModal from "../components/EpisodeComponents/SelectSeriesAndSeasonModal";
-import ConfirmationModal from "@/components/Modals/ConfirmationModal";
 import { useTranslation } from "react-i18next";
+import { CreateEpisodeFormFieldType, EpisodeUploadModal, EpisodeUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
+import { ConfirmationModal } from "@/components/Modals";
 
 export default function EpisodeUploadScreen() {
   const { t } = useTranslation();
+  const episodeUploadModalRef = useRef<EpisodeUploadModalRef>(null);
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
   const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
@@ -37,6 +36,7 @@ export default function EpisodeUploadScreen() {
     });
     setEpisode(episode);
     handleonToggleThumbnailExtractConfirmationModalVisible();
+    episodeUploadModalRef.current?.onNext();
     handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.SignedUrl);
   };
 
@@ -98,7 +98,7 @@ export default function EpisodeUploadScreen() {
   return (
     <Page>
       <Button onClick={handleOnToggleSelectSeriesModalVisible}>Upload</Button>
-      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isLoading={isGetUploadEpisodeUrlLoading || isCreateMediaImageLoading || isCreateEpisodeLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} />
+      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} onEpisodeSelect={handleOnEpisodeDrop} isCreateMediaImageLoading={isCreateMediaImageLoading} isLoading={isGetUploadEpisodeUrlLoading || isCreateEpisodeLoading} onFeedback={handleOnToggleFeedbackSideBar} onThumbnailSelect={handleOnThumbnailSelect} onCreateEpisode={handleOnCreateEpisode} thumbnailUrl={thumbnailUrl} ref={episodeUploadModalRef} />
       <SelectSeriesAndSeasonModal onNext={handleOnNextSelectSeriesAndSeasonModal} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModalVisible} />
       <ConfirmationModal isOpen={thumbnailExtractConfirmationModalVisible} onClose={handleonToggleThumbnailExtractConfirmationModalVisible} onConfirm={handleOnConfirmExtractThumbnail} title={t("Feature.VideoUpload.EpisodeUploadScreen.confirmationModalTitle")}>
         {t("Feature.VideoUpload.EpisodeUploadScreen.confirmationModalMessage")}

@@ -51,8 +51,8 @@ export function useGetManagerSeries() {
     queryKey: [""],
     queryFn: async () => {
       const result = await gqlRequest<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfoOutput[] }>(
-        `query GetManagerSeriesWithImageAndBasicInfo($input: GetManagerSeriesWithImageAndBasicInfoInput!) {
-          getManagerSeriesWithImageAndBasicInfo(GetManagerSeriesWithImageAndBasicInfoInput: $input) {
+        `query GetManagerSeriesWithImageAndBasicInfo{
+          getManagerSeriesWithImageAndBasicInfo{
             ID
             seriesIsFree
             seriesPriceInDollar
@@ -69,7 +69,6 @@ export function useGetManagerSeries() {
             }
           }
         }`,
-        { input: { MediaImageType: MediaImageTypeEnum.THUMBNAIL } }
       );
       return result.getManagerSeriesWithImageAndBasicInfo;
     },

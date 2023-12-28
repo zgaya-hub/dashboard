@@ -10,7 +10,7 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { CreateSeriesFieldType } from "../types";
+import { SeriesCreateFieldType } from "../types";
 import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
 import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
@@ -19,10 +19,11 @@ import { useTranslation } from "react-i18next";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
-  const [backDropUrl, senBackDropUrl] = useState("");
-  const [mediaImageId, setMediaImageId] = useState("");
+  const [backDropUrl, senBackdropUrl] = useState("");
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
+
+  window.open("/new-page", "_blank", "width=500,height=500");
 
   const {
     control,
@@ -31,7 +32,7 @@ export default function SeriesCreateScreen() {
     setValue: setCreateSeriesFormValue,
     handleSubmit: handleOnSubmit,
     watch: watchCreateSeriesFormValue,
-  } = useForm<CreateSeriesFieldType>({
+  } = useForm<SeriesCreateFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
@@ -39,22 +40,25 @@ export default function SeriesCreateScreen() {
       releaseDate: new Date().getTime(),
     },
   });
+  console.log(watchCreateSeriesFormValue("releaseDate"));
 
-  const handleOnBackDropSelect = async (image: File) => {
+  const handleOnBackdropSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.BACKDROP });
-    setMediaImageId(result.createMediaImage.mediaImageId);
-    senBackDropUrl(await extractImageUrl(image));
+    senBackdropUrl(await extractImageUrl(image));
+    setCreateSeriesFormValue("mediaImageId", result.createMediaImage.mediaImageId);
   };
 
-  const handleOnCreateEpisode = (input: CreateSeriesFieldType) => {
+  const handleOnCreateEpisode = (input: SeriesCreateFieldType) => {
+    console.log(input);
+
     createSeriesMutateAsync({
-      MediaImageId: mediaImageId,
+      MediaImageId: input.mediaImageId,
       MediaBasicInfo: {
         PlotSummary: input.plotSummary,
         Title: input.title,
-        ReleaseDate: input.releaseDate,
+        ReleaseDate: +input.releaseDate,
       },
       MediaAdditionalInfo: {
         Genre: input.mediaGenre,
@@ -95,7 +99,7 @@ export default function SeriesCreateScreen() {
         </Grid>
         <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
           <Grid xs={12} item lg={5.9}>
-            <SeriesImageSelectComponent onImageDrop={handleOnBackDropSelect} isLoading={isCreateMediaImageLoading} />
+            <SeriesImageSelectComponent onImageDrop={handleOnBackdropSelect} isLoading={isCreateMediaImageLoading} />
           </Grid>
           <Grid xs={12} item lg={5.9}>
             <CardMedia sx={cardMediaStyle} image={backDropUrl} />

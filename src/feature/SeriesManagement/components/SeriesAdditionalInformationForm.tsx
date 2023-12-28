@@ -2,7 +2,7 @@ import Elevator from "@/components/Tags/Elevator";
 import { Stack, Typography } from "@mui/material";
 import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { CreateSeriesFieldType } from "../types";
+import { SeriesCreateFieldType } from "../types";
 import { useState } from "react";
 import { CountriesEnum, LanguagiesEnum, MediaGenriesEnum } from "@/types/enum";
 import { ModalSelectInput } from "@/components/Form";
@@ -10,8 +10,8 @@ import { CountryPickerModal, LanguagePickerModal, MediaGenrePickerModal } from "
 import SeriesStatusSelectComponent from "./SeriesStatusSelectComponent";
 
 interface SeriesAdditionalInformationFormProps {
-  setCreateSeriesFormValue: UseFormSetValue<CreateSeriesFieldType>;
-  watchCreateSeriesFormValue: UseFormWatch<CreateSeriesFieldType>;
+  setCreateSeriesFormValue: UseFormSetValue<SeriesCreateFieldType>;
+  watchCreateSeriesFormValue: UseFormWatch<SeriesCreateFieldType>;
 }
 
 export default function SeriesAdditionalInformationForm({ setCreateSeriesFormValue, watchCreateSeriesFormValue }: SeriesAdditionalInformationFormProps) {

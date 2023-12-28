@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { FourOFourScreen } from "./screens";
 
-export type FourOFourRouteParams = {
+export type FourOFourRoutesParams = {
   "*": undefined;
 };
 

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { HomeScreen } from "./screens";
 
-export type HomeRouteParams = {
+export type HomeRoutesParams = {
   "/home": undefined;
 };
 

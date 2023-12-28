@@ -1,14 +1,14 @@
 import { ListItemText, MenuItem, SelectChangeEvent } from "@mui/material";
 import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { CreateSeriesFieldType } from "../types";
+import { SeriesCreateFieldType } from "../types";
 import { values } from "lodash";
 import { MediaStatusEnum } from "@/types/enum";
 import { SelectInput } from "@/components/Form";
 
 interface SeriesStatusSelectComponentProps {
-  setCreateSeriesFormValue: UseFormSetValue<CreateSeriesFieldType>;
-  watchCreateSeriesFormValue: UseFormWatch<CreateSeriesFieldType>;
+  setCreateSeriesFormValue: UseFormSetValue<SeriesCreateFieldType>;
+  watchCreateSeriesFormValue: UseFormWatch<SeriesCreateFieldType>;
 }
 
 export default function SeriesStatusSelectComponent({ setCreateSeriesFormValue, watchCreateSeriesFormValue }: SeriesStatusSelectComponentProps) {

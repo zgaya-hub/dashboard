@@ -60,17 +60,17 @@ export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGe
     <>
       <SearchIcon onClick={handleOnSearchInputVisible} />
       <Button onClick={handleOnClose} variant="text">
-        {t("Component.Modals.MediaGenrePickerModal.cancel")}
+        {t("Components.Modals.MediaGenrePickerModal.cancel")}
       </Button>
       <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Component.Modals.MediaGenrePickerModal.ok")}
+        {t("Components.Modals.MediaGenrePickerModal.ok")}
       </Button>
     </>
   );
 
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Component.Modals.MediaGenrePickerModal.pickAGenre")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
-      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Component.Modals.MediaGenrePickerModal.search")} /> : null}
+    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.MediaGenrePickerModal.pickAGenre")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
+      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.MediaGenrePickerModal.search")} /> : null}
       <RadioGroup value={value} onChange={handleOnChange}>
         {filteredMediaGenres.map((mediaGenre) => {
           return (

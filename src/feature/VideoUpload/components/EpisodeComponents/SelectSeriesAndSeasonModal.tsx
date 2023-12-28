@@ -32,6 +32,11 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
     setSelectedSeriesSeasons(result.getSeasonBySeriesId);
   };
 
+  const openNewWindow = () => {
+    // Open new window only on user interaction
+    window.open("/quick-media-management/series-create", "_blank", "width=500,height=500");
+  };
+
   const handleOnClearBothState = () => {
     setSelectedSeasonId(null);
     setSelectedSeries(null);
@@ -68,7 +73,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
 
   const renderSeriesListFooter = (
     <>
-      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={() => {}} />
+      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={openNewWindow} />
       <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isManagerSeriesFetching} onClick={refetchManagerSeries} />
       <Button variant="outlined" onClick={handleOnMovieNavigation} startIcon={<UploadIcon />}>
         {t("Feature.VideoUpload.SelectSeriesAndSeasonModal.movie")}

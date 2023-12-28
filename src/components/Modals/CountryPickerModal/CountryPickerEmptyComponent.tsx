@@ -23,8 +23,8 @@ export default function CountryPickerEmptyComponent({ message, height, width, sx
   return (
     <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} sx={containerStyle}>
       <NoRecordFoundIllustration />
-      <Typography mb={2}>{message ?? t("Component.Modals.CountryPickerModal.CountryPickerEmptyComponent.message")}</Typography>
-      <Button variant="text" size="small">{t("Component.Modals.CountryPickerModal.CountryPickerEmptyComponent.addCountry")}</Button>
+      <Typography mb={2}>{message ?? t("Components.Modals.CountryPickerModal.CountryPickerEmptyComponent.message")}</Typography>
+      <Button variant="text" size="small">{t("Components.Modals.CountryPickerModal.CountryPickerEmptyComponent.addCountry")}</Button>
     </Box>
   );
 }

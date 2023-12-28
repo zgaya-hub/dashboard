@@ -1,8 +1,9 @@
 import React from "react";
-import { ListItemText, Divider, MenuItem, Menu } from "@mui/material";
+import { ListItemText, Divider, MenuItem, Menu, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { ChevronRightIcon, FeedbackIcon, LogoutIcon, MoonIcon, SettingIcon, SignalBarIcon, SwitchAccountIcon, TranslateIcon } from "@/components/icons";
 import UserCardForMenu from "./UserCardForMenu";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 interface UserMenuProps {
   anchorEl: null | HTMLElement;
@@ -20,8 +21,12 @@ interface UserMenuProps {
 export default function UserMenu({ anchorEl, isVisible, onClose, onSwitchAccount, onSetting, onClickProfile, onLogout, onAppearance, onTranslation, onShareFeedback }: UserMenuProps) {
   const { t } = useTranslation();
 
+  const menuItemStyle = useThemeStyles<SxProps>((theme) => ({
+    width: theme.spacing(48),
+  }));
+
   const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void, hasChevron: boolean = false) => (
-    <MenuItem onClick={onClick}>
+    <MenuItem onClick={onClick} sx={menuItemStyle}>
       {icon}
       <ListItemText>{label}</ListItemText>
       {hasChevron && <ChevronRightIcon onClick={() => {}} />}

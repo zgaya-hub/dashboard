@@ -22,9 +22,10 @@ interface EpisodeCreateStepProps {
   onSave: (fields: CreateEpisodeFormFieldType) => void;
   onThumbnailSelect: (episode: File) => void;
   isLoading: boolean;
+  isCreateMediaImageLoading: boolean;
 }
 
-export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading }: EpisodeCreateStepProps) {
+export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, isCreateMediaImageLoading }: EpisodeCreateStepProps) {
   const { t } = useTranslation();
 
   const {
@@ -61,7 +62,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.reUsePrevious")}</Button>
         </Stack>
         {renderForm}
-        <ImageUploadComponent isLoading={isLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
+        <ImageUploadComponent isLoading={isCreateMediaImageLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
         <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={2}>
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.cancel")}</Button>
           <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>
