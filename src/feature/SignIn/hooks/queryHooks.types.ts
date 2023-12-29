@@ -4,5 +4,5 @@ export type ManagerSignInInput = {
 };
 
 export type ManagerSignInOutput = {
-  managerSignIn: { token: string };
+  token: string;
 };

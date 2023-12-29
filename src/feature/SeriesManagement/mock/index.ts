@@ -1,10 +1,10 @@
 import { randCountry, randText, randUuid, randLanguage, randMusicGenre, randStatus, randMovie, randPastDate, randUrl } from "@ngneat/falso";
 
-export const getGridData = () => {
+export const getGridData = (page: number, pageSize: number) => {
   const getGridData = [];
   for (let i = 1; i <= 30; i++) {
     getGridData.push({
-      id: randUuid(),
+      ID: randUuid(),
       mediaOriginCountry: randCountry(),
       mediaOriginalLanguage: randLanguage(),
       mediaGenre: randMusicGenre(),
@@ -17,5 +17,6 @@ export const getGridData = () => {
       updatedAt: randPastDate().getTime(),
     });
   }
-  return getGridData;
+
+  return getGridData.splice(page, pageSize);
 };

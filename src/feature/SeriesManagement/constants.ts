@@ -4,6 +4,6 @@ export const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used
 export const DUMMY_RELEASE_DATE = new Date().getTime();
 
 export const DEFAULT_PAGINATION_DATE: PaginationStateInterface = {
-  Take: 10,
-  Skip: 0,
+  page: 0,
+  pageSize: 18,
 };

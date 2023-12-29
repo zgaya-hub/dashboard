@@ -12,7 +12,7 @@ export default function SignInInputScreen() {
     const result = await managerLoginMutateAsync(formData);
     console.log(result);
 
-    handleOnAuthenticate(result.managerSignIn.token);
+    handleOnAuthenticate(result.token);
   };
 
   return (

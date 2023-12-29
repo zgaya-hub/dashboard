@@ -105,7 +105,15 @@
       "SeriesManagementScreen": {
         "createSeries": "Create series",
         "createSeason": "Create season",
-        "uploadEpisode": "Upload episode"
+        "uploadEpisode": "Upload episode",
+        "refetch": "Refetch",
+        "search": "Search",
+        "deleteSelected": "Delete selected",
+        "editSelected": "Edit selected",
+        "autoSave": "Auto save",
+        "manageSeries": "Manage series",
+        "save": "Save",
+        "cancel": "Cancel"
       },
       "SeriesBasicInformationForm": {
         "addBasicInformation": "Add basic Info",

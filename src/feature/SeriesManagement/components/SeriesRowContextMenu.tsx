@@ -23,11 +23,11 @@ export default function SeriesRowContextMenu({ onDelete, onEdit, isOpen, onClose
         <ListItemText>Select</ListItemText>
       </MenuItem>
       <MenuItem onClick={onEdit} sx={menuItemStyle}>
-        <EditIcon isListIcon fontSize="small" />
+        <EditIcon isListIcon fontSize="small" color="primary" />
         <ListItemText>Edit</ListItemText>
       </MenuItem>
       <MenuItem onClick={onDelete} sx={menuItemStyle}>
-        <DeleteIcon isListIcon fontSize="small" />
+        <DeleteIcon isListIcon fontSize="small" color="error" />
         <ListItemText>Delete</ListItemText>
       </MenuItem>
     </Menu>

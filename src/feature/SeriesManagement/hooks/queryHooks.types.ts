@@ -7,8 +7,8 @@ export type CreateMediaImageInput = {
 };
 
 export type GetManagerSeriesForTableInput = {
-  Take: number;
-  Skip: number;
+  Page: number;
+  PageSize: number;
 };
 
 export type CreateSeriesInput = {

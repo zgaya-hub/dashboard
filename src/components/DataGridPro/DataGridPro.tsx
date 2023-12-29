@@ -34,7 +34,7 @@ export default function DataGridPro({ slots, contextMenuComponent, ...restProps 
           },
         }}
       />
-      {contextMenuComponent ? contextMenuComponent(!!contextMenuAnchorEl, () => setContextMenuAnchorEl(null), contextMenuAnchorEl) : null}
+      {contextMenuComponent ? contextMenuComponent(!!contextMenuAnchorEl, () => setContextMenuAnchorEl(null), contextMenuAnchorEl!) : null}
     </Fragment>
   );
 }

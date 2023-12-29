@@ -5,9 +5,9 @@ import { Card, Stack, Switch, SxProps, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { GridColDef } from "@mui/x-data-grid-pro";
+import { GridColDef, GridPaginationModel } from "@mui/x-data-grid-pro";
 import Tooltip from "@/components/Tooltip";
-import { DeleteIcon, EditIcon, SaveIcon, SearchIcon } from "@/components/icons";
+import { CachedIcon, DeleteIcon, EditIcon, SaveIcon, SearchIcon } from "@/components/icons";
 import { SeriesRowContextMenu } from "../components";
 import { useGetManagerSeriesForTable } from "../hooks/queryHooks";
 import { useEffect, useState } from "react";
@@ -21,8 +21,19 @@ export default function SeriesManagementScreen() {
   const { data: managerSeriesForTableData, mutateAsync: managerSeriesForTableMutateAsync, isPending: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable();
 
   useEffect(() => {
-    managerSeriesForTableMutateAsync(pagination);
-  }, []);
+    handleOnFetchManagerSeriesForTableData();
+  }, [pagination]);
+  console.log(pagination, "±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±");
+  
+
+  const handleOnFetchManagerSeriesForTableData = () => {
+    managerSeriesForTableMutateAsync({ Page: pagination.page, PageSize: pagination.pageSize });
+  };
+
+  const handleOnChangePage = (model: GridPaginationModel) => {
+    setPagination({ pageSize: model.pageSize, page: model.page });
+    handleOnFetchManagerSeriesForTableData();
+  };
 
   const handleOnCreateSeriesClick = () => {
     navigation.navigate("/series-management/series-create");
@@ -42,11 +53,12 @@ export default function SeriesManagementScreen() {
 
   const tableActions = (
     <Stack gap={1} direction={"row"} alignItems={"center"}>
-      <SearchIcon onClick={() => {}} />
-      <DeleteIcon color="error" onClick={() => {}} />
-      <EditIcon color="primary" onClick={() => {}} />
-      <Tooltip title="Auto save">
-        <Switch sx={{ margin: 0 }} />
+      <CachedIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.refetch")} onClick={handleOnFetchManagerSeriesForTableData} />
+      <SearchIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.search")} onClick={() => {}} />
+      <DeleteIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.deleteSelected")} color="error" onClick={() => {}} />
+      <EditIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.editSelected")} color="primary" onClick={() => {}} />
+      <Tooltip title={t("Feature.SeriesManagement.SeriesManagementScreen.autoSave")}>
+        <Switch />
       </Tooltip>
       <Button onClick={handleOnCreateSeriesClick}>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
     </Stack>
@@ -54,25 +66,38 @@ export default function SeriesManagementScreen() {
 
   const tableHeader = (
     <Stack direction={"row"} mb={2} justifyContent={"space-between"} alignItems={"center"}>
-      <Typography variant="h5">Manage series</Typography>
+      <Typography variant="h5">{t("Feature.SeriesManagement.SeriesManagementScreen.manageSeries")}</Typography>
       {tableActions}
     </Stack>
   );
 
   const tableFooter = (
     <Stack direction={"row"} justifyContent={"end"} mt={2} gap={1}>
-      <Button variant="text">Cancle</Button>
+      <Button variant="text">{t("Feature.SeriesManagement.SeriesManagementScreen.cancel")}</Button>
       <Button endIcon={<SaveIcon />} variant="contained">
-        Save
+        {t("Feature.SeriesManagement.SeriesManagementScreen.save")}
       </Button>
     </Stack>
   );
 
   return (
-    <Page elevation={10}>
+    <Page>
       <Card sx={cardStyle}>
         {tableHeader}
-        <DataGridPro loading={isManagerSeriesForTableLoading} getRowId={(row) => row.ID} rows={managerSeriesForTableData?.seriesList ?? []} columns={SeriesTableColumn} pagination contextMenuComponent={(isOpen, onClose, anchorEl) => <SeriesRowContextMenu onEdit={handleOnEdit} onDelete={handleOnDelete} onClose={onClose} anchorEl={anchorEl} isOpen={isOpen} />} />
+        <DataGridPro
+          pagination
+          checkboxSelection
+          disableRowSelectionOnClick
+          loading={isManagerSeriesForTableLoading}
+          getRowId={(row) => row.ID}
+          rows={managerSeriesForTableData?.seriesList ?? []}
+          columns={SeriesTableColumn}
+          pageSizeOptions={[]}
+          rowCount={managerSeriesForTableData?.totalRecords}
+          onPaginationModelChange={handleOnChangePage}
+          paginationModel={pagination}
+          contextMenuComponent={(isOpen, onClose, anchorEl) => <SeriesRowContextMenu onEdit={handleOnEdit} onDelete={handleOnDelete} onClose={onClose} anchorEl={anchorEl} isOpen={isOpen} />}
+        />
         {tableFooter}
       </Card>
     </Page>
@@ -89,41 +114,49 @@ const SeriesTableColumn: GridColDef[] = [
     field: "mediaOriginCountry",
     headerName: "Origin country",
     width: 200,
+    editable: true,
   },
   {
     field: "mediaOriginalLanguage",
     headerName: "Original language",
     width: 200,
+    editable: true,
   },
   {
     field: "mediaGenre",
     headerName: "Genre",
     width: 200,
+    editable: true,
   },
   {
     field: "mediaStatus",
     headerName: "Status",
     width: 200,
+    editable: true,
   },
   {
     field: "mediaTitle",
     headerName: "Title",
     width: 200,
+    editable: true,
   },
   {
     field: "mediaPlotSummary",
     headerName: "Plot summary",
     width: 200,
+    editable: true,
   },
   {
     field: "mediaReleaseDate",
     headerName: "Release date",
     width: 200,
+    editable: true,
   },
   {
     field: "mediaImageUrl",
     headerName: "Image url",
     width: 200,
+    editable: true,
   },
   {
     field: "createdAt",
