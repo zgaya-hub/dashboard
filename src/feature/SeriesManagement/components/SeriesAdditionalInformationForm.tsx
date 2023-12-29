@@ -4,7 +4,7 @@ import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SeriesCreateFieldType } from "../types";
 import { useState } from "react";
-import { CountriesEnum, LanguagiesEnum, MediaGenriesEnum } from "@/types/enum";
+import { MediaCountriesEnum, MediaLanguagiesEnum, MediaGenriesEnum } from "@/types/enum";
 import { ModalSelectInput } from "@/components/Form";
 import { CountryPickerModal, LanguagePickerModal, MediaGenrePickerModal } from "@/components/Modals";
 import SeriesStatusSelectComponent from "./SeriesStatusSelectComponent";
@@ -20,8 +20,8 @@ export default function SeriesAdditionalInformationForm({ setCreateSeriesFormVal
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
   const [isMediaGenreModalVisible, setIsMediaGenreModalVisible] = useState(false);
 
-  const handleOnSelectCountry = (countrName: CountriesEnum) => {
-    setCreateSeriesFormValue("originCountry", countrName);
+  const handleOnSelectCountry = (countrName: MediaCountriesEnum) => {
+    setCreateSeriesFormValue("mediaOriginCountry", countrName);
     handleOnToggleCountryModalVisible();
   };
 
@@ -30,8 +30,8 @@ export default function SeriesAdditionalInformationForm({ setCreateSeriesFormVal
     handleOnToggleMediaGenreModalVisible();
   };
 
-  const handleOnSelectLanguage = (language: LanguagiesEnum) => {
-    setCreateSeriesFormValue("originalLanguage", language);
+  const handleOnSelectLanguage = (language: MediaLanguagiesEnum) => {
+    setCreateSeriesFormValue("mediaOriginalLanguage", language);
     handleOnToggleLanguageModalVisible();
   };
 
@@ -51,9 +51,9 @@ export default function SeriesAdditionalInformationForm({ setCreateSeriesFormVal
     <Elevator padding={4} gap={2}>
       <Typography variant="h5">{t("Feature.SeriesManagement.SeriesAdditionalInformationForm.addAdditionalInformation")}</Typography>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.originCountry")} value={watchCreateSeriesFormValue("originCountry")} onClick={handleOnToggleCountryModalVisible} fullWidth />
+        <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.originCountry")} value={watchCreateSeriesFormValue("mediaOriginCountry")} onClick={handleOnToggleCountryModalVisible} fullWidth />
         <CountryPickerModal isOpen={isCountryModalVisible} onClose={handleOnToggleCountryModalVisible} onOk={handleOnSelectCountry} />
-        <ModalSelectInput isModalVisible={isLanguageModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.originalLanguage")} value={watchCreateSeriesFormValue("originalLanguage")} onClick={handleOnToggleLanguageModalVisible} fullWidth />
+        <ModalSelectInput isModalVisible={isLanguageModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.originalLanguage")} value={watchCreateSeriesFormValue("mediaOriginalLanguage")} onClick={handleOnToggleLanguageModalVisible} fullWidth />
         <LanguagePickerModal isOpen={isLanguageModalVisible} onClose={handleOnToggleLanguageModalVisible} onOk={handleOnSelectLanguage} />
       </Stack>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>

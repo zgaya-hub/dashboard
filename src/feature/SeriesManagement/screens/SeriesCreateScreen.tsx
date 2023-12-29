@@ -4,19 +4,17 @@ import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metal
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { MediaImageTypeEnum } from "@/types/enum";
 import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
-import SeriesBasicInformationForm from "../components/SeriesBasicInformationForm";
-import SeriesImageSelectComponent from "../components/SeriesImageSelectComponent";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { SeriesCreateFieldType } from "../types";
-import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
 import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import { DUMMY_PLOT_SUMMARY, DUMMY_RELEASE_DATE } from "../constants";
+import { SeriesAdditionalInformationForm, SeriesBasicInformationForm, SeriesImageSelectComponent } from "../components";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
@@ -34,9 +32,9 @@ export default function SeriesCreateScreen() {
   } = useForm<SeriesCreateFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      title: "",
-      plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: DUMMY_RELEASE_DATE,
+      mediaTitle: "",
+      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
+      mediaReleaseDate: DUMMY_RELEASE_DATE,
     },
   });
 
@@ -52,15 +50,15 @@ export default function SeriesCreateScreen() {
     createSeriesMutateAsync({
       MediaImageId: input.mediaImageId,
       MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: +input.releaseDate,
+        MediaPlotSummary: input.mediaPlotSummary,
+        MediaTitle: input.mediaTitle,
+        MediaReleaseDate: +input.mediaReleaseDate,
       },
       MediaAdditionalInfo: {
-        Genre: input.mediaGenre,
-        OriginalLanguage: input.originalLanguage,
-        OriginCountry: input.originCountry,
-        Status: input.mediaStatus,
+        MediaGenre: input.mediaGenre,
+        MediaOriginalLanguage: input.mediaOriginalLanguage,
+        MediaOriginCountry: input.mediaOriginCountry,
+        MediaStatus: input.mediaStatus,
       },
     });
   };

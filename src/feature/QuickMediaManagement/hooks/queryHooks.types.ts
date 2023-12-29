@@ -1,4 +1,4 @@
-import { CountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaImageTypeEnum, MediaStatusEnum } from "@/types/enum";
+import { MediaCountriesEnum, MediaLanguagiesEnum, MediaGenriesEnum, MediaImageTypeEnum, MediaStatusEnum } from "@/types/enum";
 
 export type CreateMediaImageInput = {
   MediaImageBase64: string;
@@ -13,8 +13,8 @@ export type CreateSeriesInput = {
 };
 
 export type MediaAdditionalInformationInput = {
-  OriginCountry?: CountriesEnum;
-  OriginalLanguage?: LanguagiesEnum;
+  OriginCountry?: MediaCountriesEnum;
+  OriginalLanguage?: MediaLanguagiesEnum;
   Genre?: MediaGenriesEnum;
   Status?: MediaStatusEnum;
 };

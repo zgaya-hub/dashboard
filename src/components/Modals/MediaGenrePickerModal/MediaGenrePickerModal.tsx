@@ -9,7 +9,7 @@ import { DoneIcon, SearchIcon, StreetViewIcon } from "@/components/icons";
 import { SearchInput } from "@/components/Form";
 import { MediaGenriesEnum } from "@/types/enum";
 import { MediaGenrePickerEmptyComponent } from "..";
-import { values } from "lodash";
+import { mediaGenreList } from "../constants";
 
 interface MediaGenrePickerModalProps {
   isOpen: boolean;
@@ -51,7 +51,7 @@ export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGe
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     "& .MuiDialog-paper": {
-      minWidth: theme.spacing(48),
+      width: theme.spacing(48),
       maxHeight: theme.spacing(64),
     },
   }));
@@ -81,10 +81,8 @@ export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGe
             </MenuItem>
           );
         })}
-        {!filteredMediaGenres.length ? <MediaGenrePickerEmptyComponent height={36} /> : null}
+        {!filteredMediaGenres.length ? <MediaGenrePickerEmptyComponent height={32} /> : null}
       </RadioGroup>
     </Dialog>
   );
 }
-
-const mediaGenreList = values(MediaGenriesEnum);

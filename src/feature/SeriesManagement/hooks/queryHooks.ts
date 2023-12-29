@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CreateMediaImageInput, CreateMediaImageOutput, CreateSeriesInput } from "./queryHooks.types";
+import { CreateMediaImageInput, CreateMediaImageOutput, CreateSeriesInput, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput } from "./queryHooks.types";
 
 export function useCreateMediaImage() {
   const { showGqlError } = useGqlError();
@@ -43,20 +43,32 @@ export function useCreateSeries() {
   });
 }
 
-export function useGetSeriesTableData() {
+export function useGetManagerSeriesForTable() {
   const { showGqlError } = useGqlError();
-  return useQuery({
-    queryKey: [""],
-    queryFn: async (input: CreateSeriesInput) => {
-      const result = await gqlRequest<{ createSeries: CommonSuccessOutput }>(
-        `mutation($input: CreateSeriesInput!) {
-          createSeries(CreateSeriesInput: $input) {
-            isSuccess
+  return useMutation({
+    mutationFn: async (input: GetManagerSeriesForTableInput) => {
+      const result = await gqlRequest<{ getManagerSeriesForTable: GetManagerSeriesForTableOutput }>(
+        `mutation($input: GetManagerSeriesForTableInput!) {
+          getManagerSeriesForTable(GetManagerSeriesForTableInput: $input) {
+            totalRecords
+            seriesList{
+              ID
+              createdAt
+              updatedAt
+              mediaGenre
+              mediaImageUrl
+              mediaOriginCountry
+              mediaOriginalLanguage
+              mediaPlotSummary
+              mediaReleaseDate
+              mediaStatus
+              mediaTitle
+            }
           }
         }`,
         { input }
       );
-      return result.createSeries;
+      return result.getManagerSeriesForTable;
     },
     onError: (error) => {
       showGqlError(error.response);

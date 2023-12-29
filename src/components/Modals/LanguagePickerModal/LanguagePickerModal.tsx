@@ -8,18 +8,18 @@ import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
 import { DoneIcon, SearchIcon, TranslateIcon } from "@/components/icons";
 import { languageListWithCode } from "@/mock/languageListWithCode";
 import { SearchInput } from "@/components/Form";
-import { LanguagiesEnum } from "@/types/enum";
+import { MediaLanguagiesEnum } from "@/types/enum";
 import { LanguagePickerEmptyComponent } from "..";
 
 interface LanguagePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: LanguagiesEnum) => void;
+  onOk: (countrName: MediaLanguagiesEnum) => void;
 }
 
 export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguagePickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(LanguagiesEnum.URDU);
+  const [value, setValue] = useState(MediaLanguagiesEnum.URDU);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 
@@ -51,7 +51,7 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     "& .MuiDialog-paper": {
-      minWidth: theme.spacing(48),
+      width: theme.spacing(48),
       maxHeight: theme.spacing(64),
     },
   }));
@@ -81,7 +81,7 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
             </MenuItem>
           );
         })}
-        {!filteredLanguages.length ? <LanguagePickerEmptyComponent height={36} /> : null}
+        {!filteredLanguages.length ? <LanguagePickerEmptyComponent height={32} /> : null}
       </RadioGroup>
     </Dialog>
   );
