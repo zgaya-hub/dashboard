@@ -102,6 +102,15 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
+  MuiPopover: {
+    styleOverrides: {
+      root: {
+        "& .MuiPopover-root": {
+          background: "#ffffff",
+        },
+      },
+    },
+  },
   MuiCircularProgress: {
     styleOverrides: {
       root: {

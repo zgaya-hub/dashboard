@@ -8,7 +8,7 @@ import TrailerUploadModal from "../components/TrailerUploadModal";
 
 export default function TrailerUploadScreen() {
   const [isTrailerUploadModalVisible, setIsTrailerUploadModalVisible] = useState(true);
-  const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
+  const [isFeetbackSidebarVisible, setIsFeetbackSidebarVisible] = useState(true);
   const { mutateAsync: getUploadTrailerUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
 
@@ -32,14 +32,14 @@ export default function TrailerUploadScreen() {
     setIsTrailerUploadModalVisible(!isTrailerUploadModalVisible);
   };
 
-  const handleOnToggleFeedbackSideBar = () => {
-    setIsFeetbackSideBarVisible(!isFeetbackSideBarVisible);
+  const handleOnToggleFeedbackSidebar = () => {
+    setIsFeetbackSidebarVisible(!isFeetbackSidebarVisible);
   };
 
   return (
     <Page>
       <Button onClick={handleOnToggleTrailerUploadModal}>Upload</Button>
-      <TrailerUploadModal isVisible={isTrailerUploadModalVisible} onClose={handleOnToggleTrailerUploadModal} onVideoDrop={handleOnTrailerDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
+      <TrailerUploadModal isVisible={isTrailerUploadModalVisible} onClose={handleOnToggleTrailerUploadModal} onVideoDrop={handleOnTrailerDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSidebar} />
     </Page>
   );
 }

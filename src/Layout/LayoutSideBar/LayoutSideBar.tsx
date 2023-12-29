@@ -1,18 +1,18 @@
 import { Stack, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Menu, Sidebar, SubMenu } from "react-pro-sidebar";
-import SidebarItem, { SidebarItemProps } from "./SideBarItem";
-import { CollapsedSideBarUserCard, ExpandSideBarUserCard } from "./SideBarUserCard";
+import SidebarItem, { SidebarItemProps } from "./SidebarItem";
+import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
 import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon, QuestionAnswerIcon, SettingIcon, UploadIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { CSSProperties, useState } from "react";
 import useNavigation from "@/navigation/use-navigation";
 
-interface SideBarSectionProps {
+interface SidebarSectionProps {
   listItems: SidebarItemProps[];
 }
 
-function SideBarSection({ listItems }: SideBarSectionProps) {
+function SidebarSection({ listItems }: SidebarSectionProps) {
   const subMenuSection = (item: SidebarItemProps) => {
     return (
       <SubMenu label={item.label} icon={item.icon}>
@@ -38,7 +38,7 @@ function SideBarSection({ listItems }: SideBarSectionProps) {
   );
 }
 
-export default function LayoutSideBar() {
+export default function LayoutSidebar() {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [activeItemLabel, setActiveItemLabel] = useState("");
@@ -151,11 +151,11 @@ export default function LayoutSideBar() {
     <Sidebar collapsed={!isHovered} style={containerStyle} backgroundColor={sideBarBackground} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <Stack justifyContent={"space-between"} height={"100vh"}>
         <Stack gap={1}>
-          {!isHovered ? <CollapsedSideBarUserCard /> : <ExpandSideBarUserCard />}
-          <SideBarSection listItems={sections.sidebar} />
+          {!isHovered ? <CollapsedSidebarUserCard /> : <ExpandSidebarUserCard />}
+          <SidebarSection listItems={sections.sidebar} />
         </Stack>
         <Stack sx={footerStyles}>
-          <SideBarSection listItems={sections.footer} />
+          <SidebarSection listItems={sections.footer} />
         </Stack>
       </Stack>
     </Sidebar>

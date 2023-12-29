@@ -20,7 +20,7 @@ export type GetSeasonBySeriesIdInput = {
 };
 
 export type CreateEpisodeInput = {
-  EpisodeNo: number;
+  EpisodeNumber: number;
   SeasonId: string;
   VideoId: string;
   SignedUrlKeyId: string;

@@ -11,6 +11,7 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 export default function SeriesManagementScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  
 
   const { data, loading } = useDemoData({
     dataSet: "Employee",

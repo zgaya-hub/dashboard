@@ -12,7 +12,7 @@ interface VideoPlayCardProps {
   description: string;
   onClickMenuIcon?: () => void;
   avatarSrc?: string;
-  episodeNo?: number;
+  episodeNumber?: number;
   children?: ReactNode;
 }
 
@@ -20,7 +20,7 @@ const truncateText = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 };
 
-export default function VideoPlayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNo }: VideoPlayCardProps) {
+export default function VideoPlayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNumber }: VideoPlayCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(32),
   }));
@@ -61,9 +61,9 @@ export default function VideoPlayCard({ thumbnail, children, title, description,
     <Card sx={cardStyle}>
       <Box sx={cardImageContainerStyle}>
         <CardMedia sx={cardImageStyle} component="img" image={thumbnail} />
-        {episodeNo ? (
+        {episodeNumber ? (
           <Stack sx={badgeStyle} justifyContent={"center"} alignItems={"center"}>
-            {episodeNo}
+            {episodeNumber}
           </Stack>
         ) : null}
       </Box>

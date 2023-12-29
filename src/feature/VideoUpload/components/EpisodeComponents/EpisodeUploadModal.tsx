@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/use-navigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
-import { Ref, forwardRef, useImperativeHandle, useState } from "react";
+import { Ref, forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
 import EpisodeCreateStep, { CreateEpisodeFormFieldType } from "./EpisodeCreateStep";
 import EpisodeCreateAdditionalInfoStep from "./EpisodeCreateAdditionalInfoStep";
@@ -19,8 +19,9 @@ interface EpisodeUploadModalProps {
   onEpisodeSelect: (episode: File) => void;
   onThumbnailSelect: (episode: File) => void;
   onCreateEpisode: (input: CreateEpisodeFormFieldType) => void;
+  isVideoUploaded: boolean;
+  isEpisodeCreated: boolean;
   isLoading: boolean;
-  isCreateMediaImageLoading: boolean;
   thumbnailUrl: string;
 }
 
@@ -28,20 +29,25 @@ export interface EpisodeUploadModalRef {
   onNext: () => void;
 }
 
-const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, isCreateMediaImageLoading }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalForwardRef>) {
+const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, isVideoUploaded, isEpisodeCreated }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalRef>) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const navigate = useNavigation();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [activeStep, setActiveStep] = useState<number>(0);
 
-  // TODO: this will need to be redirect to next tab i will work on it soon
-  /*   useEffect(() => {
-    setIsInitialCall(true);
-    if (isInitialCall && !isLoading) {
-      handleOnNext();
+  const isNextButtonDisabled = useMemo(() => {
+    console.log(isVideoUploaded, activeStep === 0);
+
+    if (isVideoUploaded && activeStep === 0) {
+      return false;
     }
-  }, [isLoading]); */
+    if (isEpisodeCreated && activeStep === 1) {
+      return false;
+    }
+
+    return true;
+  }, [activeStep]);
 
   useImperativeHandle(ref, () => ({
     onNext: handleOnNext,
@@ -85,7 +91,7 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
-      step: <EpisodeCreateStep isCreateMediaImageLoading={isCreateMediaImageLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
+      step: <EpisodeCreateStep isCreateMediaImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),
@@ -118,7 +124,7 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
         activeStep={activeStep}
         sx={{ width: "100%", flexGrow: 1 }}
         nextButton={
-          <Button size="small" onClick={handleOnNext} disabled={activeStep > 0}>
+          <Button size="small" onClick={handleOnNext} disabled={isNextButtonDisabled}>
             {t("Feature.VideoUpload.EpisodeUploadModal.next")}
             <ChevronRightIcon />
           </Button>

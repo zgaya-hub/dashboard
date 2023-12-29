@@ -3,13 +3,13 @@ import useUserDetail from "@/context/UserDetail.context";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Avatar, Stack, SxProps } from "@mui/material";
 
-export function ExpandSideBarUserCard() {
+export function ExpandSidebarUserCard() {
   const { fullName, imageUrl, userName } = useUserDetail();
 
   return <ImageCircleTitleSubtitleCard image={imageUrl} title={fullName} subtitle={userName} />;
 }
 
-export function CollapsedSideBarUserCard() {
+export function CollapsedSidebarUserCard() {
   const { imageUrl } = useUserDetail();
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({

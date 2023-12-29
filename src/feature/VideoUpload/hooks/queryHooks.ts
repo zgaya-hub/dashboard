@@ -2,13 +2,12 @@ import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CreateEpisodeInput, CreateMediaImageInput, CreateMediaImageOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
-import { MediaImageTypeEnum } from "@/types/enum";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: GetUploadVideoSignedUrlInput) => {
-      return gqlRequest<{ getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput }>(
+      const result = await gqlRequest<{ getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput }>(
         `
           mutation($input: GetUploadVideoSignedUrlInput!) {
             getUploadVideoSignedUrl(GetUploadVideoSignedUrlInput: $input) {
@@ -20,6 +19,7 @@ export function useGetUploadVideoSignedUrl() {
         `,
         { input }
       );
+      return result;
     },
     onError: (error) => {
       showGqlError(error.response);
@@ -68,7 +68,7 @@ export function useGetManagerSeries() {
               ID
             }
           }
-        }`,
+        }`
       );
       return result.getManagerSeriesWithImageAndBasicInfo;
     },
@@ -79,11 +79,11 @@ export function useGetSeasonBySeriesId() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (param: GetSeasonBySeriesIdInput) => {
-      return gqlRequest<{ getSeasonBySeriesId: GetSeasonBySeriesIdOutput[] }>(
+      const result = await gqlRequest<{ getSeasonBySeriesId: GetSeasonBySeriesIdOutput[] }>(
         `query($param: GetSeasonBySeriesIdParams!) {
           getSeasonBySeriesId(GetSeasonBySeriesIdParams: $param) {
             ID
-            seasonNo
+            seasonNumber
             mediaBasicInfo {
               mediaTitle
               ID
@@ -93,6 +93,7 @@ export function useGetSeasonBySeriesId() {
         }`,
         { param }
       );
+      return result.getSeasonBySeriesId;
     },
     onError: (error) => {
       showGqlError(error.response);
@@ -104,7 +105,7 @@ export function useCreateEpisode() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: CreateEpisodeInput) => {
-      return gqlRequest<{ createEpisode: CommonSuccessOutput }>(
+      const result = await gqlRequest<{ createEpisode: CommonSuccessOutput }>(
         `mutation($input: CreateEpisodeInput!) {
           createEpisode(CreateEpisodeInput: $input) {
             isSuccess
@@ -112,6 +113,7 @@ export function useCreateEpisode() {
         }`,
         { input }
       );
+      return result.createEpisode;
     },
     onError: (error) => {
       showGqlError(error.response);
@@ -123,7 +125,7 @@ export function useCreateMediaImage() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: CreateMediaImageInput) => {
-      return gqlRequest<{ createMediaImage: CreateMediaImageOutput }>(
+      const result = await gqlRequest<{ createMediaImage: CreateMediaImageOutput }>(
         `mutation($input: CreateMediaImageInput!) {
           createMediaImage(CreateMediaImageInput: $input) {
             mediaImageId
@@ -131,6 +133,7 @@ export function useCreateMediaImage() {
         }`,
         { input }
       );
+      return result.createMediaImage;
     },
     onError: (error) => {
       showGqlError(error.response);

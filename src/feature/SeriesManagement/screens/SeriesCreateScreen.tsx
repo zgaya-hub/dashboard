@@ -16,14 +16,13 @@ import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
+import { DUMMY_PLOT_SUMMARY, DUMMY_RELEASE_DATE } from "../constants";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
   const [backDropUrl, senBackdropUrl] = useState("");
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
-
-  window.open("/new-page", "_blank", "width=500,height=500");
 
   const {
     control,
@@ -37,22 +36,19 @@ export default function SeriesCreateScreen() {
     defaultValues: {
       title: "",
       plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: new Date().getTime(),
+      releaseDate: DUMMY_RELEASE_DATE,
     },
   });
-  console.log(watchCreateSeriesFormValue("releaseDate"));
 
   const handleOnBackdropSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.BACKDROP });
     senBackdropUrl(await extractImageUrl(image));
-    setCreateSeriesFormValue("mediaImageId", result.createMediaImage.mediaImageId);
+    setCreateSeriesFormValue("mediaImageId", result.mediaImageId);
   };
 
   const handleOnCreateEpisode = (input: SeriesCreateFieldType) => {
-    console.log(input);
-
     createSeriesMutateAsync({
       MediaImageId: input.mediaImageId,
       MediaBasicInfo: {
@@ -118,5 +114,3 @@ const validationSchema = yup.object().shape({
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.string().required("Release date is required"),
 });
-
-const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";

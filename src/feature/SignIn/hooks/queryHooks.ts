@@ -7,7 +7,7 @@ export function useManagerSignIn() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: ManagerSignInInput) => {
-      return gqlRequest<ManagerSignInOutput>(
+      const result = await gqlRequest<{ managerSignIn: ManagerSignInOutput }>(
         `
           mutation ManagerSignIn($input: ManagerSignInInput!) {
             managerSignIn(ManagerSignInInput: $input) {
@@ -17,6 +17,7 @@ export function useManagerSignIn() {
         `,
         { input }
       );
+      return result.managerSignIn;
     },
     onError: (error) => {
       showGqlError(error.response);

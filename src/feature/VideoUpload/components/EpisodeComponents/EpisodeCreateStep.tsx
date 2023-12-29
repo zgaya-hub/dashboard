@@ -1,4 +1,4 @@
-import { Hidden, Stack } from "@mui/material";
+import { Hidden, Popover, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
 import { DatePickerModal, Form, TextField } from "@/components/Form";
@@ -9,11 +9,13 @@ import EpisodeCardComponent from "./EpisodeCardComponent";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
 import * as yup from "yup";
+import { useState } from "react";
+import { DUMMY_PLOT_SUMMARY, DUMMY_RELEASE_DATE } from "../../constants";
 
 export interface CreateEpisodeFormFieldType {
   title: string;
   plotSummary: string;
-  episodeNo: number;
+  episodeNumber: number;
   releaseDate: number;
 }
 
@@ -27,6 +29,11 @@ interface EpisodeCreateStepProps {
 
 export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, isCreateMediaImageLoading }: EpisodeCreateStepProps) {
   const { t } = useTranslation();
+  const [episodeNumberPopoverAnchorEl, setEpisodeNumberPopoverAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setEpisodeNumberPopoverAnchorEl(event.currentTarget);
+  };
 
   const {
     control,
@@ -39,7 +46,8 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
     defaultValues: {
       title: "",
       plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: new Date().getTime(),
+      releaseDate: DUMMY_RELEASE_DATE,
+      episodeNumber: 1,
     },
   });
 
@@ -48,7 +56,12 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
         <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
-        <Button>1</Button>
+        <Popover open={!!episodeNumberPopoverAnchorEl} anchorEl={episodeNumberPopoverAnchorEl} onClose={() => setEpisodeNumberPopoverAnchorEl(null)}>
+          <TextField register={register} name={"episodeNumber"} autoFocus type="number" />
+        </Popover>
+        <Button onClick={handleClick} color={errors.episodeNumber ? "error" : "primary"}>
+          {watch("episodeNumber")}
+        </Button>
       </Stack>
       <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />
@@ -80,7 +93,6 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
 const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
   plotSummary: yup.string().required("Plot summary is required"),
-  releaseDate: yup.string().required("Release date is required"),
+  releaseDate: yup.number().required("Release date is required"),
+  episodeNumber: yup.number().required("Episode number must one or up").min(1),
 });
-
-const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";
