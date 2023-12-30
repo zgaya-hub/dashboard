@@ -25,6 +25,7 @@ export default function FileSelectInput({ onFileSelect, loading, error, maxSize,
       InputLabelProps={{
         shrink: false,
       }}
+      disabled={loading}
       placeholder={isDragActive ? t("Components.Form.FileSelectInput.dropItHere") : label ?? t("Components.Form.FileSelectInput.selectAFile")}
       InputProps={{
         readOnly: true,

@@ -35,7 +35,7 @@ export default function SeasonListForSelection({ seasons, selectedSeasonId, onSe
         const isSelected = selectedSeasonId === season.ID;
         return (
           <ListItem key={season.ID} onClick={() => onSelectedSeason(season.ID)}>
-            <AvatarTitleAndDescCard action={isSelected ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />} title={season.mediaBasicInfo.mediaTitle} description={season.mediaBasicInfo.mediaPlotSummary} avatar={season.seasonNumber} />
+            <AvatarTitleAndDescCard action={isSelected ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />} title={season.mediaBasicInfo.title} description={season.mediaBasicInfo.plotSummary} avatar={season.number} />
           </ListItem>
         );
       })}

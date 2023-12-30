@@ -3,10 +3,10 @@ import HomeRoutes from "@/feature/Home/Home.routes";
 import VideoUploadRoutes from "@/feature/VideoUpload/VideoUpload.routes";
 import FourOFourRoutes from "@/feature/FourOFourScreen/FourOFourScreen.routes";
 import SeriesManagementRoutes from "@/feature/SeriesManagement/SeriesManagement.routes";
-import { LayoutSidebar } from "@/Layout/LayoutSidebar";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
 import QuickMediaManagementRoutes from "@/feature/QuickMediaManagement/QuickMediaManagement.routes";
+import { LayoutSidebar } from "@/Layout/LayoutSidebar";
 
 const AuthenticatedRoutes = () => {
   return (

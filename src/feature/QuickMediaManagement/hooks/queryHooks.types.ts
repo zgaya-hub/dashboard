@@ -1,30 +1,45 @@
-import { MediaCountriesEnum, MediaLanguagiesEnum, MediaGenriesEnum, MediaImageTypeEnum, MediaStatusEnum } from "@/types/enum";
+import { CountriesEnum, LanguagiesEnum, GenriesEnum, MediaImageVariantEnum, StatusEnum } from "@/types/enum";
 
 export type CreateMediaImageInput = {
-  MediaImageBase64: string;
-  MediaImageMime: string;
-  MediaImageType: MediaImageTypeEnum;
+  Base64: string;
+  Mime: string;
+  Variant: MediaImageVariantEnum;
 };
 
 export type CreateSeriesInput = {
   MediaImageId: string;
-  MediaBasicInfo: MediaBasicInformationInput;
+  MediaBasicInfo: CreateMediaBasicInfoInput;
   MediaAdditionalInfo: MediaAdditionalInformationInput;
 };
 
+export type CreateSeasonInput = {
+  MediaBasicInfo: CreateMediaBasicInfoInput;
+  MediaImageId: string;
+  Number: number;
+  SeriesId: string;
+};
+
 export type MediaAdditionalInformationInput = {
-  MediaOriginCountry?: MediaCountriesEnum;
-  MediaOriginalLanguage?: MediaLanguagiesEnum;
-  MediaGenre?: MediaGenriesEnum;
-  MediaStatus?: MediaStatusEnum;
+  OriginCountry?: CountriesEnum;
+  OriginalLanguage?: LanguagiesEnum;
+  Genre?: GenriesEnum;
+  Status?: StatusEnum;
 };
 
-export type MediaBasicInformationInput = {
-  MediaTitle: string;
-  MediaPlotSummary: string;
-  MediaReleaseDate: number;
+export type CreateMediaBasicInfoInput = {
+  Title: string;
+  PlotSummary: string;
+  ReleaseDate: number;
 };
 
-export type CreateMediaImageOutput = {
-  mediaImageId: string;
+export type GetNextSeasonNumberParams = {
+  SeriesId: string;
+};
+
+export type MediaImageIdOutput = {
+  ID: string;
+};
+
+export type GetNextSeasonNumberOutput = {
+  number: number;
 };

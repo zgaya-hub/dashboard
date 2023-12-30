@@ -1,44 +1,42 @@
-import { useState, MouseEvent, Fragment } from "react";
-import { GridColDef, GridEventListener, GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
+import { useState, MouseEvent, Fragment, useCallback } from "react";
+import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { SeriesRowContextMenu } from "../components";
-import { ManagerTableSeriesList } from "../types";
+import { TableSeriesInterface } from "../types";
 import { format } from "date-fns";
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
-import { OpenTabIcon } from "@/components/icons";
+import { MoreVertIcon, OpenTabIcon } from "@/components/icons";
 import { values as convertEnumToArray } from "lodash";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "@/types/enum";
+import { CountriesEnum, GenriesEnum, LanguagiesEnum, StatusEnum } from "@/types/enum";
 import { DataGridPro } from "@/components/DataGridPro";
-import { PopoverPosition } from "@mui/material";
+import { LinearProgress, PopoverPosition } from "@mui/material";
 
 interface SeriesTableProps {
-  rows: ManagerTableSeriesList[];
-  isLoading: boolean;
+  rows: TableSeriesInterface[];
+  isQueryLoading: boolean;
+  isMutateLoading: boolean;
   totalRecords: number;
   paginationModel: GridPaginationModel;
   rowSelectionModel: GridRowSelectionModel;
   onRefresh: () => void;
-  onEdit: (seriesId: string) => void;
-  onDelete: (seriesId: string) => void;
-  onPreview: (seriesId: string) => void;
   onSelect: (seriesId: string) => void;
-  onSeasonCreate: (seriesId: string) => void;
   onPaginationModelChange: (model: GridPaginationModel) => void;
   onRowSelectionModelChange: (model: GridRowSelectionModel) => void;
+  onSeriesUpdate: (series: TableSeriesInterface) => void;
+  isAutoSave: boolean;
 }
 
 export default function SeriesTable({
   rows,
   totalRecords,
-  onEdit,
-  onDelete,
   paginationModel,
+  isMutateLoading,
   onPaginationModelChange,
-  isLoading,
-  onPreview,
+  isQueryLoading,
   onRefresh,
-  onSeasonCreate,
   onSelect,
   onRowSelectionModelChange,
+  onSeriesUpdate,
+  isAutoSave,
   rowSelectionModel,
 }: SeriesTableProps) {
   const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
@@ -50,9 +48,12 @@ export default function SeriesTable({
     setContextMenuAnchorPosition({ left: event.clientX - 2, top: event.clientY - 4 });
   };
 
-  const handleOnRowEditCommit = (event: GridEventListener<'rowEditCommit'>) => {
-    console.log(event);
-  }
+  const processRowUpdate = useCallback(async (series: GridRowModel<TableSeriesInterface>) => {
+    if (isAutoSave) {
+      onSeriesUpdate(series);
+    }
+    return series;
+  }, []);
 
   const SeriesTableColumn: GridColDef[] = [
     {
@@ -61,51 +62,51 @@ export default function SeriesTable({
       width: 200,
     },
     {
-      field: "mediaOriginCountry",
+      field: "originCountry",
       headerName: "Origin country",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaCountriesEnum),
+      valueOptions: convertEnumToArray(CountriesEnum),
       editable: true,
     },
     {
-      field: "mediaOriginalLanguage",
+      field: "originalLanguage",
       headerName: "Original language",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaLanguagiesEnum),
+      valueOptions: convertEnumToArray(LanguagiesEnum),
       editable: true,
     },
     {
-      field: "mediaGenre",
+      field: "genre",
       headerName: "Genre",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaGenriesEnum),
+      valueOptions: convertEnumToArray(GenriesEnum),
       editable: true,
     },
     {
-      field: "mediaStatus",
+      field: "status",
       headerName: "Status",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaStatusEnum),
+      valueOptions: convertEnumToArray(StatusEnum),
       editable: true,
     },
     {
-      field: "mediaTitle",
+      field: "title",
       headerName: "Title",
       width: 200,
       editable: true,
     },
     {
-      field: "mediaPlotSummary",
+      field: "plotSummary",
       headerName: "Plot summary",
       width: 200,
       editable: true,
     },
     {
-      field: "mediaReleaseDate",
+      field: "releaseDate",
       headerName: "Release date",
       width: 200,
       type: "dateTime",
@@ -131,16 +132,24 @@ export default function SeriesTable({
       width: 200,
       valueFormatter: (params) => (params.value ? format(params.value, DEFAULT_DATE_FORMAT) : null),
     },
+    {
+      field: "actions",
+      type: "actions",
+      width: 10,
+      pinnable: true,
+      getActions: () => [<GridActionsCellItem icon={<MoreVertIcon />} onClick={handleOnContextMenu} />],
+    },
   ];
 
   return (
     <Fragment>
+      {isMutateLoading ? <LinearProgress /> : null}
       <DataGridPro
         pagination
         rows={rows ?? []}
         checkboxSelection
         disableRowSelectionOnClick
-        loading={isLoading}
+        loading={isQueryLoading}
         getRowId={(row) => row.ID}
         columns={SeriesTableColumn}
         rowCount={totalRecords}
@@ -150,7 +159,10 @@ export default function SeriesTable({
         paginationMode="server"
         onRowSelectionModelChange={onRowSelectionModelChange}
         rowSelectionModel={rowSelectionModel}
-        onRowEditCommit={handleOnRowEditCommit}
+        processRowUpdate={processRowUpdate}
+        pinnedColumns={{
+          right: ["actions"],
+        }}
         slotProps={{
           row: {
             onContextMenu: handleOnContextMenu,
@@ -158,14 +170,11 @@ export default function SeriesTable({
         }}
       />
       <SeriesRowContextMenu
-        onRefresh={onRefresh}
+        seriesId={selectedRowId}
         isOpen={!!contextMenuAnchorPosition}
         anchorPosition={contextMenuAnchorPosition}
-        onPreview={() => onPreview(selectedRowId)}
-        onSeasonCreate={() => onSeasonCreate(selectedRowId)}
         onSelect={() => onSelect(selectedRowId)}
-        onEdit={() => onEdit(selectedRowId)}
-        onDelete={() => onDelete(selectedRowId)}
+        onRefresh={onRefresh}
         onClose={() => setContextMenuAnchorPosition(null)}
       />
     </Fragment>

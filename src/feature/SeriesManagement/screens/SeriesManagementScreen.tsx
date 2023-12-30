@@ -6,20 +6,21 @@ import useNavigation from "@/navigation/use-navigation";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { useTranslation } from "react-i18next";
 import { DEFAULT_PAGINATION_DATE } from "../constants";
-import { GridEventListener, GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
-import { useDeleteMultipleSeriesByIdz, useDeleteSeriesById, useGetManagerSeriesForTable } from "../hooks/queryHooks";
+import { GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
+import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks/queryHooks";
 import { CachedIcon, DeleteIcon, EditIcon, SaveIcon, SearchIcon } from "@/components/icons";
 import Tooltip from "@/components/Tooltip";
 import { SeriesTable } from "../components";
-import FullFeaturedCrudGrid from "../components/FullFeaturedCrudGrid";
+import { TableSeriesInterface } from "../types";
 
 export default function SeriesManagementScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
-  const { mutateAsync: deleteSeriesByIdMutateAsync } = useDeleteSeriesById();
+  const [isAutoSaveChecked, setIsAutoSaveChecked] = useState(false);
   const { mutateAsync: deleteMultipleSeriesByIdzMutateAsync, isPending: isDeleteMultipleSeriesLoading } = useDeleteMultipleSeriesByIdz();
+  const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
   const {
     data: managerSeriesForTableData,
     refetch: managerSeriesForTableRefetch,
@@ -36,25 +37,30 @@ export default function SeriesManagementScreen() {
     navigation.navigate("/series-management/series-create");
   };
 
-  const handleOnEdit = (selectedRowId: string) => {
-    console.log("Edit clicked for row ID:", selectedRowId);
-  };
-
-  const handleOnPreview = (selectedRowId: string) => {
-    console.log("Edit clicked for row ID:", selectedRowId);
-  };
-
-  const handleOnSeasonCreate = (selectedRowId: string) => {
-    console.log("Edit clicked for row ID:", selectedRowId);
-  };
-
   const handleOnSelect = (selectedRowId: string) => {
     console.log("Delete clicked for row ID:", selectedRowId);
   };
 
-  const handleOnDelete = async (selectedRowId: string) => {
-    await deleteSeriesByIdMutateAsync({ SeriesId: selectedRowId });
-    managerSeriesForTableRefetch();
+  const handleOnUpdateSeries = async (series: TableSeriesInterface) => {
+    await updateSeriesMutateAsync({
+      input: {
+        MediaAdditionalInfo: {
+          Genre: series.genre,
+          OriginCountry: series.originCountry,
+          OriginalLanguage: series.originalLanguage,
+          Status: series.status,
+        },
+        MediaBasicInfo: {
+          PlotSummary: series.plotSummary,
+          ReleaseDate: series.releaseDate,
+          Title: series.title,
+        },
+        Image: {
+          ImageUrl: series.mediaImageUrl,
+        },
+      },
+      param: { SeriesId: series.ID },
+    });
   };
 
   const handleOnDeleteMultipleSeries = async () => {
@@ -66,56 +72,48 @@ export default function SeriesManagementScreen() {
     padding: theme.spacing(4),
   }));
 
-  const tableActions = (
-    <Stack gap={1} direction={"row"} alignItems={"center"}>
-      <CachedIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.refetch")} onClick={managerSeriesForTableRefetch} />
-      <SearchIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.search")} onClick={handleOnDeleteMultipleSeries} />
-      <DeleteIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.deleteSelected")} color="error" onClick={handleOnDeleteMultipleSeries} loading={isDeleteMultipleSeriesLoading} />
-      <EditIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.editSelected")} color="primary" onClick={() => {}} />
-      <Tooltip title={t("Feature.SeriesManagement.SeriesManagementScreen.autoSave")}>
-        <Switch />
-      </Tooltip>
-      <Button onClick={handleOnCreateSeriesClick}>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
-    </Stack>
-  );
-
-  const tableHeader = (
-    <Stack direction={"row"} mb={2} justifyContent={"space-between"} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.SeriesManagement.SeriesManagementScreen.manageSeries")}</Typography>
-      {tableActions}
-    </Stack>
-  );
-
-  const tableFooter = (
-    <Stack direction={"row"} justifyContent={"end"} mt={2} gap={1}>
-      <Button variant="text">{t("Feature.SeriesManagement.SeriesManagementScreen.cancel")}</Button>
-      <Button endIcon={<SaveIcon />} variant="contained">
-        {t("Feature.SeriesManagement.SeriesManagementScreen.save")}
-      </Button>
-    </Stack>
-  );
-
   return (
     <Page>
       <Card sx={cardStyle}>
-        {tableHeader}
-        <FullFeaturedCrudGrid />
+        <Stack direction={"row"} mb={2} justifyContent={"space-between"} alignItems={"center"}>
+          <Typography variant="h5">{t("Feature.SeriesManagement.SeriesManagementScreen.manageSeries")}</Typography>
+          <Stack gap={1} direction={"row"} alignItems={"center"}>
+            <CachedIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.refetch")} onClick={managerSeriesForTableRefetch} />
+            <SearchIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.search")} onClick={handleOnDeleteMultipleSeries} />
+            <DeleteIcon
+              disabled={!rowSelectionModel.length}
+              tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.deleteSelected")}
+              color="error"
+              onClick={handleOnDeleteMultipleSeries}
+              loading={isDeleteMultipleSeriesLoading}
+            />
+            <EditIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.editSelected")} color="primary" onClick={() => {}} />
+            <Tooltip title={t("Feature.SeriesManagement.SeriesManagementScreen.autoSave")}>
+              <Switch value={isAutoSaveChecked} onChange={(e) => setIsAutoSaveChecked(e.target.checked)} />
+            </Tooltip>
+            <Button onClick={handleOnCreateSeriesClick}>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
+          </Stack>
+        </Stack>
         <SeriesTable
+          onSeriesUpdate={handleOnUpdateSeries}
           rows={managerSeriesForTableData?.seriesList ?? []}
-          onEdit={handleOnEdit}
-          onDelete={handleOnDelete}
-          onPreview={handleOnPreview}
           onRefresh={managerSeriesForTableRefetch}
-          onSeasonCreate={handleOnSeasonCreate}
           onSelect={handleOnSelect}
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}
-          isLoading={isManagerSeriesForTableLoading}
           totalRecords={managerSeriesForTableData?.totalRecords ?? 0}
           rowSelectionModel={rowSelectionModel}
           onRowSelectionModelChange={setRowSelectionModel}
+          isAutoSave={isAutoSaveChecked}
+          isQueryLoading={isManagerSeriesForTableLoading}
+          isMutateLoading={isUpdateSeriesLoading || isDeleteMultipleSeriesLoading}
         />
-        {tableFooter}
+        <Stack direction={"row"} justifyContent={"end"} mt={2} gap={1}>
+          <Button variant="text">{t("Feature.SeriesManagement.SeriesManagementScreen.cancel")}</Button>
+          <Button endIcon={<SaveIcon />} variant="contained">
+            {t("Feature.SeriesManagement.SeriesManagementScreen.save")}
+          </Button>
+        </Stack>
       </Card>
     </Page>
   );

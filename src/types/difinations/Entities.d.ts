@@ -1,19 +1,19 @@
 type SeriesEntityType = {
-  seriesIsFree: number;
-  seriesPriceInDollar: number;
+  isFree: number;
+  priceInDollar: number;
 } & EntityBaseType;
 
 type MediaImageEntityType = {
-  mediaImageType: string;
-  mediaImageUrl: string;
+  variant: string;
+  url: string;
 } & EntityBaseType;
 
 type MediaBasicInfoEntityType = {
-  mediaPlotSummary: string;
-  mediaReleaseDate: number;
-  mediaTitle: string;
+  plotSummary: string;
+  releaseDate: number;
+  title: string;
 } & EntityBaseType;
 
 type SeasonEntityType = {
-  seasonNumber: number;
+  number: number;
 } & EntityBaseType;

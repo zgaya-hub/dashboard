@@ -3,24 +3,29 @@ import useGqlError from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateMediaImageInput,
-  CreateMediaImageOutput,
+  MediaImageIdOutput,
   CreateSeriesInput,
-  DeleteMultipleSeriesByIdzInput,
   DeleteMultipleSeriesByIdzOutput,
-  DeleteSeriesByIdInput,
+  DeleteMultipleSeriesByIdzParams,
   DeleteSeriesByIdOutput,
+  DeleteSeriesByIdParams,
   GetManagerSeriesForTableInput,
   GetManagerSeriesForTableOutput,
+  GetBasicInfoByIdOutput,
+  GetBasicInfoByIdParams,
+  UpdateSeriesInput,
+  UpdateSeriesOutput,
+  UpdateSeriesParams,
 } from "./queryHooks.types";
 
 export function useCreateMediaImage() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: CreateMediaImageInput) => {
-      const result = await gqlRequest<{ createMediaImage: CreateMediaImageOutput }>(
+      const result = await gqlRequest<{ createMediaImage: MediaImageIdOutput }>(
         `mutation($input: CreateMediaImageInput!) {
           createMediaImage(CreateMediaImageInput: $input) {
-            mediaImageId
+            ID
           }
         }`,
         { input }
@@ -65,14 +70,14 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
               ID
               createdAt
               updatedAt
-              mediaGenre
+              genre
               mediaImageUrl
-              mediaOriginCountry
-              mediaOriginalLanguage
-              mediaPlotSummary
-              mediaReleaseDate
-              mediaStatus
-              mediaTitle
+              originCountry
+              originalLanguage
+              plotSummary
+              releaseDate
+              status
+              title
             }
           }
         }`,
@@ -86,7 +91,7 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
 export function useDeleteSeriesById() {
   const { showGqlError } = useGqlError();
   return useMutation({
-    mutationFn: async (param: DeleteSeriesByIdInput) => {
+    mutationFn: async (param: DeleteSeriesByIdParams) => {
       const result = await gqlRequest<{ deleteSeriesById: DeleteSeriesByIdOutput }>(
         `mutation($param: DeleteSeriesByIdParams!) {
           deleteSeriesById(DeleteSeriesByIdParams: $param) {
@@ -106,7 +111,7 @@ export function useDeleteSeriesById() {
 export function useDeleteMultipleSeriesByIdz() {
   const { showGqlError } = useGqlError();
   return useMutation({
-    mutationFn: async (param: DeleteMultipleSeriesByIdzInput) => {
+    mutationFn: async (param: DeleteMultipleSeriesByIdzParams) => {
       const result = await gqlRequest<{ deleteMultipleSeriesByIdz: DeleteMultipleSeriesByIdzOutput }>(
         `mutation($param: DeleteMultipleSeriesByIdzParams!) {
           deleteMultipleSeriesByIdz(DeleteMultipleSeriesByIdzParams: $param) {
@@ -119,6 +124,46 @@ export function useDeleteMultipleSeriesByIdz() {
     },
     onError: (error) => {
       showGqlError(error.response);
+    },
+  });
+}
+
+export function useUpdateSeries() {
+  const { showGqlError } = useGqlError();
+
+  return useMutation({
+    mutationFn: async (input: { param: UpdateSeriesParams; input: UpdateSeriesInput }) => {
+      const result = await gqlRequest<{ updateSeries: UpdateSeriesOutput }>(
+        `mutation($param: UpdateSeriesParams!, $input: UpdateSeriesInput!) {
+          updateSeries(UpdateSeriesParams: $param, UpdateSeriesInput: $input) {
+            isSuccess
+          }
+        }`,
+        { param: input.param, input: input.input }
+      );
+      return result.updateSeries;
+    },
+    onError: (error) => {
+      showGqlError(error.response);
+    },
+  });
+}
+
+export function useGetBasicInfoById(param: GetBasicInfoByIdParams) {
+  return useQuery({
+    queryKey: [param.Id],
+    queryFn: async () => {
+      const result = await gqlRequest<{ getBasicInfoById: GetBasicInfoByIdOutput }>(
+        `query($param: GetBasicInfoByIdParams!) {
+          getBasicInfoById(GetBasicInfoByIdParams: $param) {
+            title
+            plotSummary
+            releaseDate
+          }
+        }`,
+        { param }
+      );
+      return result.getBasicInfoById;
     },
   });
 }

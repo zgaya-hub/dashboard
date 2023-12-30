@@ -8,18 +8,18 @@ import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
 import { DoneIcon, SearchIcon, TranslateIcon } from "@/components/icons";
 import { languageListWithCode } from "@/mock/languageListWithCode";
 import { SearchInput } from "@/components/Form";
-import { MediaLanguagiesEnum } from "@/types/enum";
+import { LanguagiesEnum } from "@/types/enum";
 import { LanguagePickerEmptyComponent } from "..";
 
 interface LanguagePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: MediaLanguagiesEnum) => void;
+  onOk: (countrName: LanguagiesEnum) => void;
 }
 
 export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguagePickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(MediaLanguagiesEnum.URDU);
+  const [value, setValue] = useState(LanguagiesEnum.URDU);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 

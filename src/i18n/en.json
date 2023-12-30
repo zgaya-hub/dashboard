@@ -41,12 +41,12 @@
           "addLanguage": "Add language"
         }
       },
-      "MediaGenrePickerModal": {
+      "GenrePickerModal": {
         "cancel": "Cancel",
         "ok": "Ok",
         "pickAGenre": "Pick a genre",
         "search": "Search",
-        "MediaGenrePickerEmptyComponent": {
+        "GenrePickerEmptyComponent": {
           "message": "No such genre matches your search"
         }
       }
@@ -102,6 +102,20 @@
       }
     },
     "SeriesManagement": {
+      "SeriesBasicDetailsComponent": {
+        "title": "Title",
+        "plotSummary": "Plot summary",
+        "releaseDate": "Release date"
+      },
+      "SeriesRowContextMenu": {
+        "preview": "Preview",
+        "refresh": "Refresh",
+        "createSeason": "Create",
+        "select": "Select",
+        "edit": "Edit",
+        "delete": "Delete",
+        "details": "Details"
+      },
       "SeriesManagementScreen": {
         "createSeries": "Create series",
         "createSeason": "Create season",
@@ -144,8 +158,19 @@
         "releaseDate": "Release Date",
         "selectABackdropImage": "Select a backdrop image"
       },
+      "SeasonCreateForm": {
+        "plotSummary": "Plot summary",
+        "title": "Title",
+        "releaseDate": "Release Date",
+        "selectABackdropImage": "Select a backdrop image"
+      },
       "SeriesCreateScreen": {
         "createASeries": "Create a series",
+        "save": "Save",
+        "back": "Back"
+      },
+      "SeasonCreateScreen": {
+        "createASeason": "Create a season",
         "save": "Save",
         "back": "Back"
       }

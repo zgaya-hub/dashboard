@@ -2,25 +2,25 @@ import Page from "@/components/Page";
 import { useState } from "react";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
-import { MediaImageTypeEnum } from "@/types/enum";
+import { MediaImageVariantEnum } from "@/types/enum";
 import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { SeriesCreateFieldType } from "../types";
+import { SeriesCreateFormFieldInterface } from "../types";
 import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
-import { DUMMY_PLOT_SUMMARY, DUMMY_RELEASE_DATE } from "../constants";
+import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { SeriesAdditionalInformationForm, SeriesBasicInformationForm, SeriesImageSelectComponent } from "../components";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
   const [backDropUrl, senBackdropUrl] = useState("");
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
-  const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
+  const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateMediaImage();
 
   const {
     control,
@@ -29,41 +29,41 @@ export default function SeriesCreateScreen() {
     setValue: setCreateSeriesFormValue,
     handleSubmit: handleOnSubmit,
     watch: watchCreateSeriesFormValue,
-  } = useForm<SeriesCreateFieldType>({
+  } = useForm<SeriesCreateFormFieldInterface>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      mediaTitle: "",
-      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
-      mediaReleaseDate: DUMMY_RELEASE_DATE,
+      title: "",
+      plotSummary: DEFAULT_PLOT_SUMMARY,
+      releaseDate: DEFAULT_RELEASE_DATE,
     },
   });
 
   const handleOnBackdropSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.BACKDROP });
+    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: MediaImageVariantEnum.BACKDROP });
     senBackdropUrl(await extractImageUrl(image));
-    setCreateSeriesFormValue("mediaImageId", result.mediaImageId);
+    setCreateSeriesFormValue("mediaImageId", result.ID);
   };
 
-  const handleOnCreateEpisode = (input: SeriesCreateFieldType) => {
+  const handleOnCreateEpisode = (input: SeriesCreateFormFieldInterface) => {
     createSeriesMutateAsync({
       MediaImageId: input.mediaImageId,
       MediaBasicInfo: {
-        MediaPlotSummary: input.mediaPlotSummary,
-        MediaTitle: input.mediaTitle,
-        MediaReleaseDate: +input.mediaReleaseDate,
+        PlotSummary: input.plotSummary,
+        Title: input.title,
+        ReleaseDate: +input.releaseDate,
       },
       MediaAdditionalInfo: {
-        MediaGenre: input.mediaGenre,
-        MediaOriginalLanguage: input.mediaOriginalLanguage,
-        MediaOriginCountry: input.mediaOriginCountry,
-        MediaStatus: input.mediaStatus,
+        Genre: input.genre,
+        OriginalLanguage: input.originalLanguage,
+        OriginCountry: input.originCountry,
+        Status: input.status,
       },
     });
   };
 
-  const cardMediaStyle = useThemeStyles<SxProps>((theme) => ({
+  const cardStyle = useThemeStyles<SxProps>((theme) => ({
     height: "100%",
     minHeight: theme.spacing(16),
     backgroundSize: "contain",
@@ -93,10 +93,10 @@ export default function SeriesCreateScreen() {
         </Grid>
         <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
           <Grid xs={12} item lg={5.9}>
-            <SeriesImageSelectComponent onImageDrop={handleOnBackdropSelect} isLoading={isCreateMediaImageLoading} />
+            <SeriesImageSelectComponent onImageDrop={handleOnBackdropSelect} isLoading={isCreateImageLoading} />
           </Grid>
           <Grid xs={12} item lg={5.9}>
-            <CardMedia sx={cardMediaStyle} image={backDropUrl} />
+            <CardMedia sx={cardStyle} image={backDropUrl} />
           </Grid>
         </Grid>
         <Grid xs={12} item lg={5.9}>

@@ -3,20 +3,19 @@ import Button from "@/components/Button";
 import Page from "@/components/Page";
 import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import { extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata, extractThumbnailFromVideo, convertVideoInBlob } from "metalyzer";
-import { MediaImageTypeEnum, MovierMediaEnum } from "@/types/enum";
+import { MediaImageVariantEnum, MovierEnum } from "@/types/enum";
 import { CreateEpisodeFormFieldType, EpisodeUploadModal, EpisodeUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
 
 export default function EpisodeUploadScreen() {
   const episodeUploadModalRef = useRef<EpisodeUploadModalRef>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [mediaImageId, setMediaImageId] = useState("");
   const [selectedSeasonId, setSelectedSeasonId] = useState("");
   const [isFeedbackSidebarVisible, setIsFeedbackSidebarVisible] = useState(false);
   const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState(true);
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
   const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending: isGetUploadEpisodeUrlLoading, data: getUploadSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
-  const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
+  const { mutateAsync: createImageMutateAsync, data: mediaImageData, isPending: isCreateImageLoading } = useCreateMediaImage();
   const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisodeLoading, data: createEpisodeData } = useCreateEpisode();
 
   const handleOnEpisodeDrop = async (episode: File) => {
@@ -24,27 +23,27 @@ export default function EpisodeUploadScreen() {
     const result = await getUploadEpisodeUrlMutateAsync({
       Height: episodeMetadata.videoHeight!,
       Width: episodeMetadata.videoWidth!,
-      MediaType: MovierMediaEnum.EPISODE,
+      MediaType: MovierEnum.EPISODE,
       Mime: episodeMetadata.mimeType,
       RunTime: episodeMetadata.videoDuration,
       SizeInKb: episodeMetadata.fileSizeKB,
     });
     episodeUploadModalRef.current?.onNext();
     handleOnThumbnailSelect(await extractThumbnailFromVideo(episode));
-    handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.SignedUrl);
+    handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.signedUrl);
   };
 
   const handleOnCreateEpisode = async (input: CreateEpisodeFormFieldType) => {
     await createEpisodeMutateAsync({
-      EpisodeNumber: input.episodeNumber,
-      MediaImageId: mediaImageId,
+      Number: input.number,
+      MediaImageId: mediaImageData?.ID,
       SeasonId: selectedSeasonId,
-      SignedUrlKeyId: getUploadSignedUrlData?.getUploadVideoSignedUrl.SignedUrlKeyId,
-      VideoId: getUploadSignedUrlData?.getUploadVideoSignedUrl.VideoId,
+      SignedUrlKeyId: getUploadSignedUrlData?.getUploadVideoSignedUrl.signedUrlKeyId,
+      VideoId: getUploadSignedUrlData?.getUploadVideoSignedUrl.videoId,
       MediaBasicInfo: {
-        PlotSummary: input.mediaPlotSummary,
-        Title: input.mediaTitle,
-        ReleaseDate: input.mediaReleaseDate,
+        PlotSummary: input.plotSummary,
+        Title: input.title,
+        ReleaseDate: input.releaseDate,
       },
     });
     episodeUploadModalRef.current?.onNext();
@@ -54,8 +53,7 @@ export default function EpisodeUploadScreen() {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     setThumbnailUrl(await extractImageUrl(image));
-    const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.THUMBNAIL });
-    setMediaImageId(result.mediaImageId);
+    await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: MediaImageVariantEnum.THUMBNAIL });
   };
 
   const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {
@@ -88,7 +86,7 @@ export default function EpisodeUploadScreen() {
         isVisible={isEpisodeUploadModalVisible}
         onClose={handleOnToggleEpisodeUploadModal}
         onEpisodeSelect={handleOnEpisodeDrop}
-        isLoading={isCreateMediaImageLoading || isGetUploadEpisodeUrlLoading || isCreateEpisodeLoading}
+        isLoading={isCreateImageLoading || isGetUploadEpisodeUrlLoading || isCreateEpisodeLoading}
         onFeedback={handleOnToggleFeedbackSidebar}
         onThumbnailSelect={handleOnThumbnailSelect}
         onCreateEpisode={handleOnCreateEpisode}
@@ -96,6 +94,7 @@ export default function EpisodeUploadScreen() {
         ref={episodeUploadModalRef}
         isVideoUploaded={!!getUploadSignedUrlData}
         isEpisodeCreated={!!createEpisodeData}
+        seasonId={selectedSeasonId}
       />
       <SelectSeriesAndSeasonModal onNext={handleOnNextSelectSeriesAndSeasonModal} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModalVisible} />
     </Page>

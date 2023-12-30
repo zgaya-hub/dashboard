@@ -23,13 +23,14 @@ interface EpisodeUploadModalProps {
   isEpisodeCreated: boolean;
   isLoading: boolean;
   thumbnailUrl: string;
+  seasonId: string;
 }
 
 export interface EpisodeUploadModalRef {
   onNext: () => void;
 }
 
-const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, isVideoUploaded, isEpisodeCreated }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalRef>) {
+const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, isVideoUploaded, isEpisodeCreated, seasonId }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalRef>) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const navigate = useNavigation();
@@ -91,7 +92,7 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
-      step: <EpisodeCreateStep isCreateMediaImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} />,
+      step: <EpisodeCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} seasonId={seasonId} />,
     },
     {
       label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),

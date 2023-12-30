@@ -9,14 +9,15 @@ import EpisodeCardComponent from "./EpisodeCardComponent";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
 import * as yup from "yup";
-import { useState } from "react";
-import { DUMMY_PLOT_SUMMARY, DUMMY_RELEASE_DATE } from "../../constants";
+import { useEffect, useState } from "react";
+import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../../constants";
+import { useGetNextEpisodeNumber } from "../../hooks/queryHooks";
 
 export interface CreateEpisodeFormFieldType {
-  mediaTitle: string;
-  mediaPlotSummary: string;
-  mediaReleaseDate: number;
-  episodeNumber: number;
+  title: string;
+  plotSummary: string;
+  releaseDate: number;
+  number: number;
 }
 
 interface EpisodeCreateStepProps {
@@ -24,46 +25,51 @@ interface EpisodeCreateStepProps {
   onSave: (fields: CreateEpisodeFormFieldType) => void;
   onThumbnailSelect: (episode: File) => void;
   isLoading: boolean;
-  isCreateMediaImageLoading: boolean;
+  isCreateImageLoading: boolean;
+  seasonId: string;
 }
 
-export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, isCreateMediaImageLoading }: EpisodeCreateStepProps) {
+export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, isCreateImageLoading, seasonId }: EpisodeCreateStepProps) {
   const { t } = useTranslation();
   const [episodeNumberPopoverAnchorEl, setEpisodeNumberPopoverAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const { data: nextSeasonNumberData } = useGetNextEpisodeNumber({ SeasonId: seasonId });
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setEpisodeNumberPopoverAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    if (nextSeasonNumberData) {
+      setEpisodeFormValue("number", nextSeasonNumberData.number);
+    }
+  }, [nextSeasonNumberData]);
 
   const {
     control,
     formState: { errors },
     handleSubmit,
     register,
+    setValue: setEpisodeFormValue,
     watch,
   } = useForm<CreateEpisodeFormFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      mediaTitle: "",
-      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
-      mediaReleaseDate: DUMMY_RELEASE_DATE,
-      episodeNumber: 1,
+      title: "",
+      plotSummary: DEFAULT_PLOT_SUMMARY,
+      releaseDate: DEFAULT_RELEASE_DATE,
+      number: 1,
     },
   });
 
   const renderForm = (
     <Form onSubmit={handleSubmit(onSave)} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="mediaTitle" label="Title" helperText={errors.mediaTitle?.message} error={!!errors.mediaTitle} fullWidth required />
-        <Controller control={control} name="mediaReleaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
+        <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
+        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
         <Popover open={!!episodeNumberPopoverAnchorEl} anchorEl={episodeNumberPopoverAnchorEl} onClose={() => setEpisodeNumberPopoverAnchorEl(null)}>
-          <TextField register={register} name={"episodeNumber"} autoFocus type="number" />
+          <TextField register={register} name={"number"} autoFocus type="number" />
         </Popover>
-        <Button onClick={handleClick} color={errors.episodeNumber ? "error" : "primary"}>
-          {watch("episodeNumber")}
+        <Button onClick={(event) => setEpisodeNumberPopoverAnchorEl(event.currentTarget)} color={errors.number ? "error" : "primary"}>
+          {watch("number")}
         </Button>
       </Stack>
-      <TextField register={register} name="mediaPlotSummary" label="Plot summary" helperText={errors.mediaPlotSummary?.message} error={!!errors.mediaPlotSummary} multiline rows={5} fullWidth required />
+      <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />
     </Form>
   );
@@ -75,7 +81,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.reUsePrevious")}</Button>
         </Stack>
         {renderForm}
-        <ImageUploadComponent isLoading={isCreateMediaImageLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
+        <ImageUploadComponent isLoading={isCreateImageLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
         <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={1}>
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.cancel")}</Button>
           <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>
@@ -84,7 +90,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
         </Stack>
       </Stack>
       <Hidden mdDown>
-        <EpisodeCardComponent title={watch("mediaTitle")} plotSummary={watch("mediaPlotSummary")} thumbnail={thumbnailSrc} />
+        <EpisodeCardComponent title={watch("title")} plotSummary={watch("plotSummary")} thumbnail={thumbnailSrc} />
       </Hidden>
     </Stack>
   );
@@ -92,7 +98,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
-  mediaPlotSummary: yup.string().required("Plot summary is required"),
-  mediaReleaseDate: yup.number().required("Release date is required"),
-  episodeNumber: yup.number().required("Episode number must one or up").min(1),
+  plotSummary: yup.string().required("Plot summary is required"),
+  releaseDate: yup.number().required("Release date is required"),
+  number: yup.number().required("Episode number must one or up").min(1),
 });

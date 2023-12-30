@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
-import { MovierMediaEnum } from "@/types/enum";
+import { MovierEnum } from "@/types/enum";
 import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
 import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
 import MovieUploadModal from "../components/MovieUploadModal";
@@ -17,14 +17,14 @@ export default function MovieUploadScreen() {
     const result = await getUploadMovieUrlMutateAsync({
       Height: movieMetadata.videoHeight!,
       Width: movieMetadata.videoWidth!,
-      MediaType: MovierMediaEnum.MOVIE,
       Mime: movieMetadata.mimeType,
       RunTime: movieMetadata.videoDuration,
       SizeInKb: movieMetadata.fileSizeKB,
+      MediaType: MovierEnum.MOVIE,
     });
 
     const movieBlob = await convertVideoInBlob(movie);
-    uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.SignedUrl, VideoBlob: movieBlob });
+    uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.signedUrl, VideoBlob: movieBlob });
   };
 
   const handleOnToggleMovieUploadModal = () => {

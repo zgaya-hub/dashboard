@@ -1,4 +1,4 @@
-export interface SignInInterface {
+export interface SignInFormFieldInterface {
   email: string;
   password: string;
 }

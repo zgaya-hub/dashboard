@@ -1,12 +1,12 @@
 import { Stack, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Menu, Sidebar, SubMenu } from "react-pro-sidebar";
-import SidebarItem, { SidebarItemProps } from "./SidebarItem";
-import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
 import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon, QuestionAnswerIcon, SettingIcon, UploadIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { CSSProperties, useState } from "react";
 import useNavigation from "@/navigation/use-navigation";
+import SidebarItem, { SidebarItemProps } from "./SidebarItem";
+import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
 
 interface SidebarSectionProps {
   listItems: SidebarItemProps[];
