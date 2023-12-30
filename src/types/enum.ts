@@ -7,7 +7,7 @@ export enum MovierMediaEnum {
   MOVIE = "Movie",
 }
 
-export enum CountriesEnum {
+export enum MediaCountriesEnum {
   USA = "United States of America",
   AUSTRALIA = "Australia",
   AUSTRIA = "Austria",
@@ -40,7 +40,7 @@ export enum CountriesEnum {
   ZIMBABWE = "Zimbabwe",
 }
 
-export enum LanguagiesEnum {
+export enum MediaLanguagiesEnum {
   ENGLISH = "English",
   GERMAN = "German",
   PERSIAN = "Persian",

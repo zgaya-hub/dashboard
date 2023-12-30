@@ -15,5 +15,5 @@ type MediaBasicInfoEntityType = {
 } & EntityBaseType;
 
 type SeasonEntityType = {
-  seasonNo: number;
+  seasonNumber: number;
 } & EntityBaseType;

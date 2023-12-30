@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { MovieUploadScreen, TrailerUploadScreen, EpisodeUploadScreen } from "./screens";
 import UploadScreen from "./screens/UploadScreen";
 
-export type VideoUploadRouteParams = {
+export type VideoUploadRoutesParams = {
   "/video-upload/episode": undefined;
   "/video-upload/movie": undefined;
   "/video-upload/trailer": undefined;

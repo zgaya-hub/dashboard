@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { SeriesCreateScreen, SeriesManagementScreen } from "./screens";
 
-export type SeriesManagementRouteParams = {
+export type SeriesManagementRoutesParams = {
   "/series-management": undefined;
   "/series-management/series-create": undefined;
 };

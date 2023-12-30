@@ -5,12 +5,12 @@ import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { Control, Controller, FieldErrors, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { CreateSeriesFieldType } from "../types";
+import { SeriesCreateFieldType } from "../types";
 
 interface SeriesBasicInformationFormProps {
-  register: UseFormRegister<CreateSeriesFieldType>;
-  control: Control<CreateSeriesFieldType>;
-  errors: FieldErrors<CreateSeriesFieldType>;
+  register: UseFormRegister<SeriesCreateFieldType>;
+  control: Control<SeriesCreateFieldType>;
+  errors: FieldErrors<SeriesCreateFieldType>;
 }
 
 export default function SeriesBasicInformationForm({ register, control, errors }: SeriesBasicInformationFormProps) {
@@ -20,10 +20,10 @@ export default function SeriesBasicInformationForm({ register, control, errors }
     <Elevator padding={4} gap={2}>
       <Typography variant="h5">{t("Feature.SeriesManagement.SeriesBasicInformationForm.addBasicInformation")}</Typography>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="title" label={t("Feature.SeriesManagement.SeriesBasicInformationForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required />
-        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.SeriesManagement.SeriesBasicInformationForm.releaseDate")} views={["year", "month"]} fullWidth />} />
+        <TextField register={register} name="mediaTitle" label={t("Feature.SeriesManagement.SeriesBasicInformationForm.title")} helperText={errors.mediaTitle?.message} error={!!errors.mediaTitle} fullWidth required />
+        <Controller control={control} name="mediaReleaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.SeriesManagement.SeriesBasicInformationForm.releaseDate")} views={["year", "month"]} fullWidth />} />
       </Stack>
-      <TextField register={register} name="plotSummary" label={t("Feature.SeriesManagement.SeriesBasicInformationForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
+      <TextField register={register} name="mediaPlotSummary" label={t("Feature.SeriesManagement.SeriesBasicInformationForm.plotSummary")} helperText={errors.mediaPlotSummary?.message} error={!!errors.mediaPlotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />
     </Elevator>
   );

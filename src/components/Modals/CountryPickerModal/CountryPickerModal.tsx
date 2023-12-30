@@ -10,17 +10,17 @@ import { DoneIcon, SearchIcon } from "@/components/icons";
 import { countryListWithFlag } from "@/mock/countryListWithFlag";
 import { SearchInput } from "@/components/Form";
 import { CountryPickerEmptyComponent } from "..";
-import { CountriesEnum } from "@/types/enum";
+import { MediaCountriesEnum } from "@/types/enum";
 
 interface CountryPickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: CountriesEnum) => void;
+  onOk: (countrName: MediaCountriesEnum) => void;
 }
 
 export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(CountriesEnum.USA);
+  const [value, setValue] = useState(MediaCountriesEnum.USA);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 
@@ -52,7 +52,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     "& .MuiDialog-paper": {
-      minWidth: theme.spacing(48),
+      width: theme.spacing(48),
       maxHeight: theme.spacing(64),
     },
   }));
@@ -61,17 +61,17 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
     <>
       <SearchIcon onClick={handleOnSearchInputVisible} />
       <Button onClick={handleOnClose} variant="text">
-        {t("Component.Modals.CountryPickerModal.cancel")}
+        {t("Components.Modals.CountryPickerModal.cancel")}
       </Button>
       <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Component.Modals.CountryPickerModal.ok")}
+        {t("Components.Modals.CountryPickerModal.ok")}
       </Button>
     </>
   );
 
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Component.Modals.CountryPickerModal.pickACountry")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
-      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Component.Modals.CountryPickerModal.search")} /> : null}
+    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.CountryPickerModal.pickACountry")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
+      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.CountryPickerModal.search")} /> : null}
       <RadioGroup value={value} onChange={handleOnChange}>
         {filteredCountries.map((country) => {
           return (
@@ -82,7 +82,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
             </MenuItem>
           );
         })}
-        {!filteredCountries.length ? <CountryPickerEmptyComponent height={36} /> : null}
+        {!filteredCountries.length ? <CountryPickerEmptyComponent height={32} /> : null}
       </RadioGroup>
     </Dialog>
   );

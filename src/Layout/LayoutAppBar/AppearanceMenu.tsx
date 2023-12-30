@@ -1,8 +1,9 @@
 import React from "react";
-import { ListItemText, Divider, Menu, MenuItem } from "@mui/material";
+import { ListItemText, Divider, Menu, MenuItem, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { LaptopIcon, LightModeIcon, MoonIcon, SignalBarIcon } from "@/components/icons";
 import { MenuHeader } from "@/components/Menu";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 interface AppearanceMenuProps {
   anchorEl: null | HTMLElement;
@@ -13,8 +14,12 @@ interface AppearanceMenuProps {
 export default function AppearanceMenu({ anchorEl, isVisible, onClose }: AppearanceMenuProps) {
   const { t } = useTranslation();
 
+  const menuItemStyle = useThemeStyles<SxProps>((theme) => ({
+    width: theme.spacing(48),
+  }));
+
   const createMenuItem = (icon: React.ReactNode, label: string, onClick: () => void) => (
-    <MenuItem onClick={onClick}>
+    <MenuItem onClick={onClick} sx={menuItemStyle}>
       {icon}
       <ListItemText>{label}</ListItemText>
       <SignalBarIcon onClick={() => {}} />

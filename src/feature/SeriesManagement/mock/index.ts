@@ -1,16 +1,22 @@
-import { randEmail, randFullName, randNumber, randAddress, randCompanyName, randUuid } from "@ngneat/falso";
+import { randCountry, randText, randUuid, randLanguage, randMusicGenre, randStatus, randMovie, randPastDate, randUrl } from "@ngneat/falso";
 
-export const getGridData = () => {
+export const getGridData = (page: number, pageSize: number) => {
   const getGridData = [];
   for (let i = 1; i <= 30; i++) {
     getGridData.push({
-      id: randUuid(),
-      name: randFullName(),
-      email: randEmail(),
-      address: randAddress().zipCode,
-      phone: randNumber(),
-      company: randCompanyName(),
+      ID: randUuid(),
+      mediaOriginCountry: randCountry(),
+      mediaOriginalLanguage: randLanguage(),
+      mediaGenre: randMusicGenre(),
+      mediaStatus: randStatus(),
+      mediaTitle: randMovie(),
+      mediaPlotSummary: randText({ length: 10 }),
+      mediaReleaseDate: randPastDate().getTime(),
+      mediaImageUrl: randUrl(),
+      createdAt: randPastDate().getTime(),
+      updatedAt: randPastDate().getTime(),
     });
   }
-  return getGridData;
+
+  return getGridData.splice(page, pageSize);
 };

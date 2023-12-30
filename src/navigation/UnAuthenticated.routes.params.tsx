@@ -1,6 +1,6 @@
-import { FourOFourRouteParams } from "@/feature/FourOFourScreen/FourOFourScreen.routes";
+import { FourOFourRoutesParams } from "@/feature/FourOFourScreen/FourOFourScreen.routes";
 import { SignInRouteParams } from "@/feature/SignIn/SignIn.routes";
 
-type UnAuthenticatedRouteParams = SignInRouteParams & FourOFourRouteParams
+type UnAuthenticatedRouteParams = SignInRouteParams & FourOFourRoutesParams
 
 export default UnAuthenticatedRouteParams;

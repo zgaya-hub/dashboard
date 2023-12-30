@@ -21,7 +21,7 @@ export default function DataGridEmptyComponent({ message, height, sx, width }: D
   return (
     <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} sx={containerStyle}>
       <NoRecordFoundIllustration />
-      <Typography>{message ?? t("Component.DataGridPro.DataGridEmptyComponent.message")}</Typography>
+      <Typography>{message ?? t("Components.DataGridPro.DataGridEmptyComponent.message")}</Typography>
     </Box>
   );
 }

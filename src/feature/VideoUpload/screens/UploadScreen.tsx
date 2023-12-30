@@ -1,11 +1,11 @@
 import Button from "@/components/Button";
-import Page from "@/components/Page";
+import NewWindow from "react-new-window";
 
 const UploadScreen = () => {
   return (
-    <Page>
+    <NewWindow>
       <Button>Close Window</Button>
-    </Page>
+    </NewWindow>
   );
 };
 

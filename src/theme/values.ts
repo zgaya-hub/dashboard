@@ -62,7 +62,7 @@ export const typography: TypographyOptions = {
 };
 
 // kindly use this types for spacing
-// export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 54, 64, 96];
+export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 54, 64, 96];
 
 export const lightThemeComponents: ThemeOptions["components"] = {
   MuiList: {
@@ -81,6 +81,11 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
+  MuiAppBar: {
+    defaultProps: {
+      elevation: 1,
+    },
+  },
   MuiMenu: {
     styleOverrides: {
       root: {
@@ -90,17 +95,28 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
-  MuiMenuItem: {
-    styleOverrides: {
-      root: {
-        width: 48 * 8,
-      },
-    },
-  },
   MuiCard: {
     styleOverrides: {
       root: {
         background: "#ffffff",
+      },
+    },
+  },
+  MuiPopover: {
+    styleOverrides: {
+      root: {
+        "& .MuiPopover-root": {
+          background: "#ffffff",
+        },
+      },
+    },
+  },
+  MuiCircularProgress: {
+    styleOverrides: {
+      root: {
+        "& .MuiCircularProgress-circle": {
+          strokeLinecap: "round",
+        },
       },
     },
   },
@@ -123,20 +139,17 @@ export const darkThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
+  MuiAppBar: {
+    defaultProps: {
+      elevation: 1,
+    },
+  },
   MuiMenu: {
     styleOverrides: {
       root: {
         "& .MuiMenu-list": {
           background: "#1c1b1b",
         },
-      },
-    },
-  },
-  MuiMenuItem: {
-    styleOverrides: {
-      root: {
-        width: 48 * 8,
-        padding: 2 * 8,
       },
     },
   },

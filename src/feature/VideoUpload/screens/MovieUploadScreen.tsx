@@ -8,7 +8,7 @@ import MovieUploadModal from "../components/MovieUploadModal";
 
 export default function MovieUploadScreen() {
   const [isMovieUploadModalVisible, setIsMovieUploadModalVisible] = useState(true);
-  const [isFeetbackSideBarVisible, setIsFeetbackSideBarVisible] = useState(true);
+  const [isFeetbackSidebarVisible, setIsFeetbackSidebarVisible] = useState(true);
   const { mutateAsync: getUploadMovieUrlMutateAsync, isPending } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
 
@@ -31,14 +31,14 @@ export default function MovieUploadScreen() {
     setIsMovieUploadModalVisible(!isMovieUploadModalVisible);
   };
 
-  const handleOnToggleFeedbackSideBar = () => {
-    setIsFeetbackSideBarVisible(!isFeetbackSideBarVisible);
+  const handleOnToggleFeedbackSidebar = () => {
+    setIsFeetbackSidebarVisible(!isFeetbackSidebarVisible);
   };
 
   return (
     <Page>
       <Button onClick={handleOnToggleMovieUploadModal}>Upload</Button>
-      <MovieUploadModal isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onVideoDrop={handleOnMovieDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSideBar} />
+      <MovieUploadModal isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onVideoDrop={handleOnMovieDrop} isLoading={isPending} onFeedback={handleOnToggleFeedbackSidebar} />
     </Page>
   );
 }

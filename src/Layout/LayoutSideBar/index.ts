@@ -1,1 +1,1 @@
-export { default as LayoutSideBar } from "./LayoutSideBar";
+export { default as LayoutSidebar } from "./LayoutSidebar";

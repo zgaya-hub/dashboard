@@ -1,7 +1,7 @@
 import { AvatarTitleAndDescCard, AvatarTitleAndDescCardSkeleton } from "@/components/Cards";
 import { RadioButtonCheckedIcon, RadioButtonUncheckedIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Card, List, ListItem, SxProps } from "@mui/material";
+import { List, ListItem, SxProps } from "@mui/material";
 import { GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
 
 interface SeasonListForSelectionProps {
@@ -35,7 +35,7 @@ export default function SeasonListForSelection({ seasons, selectedSeasonId, onSe
         const isSelected = selectedSeasonId === season.ID;
         return (
           <ListItem key={season.ID} onClick={() => onSelectedSeason(season.ID)}>
-            <AvatarTitleAndDescCard action={isSelected ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />} title={season.mediaBasicInfo.mediaTitle} description={season.mediaBasicInfo.mediaPlotSummary} avatar={season.seasonNo} />
+            <AvatarTitleAndDescCard action={isSelected ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />} title={season.mediaBasicInfo.mediaTitle} description={season.mediaBasicInfo.mediaPlotSummary} avatar={season.seasonNumber} />
           </ListItem>
         );
       })}

@@ -4,23 +4,21 @@ import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metal
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { MediaImageTypeEnum } from "@/types/enum";
 import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
-import SeriesBasicInformationForm from "../components/SeriesBasicInformationForm";
-import SeriesImageSelectComponent from "../components/SeriesImageSelectComponent";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { CreateSeriesFieldType } from "../types";
-import SeriesAdditionalInformationForm from "../components/SeriesAdditionalInformationForm";
+import { SeriesCreateFieldType } from "../types";
 import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
+import { DUMMY_PLOT_SUMMARY, DUMMY_RELEASE_DATE } from "../constants";
+import { SeriesAdditionalInformationForm, SeriesBasicInformationForm, SeriesImageSelectComponent } from "../components";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
-  const [backDropUrl, senBackDropUrl] = useState("");
-  const [mediaImageId, setMediaImageId] = useState("");
+  const [backDropUrl, senBackdropUrl] = useState("");
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
   const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
 
@@ -31,36 +29,36 @@ export default function SeriesCreateScreen() {
     setValue: setCreateSeriesFormValue,
     handleSubmit: handleOnSubmit,
     watch: watchCreateSeriesFormValue,
-  } = useForm<CreateSeriesFieldType>({
+  } = useForm<SeriesCreateFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      title: "",
-      plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: new Date().getTime(),
+      mediaTitle: "",
+      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
+      mediaReleaseDate: DUMMY_RELEASE_DATE,
     },
   });
 
-  const handleOnBackDropSelect = async (image: File) => {
+  const handleOnBackdropSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.BACKDROP });
-    setMediaImageId(result.createMediaImage.mediaImageId);
-    senBackDropUrl(await extractImageUrl(image));
+    senBackdropUrl(await extractImageUrl(image));
+    setCreateSeriesFormValue("mediaImageId", result.mediaImageId);
   };
 
-  const handleOnCreateEpisode = (input: CreateSeriesFieldType) => {
+  const handleOnCreateEpisode = (input: SeriesCreateFieldType) => {
     createSeriesMutateAsync({
-      MediaImageId: mediaImageId,
+      MediaImageId: input.mediaImageId,
       MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: input.releaseDate,
+        MediaPlotSummary: input.mediaPlotSummary,
+        MediaTitle: input.mediaTitle,
+        MediaReleaseDate: +input.mediaReleaseDate,
       },
       MediaAdditionalInfo: {
-        Genre: input.mediaGenre,
-        OriginalLanguage: input.originalLanguage,
-        OriginCountry: input.originCountry,
-        Status: input.mediaStatus,
+        MediaGenre: input.mediaGenre,
+        MediaOriginalLanguage: input.mediaOriginalLanguage,
+        MediaOriginCountry: input.mediaOriginCountry,
+        MediaStatus: input.mediaStatus,
       },
     });
   };
@@ -95,7 +93,7 @@ export default function SeriesCreateScreen() {
         </Grid>
         <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
           <Grid xs={12} item lg={5.9}>
-            <SeriesImageSelectComponent onImageDrop={handleOnBackDropSelect} isLoading={isCreateMediaImageLoading} />
+            <SeriesImageSelectComponent onImageDrop={handleOnBackdropSelect} isLoading={isCreateMediaImageLoading} />
           </Grid>
           <Grid xs={12} item lg={5.9}>
             <CardMedia sx={cardMediaStyle} image={backDropUrl} />
@@ -114,5 +112,3 @@ const validationSchema = yup.object().shape({
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.string().required("Release date is required"),
 });
-
-const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";

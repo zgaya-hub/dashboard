@@ -27,17 +27,17 @@ export default function ConfirmationModal({ isOpen, onClose, onConfirm, cancelBu
   const dialogActions = (
     <>
       <Button onClick={onClose} variant="text" color={variant} disabled={disabledCancelButton} size="small">
-        {cancelButtonText ?? t("Component.Modals.ConfirmationModal.cancel")}
+        {cancelButtonText ?? t("Components.Modals.ConfirmationModal.cancel")}
       </Button>
       <Button onClick={handleOnConfirm} variant="contained" color={variant} disabled={disabledConfirmButton} size="small">
-        {confirmButtonText ?? t("Component.Modals.ConfirmationModal.confirm")}
+        {confirmButtonText ?? t("Components.Modals.ConfirmationModal.confirm")}
       </Button>
     </>
   );
 
   return (
-    <Dialog isDraggable dividers={false} open={isOpen} onClose={onClose} headerText={title ?? t("Component.Modals.ConfirmationModal.title")} hideCrossButton dialogAction={dialogActions}>
-      {children ?? t("Component.Modals.ConfirmationModal.question")}
+    <Dialog isDraggable dividers={false} open={isOpen} onClose={onClose} headerText={title ?? t("Components.Modals.ConfirmationModal.title")} hideCrossButton dialogAction={dialogActions}>
+      {children ?? t("Components.Modals.ConfirmationModal.question")}
     </Dialog>
   );
 }

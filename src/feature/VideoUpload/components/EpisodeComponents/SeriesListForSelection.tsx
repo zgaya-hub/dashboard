@@ -31,7 +31,7 @@ export default function SeriesListForSelection({ seriesList, onSelectedSeries, i
     <List sx={listStyle}>
       {seriesList.map((series) => (
         <ListItem key={series.ID} onClick={() => onSelectedSeries(series)}>
-          <ImagePlusTitleCard thumbnail={series.mediaImage[0].mediaImageUrl} title={series.mediaBasicInfo.mediaTitle} />
+          <ImagePlusTitleCard thumbnail={series.mediaImage.mediaImageUrl} title={series.mediaBasicInfo.mediaTitle} />
         </ListItem>
       ))}
     </List>
