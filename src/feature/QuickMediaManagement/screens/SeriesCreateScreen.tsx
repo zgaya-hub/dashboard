@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import SeriesCreateForm from "../components/SeriesCreateForm";
-import { SeriesCreateFieldInterface } from "../types";
+import { SeriesCreateFormFieldInterface } from "../types";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,12 +10,13 @@ import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
 import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { MediaImageTypeEnum } from "@/types/enum";
+import { MediaImageVariantEnum } from "@/types/enum";
+import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
-  const { mutateAsync: createMediaImageMutateAsync, isPending: isCreateMediaImageLoading } = useCreateMediaImage();
+  const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateMediaImage();
 
   const {
     control,
@@ -24,41 +25,42 @@ export default function SeriesCreateScreen() {
     handleSubmit: handleOnSubmit,
     setValue: setCreateSeriesFormValue,
     watch: watchCreateSeriesFormValue,
-  } = useForm<SeriesCreateFieldInterface>({
+  } = useForm<SeriesCreateFormFieldInterface>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
-      plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: new Date().getTime(),
+      plotSummary: DEFAULT_PLOT_SUMMARY,
+      releaseDate: DEFAULT_RELEASE_DATE,
     },
   });
 
   const handleOnImageSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    const result = await createMediaImageMutateAsync({ MediaImageBase64: imageBase64, MediaImageMime: mimeType, MediaImageType: MediaImageTypeEnum.BACKDROP });
-    setCreateSeriesFormValue("mediaImageId", result.createMediaImage.mediaImageId);
+    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: MediaImageVariantEnum.BACKDROP });
+    setCreateSeriesFormValue("mediaImageId", result.ID);
   };
 
-  const handleOnCreateEpisode = (input: SeriesCreateFieldInterface) => {
-    createSeriesMutateAsync({
+  const handleOnCreateEpisode = async (input: SeriesCreateFormFieldInterface) => {
+    await createSeriesMutateAsync({
       MediaImageId: watchCreateSeriesFormValue("mediaImageId"),
       MediaBasicInfo: {
-        MediaPlotSummary: input.plotSummary,
-        MediaTitle: input.title,
-        MediaReleaseDate: +input.releaseDate,
+        PlotSummary: input.plotSummary,
+        Title: input.title,
+        ReleaseDate: +input.releaseDate,
       },
       MediaAdditionalInfo: {},
     });
+    window.close();
   };
 
   const pageHeader = (
     <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.SeriesManagement.SeriesCreateScreen.createASeries")}</Typography>
+      <Typography variant="h5">{t("Feature.QuickMediaManagement.SeriesCreateScreen.createASeries")}</Typography>
       <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.SeriesManagement.SeriesCreateScreen.back")}</Button>
+        <Button variant="text">{t("Feature.QuickMediaManagement.SeriesCreateScreen.back")}</Button>
         <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.SeriesManagement.SeriesCreateScreen.save")}
+          {t("Feature.QuickMediaManagement.SeriesCreateScreen.save")}
         </Button>
       </Stack>
     </Elevator>
@@ -67,7 +69,7 @@ export default function SeriesCreateScreen() {
   return (
     <Stack>
       {pageHeader}
-      <SeriesCreateForm control={control} errors={errors} register={register} onImageSelect={handleOnImageSelect} isLoading={isCreateMediaImageLoading} />
+      <SeriesCreateForm control={control} errors={errors} register={register} onImageSelect={handleOnImageSelect} isLoading={isCreateImageLoading} />
     </Stack>
   );
 }
@@ -79,4 +81,3 @@ const validationSchema = yup.object().shape({
   mediaImageId: yup.string().required("Backdrop is required"),
 });
 
-const DUMMY_PLOT_SUMMARY = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing ";

@@ -45,18 +45,18 @@ export default function SeriesManagementScreen() {
     await updateSeriesMutateAsync({
       input: {
         MediaAdditionalInfo: {
-          MediaGenre: series.genre,
-          MediaOriginCountry: series.originCountry,
-          MediaOriginalLanguage: series.originalLanguage,
-          MediaStatus: series.status,
+          Genre: series.genre,
+          OriginCountry: series.originCountry,
+          OriginalLanguage: series.originalLanguage,
+          Status: series.status,
         },
         MediaBasicInfo: {
-          MediaPlotSummary: series.plotSummary,
-          MediaReleaseDate: series.releaseDate,
-          MediaTitle: series.title,
+          PlotSummary: series.plotSummary,
+          ReleaseDate: series.releaseDate,
+          Title: series.title,
         },
-        MediaImage: {
-          MediaImageUrl: series.mediaImageUrl,
+        Image: {
+          ImageUrl: series.mediaImageUrl,
         },
       },
       param: { SeriesId: series.ID },

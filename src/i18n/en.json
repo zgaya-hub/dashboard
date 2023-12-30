@@ -41,12 +41,12 @@
           "addLanguage": "Add language"
         }
       },
-      "MediaGenrePickerModal": {
+      "GenrePickerModal": {
         "cancel": "Cancel",
         "ok": "Ok",
         "pickAGenre": "Pick a genre",
         "search": "Search",
-        "MediaGenrePickerEmptyComponent": {
+        "GenrePickerEmptyComponent": {
           "message": "No such genre matches your search"
         }
       }
@@ -158,8 +158,19 @@
         "releaseDate": "Release Date",
         "selectABackdropImage": "Select a backdrop image"
       },
+      "SeasonCreateForm": {
+        "plotSummary": "Plot summary",
+        "title": "Title",
+        "releaseDate": "Release Date",
+        "selectABackdropImage": "Select a backdrop image"
+      },
       "SeriesCreateScreen": {
         "createASeries": "Create a series",
+        "save": "Save",
+        "back": "Back"
+      },
+      "SeasonCreateScreen": {
+        "createASeason": "Create a season",
         "save": "Save",
         "back": "Back"
       }

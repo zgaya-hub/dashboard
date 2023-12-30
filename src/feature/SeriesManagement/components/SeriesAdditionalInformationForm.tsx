@@ -2,35 +2,35 @@ import Elevator from "@/components/Tags/Elevator";
 import { Stack, Typography } from "@mui/material";
 import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SeriesCreateFieldInterface } from "../types";
+import { SeriesCreateFormFieldInterface } from "../types";
 import { useState } from "react";
-import { MediaCountriesEnum, MediaLanguagiesEnum, MediaGenriesEnum } from "@/types/enum";
+import { CountriesEnum, LanguagiesEnum, GenriesEnum } from "@/types/enum";
 import { ModalSelectInput } from "@/components/Form";
-import { CountryPickerModal, LanguagePickerModal, MediaGenrePickerModal } from "@/components/Modals";
+import { CountryPickerModal, LanguagePickerModal, GenrePickerModal } from "@/components/Modals";
 import SeriesStatusSelectComponent from "./SeriesStatusSelectComponent";
 
 interface SeriesAdditionalInformationFormProps {
-  setCreateSeriesFormValue: UseFormSetValue<SeriesCreateFieldInterface>;
-  watchCreateSeriesFormValue: UseFormWatch<SeriesCreateFieldInterface>;
+  setCreateSeriesFormValue: UseFormSetValue<SeriesCreateFormFieldInterface>;
+  watchCreateSeriesFormValue: UseFormWatch<SeriesCreateFormFieldInterface>;
 }
 
 export default function SeriesAdditionalInformationForm({ setCreateSeriesFormValue, watchCreateSeriesFormValue }: SeriesAdditionalInformationFormProps) {
   const { t } = useTranslation();
   const [isCountryModalVisible, setIsCountryModalVisible] = useState(false);
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
-  const [isMediaGenreModalVisible, setIsMediaGenreModalVisible] = useState(false);
+  const [isGenreModalVisible, setIsGenreModalVisible] = useState(false);
 
-  const handleOnSelectCountry = (countrName: MediaCountriesEnum) => {
+  const handleOnSelectCountry = (countrName: CountriesEnum) => {
     setCreateSeriesFormValue("originCountry", countrName);
     handleOnToggleCountryModalVisible();
   };
 
-  const handleOnSelectMediaGenre = (genre: MediaGenriesEnum) => {
+  const handleOnSelectGenre = (genre: GenriesEnum) => {
     setCreateSeriesFormValue("genre", genre);
-    handleOnToggleMediaGenreModalVisible();
+    handleOnToggleGenreModalVisible();
   };
 
-  const handleOnSelectLanguage = (language: MediaLanguagiesEnum) => {
+  const handleOnSelectLanguage = (language: LanguagiesEnum) => {
     setCreateSeriesFormValue("originalLanguage", language);
     handleOnToggleLanguageModalVisible();
   };
@@ -39,8 +39,8 @@ export default function SeriesAdditionalInformationForm({ setCreateSeriesFormVal
     setIsCountryModalVisible(!isCountryModalVisible);
   };
 
-  const handleOnToggleMediaGenreModalVisible = () => {
-    setIsMediaGenreModalVisible(!isMediaGenreModalVisible);
+  const handleOnToggleGenreModalVisible = () => {
+    setIsGenreModalVisible(!isGenreModalVisible);
   };
 
   const handleOnToggleLanguageModalVisible = () => {
@@ -57,8 +57,8 @@ export default function SeriesAdditionalInformationForm({ setCreateSeriesFormVal
         <LanguagePickerModal isOpen={isLanguageModalVisible} onClose={handleOnToggleLanguageModalVisible} onOk={handleOnSelectLanguage} />
       </Stack>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <ModalSelectInput isModalVisible={isMediaGenreModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.pickAGenre")} value={watchCreateSeriesFormValue("genre")} onClick={handleOnToggleMediaGenreModalVisible} fullWidth />
-        <MediaGenrePickerModal isOpen={isMediaGenreModalVisible} onClose={handleOnToggleMediaGenreModalVisible} onOk={handleOnSelectMediaGenre} />
+        <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.pickAGenre")} value={watchCreateSeriesFormValue("genre")} onClick={handleOnToggleGenreModalVisible} fullWidth />
+        <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModalVisible} onOk={handleOnSelectGenre} />
         <SeriesStatusSelectComponent setCreateSeriesFormValue={setCreateSeriesFormValue} watchCreateSeriesFormValue={watchCreateSeriesFormValue} />
       </Stack>
     </Elevator>

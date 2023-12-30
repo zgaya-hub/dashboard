@@ -1,6 +1,6 @@
 export type ManagerSignInInput = {
-  email: string;
-  password: string;
+  Email: string;
+  Password: string;
 };
 
 export type ManagerSignInOutput = {

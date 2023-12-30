@@ -4,13 +4,11 @@ import { Form, TextField } from "@/components/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { SignInFormFieldInterface } from "../types";
 
-export interface SignInFormFieldType {
-  email: string;
-  password: string;
-}
+
 interface SignInFormProps {
-  onSubmit: (formData: SignInFormFieldType) => void;
+  onSubmit: (formData: SignInFormFieldInterface) => void;
   isLoading: boolean;
 }
 
@@ -19,11 +17,11 @@ export default function SignInForm({ onSubmit, isLoading }: SignInFormProps) {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<SignInFormFieldType>({
+  } = useForm<SignInFormFieldInterface>({
     resolver: yupResolver(validationSchema),
   });
 
-  const handleOnSubmit = (data: SignInFormFieldType) => {
+  const handleOnSubmit = (data: SignInFormFieldInterface) => {
     onSubmit(data);
   };
 

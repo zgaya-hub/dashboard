@@ -1,4 +1,4 @@
-export enum MovierMediaEnum {
+export enum MovierEnum {
   SERIES = "Series",
   SEASON = "Season",
   EPISODE = "Episode",
@@ -7,7 +7,7 @@ export enum MovierMediaEnum {
   MOVIE = "Movie",
 }
 
-export enum MediaCountriesEnum {
+export enum CountriesEnum {
   USA = "United States of America",
   AUSTRALIA = "Australia",
   AUSTRIA = "Austria",
@@ -40,7 +40,7 @@ export enum MediaCountriesEnum {
   ZIMBABWE = "Zimbabwe",
 }
 
-export enum MediaLanguagiesEnum {
+export enum LanguagiesEnum {
   ENGLISH = "English",
   GERMAN = "German",
   PERSIAN = "Persian",
@@ -60,12 +60,12 @@ export enum MediaLanguagiesEnum {
   TURKISH = "Turkish",
 }
 
-export enum MediaImageTypeEnum {
+export enum MediaImageVariantEnum {
   BACKDROP = "Backdrop",
   THUMBNAIL = "Thumbnail",
 }
 
-export enum MediaGenriesEnum {
+export enum GenriesEnum {
   ACTION = "Action",
   DRAMA = "Drama",
   COMEDY = "Comedy",
@@ -78,7 +78,7 @@ export enum MediaGenriesEnum {
   SUPER_HERO = "Super Hero",
 }
 
-export enum MediaStatusEnum {
+export enum StatusEnum {
   RELEASED = "Released",
   IN_PRODUCTION = "In Production",
   POST_PRODUCTION = "Post Production",

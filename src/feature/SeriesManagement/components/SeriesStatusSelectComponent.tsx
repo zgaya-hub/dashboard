@@ -1,14 +1,14 @@
 import { ListItemText, MenuItem, SelectChangeEvent } from "@mui/material";
 import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SeriesCreateFieldInterface } from "../types";
+import { SeriesCreateFormFieldInterface } from "../types";
 import { values } from "lodash";
-import { MediaStatusEnum } from "@/types/enum";
+import { StatusEnum } from "@/types/enum";
 import { SelectInput } from "@/components/Form";
 
 interface SeriesStatusSelectComponentProps {
-  setCreateSeriesFormValue: UseFormSetValue<SeriesCreateFieldInterface>;
-  watchCreateSeriesFormValue: UseFormWatch<SeriesCreateFieldInterface>;
+  setCreateSeriesFormValue: UseFormSetValue<SeriesCreateFormFieldInterface>;
+  watchCreateSeriesFormValue: UseFormWatch<SeriesCreateFormFieldInterface>;
 }
 
 export default function SeriesStatusSelectComponent({ setCreateSeriesFormValue, watchCreateSeriesFormValue }: SeriesStatusSelectComponentProps) {
@@ -31,4 +31,4 @@ export default function SeriesStatusSelectComponent({ setCreateSeriesFormValue, 
   );
 }
 
-const seriesStatusesList = values(MediaStatusEnum);
+const seriesStatusesList = values(StatusEnum);

@@ -3,7 +3,7 @@ import useGqlError from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CreateMediaImageInput,
-  CreateMediaImageOutput,
+  MediaImageIdOutput,
   CreateSeriesInput,
   DeleteMultipleSeriesByIdzOutput,
   DeleteMultipleSeriesByIdzParams,
@@ -11,8 +11,8 @@ import {
   DeleteSeriesByIdParams,
   GetManagerSeriesForTableInput,
   GetManagerSeriesForTableOutput,
-  GetMediaBasicInfoByMediaIdOutput,
-  GetMediaBasicInfoByMediaIdParams,
+  GetBasicInfoByIdOutput,
+  GetBasicInfoByIdParams,
   UpdateSeriesInput,
   UpdateSeriesOutput,
   UpdateSeriesParams,
@@ -22,10 +22,10 @@ export function useCreateMediaImage() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: CreateMediaImageInput) => {
-      const result = await gqlRequest<{ createMediaImage: CreateMediaImageOutput }>(
+      const result = await gqlRequest<{ createMediaImage: MediaImageIdOutput }>(
         `mutation($input: CreateMediaImageInput!) {
           createMediaImage(CreateMediaImageInput: $input) {
-            mediaImageId
+            ID
           }
         }`,
         { input }
@@ -149,13 +149,13 @@ export function useUpdateSeries() {
   });
 }
 
-export function useGetMediaBasicInfoByMediaId(param: GetMediaBasicInfoByMediaIdParams) {
+export function useGetBasicInfoById(param: GetBasicInfoByIdParams) {
   return useQuery({
-    queryKey: [param.MediaId],
+    queryKey: [param.Id],
     queryFn: async () => {
-      const result = await gqlRequest<{ getMediaBasicInfoByMediaId: GetMediaBasicInfoByMediaIdOutput }>(
-        `query($param: GetMediaBasicInfoByMediaIdParams!) {
-          getMediaBasicInfoByMediaId(GetMediaBasicInfoByMediaIdParams: $param) {
+      const result = await gqlRequest<{ getBasicInfoById: GetBasicInfoByIdOutput }>(
+        `query($param: GetBasicInfoByIdParams!) {
+          getBasicInfoById(GetBasicInfoByIdParams: $param) {
             title
             plotSummary
             releaseDate
@@ -163,7 +163,7 @@ export function useGetMediaBasicInfoByMediaId(param: GetMediaBasicInfoByMediaIdP
         }`,
         { param }
       );
-      return result.getMediaBasicInfoByMediaId;
+      return result.getBasicInfoById;
     },
   });
 }

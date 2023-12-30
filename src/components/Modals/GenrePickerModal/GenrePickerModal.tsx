@@ -7,23 +7,23 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
 import { DoneIcon, SearchIcon, StreetViewIcon } from "@/components/icons";
 import { SearchInput } from "@/components/Form";
-import { MediaGenriesEnum } from "@/types/enum";
-import { MediaGenrePickerEmptyComponent } from "..";
+import { GenriesEnum } from "@/types/enum";
+import { GenrePickerEmptyComponent } from "..";
 import { mediaGenreList } from "../constants";
 
-interface MediaGenrePickerModalProps {
+interface GenrePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: MediaGenriesEnum) => void;
+  onOk: (countrName: GenriesEnum) => void;
 }
 
-export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGenrePickerModalProps) {
+export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(MediaGenriesEnum.ACTION);
+  const [value, setValue] = useState(GenriesEnum.ACTION);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-  const filteredMediaGenres = useMemo(() => {
+  const filteredGenres = useMemo(() => {
     return mediaGenreList.filter((language) => language.toLowerCase().includes(searchText.toLowerCase()));
   }, [searchText]);
 
@@ -60,19 +60,19 @@ export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGe
     <>
       <SearchIcon onClick={handleOnSearchInputVisible} />
       <Button onClick={handleOnClose} variant="text">
-        {t("Components.Modals.MediaGenrePickerModal.cancel")}
+        {t("Components.Modals.GenrePickerModal.cancel")}
       </Button>
       <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Components.Modals.MediaGenrePickerModal.ok")}
+        {t("Components.Modals.GenrePickerModal.ok")}
       </Button>
     </>
   );
 
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.MediaGenrePickerModal.pickAGenre")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
-      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.MediaGenrePickerModal.search")} /> : null}
+    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.GenrePickerModal.pickAGenre")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
+      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.GenrePickerModal.search")} /> : null}
       <RadioGroup value={value} onChange={handleOnChange}>
-        {filteredMediaGenres.map((genre) => {
+        {filteredGenres.map((genre) => {
           return (
             <MenuItem onClick={() => setValue(genre)}>
               <StreetViewIcon isListIcon />
@@ -81,7 +81,7 @@ export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGe
             </MenuItem>
           );
         })}
-        {!filteredMediaGenres.length ? <MediaGenrePickerEmptyComponent height={32} /> : null}
+        {!filteredGenres.length ? <GenrePickerEmptyComponent height={32} /> : null}
       </RadioGroup>
     </Dialog>
   );

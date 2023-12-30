@@ -1,7 +1,7 @@
 import { gqlRequest } from "@/api/gqlRequest";
 import useGqlError, { ErrorResponse } from "@/context/GqlErrorContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CreateEpisodeInput, CreateMediaImageInput, CreateMediaImageOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input } from "./queryHooks.types";
+import { CreateEpisodeInput, CreateMediaImageInput, MediaImageIdOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input, GetNextEpisodeNumberParams, GetNextEpisodeNumberOutput } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
   const { showGqlError } = useGqlError();
@@ -11,9 +11,9 @@ export function useGetUploadVideoSignedUrl() {
         `
           mutation($input: GetUploadVideoSignedUrlInput!) {
             getUploadVideoSignedUrl(GetUploadVideoSignedUrlInput: $input) {
-              SignedUrl
-              SignedUrlKeyId
-              VideoId
+              signedUrl
+              signedUrlKeyId
+              videoId
             }
           }
         `,
@@ -54,12 +54,12 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
         `query GetManagerSeriesWithImageAndBasicInfo{
           getManagerSeriesWithImageAndBasicInfo{
             ID
-            seriesIsFree
-            seriesPriceInDollar
+            isFree
+            priceInDollar
             mediaImage {
               ID
-              mediaImageType
-              mediaImageUrl
+              variant
+              url
             }
             mediaBasicInfo {
               plotSummary
@@ -83,7 +83,7 @@ export function useGetSeasonBySeriesId() {
         `query($param: GetSeasonBySeriesIdParams!) {
           getSeasonBySeriesId(GetSeasonBySeriesIdParams: $param) {
             ID
-            seasonNumber
+            number
             mediaBasicInfo {
               title
               ID
@@ -125,10 +125,10 @@ export function useCreateMediaImage() {
   const { showGqlError } = useGqlError();
   return useMutation({
     mutationFn: async (input: CreateMediaImageInput) => {
-      const result = await gqlRequest<{ createMediaImage: CreateMediaImageOutput }>(
+      const result = await gqlRequest<{ createMediaImage: MediaImageIdOutput }>(
         `mutation($input: CreateMediaImageInput!) {
           createMediaImage(CreateMediaImageInput: $input) {
-            mediaImageId
+            ID
           }
         }`,
         { input }
@@ -137,6 +137,23 @@ export function useCreateMediaImage() {
     },
     onError: (error) => {
       showGqlError(error.response);
+    },
+  });
+}
+
+export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
+  return useQuery({
+    queryKey: [param.SeasonId],
+    queryFn: async () => {
+      const result = await gqlRequest<{ getNextEpisodeNumber: GetNextEpisodeNumberOutput }>(
+        `query($param: GetNextEpisodeNumberParams!) {
+          getNextEpisodeNumber(GetNextEpisodeNumberParams: $param) {
+            number
+          }
+        }`,
+        { param }
+      );
+      return result.getNextEpisodeNumber;
     },
   });
 }

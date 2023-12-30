@@ -1,10 +1,10 @@
-import { MediaCountriesEnum, MediaLanguagiesEnum, MediaGenriesEnum, MediaImageTypeEnum, MediaStatusEnum } from "@/types/enum";
+import { CountriesEnum, LanguagiesEnum, GenriesEnum, MediaImageVariantEnum, StatusEnum } from "@/types/enum";
 import { TableSeriesInterface } from "../types";
 
 export type CreateMediaImageInput = {
-  MediaImageBase64: string;
-  MediaImageMime: string;
-  MediaImageType: MediaImageTypeEnum;
+  Base64: string;
+  Mime: string;
+  Variant: MediaImageVariantEnum;
 };
 
 export type GetManagerSeriesForTableInput = {
@@ -14,26 +14,26 @@ export type GetManagerSeriesForTableInput = {
 
 export type CreateSeriesInput = {
   MediaImageId: string;
-  MediaBasicInfo: MediaBasicInformationInput;
-  MediaAdditionalInfo: Partial<MediaAdditionalInformationInput>;
+  MediaBasicInfo: CreateMediaBasicInfoInput;
+  MediaAdditionalInfo: Partial<CreateMediaAdditionalInfoInput>;
 };
 
-export type MediaAdditionalInformationInput = {
-  MediaOriginCountry: MediaCountriesEnum;
-  MediaOriginalLanguage: MediaLanguagiesEnum;
-  MediaGenre: MediaGenriesEnum;
-  MediaStatus: MediaStatusEnum;
+export type CreateMediaAdditionalInfoInput = {
+  OriginCountry: CountriesEnum;
+  OriginalLanguage: LanguagiesEnum;
+  Genre: GenriesEnum;
+  Status: StatusEnum;
 };
 
-export type UpdateMediaImageInput = {
-  MediaImageUrl: string;
-  MediaImageType: MediaImageTypeEnum;
+export type UpdateImageInput = {
+  ImageUrl: string;
+  ImageType: MediaImageVariantEnum;
 };
 
-export type MediaBasicInformationInput = {
-  MediaTitle: string;
-  MediaPlotSummary: string;
-  MediaReleaseDate: number;
+export type CreateMediaBasicInfoInput = {
+  Title: string;
+  PlotSummary: string;
+  ReleaseDate: number;
 };
 
 export type DeleteSeriesByIdParams = {
@@ -41,25 +41,25 @@ export type DeleteSeriesByIdParams = {
 };
 
 export type UpdateSeriesInput = {
-  MediaBasicInfo: Partial<MediaBasicInformationInput>;
-  MediaAdditionalInfo: Partial<MediaAdditionalInformationInput>;
-  MediaImage: Partial<UpdateMediaImageInput>;
+  MediaBasicInfo: Partial<CreateMediaBasicInfoInput>;
+  MediaAdditionalInfo: Partial<CreateMediaAdditionalInfoInput>;
+  Image: Partial<UpdateImageInput>;
 };
 
 export type UpdateSeriesParams = {
   SeriesId: string;
 };
 
-export type GetMediaBasicInfoByMediaIdParams = {
-  MediaId: string;
+export type GetBasicInfoByIdParams = {
+  Id: string;
 };
 
 export type DeleteMultipleSeriesByIdzParams = {
   SeriesIdz: string[];
 };
 
-export type CreateMediaImageOutput = {
-  mediaImageId: string;
+export type MediaImageIdOutput = {
+  ID: string;
 };
 
 export type GetManagerSeriesForTableOutput = {
@@ -79,7 +79,7 @@ export type UpdateSeriesOutput = {
   isSuccess: true;
 };
 
-export type GetMediaBasicInfoByMediaIdOutput = {
+export type GetBasicInfoByIdOutput = {
   title: string;
   plotSummary: string;
   releaseDate: number;

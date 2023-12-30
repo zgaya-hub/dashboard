@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 import { MoreVertIcon, OpenTabIcon } from "@/components/icons";
 import { values as convertEnumToArray } from "lodash";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "@/types/enum";
+import { CountriesEnum, GenriesEnum, LanguagiesEnum, StatusEnum } from "@/types/enum";
 import { DataGridPro } from "@/components/DataGridPro";
 import { LinearProgress, PopoverPosition } from "@mui/material";
 
@@ -66,7 +66,7 @@ export default function SeriesTable({
       headerName: "Origin country",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaCountriesEnum),
+      valueOptions: convertEnumToArray(CountriesEnum),
       editable: true,
     },
     {
@@ -74,7 +74,7 @@ export default function SeriesTable({
       headerName: "Original language",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaLanguagiesEnum),
+      valueOptions: convertEnumToArray(LanguagiesEnum),
       editable: true,
     },
     {
@@ -82,7 +82,7 @@ export default function SeriesTable({
       headerName: "Genre",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaGenriesEnum),
+      valueOptions: convertEnumToArray(GenriesEnum),
       editable: true,
     },
     {
@@ -90,7 +90,7 @@ export default function SeriesTable({
       headerName: "Status",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaStatusEnum),
+      valueOptions: convertEnumToArray(StatusEnum),
       editable: true,
     },
     {

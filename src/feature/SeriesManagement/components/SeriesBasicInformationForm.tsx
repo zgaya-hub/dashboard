@@ -5,12 +5,12 @@ import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { Control, Controller, FieldErrors, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SeriesCreateFieldInterface } from "../types";
+import { SeriesCreateFormFieldInterface } from "../types";
 
 interface SeriesBasicInformationFormProps {
-  register: UseFormRegister<SeriesCreateFieldInterface>;
-  control: Control<SeriesCreateFieldInterface>;
-  errors: FieldErrors<SeriesCreateFieldInterface>;
+  register: UseFormRegister<SeriesCreateFormFieldInterface>;
+  control: Control<SeriesCreateFormFieldInterface>;
+  errors: FieldErrors<SeriesCreateFormFieldInterface>;
 }
 
 export default function SeriesBasicInformationForm({ register, control, errors }: SeriesBasicInformationFormProps) {

@@ -18,11 +18,11 @@ interface SelectSeriesAndSeasonModalProps {
 export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose }: SelectSeriesAndSeasonModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
-  const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfoOutput | null>(null);
   const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
   const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput[]>([]);
-  const { isFetching: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries } = useGetManagerSeriesWithImageAndBasicInfo();
+  const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfoOutput | null>(null);
   const { mutateAsync: getSeasonBySeriesIdMutateAsync, isPending: isSeasonFetching } = useGetSeasonBySeriesId();
+  const { isFetching: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries } = useGetManagerSeriesWithImageAndBasicInfo();
 
   const handleOnFetchSeasons = async (series: GetManagerSeriesWithImageAndBasicInfoOutput) => {
     setSelectedSeries(series);
@@ -32,9 +32,12 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
     setSelectedSeriesSeasons(result);
   };
 
-  const openNewWindow = () => {
-    // Open new window only on user interaction
+  const handleOnCreateSeries = () => {
     window.open("/quick-media-management/series-create", "_blank", "width=500,height=500");
+  };
+
+  const handleOnCreateSeason = () => {
+    window.open(`/quick-media-management/season-create/${selectedSeries?.ID}`, "_blank", "width=500,height=600");
   };
 
   const handleOnClearBothState = () => {
@@ -63,7 +66,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   const renderSeasonListFooter = (
     <>
       <ChevronLeftIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.back")} tooltipPlacement="top" onClick={handleOnClearBothState} />
-      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={() => {}} />
+      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={handleOnCreateSeason} />
       <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isSeasonFetching} onClick={() => handleOnFetchSeasons(selectedSeries!)} />
       <Button disabled={!selectedSeasonId} onClick={handleOnNext}>
         {t("Feature.VideoUpload.SelectSeriesAndSeasonModal.next")}
@@ -73,7 +76,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
 
   const renderSeriesListFooter = (
     <>
-      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={openNewWindow} />
+      <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={handleOnCreateSeries} />
       <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isManagerSeriesFetching} onClick={refetchManagerSeries} />
       <Button variant="outlined" onClick={handleOnMovieNavigation} startIcon={<UploadIcon />}>
         {t("Feature.VideoUpload.SelectSeriesAndSeasonModal.movie")}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetMediaBasicInfoByMediaId } from "../../hooks/queryHooks";
+import { useGetBasicInfoById } from "../../hooks/queryHooks";
 import { Elevator } from "@/components/Tags";
 import { ListItem, MenuItem, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ interface SeriesBasicDetailsComponentProps {
 
 export default function SeriesBasicDetailsComponent({ seriesId }: SeriesBasicDetailsComponentProps) {
   const { t } = useTranslation();
-  const { isLoading, data } = useGetMediaBasicInfoByMediaId({ MediaId: seriesId });
+  const { isLoading, data } = useGetBasicInfoById({ Id: seriesId });
 
   /*  if (isLoading) {
     return <SeriesBasicDetailsComponentSkeleton />;
