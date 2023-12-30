@@ -13,16 +13,16 @@ export type CreateSeriesInput = {
 };
 
 export type MediaAdditionalInformationInput = {
-  OriginCountry?: MediaCountriesEnum;
-  OriginalLanguage?: MediaLanguagiesEnum;
-  Genre?: MediaGenriesEnum;
-  Status?: MediaStatusEnum;
+  MediaOriginCountry?: MediaCountriesEnum;
+  MediaOriginalLanguage?: MediaLanguagiesEnum;
+  MediaGenre?: MediaGenriesEnum;
+  MediaStatus?: MediaStatusEnum;
 };
 
 export type MediaBasicInformationInput = {
-  Title: string;
-  PlotSummary: string;
-  ReleaseDate: number;
+  MediaTitle: string;
+  MediaPlotSummary: string;
+  MediaReleaseDate: number;
 };
 
 export type CreateMediaImageOutput = {

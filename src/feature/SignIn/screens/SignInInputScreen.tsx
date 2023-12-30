@@ -10,8 +10,6 @@ export default function SignInInputScreen() {
 
   const handleOnSignIn = async (formData: ManagerSignInInput) => {
     const result = await managerLoginMutateAsync(formData);
-    console.log(result);
-
     handleOnAuthenticate(result.token);
   };
 

@@ -1,50 +1,65 @@
+import { useEffect, useState } from "react";
 import Page from "@/components/Page";
-import DataGridPro from "@/components/DataGridPro/DataGridPro";
-import Button from "@/components/Button";
 import { Card, Stack, Switch, SxProps, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import Button from "@/components/Button";
 import useNavigation from "@/navigation/use-navigation";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { GridColDef, GridPaginationModel } from "@mui/x-data-grid-pro";
-import Tooltip from "@/components/Tooltip";
-import { CachedIcon, DeleteIcon, EditIcon, SaveIcon, SearchIcon } from "@/components/icons";
-import { SeriesRowContextMenu } from "../components";
-import { useGetManagerSeriesForTable } from "../hooks/queryHooks";
-import { useEffect, useState } from "react";
-import { PaginationStateInterface } from "@/types/types";
+import { useTranslation } from "react-i18next";
 import { DEFAULT_PAGINATION_DATE } from "../constants";
+import { GridEventListener, GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
+import { useDeleteMultipleSeriesByIdz, useDeleteSeriesById, useGetManagerSeriesForTable } from "../hooks/queryHooks";
+import { CachedIcon, DeleteIcon, EditIcon, SaveIcon, SearchIcon } from "@/components/icons";
+import Tooltip from "@/components/Tooltip";
+import { SeriesTable } from "../components";
+import FullFeaturedCrudGrid from "../components/FullFeaturedCrudGrid";
 
 export default function SeriesManagementScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const [pagination, setPagination] = useState<PaginationStateInterface>(DEFAULT_PAGINATION_DATE);
-  const { data: managerSeriesForTableData, mutateAsync: managerSeriesForTableMutateAsync, isPending: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable();
+  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
+  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
+  const { mutateAsync: deleteSeriesByIdMutateAsync } = useDeleteSeriesById();
+  const { mutateAsync: deleteMultipleSeriesByIdzMutateAsync, isPending: isDeleteMultipleSeriesLoading } = useDeleteMultipleSeriesByIdz();
+  const {
+    data: managerSeriesForTableData,
+    refetch: managerSeriesForTableRefetch,
+    isFetching: isManagerSeriesForTableLoading,
+  } = useGetManagerSeriesForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize });
 
   useEffect(() => {
-    handleOnFetchManagerSeriesForTableData();
-  }, [pagination]);
-  console.log(pagination, "±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±");
-  
-
-  const handleOnFetchManagerSeriesForTableData = () => {
-    managerSeriesForTableMutateAsync({ Page: pagination.page, PageSize: pagination.pageSize });
-  };
-
-  const handleOnChangePage = (model: GridPaginationModel) => {
-    setPagination({ pageSize: model.pageSize, page: model.page });
-    handleOnFetchManagerSeriesForTableData();
-  };
+    if (managerSeriesForTableData) {
+      managerSeriesForTableRefetch();
+    }
+  }, [paginationModel]);
 
   const handleOnCreateSeriesClick = () => {
     navigation.navigate("/series-management/series-create");
   };
 
-  const handleOnEdit = () => {
-    console.log("Edit clicked for row:");
+  const handleOnEdit = (selectedRowId: string) => {
+    console.log("Edit clicked for row ID:", selectedRowId);
   };
 
-  const handleOnDelete = () => {
-    console.log("Delete clicked for row:");
+  const handleOnPreview = (selectedRowId: string) => {
+    console.log("Edit clicked for row ID:", selectedRowId);
+  };
+
+  const handleOnSeasonCreate = (selectedRowId: string) => {
+    console.log("Edit clicked for row ID:", selectedRowId);
+  };
+
+  const handleOnSelect = (selectedRowId: string) => {
+    console.log("Delete clicked for row ID:", selectedRowId);
+  };
+
+  const handleOnDelete = async (selectedRowId: string) => {
+    await deleteSeriesByIdMutateAsync({ SeriesId: selectedRowId });
+    managerSeriesForTableRefetch();
+  };
+
+  const handleOnDeleteMultipleSeries = async () => {
+    await deleteMultipleSeriesByIdzMutateAsync({ SeriesIdz: rowSelectionModel });
+    managerSeriesForTableRefetch();
   };
 
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
@@ -53,9 +68,9 @@ export default function SeriesManagementScreen() {
 
   const tableActions = (
     <Stack gap={1} direction={"row"} alignItems={"center"}>
-      <CachedIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.refetch")} onClick={handleOnFetchManagerSeriesForTableData} />
-      <SearchIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.search")} onClick={() => {}} />
-      <DeleteIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.deleteSelected")} color="error" onClick={() => {}} />
+      <CachedIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.refetch")} onClick={managerSeriesForTableRefetch} />
+      <SearchIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.search")} onClick={handleOnDeleteMultipleSeries} />
+      <DeleteIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.deleteSelected")} color="error" onClick={handleOnDeleteMultipleSeries} loading={isDeleteMultipleSeriesLoading} />
       <EditIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.editSelected")} color="primary" onClick={() => {}} />
       <Tooltip title={t("Feature.SeriesManagement.SeriesManagementScreen.autoSave")}>
         <Switch />
@@ -84,88 +99,24 @@ export default function SeriesManagementScreen() {
     <Page>
       <Card sx={cardStyle}>
         {tableHeader}
-        <DataGridPro
-          pagination
-          checkboxSelection
-          disableRowSelectionOnClick
-          loading={isManagerSeriesForTableLoading}
-          getRowId={(row) => row.ID}
+        <FullFeaturedCrudGrid />
+        <SeriesTable
           rows={managerSeriesForTableData?.seriesList ?? []}
-          columns={SeriesTableColumn}
-          pageSizeOptions={[]}
-          rowCount={managerSeriesForTableData?.totalRecords}
-          onPaginationModelChange={handleOnChangePage}
-          paginationModel={pagination}
-          contextMenuComponent={(isOpen, onClose, anchorEl) => <SeriesRowContextMenu onEdit={handleOnEdit} onDelete={handleOnDelete} onClose={onClose} anchorEl={anchorEl} isOpen={isOpen} />}
+          onEdit={handleOnEdit}
+          onDelete={handleOnDelete}
+          onPreview={handleOnPreview}
+          onRefresh={managerSeriesForTableRefetch}
+          onSeasonCreate={handleOnSeasonCreate}
+          onSelect={handleOnSelect}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          isLoading={isManagerSeriesForTableLoading}
+          totalRecords={managerSeriesForTableData?.totalRecords ?? 0}
+          rowSelectionModel={rowSelectionModel}
+          onRowSelectionModelChange={setRowSelectionModel}
         />
         {tableFooter}
       </Card>
     </Page>
   );
 }
-
-const SeriesTableColumn: GridColDef[] = [
-  {
-    field: "ID",
-    headerName: "ID",
-    width: 200,
-  },
-  {
-    field: "mediaOriginCountry",
-    headerName: "Origin country",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mediaOriginalLanguage",
-    headerName: "Original language",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mediaGenre",
-    headerName: "Genre",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mediaStatus",
-    headerName: "Status",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mediaTitle",
-    headerName: "Title",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mediaPlotSummary",
-    headerName: "Plot summary",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mediaReleaseDate",
-    headerName: "Release date",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mediaImageUrl",
-    headerName: "Image url",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "createdAt",
-    headerName: "Created at",
-    width: 200,
-  },
-  {
-    field: "updatedAt",
-    headerName: "Updated at",
-    width: 200,
-  },
-];

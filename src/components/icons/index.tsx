@@ -15,6 +15,9 @@ import { default as MuiNightsStayIcon } from "@mui/icons-material/NightsStay";
 import { default as MuiQuestionAnswerIcon } from "@mui/icons-material/QuestionAnswer";
 import { default as MuiAirplanemodeActiveIcon } from "@mui/icons-material/AirplanemodeActive";
 import { default as MuiDeleteIcon } from "@mui/icons-material/Delete";
+import { default as MuiOpenInNewIcon } from "@mui/icons-material/OpenInNew";
+import { default as MuiRefreshIcon } from "@mui/icons-material/Refresh";
+import { default as MuiPreviewIcon } from "@mui/icons-material/Preview";
 import { default as MuiEditIcon } from "@mui/icons-material/Edit";
 import { default as MuiSelectAll } from "@mui/icons-material/SelectAll";
 import { default as MuiSearchIcon } from "@mui/icons-material/Search";
@@ -37,18 +40,21 @@ import { default as MuiPlayArrowIcon } from "@mui/icons-material/PlayArrow";
 import { default as MuiFastRewindIcon } from "@mui/icons-material/FastRewind";
 import { default as MuiCachedIcon } from "@mui/icons-material/Cached";
 import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/RadioButtonUnchecked";
+import { default as MuiLibraryAddCheckIcon } from "@mui/icons-material/LibraryAddCheck";
 import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVert";
 import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonChecked";
+import { default as MuiCheckBoxIcon } from "@mui/icons-material/CheckBox";
 import { default as MuiSignalCellularAlt1BarIcon } from "@mui/icons-material/SignalCellularAlt1Bar";
 import { default as MuiAttachFileIcon } from "@mui/icons-material/AttachFile";
 import { default as MuiDoneIcon } from "@mui/icons-material/Done";
+import {default as MuiAddCircleOutlineIcon} from '@mui/icons-material/AddCircleOutline';
 import Tooltip from "../Tooltip";
 
 interface IconWrapperProps extends SvgIconProps {
   onClick?: () => void;
   disableRipple?: boolean;
-  tooltip?: string; // Add a new prop for tooltip text
-  tooltipPlacement?: TooltipProps["placement"]; // Placement prop for Tooltip component
+  tooltip?: string;
+  tooltipPlacement?: TooltipProps["placement"];
   isListIcon?: boolean;
   iconButtonProps?: IconButtonProps;
   loading?: boolean;
@@ -117,3 +123,9 @@ export const CaretDownIcon = withIconWrapper(MuiArrowDropDownIcon);
 export const ClearCircleIcon = withIconWrapper(MuiCancelIcon);
 export const StreetViewIcon = withIconWrapper(MuiStreetviewIcon);
 export const AttachFileIcon = withIconWrapper(MuiAttachFileIcon);
+export const CheckBoxIcon = withIconWrapper(MuiCheckBoxIcon);
+export const RefreshIcon = withIconWrapper(MuiRefreshIcon);
+export const OpenTabIcon = withIconWrapper(MuiOpenInNewIcon);
+export const PreviewIcon = withIconWrapper(MuiPreviewIcon);
+export const MultiCheckIcon = withIconWrapper(MuiLibraryAddCheckIcon);
+export const AddCircleIcon = withIconWrapper(MuiAddCircleOutlineIcon);

@@ -1,4 +1,5 @@
 import { MediaCountriesEnum, MediaLanguagiesEnum, MediaGenriesEnum, MediaImageTypeEnum, MediaStatusEnum } from "@/types/enum";
+import { ManagerTableSeriesList } from "../types";
 
 export type CreateMediaImageInput = {
   MediaImageBase64: string;
@@ -35,20 +36,21 @@ export type CreateMediaImageOutput = {
 };
 
 export interface GetManagerSeriesForTableOutput {
-  seriesList: GetManagerTableOutputSeriesList[];
+  seriesList: ManagerTableSeriesList[];
   totalRecords: number;
 }
 
-export interface GetManagerTableOutputSeriesList {
-  ID: string;
-  mediaOriginCountry: MediaCountriesEnum;
-  mediaOriginalLanguage: MediaLanguagiesEnum;
-  mediaGenre: MediaGenriesEnum;
-  mediaStatus: MediaStatusEnum;
-  mediaTitle: string;
-  mediaPlotSummary: string;
-  mediaReleaseDate: number;
-  mediaImageUrl: string;
-  createdAt: number;
-  updatedAt: number;
+export interface DeleteSeriesByIdInput {
+  SeriesId: string;
+}
+
+export interface DeleteMultipleSeriesByIdzInput {
+  SeriesIdz: string[];
+}
+
+export interface DeleteSeriesByIdOutput {
+}
+
+export interface DeleteMultipleSeriesByIdzOutput {
+  isSuccess: true;
 }

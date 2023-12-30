@@ -27,9 +27,9 @@ export default function SeriesCreateScreen() {
   } = useForm<SeriesCreateFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      title: "",
-      plotSummary: DUMMY_PLOT_SUMMARY,
-      releaseDate: new Date().getTime(),
+      mediaTitle: "",
+      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
+      mediaReleaseDate: new Date().getTime(),
     },
   });
 
@@ -44,9 +44,9 @@ export default function SeriesCreateScreen() {
     createSeriesMutateAsync({
       MediaImageId: watchCreateSeriesFormValue("mediaImageId"),
       MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: +input.releaseDate,
+        MediaPlotSummary: input.mediaPlotSummary,
+        MediaTitle: input.mediaTitle,
+        MediaReleaseDate: +input.mediaReleaseDate,
       },
       MediaAdditionalInfo: {},
     });
@@ -73,9 +73,9 @@ export default function SeriesCreateScreen() {
 }
 
 const validationSchema = yup.object().shape({
-  title: yup.string().required("Title is required"),
-  plotSummary: yup.string().required("Plot summary is required"),
-  releaseDate: yup.string().required("Release date is required"),
+  mediaTitle: yup.string().required("Title is required"),
+  mediaPlotSummary: yup.string().required("Plot summary is required"),
+  mediaReleaseDate: yup.string().required("Release date is required"),
   mediaImageId: yup.string().required("Backdrop is required"),
 });
 

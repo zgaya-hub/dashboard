@@ -1,6 +1,6 @@
 export interface SeriesCreateFieldType {
-  title: string;
-  plotSummary: string;
-  releaseDate: number;
+  mediaTitle: string;
+  mediaPlotSummary: string;
+  mediaReleaseDate: number;
   mediaImageId: string;
 }
