@@ -102,6 +102,20 @@
       }
     },
     "SeriesManagement": {
+      "SeriesBasicDetailsComponent": {
+        "title": "Title",
+        "plotSummary": "Plot summary",
+        "releaseDate": "Release date"
+      },
+      "SeriesRowContextMenu": {
+        "preview": "Preview",
+        "refresh": "Refresh",
+        "createSeason": "Create",
+        "select": "Select",
+        "edit": "Edit",
+        "delete": "Delete",
+        "details": "Details"
+      },
       "SeriesManagementScreen": {
         "createSeries": "Create series",
         "createSeason": "Create season",

@@ -42,9 +42,9 @@ export default function EpisodeUploadScreen() {
       SignedUrlKeyId: getUploadSignedUrlData?.getUploadVideoSignedUrl.SignedUrlKeyId,
       VideoId: getUploadSignedUrlData?.getUploadVideoSignedUrl.VideoId,
       MediaBasicInfo: {
-        PlotSummary: input.mediaPlotSummary,
-        Title: input.mediaTitle,
-        ReleaseDate: input.mediaReleaseDate,
+        PlotSummary: input.plotSummary,
+        Title: input.title,
+        ReleaseDate: input.releaseDate,
       },
     });
     episodeUploadModalRef.current?.onNext();

@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import SeriesCreateForm from "../components/SeriesCreateForm";
-import { SeriesCreateFieldType } from "../types";
+import { SeriesCreateFieldInterface } from "../types";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,12 +24,12 @@ export default function SeriesCreateScreen() {
     handleSubmit: handleOnSubmit,
     setValue: setCreateSeriesFormValue,
     watch: watchCreateSeriesFormValue,
-  } = useForm<SeriesCreateFieldType>({
+  } = useForm<SeriesCreateFieldInterface>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      mediaTitle: "",
-      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
-      mediaReleaseDate: new Date().getTime(),
+      title: "",
+      plotSummary: DUMMY_PLOT_SUMMARY,
+      releaseDate: new Date().getTime(),
     },
   });
 
@@ -40,13 +40,13 @@ export default function SeriesCreateScreen() {
     setCreateSeriesFormValue("mediaImageId", result.createMediaImage.mediaImageId);
   };
 
-  const handleOnCreateEpisode = (input: SeriesCreateFieldType) => {
+  const handleOnCreateEpisode = (input: SeriesCreateFieldInterface) => {
     createSeriesMutateAsync({
       MediaImageId: watchCreateSeriesFormValue("mediaImageId"),
       MediaBasicInfo: {
-        MediaPlotSummary: input.mediaPlotSummary,
-        MediaTitle: input.mediaTitle,
-        MediaReleaseDate: +input.mediaReleaseDate,
+        MediaPlotSummary: input.plotSummary,
+        MediaTitle: input.title,
+        MediaReleaseDate: +input.releaseDate,
       },
       MediaAdditionalInfo: {},
     });
@@ -73,9 +73,9 @@ export default function SeriesCreateScreen() {
 }
 
 const validationSchema = yup.object().shape({
-  mediaTitle: yup.string().required("Title is required"),
-  mediaPlotSummary: yup.string().required("Plot summary is required"),
-  mediaReleaseDate: yup.string().required("Release date is required"),
+  title: yup.string().required("Title is required"),
+  plotSummary: yup.string().required("Plot summary is required"),
+  releaseDate: yup.string().required("Release date is required"),
   mediaImageId: yup.string().required("Backdrop is required"),
 });
 

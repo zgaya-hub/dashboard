@@ -4,3 +4,4 @@ export { default as SeriesImageSelectComponent } from "./SeriesImageSelectCompon
 export { default as SeriesRowContextMenu } from "./SeriesRowContextMenu";
 export { default as SeriesStatusSelectComponent } from "./SeriesStatusSelectComponent";
 export { default as SeriesTable } from "./SeriesTable";
+export { default as SeriesBasicDetailsComponent } from "./SeriesBasicDetailsComponent/SeriesBasicDetailsComponent";

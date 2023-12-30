@@ -1,5 +1,5 @@
 import { MediaCountriesEnum, MediaLanguagiesEnum, MediaGenriesEnum, MediaImageTypeEnum, MediaStatusEnum } from "@/types/enum";
-import { ManagerTableSeriesList } from "../types";
+import { TableSeriesInterface } from "../types";
 
 export type CreateMediaImageInput = {
   MediaImageBase64: string;
@@ -15,14 +15,19 @@ export type GetManagerSeriesForTableInput = {
 export type CreateSeriesInput = {
   MediaImageId: string;
   MediaBasicInfo: MediaBasicInformationInput;
-  MediaAdditionalInfo: MediaAdditionalInformationInput;
+  MediaAdditionalInfo: Partial<MediaAdditionalInformationInput>;
 };
 
 export type MediaAdditionalInformationInput = {
-  MediaOriginCountry?: MediaCountriesEnum;
-  MediaOriginalLanguage?: MediaLanguagiesEnum;
-  MediaGenre?: MediaGenriesEnum;
-  MediaStatus?: MediaStatusEnum;
+  MediaOriginCountry: MediaCountriesEnum;
+  MediaOriginalLanguage: MediaLanguagiesEnum;
+  MediaGenre: MediaGenriesEnum;
+  MediaStatus: MediaStatusEnum;
+};
+
+export type UpdateMediaImageInput = {
+  MediaImageUrl: string;
+  MediaImageType: MediaImageTypeEnum;
 };
 
 export type MediaBasicInformationInput = {
@@ -31,26 +36,51 @@ export type MediaBasicInformationInput = {
   MediaReleaseDate: number;
 };
 
+export type DeleteSeriesByIdParams = {
+  SeriesId: string;
+};
+
+export type UpdateSeriesInput = {
+  MediaBasicInfo: Partial<MediaBasicInformationInput>;
+  MediaAdditionalInfo: Partial<MediaAdditionalInformationInput>;
+  MediaImage: Partial<UpdateMediaImageInput>;
+};
+
+export type UpdateSeriesParams = {
+  SeriesId: string;
+};
+
+export type GetMediaBasicInfoByMediaIdParams = {
+  MediaId: string;
+};
+
+export type DeleteMultipleSeriesByIdzParams = {
+  SeriesIdz: string[];
+};
+
 export type CreateMediaImageOutput = {
   mediaImageId: string;
 };
 
-export interface GetManagerSeriesForTableOutput {
-  seriesList: ManagerTableSeriesList[];
+export type GetManagerSeriesForTableOutput = {
+  seriesList: TableSeriesInterface[];
   totalRecords: number;
-}
+};
 
-export interface DeleteSeriesByIdInput {
-  SeriesId: string;
-}
+export type DeleteSeriesByIdOutput = {
+  isSuccess: boolean;
+};
 
-export interface DeleteMultipleSeriesByIdzInput {
-  SeriesIdz: string[];
-}
-
-export interface DeleteSeriesByIdOutput {
-}
-
-export interface DeleteMultipleSeriesByIdzOutput {
+export type DeleteMultipleSeriesByIdzOutput = {
   isSuccess: true;
-}
+};
+
+export type UpdateSeriesOutput = {
+  isSuccess: true;
+};
+
+export type GetMediaBasicInfoByMediaIdOutput = {
+  title: string;
+  plotSummary: string;
+  releaseDate: number;
+};

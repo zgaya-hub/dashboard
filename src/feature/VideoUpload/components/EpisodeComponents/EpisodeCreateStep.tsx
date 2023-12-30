@@ -13,9 +13,9 @@ import { useState } from "react";
 import { DUMMY_PLOT_SUMMARY, DUMMY_RELEASE_DATE } from "../../constants";
 
 export interface CreateEpisodeFormFieldType {
-  mediaTitle: string;
-  mediaPlotSummary: string;
-  mediaReleaseDate: number;
+  title: string;
+  plotSummary: string;
+  releaseDate: number;
   episodeNumber: number;
 }
 
@@ -44,9 +44,9 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
   } = useForm<CreateEpisodeFormFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      mediaTitle: "",
-      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
-      mediaReleaseDate: DUMMY_RELEASE_DATE,
+      title: "",
+      plotSummary: DUMMY_PLOT_SUMMARY,
+      releaseDate: DUMMY_RELEASE_DATE,
       episodeNumber: 1,
     },
   });
@@ -54,8 +54,8 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
   const renderForm = (
     <Form onSubmit={handleSubmit(onSave)} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="mediaTitle" label="Title" helperText={errors.mediaTitle?.message} error={!!errors.mediaTitle} fullWidth required />
-        <Controller control={control} name="mediaReleaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
+        <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
+        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
         <Popover open={!!episodeNumberPopoverAnchorEl} anchorEl={episodeNumberPopoverAnchorEl} onClose={() => setEpisodeNumberPopoverAnchorEl(null)}>
           <TextField register={register} name={"episodeNumber"} autoFocus type="number" />
         </Popover>
@@ -63,7 +63,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
           {watch("episodeNumber")}
         </Button>
       </Stack>
-      <TextField register={register} name="mediaPlotSummary" label="Plot summary" helperText={errors.mediaPlotSummary?.message} error={!!errors.mediaPlotSummary} multiline rows={5} fullWidth required />
+      <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />
     </Form>
   );
@@ -84,7 +84,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
         </Stack>
       </Stack>
       <Hidden mdDown>
-        <EpisodeCardComponent title={watch("mediaTitle")} plotSummary={watch("mediaPlotSummary")} thumbnail={thumbnailSrc} />
+        <EpisodeCardComponent title={watch("title")} plotSummary={watch("plotSummary")} thumbnail={thumbnailSrc} />
       </Hidden>
     </Stack>
   );
@@ -92,7 +92,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
-  mediaPlotSummary: yup.string().required("Plot summary is required"),
-  mediaReleaseDate: yup.number().required("Release date is required"),
+  plotSummary: yup.string().required("Plot summary is required"),
+  releaseDate: yup.number().required("Release date is required"),
   episodeNumber: yup.number().required("Episode number must one or up").min(1),
 });

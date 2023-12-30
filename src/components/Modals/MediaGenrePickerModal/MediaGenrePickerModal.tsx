@@ -72,12 +72,12 @@ export default function MediaGenrePickerModal({ isOpen, onClose, onOk }: MediaGe
     <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.MediaGenrePickerModal.pickAGenre")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
       {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.MediaGenrePickerModal.search")} /> : null}
       <RadioGroup value={value} onChange={handleOnChange}>
-        {filteredMediaGenres.map((mediaGenre) => {
+        {filteredMediaGenres.map((genre) => {
           return (
-            <MenuItem onClick={() => setValue(mediaGenre)}>
+            <MenuItem onClick={() => setValue(genre)}>
               <StreetViewIcon isListIcon />
-              <ListItemText>{mediaGenre}</ListItemText>
-              <Radio value={mediaGenre} />
+              <ListItemText>{genre}</ListItemText>
+              <Radio value={genre} />
             </MenuItem>
           );
         })}

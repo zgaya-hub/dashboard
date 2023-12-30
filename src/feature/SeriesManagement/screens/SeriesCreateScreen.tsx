@@ -8,7 +8,7 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { SeriesCreateFieldType } from "../types";
+import { SeriesCreateFieldInterface } from "../types";
 import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
@@ -29,12 +29,12 @@ export default function SeriesCreateScreen() {
     setValue: setCreateSeriesFormValue,
     handleSubmit: handleOnSubmit,
     watch: watchCreateSeriesFormValue,
-  } = useForm<SeriesCreateFieldType>({
+  } = useForm<SeriesCreateFieldInterface>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      mediaTitle: "",
-      mediaPlotSummary: DUMMY_PLOT_SUMMARY,
-      mediaReleaseDate: DUMMY_RELEASE_DATE,
+      title: "",
+      plotSummary: DUMMY_PLOT_SUMMARY,
+      releaseDate: DUMMY_RELEASE_DATE,
     },
   });
 
@@ -46,19 +46,19 @@ export default function SeriesCreateScreen() {
     setCreateSeriesFormValue("mediaImageId", result.mediaImageId);
   };
 
-  const handleOnCreateEpisode = (input: SeriesCreateFieldType) => {
+  const handleOnCreateEpisode = (input: SeriesCreateFieldInterface) => {
     createSeriesMutateAsync({
       MediaImageId: input.mediaImageId,
       MediaBasicInfo: {
-        MediaPlotSummary: input.mediaPlotSummary,
-        MediaTitle: input.mediaTitle,
-        MediaReleaseDate: +input.mediaReleaseDate,
+        MediaPlotSummary: input.plotSummary,
+        MediaTitle: input.title,
+        MediaReleaseDate: +input.releaseDate,
       },
       MediaAdditionalInfo: {
-        MediaGenre: input.mediaGenre,
-        MediaOriginalLanguage: input.mediaOriginalLanguage,
-        MediaOriginCountry: input.mediaOriginCountry,
-        MediaStatus: input.mediaStatus,
+        MediaGenre: input.genre,
+        MediaOriginalLanguage: input.originalLanguage,
+        MediaOriginCountry: input.originCountry,
+        MediaStatus: input.status,
       },
     });
   };

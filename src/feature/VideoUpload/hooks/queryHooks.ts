@@ -46,7 +46,7 @@ export function useUploadVideoOnAwsS3() {
   });
 }
 
-export function useGetManagerSeries() {
+export function useGetManagerSeriesWithImageAndBasicInfo() {
   return useQuery({
     queryKey: [""],
     queryFn: async () => {
@@ -62,9 +62,9 @@ export function useGetManagerSeries() {
               mediaImageUrl
             }
             mediaBasicInfo {
-              mediaPlotSummary
-              mediaReleaseDate
-              mediaTitle
+              plotSummary
+              releaseDate
+              title
               ID
             }
           }
@@ -85,9 +85,9 @@ export function useGetSeasonBySeriesId() {
             ID
             seasonNumber
             mediaBasicInfo {
-              mediaTitle
+              title
               ID
-              mediaPlotSummary
+              plotSummary
             }
           }
         }`,

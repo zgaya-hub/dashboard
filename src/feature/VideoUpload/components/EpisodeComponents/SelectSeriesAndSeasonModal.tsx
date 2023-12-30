@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetManagerSeries, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
+import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
 import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
 import { useTranslation } from "react-i18next";
 import { AddIcon, CachedIcon, ChevronLeftIcon, UploadIcon } from "@/components/icons";
@@ -21,7 +21,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfoOutput | null>(null);
   const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
   const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput[]>([]);
-  const { isFetching: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries } = useGetManagerSeries();
+  const { isFetching: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries } = useGetManagerSeriesWithImageAndBasicInfo();
   const { mutateAsync: getSeasonBySeriesIdMutateAsync, isPending: isSeasonFetching } = useGetSeasonBySeriesId();
 
   const handleOnFetchSeasons = async (series: GetManagerSeriesWithImageAndBasicInfoOutput) => {
@@ -85,7 +85,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   );
 
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} onClose={handleOnClose} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.mediaTitle : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")} hideCrossButton open={isVisible} dialogAction={selectedSeries ? renderSeasonListFooter : renderSeriesListFooter}>
+    <Dialog dialogContentSx={{ padding: 0 }} onClose={handleOnClose} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.title : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")} hideCrossButton open={isVisible} dialogAction={selectedSeries ? renderSeasonListFooter : renderSeriesListFooter}>
       {selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={(id) => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries ?? []} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}
     </Dialog>
   );

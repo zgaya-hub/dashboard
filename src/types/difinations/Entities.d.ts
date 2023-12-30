@@ -9,9 +9,9 @@ type MediaImageEntityType = {
 } & EntityBaseType;
 
 type MediaBasicInfoEntityType = {
-  mediaPlotSummary: string;
-  mediaReleaseDate: number;
-  mediaTitle: string;
+  plotSummary: string;
+  releaseDate: number;
+  title: string;
 } & EntityBaseType;
 
 type SeasonEntityType = {

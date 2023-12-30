@@ -5,12 +5,17 @@ import {
   CreateMediaImageInput,
   CreateMediaImageOutput,
   CreateSeriesInput,
-  DeleteMultipleSeriesByIdzInput,
   DeleteMultipleSeriesByIdzOutput,
-  DeleteSeriesByIdInput,
+  DeleteMultipleSeriesByIdzParams,
   DeleteSeriesByIdOutput,
+  DeleteSeriesByIdParams,
   GetManagerSeriesForTableInput,
   GetManagerSeriesForTableOutput,
+  GetMediaBasicInfoByMediaIdOutput,
+  GetMediaBasicInfoByMediaIdParams,
+  UpdateSeriesInput,
+  UpdateSeriesOutput,
+  UpdateSeriesParams,
 } from "./queryHooks.types";
 
 export function useCreateMediaImage() {
@@ -65,14 +70,14 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
               ID
               createdAt
               updatedAt
-              mediaGenre
+              genre
               mediaImageUrl
-              mediaOriginCountry
-              mediaOriginalLanguage
-              mediaPlotSummary
-              mediaReleaseDate
-              mediaStatus
-              mediaTitle
+              originCountry
+              originalLanguage
+              plotSummary
+              releaseDate
+              status
+              title
             }
           }
         }`,
@@ -86,7 +91,7 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
 export function useDeleteSeriesById() {
   const { showGqlError } = useGqlError();
   return useMutation({
-    mutationFn: async (param: DeleteSeriesByIdInput) => {
+    mutationFn: async (param: DeleteSeriesByIdParams) => {
       const result = await gqlRequest<{ deleteSeriesById: DeleteSeriesByIdOutput }>(
         `mutation($param: DeleteSeriesByIdParams!) {
           deleteSeriesById(DeleteSeriesByIdParams: $param) {
@@ -106,7 +111,7 @@ export function useDeleteSeriesById() {
 export function useDeleteMultipleSeriesByIdz() {
   const { showGqlError } = useGqlError();
   return useMutation({
-    mutationFn: async (param: DeleteMultipleSeriesByIdzInput) => {
+    mutationFn: async (param: DeleteMultipleSeriesByIdzParams) => {
       const result = await gqlRequest<{ deleteMultipleSeriesByIdz: DeleteMultipleSeriesByIdzOutput }>(
         `mutation($param: DeleteMultipleSeriesByIdzParams!) {
           deleteMultipleSeriesByIdz(DeleteMultipleSeriesByIdzParams: $param) {
@@ -119,6 +124,46 @@ export function useDeleteMultipleSeriesByIdz() {
     },
     onError: (error) => {
       showGqlError(error.response);
+    },
+  });
+}
+
+export function useUpdateSeries() {
+  const { showGqlError } = useGqlError();
+
+  return useMutation({
+    mutationFn: async (input: { param: UpdateSeriesParams; input: UpdateSeriesInput }) => {
+      const result = await gqlRequest<{ updateSeries: UpdateSeriesOutput }>(
+        `mutation($param: UpdateSeriesParams!, $input: UpdateSeriesInput!) {
+          updateSeries(UpdateSeriesParams: $param, UpdateSeriesInput: $input) {
+            isSuccess
+          }
+        }`,
+        { param: input.param, input: input.input }
+      );
+      return result.updateSeries;
+    },
+    onError: (error) => {
+      showGqlError(error.response);
+    },
+  });
+}
+
+export function useGetMediaBasicInfoByMediaId(param: GetMediaBasicInfoByMediaIdParams) {
+  return useQuery({
+    queryKey: [param.MediaId],
+    queryFn: async () => {
+      const result = await gqlRequest<{ getMediaBasicInfoByMediaId: GetMediaBasicInfoByMediaIdOutput }>(
+        `query($param: GetMediaBasicInfoByMediaIdParams!) {
+          getMediaBasicInfoByMediaId(GetMediaBasicInfoByMediaIdParams: $param) {
+            title
+            plotSummary
+            releaseDate
+          }
+        }`,
+        { param }
+      );
+      return result.getMediaBasicInfoByMediaId;
     },
   });
 }
