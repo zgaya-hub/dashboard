@@ -11,11 +11,10 @@ import {
   DeleteSeriesByIdParams,
   GetManagerSeriesForTableInput,
   GetManagerSeriesForTableOutput,
-  GetBasicInfoByIdOutput,
-  GetBasicInfoByIdParams,
   UpdateSeriesInput,
   UpdateSeriesOutput,
   UpdateSeriesParams,
+  GetMediaBasicInfoByMediaIdParams,
 } from "./queryHooks.types";
 
 export function useCreateMediaImage() {
@@ -149,13 +148,14 @@ export function useUpdateSeries() {
   });
 }
 
-export function useGetBasicInfoById(param: GetBasicInfoByIdParams) {
+export function useGetMediaBasicInfoByMediaId(param: GetMediaBasicInfoByMediaIdParams) {
   return useQuery({
-    queryKey: [param.Id],
+    queryKey: [param.MediaId],
     queryFn: async () => {
-      const result = await gqlRequest<{ getBasicInfoById: GetBasicInfoByIdOutput }>(
-        `query($param: GetBasicInfoByIdParams!) {
-          getBasicInfoById(GetBasicInfoByIdParams: $param) {
+      const result = await gqlRequest<{ getMediaBasicInfoByMediaId: MediaBasicInfoEntityType }>(
+        `query($param: GetMediaBasicInfoByMediaIdParams!) {
+          getMediaBasicInfoByMediaId(GetMediaBasicInfoByMediaIdParams: $param) {
+            ID
             title
             plotSummary
             releaseDate
@@ -163,7 +163,7 @@ export function useGetBasicInfoById(param: GetBasicInfoByIdParams) {
         }`,
         { param }
       );
-      return result.getBasicInfoById;
+      return result.getMediaBasicInfoByMediaId;
     },
   });
 }

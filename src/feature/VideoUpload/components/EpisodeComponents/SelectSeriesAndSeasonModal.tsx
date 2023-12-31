@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { AddIcon, CachedIcon, ChevronLeftIcon, UploadIcon } from "@/components/icons";
 import { Dialog } from "@/components/Dialog";
 import Button from "@/components/Button";
-import useNavigation from "@/navigation/use-navigation";
+import useNavigation from "@/navigation/useNavigation";
 import SeasonListForSelection from "./SeasonListForSelection";
 import SeriesListForSelection from "./SeriesListForSelection";
 

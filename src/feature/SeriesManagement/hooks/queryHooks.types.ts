@@ -50,8 +50,8 @@ export type UpdateSeriesParams = {
   SeriesId: string;
 };
 
-export type GetBasicInfoByIdParams = {
-  Id: string;
+export type GetMediaBasicInfoByMediaIdParams = {
+  MediaId: string;
 };
 
 export type DeleteMultipleSeriesByIdzParams = {
@@ -77,10 +77,4 @@ export type DeleteMultipleSeriesByIdzOutput = {
 
 export type UpdateSeriesOutput = {
   isSuccess: true;
-};
-
-export type GetBasicInfoByIdOutput = {
-  title: string;
-  plotSummary: string;
-  releaseDate: number;
 };

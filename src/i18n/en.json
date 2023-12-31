@@ -103,6 +103,7 @@
     },
     "SeriesManagement": {
       "SeriesBasicDetailsComponent": {
+        "basicInfo": "Basic info",
         "title": "Title",
         "plotSummary": "Plot summary",
         "releaseDate": "Release date"

@@ -4,7 +4,7 @@ import { Divider, ListItemText, PopoverPosition, SxProps } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useDeleteSeriesById } from "../hooks/queryHooks";
-import useNavigation from "@/navigation/use-navigation";
+import useNavigation from "@/navigation/useNavigation";
 import { useTranslation } from "react-i18next";
 
 interface SeriesRowContextMenuProps {
@@ -31,7 +31,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnDetails = () => {
-    navigation.navigate("/series-management/series-details");
+    navigation.navigate(`/series-management/series-details`, { seriesId });
   };
 
   const handleOnCreateSeason = () => {

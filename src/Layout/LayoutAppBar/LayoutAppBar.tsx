@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import useTheme from "@/theme/Theme.context";
-import useNavigation from "@/navigation/use-navigation";
+import useNavigation from "@/navigation/useNavigation";
 
 import { MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
 import UserAvatar from "./UserAvatar";

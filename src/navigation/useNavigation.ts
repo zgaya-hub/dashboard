@@ -4,17 +4,13 @@ import UnAuthenticatedRouteParams from "./UnAuthenticated.routes.params";
 
 export type Routes = keyof AuthenticatedRouteParams | keyof UnAuthenticatedRouteParams;
 
-type ParamsForRoute<T extends Routes> = T extends keyof AuthenticatedRouteParams
-  ? AuthenticatedRouteParams[T] extends undefined
-    ? undefined
-    : AuthenticatedRouteParams[T]
-  : never;
+type ParamsForRoute<T extends Routes> = T extends keyof AuthenticatedRouteParams ? (AuthenticatedRouteParams[T] extends undefined ? undefined : AuthenticatedRouteParams[T]) : never;
 
 export default function useNavigation() {
   const rnNavigate = rnUseNavigate();
 
   const navigate = <T extends Routes>(route: T, params?: ParamsForRoute<T>) => {
-    rnNavigate(`${route}/${params ? Object.values(params).join('/') : ""}`);
+    rnNavigate(route, { state: params });
   };
 
   const goBack = () => {

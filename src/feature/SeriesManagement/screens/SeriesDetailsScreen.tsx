@@ -1,16 +1,14 @@
 import Page from "@/components/Page";
-import { Card } from "@mui/material";
-import useNavigation from "@/navigation/use-navigation";
-import { useTranslation } from "react-i18next";
-import { SeriesBasicDetailsComponent, SeriesTable } from "../components";
+import { SeriesBasicDetailsComponent } from "../components";
+import { useLocation } from "@/navigation";
+
 
 export default function SeriesDetailsScreen() {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
+  const location = useLocation<'/series-management/series-details'>();
 
   return (
     <Page>
-      <SeriesBasicDetailsComponent />
+      <SeriesBasicDetailsComponent seriesId={location.seriesId!} />
     </Page>
   );
 }

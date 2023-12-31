@@ -40,7 +40,7 @@ export const typography: TypographyOptions = {
     fontWeight: 600,
   },
   h6: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 500,
   },
   body1: {

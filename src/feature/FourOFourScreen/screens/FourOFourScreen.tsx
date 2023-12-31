@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { useAuthContext } from "@/context/AuthContext";
-import useNavigation from "@/navigation/use-navigation";
+import useNavigation from "@/navigation/useNavigation";
 
 export default function FourOFourScreen() {
   const navigation = useNavigation();

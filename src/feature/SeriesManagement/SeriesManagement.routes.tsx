@@ -4,7 +4,7 @@ import { SeriesCreateScreen, SeriesManagementScreen, SeriesDetailsScreen } from 
 export type SeriesManagementRoutesParams = {
   "/series-management": undefined;
   "/series-management/series-create": undefined;
-  "/series-management/series-details": undefined;
+  "/series-management/series-details": { seriesId: string };
 };
 
 const SeriesManagementRoutes = () => {

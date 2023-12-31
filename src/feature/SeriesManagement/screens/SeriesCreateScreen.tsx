@@ -15,9 +15,11 @@ import { SaveIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { SeriesAdditionalInformationForm, SeriesBasicInformationForm, SeriesImageSelectComponent } from "../components";
+import useNavigation from "@/navigation/useNavigation";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
+  const navigation = useNavigation();
   const [backDropUrl, senBackdropUrl] = useState("");
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
   const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateMediaImage();
@@ -46,8 +48,8 @@ export default function SeriesCreateScreen() {
     setCreateSeriesFormValue("mediaImageId", result.ID);
   };
 
-  const handleOnCreateEpisode = (input: SeriesCreateFormFieldInterface) => {
-    createSeriesMutateAsync({
+  const handleOnCreateEpisode = async (input: SeriesCreateFormFieldInterface) => {
+    await createSeriesMutateAsync({
       MediaImageId: input.mediaImageId,
       MediaBasicInfo: {
         PlotSummary: input.plotSummary,
@@ -61,6 +63,7 @@ export default function SeriesCreateScreen() {
         Status: input.status,
       },
     });
+    navigation.goBack();
   };
 
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
@@ -93,7 +96,7 @@ export default function SeriesCreateScreen() {
         </Grid>
         <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
           <Grid xs={12} item lg={5.9}>
-            <SeriesImageSelectComponent onImageDrop={handleOnBackdropSelect} isLoading={isCreateImageLoading} />
+            <SeriesImageSelectComponent errorMessage={errors.mediaImageId?.message} onImageDrop={handleOnBackdropSelect} isLoading={isCreateImageLoading} />
           </Grid>
           <Grid xs={12} item lg={5.9}>
             <CardMedia sx={cardStyle} image={backDropUrl} />
@@ -111,4 +114,5 @@ const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.string().required("Release date is required"),
+  mediaImageId: yup.string().required("Backdrop image is required"),
 });

@@ -3,7 +3,7 @@ export const handleOnGetImageBackgroundColor = async (
 ): Promise<string | null> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "Anonymous"; // Enable cross-origin resource sharing (CORS) for the image
+    img.crossOrigin = "Anonymous";
     img.src = imageUrl;
 
     img.onload = function () {

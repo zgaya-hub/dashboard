@@ -25,20 +25,7 @@ interface SeriesTableProps {
   isAutoSave: boolean;
 }
 
-export default function SeriesTable({
-  rows,
-  totalRecords,
-  paginationModel,
-  isMutateLoading,
-  onPaginationModelChange,
-  isQueryLoading,
-  onRefresh,
-  onSelect,
-  onRowSelectionModelChange,
-  onSeriesUpdate,
-  isAutoSave,
-  rowSelectionModel,
-}: SeriesTableProps) {
+export default function SeriesTable({ rows, totalRecords, paginationModel, isMutateLoading, onPaginationModelChange, isQueryLoading, onRefresh, onSelect, onRowSelectionModelChange, onSeriesUpdate, isAutoSave, rowSelectionModel }: SeriesTableProps) {
   const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
   const [selectedRowId, setSelectedRowId] = useState("");
 
@@ -49,11 +36,13 @@ export default function SeriesTable({
   };
 
   const processRowUpdate = useCallback(async (series: GridRowModel<TableSeriesInterface>) => {
+
     if (isAutoSave) {
       onSeriesUpdate(series);
     }
+    
     return series;
-  }, []);
+  }, [isAutoSave]);
 
   const SeriesTableColumn: GridColDef[] = [
     {
@@ -169,14 +158,7 @@ export default function SeriesTable({
           },
         }}
       />
-      <SeriesRowContextMenu
-        seriesId={selectedRowId}
-        isOpen={!!contextMenuAnchorPosition}
-        anchorPosition={contextMenuAnchorPosition}
-        onSelect={() => onSelect(selectedRowId)}
-        onRefresh={onRefresh}
-        onClose={() => setContextMenuAnchorPosition(null)}
-      />
+      <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition} onSelect={() => onSelect(selectedRowId)} onRefresh={onRefresh} onClose={() => setContextMenuAnchorPosition(null)} />
     </Fragment>
   );
 }

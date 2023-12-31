@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4Icon } from "@mui/icons-material/Brightness4";
@@ -52,7 +52,7 @@ import { default as MuiDetails } from "@mui/icons-material/Details";
 import Tooltip from "../Tooltip";
 
 interface IconWrapperProps extends SvgIconProps {
-  onClick?: () => void;
+  onClick?: (event: MouseEvent) => void;
   disableRipple?: boolean;
   tooltip?: string;
   tooltipPlacement?: TooltipProps["placement"];

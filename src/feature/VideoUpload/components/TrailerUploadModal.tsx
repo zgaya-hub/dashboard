@@ -4,7 +4,7 @@ import { Dialog } from "@/components/Dialog";
 import VideoUploadComponent from "./VideoUploadComponent";
 import { FeedbackIcon, UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
-import useNavigation from "@/navigation/use-navigation";
+import useNavigation from "@/navigation/useNavigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
 
