@@ -58,11 +58,11 @@ export default function SeriesCreateScreen() {
 
   const pageHeader = (
     <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.QuickMediaManagement.SeriesCreateScreen.createASeries")}</Typography>
+      <Typography variant="h5">{t("Feature.Quick.SeriesCreateScreen.createASeries")}</Typography>
       <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.QuickMediaManagement.SeriesCreateScreen.back")}</Button>
+        <Button variant="text">{t("Feature.Quick.SeriesCreateScreen.back")}</Button>
         <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.QuickMediaManagement.SeriesCreateScreen.save")}
+          {t("Feature.Quick.SeriesCreateScreen.save")}
         </Button>
       </Stack>
     </Elevator>

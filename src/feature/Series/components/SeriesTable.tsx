@@ -9,7 +9,7 @@ import { values as convertEnumToArray } from "lodash";
 import { CountriesEnum, MediaGenriesEnum, LanguagiesEnum, MediaStatusEnum } from "@/types/enum";
 import { DataGridPro } from "@/components/DataGridPro";
 import { LinearProgress, PopoverPosition } from "@mui/material";
-import { HorizontalCard } from "@/components/Cards";
+import { MediaTableCard } from "@/components/Cards";
 
 interface SeriesTableProps {
   rows: TableSeriesInterface[];
@@ -45,7 +45,7 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
       field: "series",
       headerName: "Origin country",
       width: 500,
-      renderCell: (params) => <HorizontalCard imageSrc={params.row.mediaImageUrl} title={params.row.title} description={params.row.plotSummary} />,
+      renderCell: (params) => <MediaTableCard imageSrc={params.row.mediaImageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
       field: "originCountry",

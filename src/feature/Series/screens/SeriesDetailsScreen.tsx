@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import { SeriesDetailsCard } from "../components";
 
 export default function SeriesDetailsScreen() {
-  const location = useLocation<"/series/series-details">();
+  const location = useLocation("/series/details");
 
   return (
     <Page>

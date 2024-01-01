@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Menu, Sidebar, SubMenu } from "react-pro-sidebar";
 import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon, QuestionAnswerIcon, SettingIcon, UploadIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import useNavigation from "@/navigation/useNavigation";
 import SidebarItem, { SidebarItemProps } from "./SidebarItem";
 import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
+import { useLocation } from "@/navigation";
 
 interface SidebarSectionProps {
   listItems: SidebarItemProps[];
@@ -39,10 +40,24 @@ function SidebarSection({ listItems }: SidebarSectionProps) {
 }
 
 export default function LayoutSidebar() {
+  const location = useLocation('*')
+
+  const [activeItem, setActiveItem] = useState("home");
+
+  // Check for active item from URL on refresh
+
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [activeItemLabel, setActiveItemLabel] = useState("");
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location);
+    const itemFromUrl = urlParams.get("activeItem");
+    if (itemFromUrl) {
+      setActiveItem(itemFromUrl);
+    }
+  }, [location]);
 
   const sections: { sidebar: SidebarItemProps[]; footer: SidebarItemProps[] } = {
     sidebar: [

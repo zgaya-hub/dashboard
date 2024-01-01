@@ -5,7 +5,7 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { SxProps, CardContent, Typography } from "@mui/material";
 import { handleOnTruncateText } from "@/utils";
 
-interface HorizontalCardProps {
+interface MediaTableCardProps {
   imageSrc: string;
   title: string;
   description: string;
@@ -13,7 +13,7 @@ interface HorizontalCardProps {
   children?: ReactNode;
 }
 
-export default function HorizontalCard({ imageSrc, title, description }: HorizontalCardProps) {
+export default function MediaTableCard({ imageSrc, title, description }: MediaTableCardProps) {
   const cardStyle = useThemeStyles<SxProps>(() => ({
     display: "flex",
     flexDirection: "row",

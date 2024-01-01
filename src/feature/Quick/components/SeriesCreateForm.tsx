@@ -19,11 +19,11 @@ export default function SeriesCreateForm({ register, control, errors, onImageSel
   return (
     <Stack padding={4} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <TextField register={register} name="title" label={t("Feature.QuickMediaManagement.SeriesCreateForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required autoFocus />
-        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.QuickMediaManagement.SeriesCreateForm.releaseDate")} views={["year", "month"]} fullWidth />} />
-        <FileSelectInput label={t("Feature.QuickMediaManagement.SeriesCreateForm.selectABackdropImage")} fullWidth onFileSelect={onImageSelect} loading={isLoading} helperText={errors.mediaImageId?.message} error={!!errors.mediaImageId} />
+        <TextField register={register} name="title" label={t("Feature.Quick.SeriesCreateForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required autoFocus />
+        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.Quick.SeriesCreateForm.releaseDate")} views={["year", "month"]} fullWidth />} />
+        <FileSelectInput label={t("Feature.Quick.SeriesCreateForm.selectABackdropImage")} fullWidth onFileSelect={onImageSelect} loading={isLoading} helperText={errors.mediaImageId?.message} error={!!errors.mediaImageId} />
       </Stack>
-      <TextField register={register} name="plotSummary" label={t("Feature.QuickMediaManagement.SeriesCreateForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
+      <TextField register={register} name="plotSummary" label={t("Feature.Quick.SeriesCreateForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />
     </Stack>
   );

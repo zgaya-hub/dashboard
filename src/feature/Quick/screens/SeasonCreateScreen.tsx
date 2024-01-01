@@ -70,11 +70,11 @@ export default function SeasonCreateScreen() {
 
   const pageHeader = (
     <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.QuickMediaManagement.SeasonCreateScreen.createASeason")}</Typography>
+      <Typography variant="h5">{t("Feature.Quick.SeasonCreateScreen.createASeason")}</Typography>
       <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.QuickMediaManagement.SeasonCreateScreen.back")}</Button>
+        <Button variant="text">{t("Feature.Quick.SeasonCreateScreen.back")}</Button>
         <Button loading={isCreateSeasonLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.QuickMediaManagement.SeasonCreateScreen.save")}
+          {t("Feature.Quick.SeasonCreateScreen.save")}
         </Button>
       </Stack>
     </Elevator>
