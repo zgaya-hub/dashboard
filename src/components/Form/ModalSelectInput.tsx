@@ -13,6 +13,7 @@ export default function ModalSelectInput({ value, isModalVisible, ...restProps }
         shrink: !!value || isModalVisible,
       }}
       InputProps={{
+        readOnly: true,
         endAdornment: <InputAdornment position="end">{<CaretDownIcon />}</InputAdornment>,
       }}
       {...restProps}

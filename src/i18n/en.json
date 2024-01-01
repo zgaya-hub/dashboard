@@ -74,7 +74,7 @@
       },
       "EpisodeUploadModal": {
         "uploadEpisode": "Upload episode",
-        "addBasicInformation": "Add basic Info",
+        "addBasicInfo": "Add basic Info",
         "title": "Drag and drop a episode here",
         "message": "Ready to upload? Just simple upload episode here",
         "movie": "Movie",
@@ -82,7 +82,7 @@
         "back": "Back",
         "cancel": "Cancel",
         "reUsePrevious": "Reuse previous",
-        "addAdditionalInformation": "Add additional information",
+        "addAdditionalInfo": "Add additional information",
         "trailer": "Trailer",
         "imageUploadComponentTitle": "Drop a thumbnail"
       },
@@ -101,12 +101,7 @@
         "back": "Back"
       }
     },
-    "SeriesManagement": {
-      "SeriesBasicDetailsComponent": {
-        "title": "Title",
-        "plotSummary": "Plot summary",
-        "releaseDate": "Release date"
-      },
+    "Series": {
       "SeriesRowContextMenu": {
         "preview": "Preview",
         "refresh": "Refresh",
@@ -116,7 +111,7 @@
         "delete": "Delete",
         "details": "Details"
       },
-      "SeriesManagementScreen": {
+      "SeriesScreen": {
         "createSeries": "Create series",
         "createSeason": "Create season",
         "uploadEpisode": "Upload episode",
@@ -129,8 +124,17 @@
         "save": "Save",
         "cancel": "Cancel"
       },
-      "SeriesBasicInformationForm": {
-        "addBasicInformation": "Add basic Info",
+      "SeriesDetailsCard" : {
+        "originCountry": "Origin country",
+        "originalLanguage": "Original language",
+        "genre": "Genre",
+        "status": "Status",
+        "title": "Title",
+        "plotSummary": "Plot summary",
+        "releaseDate": "Release date"
+      },
+      "SeriesBasicInfoForm": {
+        "addBasicInfo": "Add basic Info",
         "plotSummary": "Plot summary",
         "title": "Title",
         "releaseDate": "Release Date"
@@ -138,8 +142,8 @@
       "SeriesImageSelectComponent": {
         "title": "Drop or select a backdrop image"
       },
-      "SeriesAdditionalInformationForm": {
-        "addAdditionalInformation": "Add additional Info",
+      "SeriesAdditionalInfoForm": {
+        "addAdditionalInfo": "Add additional Info",
         "originCountry": "Origin country",
         "originalLanguage": "Original language",
         "pickAGenre": "Pick a genre",

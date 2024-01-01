@@ -23,8 +23,8 @@ export const darkThemePalette: PaletteOptions = {
     dark: "#1565c0",
   },
   background: {
-    default: "#171717",
-    paper: "#171717",
+    default: "#1e1e1f",
+    paper: "#1e1e1f",
   },
 };
 
@@ -40,7 +40,7 @@ export const typography: TypographyOptions = {
     fontWeight: 600,
   },
   h6: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 500,
   },
   body1: {

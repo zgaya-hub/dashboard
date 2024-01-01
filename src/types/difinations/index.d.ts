@@ -9,4 +9,11 @@ type EntityBaseType = {
 
 type CommonSuccessOutput = {
   isSuccess: boolean;
-}
+};
+
+type GqlError = {
+  message: string;
+};
+type ServerErrorResponse = {
+  response: { errors: [GqlError] };
+};

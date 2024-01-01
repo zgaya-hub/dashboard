@@ -1,7 +1,7 @@
 import Page from "@/components/Page";
 import SignUpForm from "../components/SignUpForm";
 import { SignUpFormDataInterface } from "../types";
-import { useManagerSignIn } from "../hooks/queryHooks";
+import { useManagerSignIn } from "../hooks";
 
 export default function SignUpInputScreen() {
   const { mutateAsync: managerLoginMutateAsync } = useManagerSignIn();

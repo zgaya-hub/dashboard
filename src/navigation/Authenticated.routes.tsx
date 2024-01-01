@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import HomeRoutes from "@/feature/Home/Home.routes";
-import VideoUploadRoutes from "@/feature/VideoUpload/VideoUpload.routes";
+import VideoUploadRoutes from "@/feature/Upload/VideoUpload.routes";
 import FourOFourRoutes from "@/feature/FourOFourScreen/FourOFourScreen.routes";
-import SeriesManagementRoutes from "@/feature/SeriesManagement/SeriesManagement.routes";
+import SeriesRoutes from "@/feature/Series/Series.routes";
 import { LayoutAppBar } from "@/Layout/LayoutAppBar";
 import { LayoutAppHeader } from "@/Layout/LayoutAppHeader";
-import QuickMediaManagementRoutes from "@/feature/QuickMediaManagement/QuickMediaManagement.routes";
+import QuickMediaManagementRoutes from "@/feature/Quick/QuickMediaManagement.routes";
 import { LayoutSidebar } from "@/Layout/LayoutSidebar";
 
 const AuthenticatedRoutes = () => {
@@ -13,10 +13,10 @@ const AuthenticatedRoutes = () => {
     <Routes>
       <Route element={[<LayoutSidebar />, <LayoutAppBar />, <LayoutAppHeader />]}>
         <Route path="home/*" Component={HomeRoutes} />
-        <Route path="video-upload/*" Component={VideoUploadRoutes} />
-        <Route path="series-management/*" Component={SeriesManagementRoutes} />
+        <Route path="upload/*" Component={VideoUploadRoutes} />
+        <Route path="series/*" Component={SeriesRoutes} />
       </Route>
-      <Route path="quick-media-management/*" Component={QuickMediaManagementRoutes} />
+      <Route path="quick/*" Component={QuickMediaManagementRoutes} />
       <Route path="*" Component={FourOFourRoutes} />
     </Routes>
   );

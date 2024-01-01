@@ -1,4 +1,4 @@
-export enum MovierEnum {
+export enum MovierMediaEnum {
   SERIES = "Series",
   SEASON = "Season",
   EPISODE = "Episode",
@@ -65,7 +65,7 @@ export enum MediaImageVariantEnum {
   THUMBNAIL = "Thumbnail",
 }
 
-export enum GenriesEnum {
+export enum MediaGenriesEnum {
   ACTION = "Action",
   DRAMA = "Drama",
   COMEDY = "Comedy",
@@ -78,7 +78,7 @@ export enum GenriesEnum {
   SUPER_HERO = "Super Hero",
 }
 
-export enum StatusEnum {
+export enum MediaStatusEnum {
   RELEASED = "Released",
   IN_PRODUCTION = "In Production",
   POST_PRODUCTION = "Post Production",

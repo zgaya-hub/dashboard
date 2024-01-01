@@ -22,7 +22,7 @@ export default function AppearanceMenu({ anchorEl, isVisible, onClose }: Appeara
     <MenuItem onClick={onClick} sx={menuItemStyle}>
       {icon}
       <ListItemText>{label}</ListItemText>
-      <SignalBarIcon onClick={() => {}} />
+      <SignalBarIcon iconButton />
     </MenuItem>
   );
 

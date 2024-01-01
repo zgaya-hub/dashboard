@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { setAuthenticationHeaders } from "@/api/gqlRequest";
+import { setAuthenticationHeaders } from "@/api/queryClient";
 import { handleOnGetItemFromStorage, handleOnRemoveItemFromStorage, handleOnSetItemInStorage } from "@/utils/localStorage";
 
 interface AuthContextProps {

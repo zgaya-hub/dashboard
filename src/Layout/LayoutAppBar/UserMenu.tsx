@@ -29,8 +29,8 @@ export default function UserMenu({ anchorEl, isVisible, onClose, onSwitchAccount
     <MenuItem onClick={onClick} sx={menuItemStyle}>
       {icon}
       <ListItemText>{label}</ListItemText>
-      {hasChevron && <ChevronRightIcon onClick={() => {}} />}
-      {!hasChevron && <SignalBarIcon onClick={() => {}} />}
+      {hasChevron && <ChevronRightIcon iconButton />}
+      {!hasChevron && <SignalBarIcon iconButton />}
     </MenuItem>
   );
 

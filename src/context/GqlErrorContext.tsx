@@ -1,14 +1,8 @@
 import Snackbar from "@/components/Snackbar";
 import { createContext, useContext, useState, ReactNode } from "react";
 
-interface GqlError {
-  statusCode?: string;
-  message: string;
-  error?: string;
-}
-
 interface GqlErrorContextProps {
-  showGqlError: (error: ErrorResponse) => void;
+  showGqlError: (error: ServerErrorResponse) => void;
 }
 
 const GqlErrorContext = createContext<GqlErrorContextProps | undefined>(undefined);
@@ -20,8 +14,8 @@ interface GqlErrorProviderProps {
 export function GqlErrorProvider({ children }: GqlErrorProviderProps) {
   const [gqlError, setGqlError] = useState<GqlError | null>(null);
 
-  const showGqlError = (error: ErrorResponse) => {
-    const err = error.errors[0];
+  const showGqlError = (error: ServerErrorResponse) => {
+    const err = error.response.errors[0];
     setGqlError(err);
   };
 
@@ -45,8 +39,4 @@ export default function useGqlError(): GqlErrorContextProps {
   }
 
   return context;
-}
-
-export interface ErrorResponse {
-  errors: [GqlError];
 }

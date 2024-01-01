@@ -4,7 +4,7 @@ import { Menu, Sidebar, SubMenu } from "react-pro-sidebar";
 import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon, QuestionAnswerIcon, SettingIcon, UploadIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { CSSProperties, useState } from "react";
-import useNavigation from "@/navigation/use-navigation";
+import useNavigation from "@/navigation/useNavigation";
 import SidebarItem, { SidebarItemProps } from "./SidebarItem";
 import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
 
@@ -71,8 +71,8 @@ export default function LayoutSidebar() {
         icon: <PlayDoubleIcon />,
         label: t("Layout.Sidebar.manageSeries"),
         onClick: () => {
-          navigation.navigate("/series-management");
           setActiveItemLabel(t("Layout.Sidebar.manageSeries"));
+          navigation.navigate("/series");
         },
         isActive: activeItemLabel === t("Layout.Sidebar.manageSeries"),
       },
@@ -93,7 +93,7 @@ export default function LayoutSidebar() {
             label: t("Layout.Sidebar.uploadMovie"),
             onClick: () => {
               setActiveItemLabel(t("Layout.Sidebar.uploadMovie"));
-              navigation.navigate("/video-upload/movie");
+              navigation.navigate("/upload/movie");
             },
             isActive: activeItemLabel === t("Layout.Sidebar.uploadMovie"),
           },
@@ -102,7 +102,7 @@ export default function LayoutSidebar() {
             label: t("Layout.Sidebar.uploadTrailer"),
             onClick: () => {
               setActiveItemLabel(t("Layout.Sidebar.uploadTrailer"));
-              navigation.navigate("/video-upload/trailer");
+              navigation.navigate("/upload/trailer");
             },
             isActive: activeItemLabel === t("Layout.Sidebar.uploadTrailer"),
           },
@@ -111,7 +111,7 @@ export default function LayoutSidebar() {
             label: t("Layout.Sidebar.uploadEpisode"),
             onClick: () => {
               setActiveItemLabel(t("Layout.Sidebar.uploadEpisode"));
-              navigation.navigate("/video-upload/episode");
+              navigation.navigate("/upload/episode");
             },
             isActive: activeItemLabel === t("Layout.Sidebar.uploadEpisode"),
           },

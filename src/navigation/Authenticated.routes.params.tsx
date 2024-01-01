@@ -1,9 +1,9 @@
 import { FourOFourRoutesParams } from "@/feature/FourOFourScreen/FourOFourScreen.routes";
-import { QuickMediaManagementRoutesParams } from "@/feature/QuickMediaManagement/QuickMediaManagement.routes";
-import { SeriesManagementRoutesParams } from "@/feature/SeriesManagement/SeriesManagement.routes";
-import { VideoUploadRoutesParams } from "@/feature/VideoUpload/VideoUpload.routes";
+import { QuickMediaManagementRoutesParams } from "@/feature/Quick/QuickMediaManagement.routes";
+import { SeriesRoutesParams } from "@/feature/Series/Series.routes";
+import { VideoUploadRoutesParams } from "@/feature/Upload/VideoUpload.routes";
 import { HomeRoutesParams } from "feature/Home/Home.routes";
 
-type AuthenticatedRouteParams = HomeRoutesParams & VideoUploadRoutesParams & FourOFourRoutesParams & SeriesManagementRoutesParams & QuickMediaManagementRoutesParams;
+type AuthenticatedRouteParams = HomeRoutesParams & VideoUploadRoutesParams & FourOFourRoutesParams & SeriesRoutesParams & QuickMediaManagementRoutesParams;
 
 export default AuthenticatedRouteParams;

@@ -21,8 +21,6 @@
     "@mui/x-data-grid-pro": "^6.18.6",
     "@mui/x-date-pickers-pro": "^6.18.6",
     "@ngneat/falso": "^7.1.1",
-    "@tanstack/react-query": "^5.15.0",
-    "@tanstack/react-query-devtools": "^5.15.0",
     "@types/node": "^20.10.5",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
