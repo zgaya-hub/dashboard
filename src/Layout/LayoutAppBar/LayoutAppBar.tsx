@@ -2,11 +2,9 @@ import { SxProps } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Stack from "@mui/material/Stack";
-
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import useTheme from "@/theme/Theme.context";
 import useNavigation from "@/navigation/useNavigation";
-
 import { MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
 import UserAvatar from "./UserAvatar";
 import AppBar from "@/components/AppBar";

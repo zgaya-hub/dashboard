@@ -45,7 +45,7 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
       field: "series",
       headerName: "Series",
       width: 500,
-      renderCell: (params) => <MediaTableCard imageSrc={params.row.mediaImageUrl + "1"} title={params.row.title} description={params.row.plotSummary} />,
+      renderCell: (params) => <MediaTableCard imageSrc={params.row.mediaImageUrl + '1'} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
       field: "originCountry",

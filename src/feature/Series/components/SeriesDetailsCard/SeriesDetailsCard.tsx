@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Card, CardContent, CardMedia, Stack, SxProps, Typography } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { useTranslation } from "react-i18next";
@@ -27,41 +28,26 @@ export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) 
     return <SeriesDetailsCardSkeleton />;
   }
 
+  const renderEditableText = (label: string, value: string, icon?: ReactNode) => (
+    <Stack direction={"row"} justifyContent={"space-between"} p={1}>
+      <Typography variant="h6">{label}</Typography>
+      <Typography sx={{ position: "relative" }}>
+        {value} {icon}
+      </Typography>
+    </Stack>
+  );
+
   return (
-    <Card sx={cardStyle}>
+    <Card>
       <CardMedia sx={cardStyle} image={mediaImageData?.url} />
       <CardContent>
-        <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-          <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.title")}</Typography>
-          <Typography>{mediaBasicInfoData?.title}</Typography>
-        </Stack>
-        <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-          <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.releaseDate")}</Typography>
-          <Typography>{format(mediaBasicInfoData?.releaseDate ?? 0, DEFAULT_DATE_FORMAT)}</Typography>
-        </Stack>
-        <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-          <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.genre")}</Typography>
-          <Typography>{mediaAdditionalInfoData?.genre}</Typography>
-        </Stack>
-        <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-          <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.originCountry")}</Typography>
-          <Typography>{mediaAdditionalInfoData?.originCountry}</Typography>
-        </Stack>
-        <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-          <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.originalLanguage")}</Typography>
-          <Typography>{mediaAdditionalInfoData?.originalLanguage}</Typography>
-        </Stack>
-        <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-          <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.status")}</Typography>
-          <Typography>{mediaAdditionalInfoData?.status}</Typography>
-        </Stack>
-        <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-          <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.plotSummary")}</Typography>
-          <Typography>
-            {handleOnTruncateText(mediaBasicInfoData?.plotSummary ?? "", 20)}
-            <InfoIcon fontSize="inherit" tooltip={mediaBasicInfoData?.plotSummary} />
-          </Typography>
-        </Stack>
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"), mediaBasicInfoData?.title || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"), format(mediaBasicInfoData?.releaseDate || 0, DEFAULT_DATE_FORMAT))}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"), mediaAdditionalInfoData?.genre || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"), mediaAdditionalInfoData?.originCountry || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"), mediaAdditionalInfoData?.originalLanguage || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"), mediaAdditionalInfoData?.status || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"), handleOnTruncateText(mediaBasicInfoData?.plotSummary || "", 20), <InfoIcon fontSize="inherit" className="edit-icon" tooltip={mediaBasicInfoData?.plotSummary} />)}
       </CardContent>
     </Card>
   );

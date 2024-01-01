@@ -44,7 +44,7 @@ export default function LayoutSidebar() {
   const location = useLocation();
   const navigation = useNavigation();
   const [activeItem, setActiveItem] = useState<keyof AuthenticatedRouteParams>("/home");
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered] = useState(false);
 
   console.log(activeItem);
 
@@ -60,7 +60,7 @@ export default function LayoutSidebar() {
         onClick: () => {
           navigation.navigate("/home");
         },
-        isActive: activeItem === t("Layout.Sidebar.dashboard"),
+        isActive: activeItem.startsWith('/home'),
       },
       {
         icon: <AnalyticsIcon />,
@@ -80,10 +80,9 @@ export default function LayoutSidebar() {
         icon: <PlayDoubleIcon />,
         label: t("Layout.Sidebar.manageSeries"),
         onClick: () => {
-          alert(t("Layout.Sidebar.manageSeries"));
           navigation.navigate("/series");
         },
-        isActive: activeItem === t("Layout.Sidebar.manageSeries"),
+        isActive: activeItem.startsWith('/series'),
       },
       {
         icon: <LinkIcon />,
@@ -101,28 +100,25 @@ export default function LayoutSidebar() {
             icon: <UploadIcon />,
             label: t("Layout.Sidebar.uploadMovie"),
             onClick: () => {
-              alert(t("Layout.Sidebar.uploadMovie"));
               navigation.navigate("/upload/movie");
             },
-            isActive: activeItem === t("Layout.Sidebar.uploadMovie"),
+            isActive: activeItem.startsWith('/upload/movie'),
           },
           {
             icon: <UploadIcon />,
             label: t("Layout.Sidebar.uploadTrailer"),
             onClick: () => {
-              alert(t("Layout.Sidebar.uploadTrailer"));
               navigation.navigate("/upload/trailer");
             },
-            isActive: activeItem === t("Layout.Sidebar.uploadTrailer"),
+            isActive: activeItem.startsWith('/upload/trailer'),
           },
           {
             icon: <UploadIcon />,
             label: t("Layout.Sidebar.uploadEpisode"),
             onClick: () => {
-              alert(t("Layout.Sidebar.uploadEpisode"));
               navigation.navigate("/upload/episode");
             },
-            isActive: activeItem === t("Layout.Sidebar.uploadEpisode"),
+            isActive: activeItem.startsWith('/upload/episode'),
           },
         ],
       },
@@ -157,7 +153,7 @@ export default function LayoutSidebar() {
   const sideBarBackground = useThemeStyles((theme) => theme.palette.background.default);
 
   return (
-    <Sidebar collapsed={!isHovered} style={containerStyle} backgroundColor={sideBarBackground} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <Sidebar collapsed={!isHovered} style={containerStyle} backgroundColor={sideBarBackground}>
       <Stack justifyContent={"space-between"} height={"100vh"}>
         <Stack gap={1}>
           {!isHovered ? <CollapsedSidebarUserCard /> : <ExpandSidebarUserCard />}
