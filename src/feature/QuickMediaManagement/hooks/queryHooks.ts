@@ -1,81 +1,84 @@
-import { gqlRequest } from "@/api/gqlRequest";
-import useGqlError from "@/context/GqlErrorContext";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { CreateMediaImageInput, MediaImageIdOutput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams } from "./queryHooks.types";
+import { gql, useMutation, useQuery } from "@apollo/client";
 
 export function useCreateMediaImage() {
-  const { showGqlError } = useGqlError();
-  return useMutation({
-    mutationFn: async (input: CreateMediaImageInput) => {
-      const result = await gqlRequest<{ createMediaImage: MediaImageIdOutput }>(
-        `mutation($input: CreateMediaImageInput!) {
-          createMediaImage(CreateMediaImageInput: $input) {
-            ID
-          }
-        }`,
-        { input }
-      );
-      return result.createMediaImage;
-    },
-    onError: (error) => {
-      showGqlError(error.response);
-    },
-  });
+  const [apiCaller, status] = useMutation<{ createMediaImage: MediaImageIdOutput }, { input: CreateMediaImageInput }>(
+    gql`
+      mutation ($input: CreateMediaImageInput!) {
+        createMediaImage(CreateMediaImageInput: $input) {
+          ID
+        }
+      }
+    `
+  );
+  const mutateAsync = async (input: CreateMediaImageInput) => {
+    try {
+      const result = await apiCaller({ variables: { input } });
+      return result.data?.createMediaImage;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { mutateAsync, data: status.data?.createMediaImage, isPending: status.loading, ...status };
 }
 
 export function useCreateSeries() {
-  const { showGqlError } = useGqlError();
-  return useMutation({
-    mutationFn: async (input: CreateSeriesInput) => {
-      const result = await gqlRequest<{ createSeries: CommonSuccessOutput }>(
-        `mutation($input: CreateSeriesInput!) {
-          createSeries(CreateSeriesInput: $input) {
-            isSuccess
-          }
-        }`,
-        { input }
-      );
-      return result.createSeries;
-    },
-    onError: (error) => {
-      showGqlError(error.response);
-    },
-  });
+  const [apiCaller, status] = useMutation<{ createSeries: CommonSuccessOutput }, { input: CreateSeriesInput }>(
+    gql`
+      mutation ($input: CreateSeriesInput!) {
+        createSeries(CreateSeriesInput: $input) {
+          isSuccess
+        }
+      }
+    `
+  );
+  const mutateAsync = async (input: CreateSeriesInput) => {
+    try {
+      const result = await apiCaller({ variables: { input } });
+      return result.data?.createSeries;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { mutateAsync, data: status.data?.createSeries, isPending: status.loading, ...status };
 }
 
 export function useGetNextSeasonNumber(param: GetNextSeasonNumberParams) {
-  return useQuery({
-    queryKey: [param.SeriesId],
-    queryFn: async () => {
-      const result = await gqlRequest<{ getNextSeasonNumber: GetNextSeasonNumberOutput }>(
-        `query($param: GetNextSeasonNumberParams!) {
-          getNextSeasonNumber(GetNextSeasonNumberParams: $param) {
-            number
-          }
-        }`,
-        { param }
-      );
-      return result.getNextSeasonNumber;
-    },
-  });
+  const status = useQuery<{ getNextSeasonNumber: GetNextSeasonNumberOutput }>(
+    gql`
+      query ($param: GetNextSeasonNumberParams!) {
+        getNextSeasonNumber(GetNextSeasonNumberParams: $param) {
+          number
+        }
+      }
+    `,
+    {
+      variables: { param },
+    }
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getNextSeasonNumber };
 }
 
 export function useCreateSeason() {
-  const { showGqlError } = useGqlError();
-  return useMutation({
-    mutationFn: async (input: CreateSeasonInput) => {
-      const result = await gqlRequest<{ createSeason: CommonSuccessOutput }>(
-        `mutation($input: CreateSeasonInput!) {
-          createSeason(CreateSeasonInput: $input) {
-            isSuccess
-          }
-        }`,
-        { input }
-      );
-      return result.createSeason;
-    },
-    onError: (error) => {
-      showGqlError(error.response);
-    },
-  });
+  const [apiCaller, status] = useMutation<{ createSeason: CommonSuccessOutput }, { input: CreateSeasonInput }>(
+    gql`
+      mutation ($input: CreateSeasonInput!) {
+        createSeason(CreateSeasonInput: $input) {
+          isSuccess
+        }
+      }
+    `
+  );
+  const mutateAsync = async (input: CreateSeasonInput) => {
+    try {
+      const result = await apiCaller({ variables: { input } });
+      return result.data?.createSeason;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { mutateAsync, data: status.data?.createSeason, isPending: status.loading, ...status };
 }

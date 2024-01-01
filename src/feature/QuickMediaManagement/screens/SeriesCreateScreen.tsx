@@ -8,7 +8,7 @@ import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
-import { useCreateMediaImage, useCreateSeries } from "../hooks/queryHooks";
+import { useCreateMediaImage, useCreateSeries } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
 import { MediaImageVariantEnum } from "@/types/enum";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
@@ -38,7 +38,9 @@ export default function SeriesCreateScreen() {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: MediaImageVariantEnum.BACKDROP });
-    setCreateSeriesFormValue("mediaImageId", result.ID);
+    if (result) {
+      setCreateSeriesFormValue("mediaImageId", result.ID);
+    }
   };
 
   const handleOnCreateEpisode = async (input: SeriesCreateFormFieldInterface) => {
@@ -80,4 +82,3 @@ const validationSchema = yup.object().shape({
   releaseDate: yup.string().required("Release date is required"),
   mediaImageId: yup.string().required("Backdrop is required"),
 });
-

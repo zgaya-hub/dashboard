@@ -7,19 +7,19 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
 import { DoneIcon, SearchIcon, StreetViewIcon } from "@/components/icons";
 import { SearchInput } from "@/components/Form";
-import { GenriesEnum } from "@/types/enum";
+import { MediaGenriesEnum } from "@/types/enum";
 import { GenrePickerEmptyComponent } from "..";
 import { mediaGenreList } from "../constants";
 
 interface GenrePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: GenriesEnum) => void;
+  onOk: (countrName: MediaGenriesEnum) => void;
 }
 
 export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(GenriesEnum.ACTION);
+  const [value, setValue] = useState(MediaGenriesEnum.ACTION);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 

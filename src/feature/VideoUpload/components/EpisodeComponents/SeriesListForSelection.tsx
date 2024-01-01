@@ -1,7 +1,7 @@
 import { ImagePlusTitleCard, ImagePlusTitleCardSkeleton } from "@/components/Cards";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { List, ListItem, SxProps } from "@mui/material";
-import { GetManagerSeriesWithImageAndBasicInfoOutput } from "../../hooks/queryHooks.types";
+import { GetManagerSeriesWithImageAndBasicInfoOutput } from "../../hooks";
 
 interface SeriesListForSelectionProps {
   seriesList: GetManagerSeriesWithImageAndBasicInfoOutput[];

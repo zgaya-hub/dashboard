@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks/queryHooks";
-import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
+import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks";
+import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdOutput } from "../../hooks";
 import { useTranslation } from "react-i18next";
-import { AddIcon, CachedIcon, ChevronLeftIcon, UploadIcon } from "@/components/icons";
+import { AddIcon, CachedIcon, ChevronLeftIcon, ErrorIcon, UploadIcon } from "@/components/icons";
 import { Dialog } from "@/components/Dialog";
 import Button from "@/components/Button";
 import useNavigation from "@/navigation/useNavigation";
@@ -22,14 +22,16 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput[]>([]);
   const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfoOutput | null>(null);
   const { mutateAsync: getSeasonBySeriesIdMutateAsync, isPending: isSeasonFetching } = useGetSeasonBySeriesId();
-  const { isFetching: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries } = useGetManagerSeriesWithImageAndBasicInfo();
+  const { isLoading: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries, error: getManagerSeriesError } = useGetManagerSeriesWithImageAndBasicInfo();
 
   const handleOnFetchSeasons = async (series: GetManagerSeriesWithImageAndBasicInfoOutput) => {
     setSelectedSeries(series);
     const result = await getSeasonBySeriesIdMutateAsync({
       SeriesId: series.ID,
     });
-    setSelectedSeriesSeasons(result);
+    if (result) {
+      setSelectedSeriesSeasons(result);
+    }
   };
 
   const handleOnCreateSeries = () => {
@@ -66,6 +68,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   const renderSeasonListFooter = (
     <>
       <ChevronLeftIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.back")} tooltipPlacement="top" onClick={handleOnClearBothState} />
+      {getManagerSeriesError ? <ErrorIcon tooltip={getManagerSeriesError?.message} onClick={() => {}} color="error" /> : null}
       <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={handleOnCreateSeason} />
       <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isSeasonFetching} onClick={() => handleOnFetchSeasons(selectedSeries!)} />
       <Button disabled={!selectedSeasonId} onClick={handleOnNext}>
@@ -76,8 +79,9 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
 
   const renderSeriesListFooter = (
     <>
+      {getManagerSeriesError ? <ErrorIcon tooltip={getManagerSeriesError?.message} onClick={() => {}} color="error" /> : null}
       <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={handleOnCreateSeries} />
-      <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isManagerSeriesFetching} onClick={refetchManagerSeries} />
+      <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isManagerSeriesFetching} onClick={() => refetchManagerSeries()} />
       <Button variant="outlined" onClick={handleOnMovieNavigation} startIcon={<UploadIcon />}>
         {t("Feature.VideoUpload.SelectSeriesAndSeasonModal.movie")}
       </Button>

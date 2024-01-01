@@ -10,7 +10,9 @@ export default function SignInInputScreen() {
 
   const handleOnSignIn = async (input: SignInFormFieldInterface) => {
     const result = await managerLoginMutateAsync({ Email: input.email, Password: input.password });
-    handleOnAuthenticate(result.token);
+    if (result) {
+      handleOnAuthenticate(result?.token);
+    }
   };
 
   return (

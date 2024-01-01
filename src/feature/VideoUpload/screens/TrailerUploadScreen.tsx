@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Page from "@/components/Page";
-import { MovierEnum } from "@/types/enum";
+import { MovierMediaEnum } from "@/types/enum";
 import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
-import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
+import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
 import Button from "@/components/Button";
 import TrailerUploadModal from "../components/TrailerUploadModal";
 
@@ -20,7 +20,7 @@ export default function TrailerUploadScreen() {
       Mime: trailerMetadata.mimeType,
       RunTime: trailerMetadata.videoDuration,
       SizeInKb: trailerMetadata.fileSizeKB,
-      MediaType: MovierEnum.TRAILER,
+      MediaType: MovierMediaEnum.TRAILER,
     });
 
     const movieBlob = await convertVideoInBlob(trailer);

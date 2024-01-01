@@ -2,7 +2,7 @@ import { AvatarTitleAndDescCard, AvatarTitleAndDescCardSkeleton } from "@/compon
 import { RadioButtonCheckedIcon, RadioButtonUncheckedIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { List, ListItem, SxProps } from "@mui/material";
-import { GetSeasonBySeriesIdOutput } from "../../hooks/queryHooks.types";
+import { GetSeasonBySeriesIdOutput } from "../../hooks";
 
 interface SeasonListForSelectionProps {
   seasons: GetSeasonBySeriesIdOutput[];

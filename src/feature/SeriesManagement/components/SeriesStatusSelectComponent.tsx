@@ -3,7 +3,7 @@ import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SeriesCreateFormFieldInterface } from "../types";
 import { values } from "lodash";
-import { StatusEnum } from "@/types/enum";
+import { MediaStatusEnum } from "@/types/enum";
 import { SelectInput } from "@/components/Form";
 
 interface SeriesStatusSelectComponentProps {
@@ -19,7 +19,7 @@ export default function SeriesStatusSelectComponent({ setCreateSeriesFormValue, 
   };
 
   return (
-    <SelectInput label={t("Feature.SeriesManagement.SeriesAdditionalInformationForm.selectStatus")} fullWidth value={watchCreateSeriesFormValue("status")} onChange={handleChange}>
+    <SelectInput label={t("Feature.SeriesManagement.SeriesAdditionalInfoForm.selectStatus")} fullWidth value={watchCreateSeriesFormValue("status")} onChange={handleChange}>
       {seriesStatusesList.map((seriesStatus) => {
         return (
           <MenuItem value={seriesStatus}>
@@ -31,4 +31,4 @@ export default function SeriesStatusSelectComponent({ setCreateSeriesFormValue, 
   );
 }
 
-const seriesStatusesList = values(StatusEnum);
+const seriesStatusesList = values(MediaStatusEnum);

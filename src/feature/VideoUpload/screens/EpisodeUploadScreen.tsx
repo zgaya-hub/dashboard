@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
+import { CreateEpisodeFormFieldType, EpisodeUploadModal, EpisodeUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
+import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
+import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractThumbnailFromVideo, extractVideoMetadata } from "metalyzer";
+import { MediaImageVariantEnum, MovierMediaEnum } from "@/types/enum";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
-import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks/queryHooks";
-import { extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata, extractThumbnailFromVideo, convertVideoInBlob } from "metalyzer";
-import { MediaImageVariantEnum, MovierEnum } from "@/types/enum";
-import { CreateEpisodeFormFieldType, EpisodeUploadModal, EpisodeUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
 
 export default function EpisodeUploadScreen() {
   const episodeUploadModalRef = useRef<EpisodeUploadModalRef>(null);
@@ -23,14 +23,14 @@ export default function EpisodeUploadScreen() {
     const result = await getUploadEpisodeUrlMutateAsync({
       Height: episodeMetadata.videoHeight!,
       Width: episodeMetadata.videoWidth!,
-      MediaType: MovierEnum.EPISODE,
+      MediaType: MovierMediaEnum.EPISODE,
       Mime: episodeMetadata.mimeType,
       RunTime: episodeMetadata.videoDuration,
       SizeInKb: episodeMetadata.fileSizeKB,
     });
     episodeUploadModalRef.current?.onNext();
     handleOnThumbnailSelect(await extractThumbnailFromVideo(episode));
-    handleOnUploadOnAwsS3(episode, result.getUploadVideoSignedUrl.signedUrl);
+    handleOnUploadOnAwsS3(episode, result?.signedUrl);
   };
 
   const handleOnCreateEpisode = async (input: CreateEpisodeFormFieldType) => {
@@ -38,8 +38,8 @@ export default function EpisodeUploadScreen() {
       Number: input.number,
       MediaImageId: mediaImageData?.ID,
       SeasonId: selectedSeasonId,
-      SignedUrlKeyId: getUploadSignedUrlData?.getUploadVideoSignedUrl.signedUrlKeyId,
-      VideoId: getUploadSignedUrlData?.getUploadVideoSignedUrl.videoId,
+      SignedUrlKeyId: getUploadSignedUrlData?.signedUrlKeyId,
+      VideoId: getUploadSignedUrlData?.videoId,
       MediaBasicInfo: {
         PlotSummary: input.plotSummary,
         Title: input.title,

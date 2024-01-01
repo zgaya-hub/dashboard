@@ -14,6 +14,13 @@ type MediaBasicInfoEntityType = {
   title: string;
 } & EntityBaseType;
 
+type MediaAdditionalInfoEntityType = {
+  originCountry: MediaCountriesEnum;
+  originalLanguage: MediaLanguagiesEnum;
+  genre: MediaGenriesEnum;
+  status: MediaStatusEnum;
+} & EntityBaseType;
+
 type SeasonEntityType = {
   number: number;
 } & EntityBaseType;

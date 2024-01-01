@@ -1,7 +1,7 @@
-import { MediaImageVariantEnum, MovierEnum } from "@/types/enum";
+import { MediaImageVariantEnum, MovierMediaEnum } from "@/types/enum";
 
 export type GetUploadVideoSignedUrlInput = {
-  MediaType: MovierEnum;
+  MediaType: MovierMediaEnum;
   Width: number;
   Height: number;
   RunTime: number;

@@ -11,7 +11,7 @@ import { SaveIcon } from "@/components/icons";
 import * as yup from "yup";
 import { useEffect, useState } from "react";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../../constants";
-import { useGetNextEpisodeNumber } from "../../hooks/queryHooks";
+import { useGetNextEpisodeNumber } from "../../hooks";
 
 export interface CreateEpisodeFormFieldType {
   title: string;

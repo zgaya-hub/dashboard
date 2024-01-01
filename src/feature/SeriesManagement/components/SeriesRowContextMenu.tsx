@@ -3,7 +3,7 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Divider, ListItemText, PopoverPosition, SxProps } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useDeleteSeriesById } from "../hooks/queryHooks";
+import { useDeleteSeriesById } from "../hooks";
 import useNavigation from "@/navigation/useNavigation";
 import { useTranslation } from "react-i18next";
 

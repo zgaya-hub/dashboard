@@ -49,10 +49,12 @@ import { default as MuiAttachFileIcon } from "@mui/icons-material/AttachFile";
 import { default as MuiDoneIcon } from "@mui/icons-material/Done";
 import { default as MuiAddCircleOutlineIcon } from "@mui/icons-material/AddCircleOutline";
 import { default as MuiDetails } from "@mui/icons-material/Details";
+import { default as MuiInfoOutlinedIcon } from "@mui/icons-material/InfoOutlined";
 import Tooltip from "../Tooltip";
 
 interface IconWrapperProps extends SvgIconProps {
   onClick?: (event: MouseEvent) => void;
+  iconButton?: boolean;
   disableRipple?: boolean;
   tooltip?: string;
   tooltipPlacement?: TooltipProps["placement"];
@@ -63,23 +65,25 @@ interface IconWrapperProps extends SvgIconProps {
 }
 
 const withIconWrapper = (WrappedIcon: React.ComponentType<IconWrapperProps>) => {
-  return ({ onClick, disableRipple, isListIcon, tooltip, tooltipPlacement, iconButtonProps, loading, disabled, ...restProps }: IconWrapperProps) => {
+  return ({ onClick, disableRipple, isListIcon, tooltip, tooltipPlacement, iconButton, iconButtonProps, loading, disabled, ...restProps }: IconWrapperProps) => {
     const renderIcon = () => <WrappedIcon {...restProps} />;
 
     if (isListIcon) {
       return <ListItemIcon>{renderIcon()}</ListItemIcon>;
     }
-    if (onClick) {
+    if (onClick || iconButton) {
       return (
-        <Tooltip title={tooltip} placement={tooltipPlacement}>
-          <IconButton disableRipple={disableRipple} disabled={loading || disabled} onClick={onClick} color="inherit" {...iconButtonProps}>
-            {loading ? <CircularProgress size={25} /> : renderIcon()}
-          </IconButton>
-        </Tooltip>
+        <IconButton disableRipple={disableRipple} disabled={loading || disabled} onClick={onClick} color="inherit" {...iconButtonProps}>
+          {loading ? <CircularProgress size={25} /> : renderIcon()}
+        </IconButton>
       );
     }
 
-    return renderIcon();
+    return (
+      <Tooltip title={tooltip} placement={tooltipPlacement}>
+        {renderIcon()}
+      </Tooltip>
+    );
   };
 };
 
@@ -132,3 +136,4 @@ export const PreviewIcon = withIconWrapper(MuiPreviewIcon);
 export const MultiCheckIcon = withIconWrapper(MuiLibraryAddCheckIcon);
 export const AddCircleIcon = withIconWrapper(MuiAddCircleOutlineIcon);
 export const DetailsIcon = withIconWrapper(MuiDetails);
+export const InfoIcon = withIconWrapper(MuiInfoOutlinedIcon);

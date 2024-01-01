@@ -38,8 +38,6 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
   const [activeStep, setActiveStep] = useState<number>(0);
 
   const isNextButtonDisabled = useMemo(() => {
-    console.log(isVideoUploaded, activeStep === 0);
-
     if (isVideoUploaded && activeStep === 0) {
       return false;
     }
@@ -91,11 +89,11 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
       step: <VideoUploadComponent onVideoSelect={handleOnEpisodeSelect} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />,
     },
     {
-      label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInformation"),
+      label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInfo"),
       step: <EpisodeCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} seasonId={seasonId} />,
     },
     {
-      label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInformation"),
+      label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInfo"),
       step: <EpisodeCreateAdditionalInfoStep />,
     },
   ];
