@@ -1,6 +1,6 @@
-import { useState, MouseEvent, Fragment, useCallback } from "react";
+import { useState, MouseEvent, Fragment } from "react";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
-import { SeriesRowContextMenu } from "../components";
+import { SeriesRowContextMenu } from ".";
 import { TableSeriesInterface } from "../types";
 import { format } from "date-fns";
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";

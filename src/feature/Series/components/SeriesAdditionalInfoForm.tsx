@@ -49,15 +49,15 @@ export default function SeriesAdditionalInfoForm({ setCreateSeriesFormValue, wat
 
   return (
     <Elevator padding={4} gap={2}>
-      <Typography variant="h5">{t("Feature.SeriesManagement.SeriesAdditionalInfoForm.addAdditionalInfo")}</Typography>
+      <Typography variant="h5">{t("Feature.Series.SeriesAdditionalInfoForm.addAdditionalInfo")}</Typography>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInfoForm.originCountry")} value={watchCreateSeriesFormValue("originCountry")} onClick={handleOnToggleCountryModalVisible} fullWidth />
+        <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.Series.SeriesAdditionalInfoForm.originCountry")} value={watchCreateSeriesFormValue("originCountry")} onClick={handleOnToggleCountryModalVisible} fullWidth />
         <CountryPickerModal isOpen={isCountryModalVisible} onClose={handleOnToggleCountryModalVisible} onOk={handleOnSelectCountry} />
-        <ModalSelectInput isModalVisible={isLanguageModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInfoForm.originalLanguage")} value={watchCreateSeriesFormValue("originalLanguage")} onClick={handleOnToggleLanguageModalVisible} fullWidth />
+        <ModalSelectInput isModalVisible={isLanguageModalVisible} label={t("Feature.Series.SeriesAdditionalInfoForm.originalLanguage")} value={watchCreateSeriesFormValue("originalLanguage")} onClick={handleOnToggleLanguageModalVisible} fullWidth />
         <LanguagePickerModal isOpen={isLanguageModalVisible} onClose={handleOnToggleLanguageModalVisible} onOk={handleOnSelectLanguage} />
       </Stack>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-        <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.SeriesManagement.SeriesAdditionalInfoForm.pickAGenre")} value={watchCreateSeriesFormValue("genre")} onClick={handleOnToggleGenreModalVisible} fullWidth />
+        <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.Series.SeriesAdditionalInfoForm.pickAGenre")} value={watchCreateSeriesFormValue("genre")} onClick={handleOnToggleGenreModalVisible} fullWidth />
         <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModalVisible} onOk={handleOnSelectGenre} />
         <SeriesStatusSelectComponent setCreateSeriesFormValue={setCreateSeriesFormValue} watchCreateSeriesFormValue={watchCreateSeriesFormValue} />
       </Stack>

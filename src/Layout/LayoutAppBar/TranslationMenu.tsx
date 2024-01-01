@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { Divider, ListItemText, Menu, MenuItem, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { ClearIcon, SearchIcon, SignalBarIcon, TranslateIcon } from "@/components/icons";
+import { SearchIcon, SignalBarIcon, TranslateIcon } from "@/components/icons";
 import { MenuHeader } from "@/components/Menu";
 import { SearchInput } from "@/components/Form";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";

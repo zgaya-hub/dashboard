@@ -31,7 +31,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnDetails = () => {
-    navigation.navigate(`/series-management/series-details`, { seriesId });
+    navigation.navigate(`/series/series-details`, { seriesId });
   };
 
   const handleOnCreateSeason = () => {
@@ -46,34 +46,34 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
     <Menu id="series-context-menu" anchorReference="anchorPosition" anchorPosition={anchorPosition} onClose={onClose} open={isOpen} onClick={onClose}>
       <MenuItem sx={menuItemStyle}>
         <OpenTabIcon isListIcon fontSize="small" />
-        <ListItemText>{t("Feature.SeriesManagement.SeriesRowContextMenu.preview")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.preview")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={onRefresh} sx={menuItemStyle}>
         <RefreshIcon isListIcon fontSize="small" />
-        <ListItemText>{t("Feature.SeriesManagement.SeriesRowContextMenu.refresh")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.refresh")}</ListItemText>
       </MenuItem>
       <MenuItem sx={menuItemStyle} onClick={handleOnCreateSeason}>
         <PlaySquareIcon isListIcon fontSize="small" />
-        <ListItemText>{t("Feature.SeriesManagement.SeriesRowContextMenu.createSeason")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.createSeason")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={onSelect} sx={menuItemStyle}>
         <CheckBoxIcon isListIcon fontSize="small" />
-        <ListItemText>{t("Feature.SeriesManagement.SeriesRowContextMenu.select")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.select")}</ListItemText>
       </MenuItem>
       <MenuItem onClick={handleOnEdit} sx={menuItemStyle}>
         <EditIcon isListIcon fontSize="small" color="primary" />
-        <ListItemText>{t("Feature.SeriesManagement.SeriesRowContextMenu.edit")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.edit")}</ListItemText>
       </MenuItem>
       <MenuItem onClick={handleOnDeleteSeries} sx={menuItemStyle}>
         <DeleteIcon isListIcon fontSize="small" color="error" />
-        <ListItemText>{t("Feature.SeriesManagement.SeriesRowContextMenu.delete")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.delete")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={handleOnDetails} sx={menuItemStyle}>
         <DetailsIcon isListIcon fontSize="small" />
-        <ListItemText>{t("Feature.SeriesManagement.SeriesRowContextMenu.details")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.details")}</ListItemText>
       </MenuItem>
     </Menu>
   );

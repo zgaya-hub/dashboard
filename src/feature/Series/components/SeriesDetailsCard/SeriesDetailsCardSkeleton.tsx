@@ -20,31 +20,31 @@ export default function SeriesDetailsCardSkeleton() {
           <CardMedia />
           <CardContent>
             <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-              <Typography variant="h6">{t("Feature.SeriesManagement.SeriesDetailsCard.title")}</Typography>
+              <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.title")}</Typography>
               <Skeleton width={textSkeletonWidth}></Skeleton>
             </Stack>
             <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-              <Typography variant="h6">{t("Feature.SeriesManagement.SeriesDetailsCard.releaseDate")}</Typography>
+              <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.releaseDate")}</Typography>
               <Skeleton width={textSkeletonWidth}></Skeleton>
             </Stack>
             <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-              <Typography variant="h6">{t("Feature.SeriesManagement.SeriesDetailsCard.genre")}</Typography>
+              <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.genre")}</Typography>
               <Skeleton width={textSkeletonWidth}></Skeleton>
             </Stack>
             <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-              <Typography variant="h6">{t("Feature.SeriesManagement.SeriesDetailsCard.originCountry")}</Typography>
+              <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.originCountry")}</Typography>
               <Skeleton width={textSkeletonWidth}></Skeleton>
             </Stack>
             <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-              <Typography variant="h6">{t("Feature.SeriesManagement.SeriesDetailsCard.originalLanguage")}</Typography>
+              <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.originalLanguage")}</Typography>
               <Skeleton width={textSkeletonWidth}></Skeleton>
             </Stack>
             <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-              <Typography variant="h6">{t("Feature.SeriesManagement.SeriesDetailsCard.status")}</Typography>
+              <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.status")}</Typography>
               <Skeleton width={textSkeletonWidth}></Skeleton>
             </Stack>
             <Stack direction={"row"} justifyContent={"space-between"} p={1}>
-              <Typography variant="h6">{t("Feature.SeriesManagement.SeriesDetailsCard.plotSummary")}</Typography>
+              <Typography variant="h6">{t("Feature.Series.SeriesDetailsCard.plotSummary")}</Typography>
               <Skeleton width={textSkeletonWidth}></Skeleton>
             </Stack>
           </CardContent>

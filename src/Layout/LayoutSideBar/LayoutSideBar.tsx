@@ -71,7 +71,6 @@ export default function LayoutSidebar() {
         icon: <PlayDoubleIcon />,
         label: t("Layout.Sidebar.manageSeries"),
         onClick: () => {
-          navigation.navigate("/series-management");
           setActiveItemLabel(t("Layout.Sidebar.manageSeries"));
         },
         isActive: activeItemLabel === t("Layout.Sidebar.manageSeries"),
@@ -93,7 +92,7 @@ export default function LayoutSidebar() {
             label: t("Layout.Sidebar.uploadMovie"),
             onClick: () => {
               setActiveItemLabel(t("Layout.Sidebar.uploadMovie"));
-              navigation.navigate("/video-upload/movie");
+              navigation.navigate("/upload/movie");
             },
             isActive: activeItemLabel === t("Layout.Sidebar.uploadMovie"),
           },
@@ -102,7 +101,7 @@ export default function LayoutSidebar() {
             label: t("Layout.Sidebar.uploadTrailer"),
             onClick: () => {
               setActiveItemLabel(t("Layout.Sidebar.uploadTrailer"));
-              navigation.navigate("/video-upload/trailer");
+              navigation.navigate("/upload/trailer");
             },
             isActive: activeItemLabel === t("Layout.Sidebar.uploadTrailer"),
           },
@@ -111,7 +110,7 @@ export default function LayoutSidebar() {
             label: t("Layout.Sidebar.uploadEpisode"),
             onClick: () => {
               setActiveItemLabel(t("Layout.Sidebar.uploadEpisode"));
-              navigation.navigate("/video-upload/episode");
+              navigation.navigate("/upload/episode");
             },
             isActive: activeItemLabel === t("Layout.Sidebar.uploadEpisode"),
           },

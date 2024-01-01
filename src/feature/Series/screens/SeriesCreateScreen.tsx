@@ -77,11 +77,11 @@ export default function SeriesCreateScreen() {
 
   const pageHeader = (
     <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.SeriesManagement.SeriesCreateScreen.createASeries")}</Typography>
+      <Typography variant="h5">{t("Feature.Series.SeriesCreateScreen.createASeries")}</Typography>
       <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.SeriesManagement.SeriesCreateScreen.back")}</Button>
+        <Button variant="text">{t("Feature.Series.SeriesCreateScreen.back")}</Button>
         <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.SeriesManagement.SeriesCreateScreen.save")}
+          {t("Feature.Series.SeriesCreateScreen.save")}
         </Button>
       </Stack>
     </Elevator>

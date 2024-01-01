@@ -53,11 +53,11 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
   }));
 
   const handleOnMovie = () => {
-    navigate.navigate("/video-upload/movie");
+    navigate.navigate("/upload/movie");
   };
 
   const handleOnTrailer = () => {
-    navigate.navigate("/video-upload/trailer");
+    navigate.navigate("/upload/trailer");
   };
 
   const handleOnNext = () => {

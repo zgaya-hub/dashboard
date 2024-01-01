@@ -35,11 +35,11 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   };
 
   const handleOnCreateSeries = () => {
-    window.open("/quick-media-management/series-create", "_blank", "width=500,height=500");
+    window.open("/quick/series-create", "_blank", "width=500,height=500");
   };
 
   const handleOnCreateSeason = () => {
-    window.open(`/quick-media-management/season-create/${selectedSeries?.ID}`, "_blank", "width=500,height=600");
+    window.open(`/quick/season-create/${selectedSeries?.ID}`, "_blank", "width=500,height=600");
   };
 
   const handleOnClearBothState = () => {
@@ -48,11 +48,11 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   };
 
   const handleOnMovieNavigation = () => {
-    navigate.navigate("/video-upload/movie");
+    navigate.navigate("/upload/movie");
   };
 
   const handleOnTrailerNavigation = () => {
-    navigate.navigate("/video-upload/trailer");
+    navigate.navigate("/upload/trailer");
   };
 
   const handleOnNext = () => {

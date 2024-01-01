@@ -3,19 +3,19 @@ import { MovieUploadScreen, TrailerUploadScreen, EpisodeUploadScreen } from "./s
 import UploadScreen from "./screens/UploadScreen";
 
 export type VideoUploadRoutesParams = {
-  "/video-upload/episode": undefined;
-  "/video-upload/movie": undefined;
-  "/video-upload/trailer": undefined;
-  "/video-upload": undefined;
+  "/upload/episode": undefined;
+  "/upload/movie": undefined;
+  "/upload/trailer": undefined;
+  "/upload": undefined;
 };
 
 const VideoUploadRoutes = () => {
   return (
     <Routes>
       <Route path="" Component={UploadScreen} />
-      <Route path="movie" Component={MovieUploadScreen} />
-      <Route path="trailer" Component={TrailerUploadScreen} />
-      <Route path="episode" Component={EpisodeUploadScreen} />
+      <Route path="/movie" Component={MovieUploadScreen} />
+      <Route path="/trailer" Component={TrailerUploadScreen} />
+      <Route path="/episode" Component={EpisodeUploadScreen} />
     </Routes>
   );
 };

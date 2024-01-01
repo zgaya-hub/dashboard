@@ -8,7 +8,7 @@ import useNavigation from "@/navigation/useNavigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
 
-interface TrailerUploadModalProps {
+interface MovieUploadModalProps {
   isVisible: boolean;
   onClose: () => void;
   onVideoDrop: (video: File) => void;
@@ -16,18 +16,18 @@ interface TrailerUploadModalProps {
   onFeedback: () => void;
 }
 
-export default function TrailerUploadModal({ isVisible, onClose, onFeedback, onVideoDrop, isLoading }: TrailerUploadModalProps) {
+export default function MovieUploadModal({ isVisible, onClose, onFeedback, onVideoDrop, isLoading }: MovieUploadModalProps) {
   const { t } = useTranslation();
   const navigate = useNavigation();
   const { theme } = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleOnEpisode = () => {
-    navigate.navigate("/video-upload/episode");
+  const handleOnTrailer = () => {
+    navigate.navigate("/upload/trailer");
   };
 
-  const handleOnMovie = () => {
-    navigate.navigate("/video-upload/movie");
+  const handleOnEpisode = () => {
+    navigate.navigate("/upload/episode");
   };
 
   const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
@@ -47,18 +47,18 @@ export default function TrailerUploadModal({ isVisible, onClose, onFeedback, onV
       <Button onClick={onFeedback} variant="text">
         <FeedbackIcon />
       </Button>
-      <Button onClick={handleOnEpisode} startIcon={<UploadIcon />}>
-        {t("Feature.VideoUpload.TrailerUploadModal.episode")}
+      <Button onClick={handleOnTrailer} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.MovieUploadModal.trailer")}
       </Button>
-      <Button onClick={handleOnMovie} startIcon={<UploadIcon />}>
-        {t("Feature.VideoUpload.TrailerUploadModal.movie")}
+      <Button onClick={handleOnEpisode} startIcon={<UploadIcon />}>
+        {t("Feature.VideoUpload.MovieUploadModal.episode")}
       </Button>
     </>
   );
 
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.TrailerUploadModal.headerText")} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
-      <VideoUploadComponent onVideoSelect={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.TrailerUploadModal.message")} title={t("Feature.VideoUpload.TrailerUploadModal.title")} />
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.MovieUploadModal.headerText")} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
+      <VideoUploadComponent onVideoSelect={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />
     </Dialog>
   );
 }

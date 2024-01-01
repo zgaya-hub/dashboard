@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Page from "@/components/Page";
-import { Card, Hidden, Menu, MenuItem, Stack, Switch, SxProps, Typography } from "@mui/material";
+import { Card, Hidden, Menu, MenuItem, Stack, SxProps, Typography } from "@mui/material";
 import Button from "@/components/Button";
 import useNavigation from "@/navigation/useNavigation";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
@@ -9,11 +9,10 @@ import { DEFAULT_PAGINATION_DATE } from "../constants";
 import { GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks";
 import { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SaveIcon, SearchIcon } from "@/components/icons";
-import Tooltip from "@/components/Tooltip";
 import { SeriesTable } from "../components";
 import { TableSeriesInterface } from "../types";
 
-export default function SeriesManagementScreen() {
+export default function SeriesTableScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
@@ -30,7 +29,7 @@ export default function SeriesManagementScreen() {
   }, [paginationModel]);
 
   const handleOnCreateSeriesClick = () => {
-    navigation.navigate("/series-management/series-create");
+    navigation.navigate("/seriescreate");
   };
 
   const handleOnSelect = (selectedRowId: string) => {
@@ -68,16 +67,16 @@ export default function SeriesManagementScreen() {
   const actionMenu = (
     <Menu open={!!actionMenuEnchorEl} onClose={() => setActionMenuEnchorEl(null)} anchorEl={actionMenuEnchorEl} onClick={() => setActionMenuEnchorEl(null)}>
       <MenuItem onClick={() => managerSeriesForTableRefetch()}>
-        <CachedIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.refetch")} />
+        <CachedIcon tooltip={t("Feature.Series.SeriesScreen.refetch")} />
       </MenuItem>
       <MenuItem onClick={handleOnDeleteMultipleSeries}>
-        <SearchIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.search")} />
+        <SearchIcon tooltip={t("Feature.Series.SeriesScreen.search")} />
       </MenuItem>
       <MenuItem disabled={!rowSelectionModel.length} onClick={handleOnDeleteMultipleSeries}>
-        <DeleteIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.deleteSelected")} color="error" loading={isDeleteMultipleSeriesLoading} />
+        <DeleteIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" loading={isDeleteMultipleSeriesLoading} />
       </MenuItem>
       <MenuItem disabled={!rowSelectionModel.length} onClick={() => {}}>
-        <EditIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.editSelected")} color="primary" />
+        <EditIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" />
       </MenuItem>
     </Menu>
   );
@@ -86,19 +85,19 @@ export default function SeriesManagementScreen() {
     <Page>
       <Card sx={cardStyle}>
         <Stack direction={"row"} mb={2} justifyContent={"space-between"} alignItems={"center"}>
-          <Typography variant="h5">{t("Feature.SeriesManagement.SeriesManagementScreen.manageSeries")}</Typography>
+          <Typography variant="h5">{t("Feature.Series.SeriesScreen.manageSeries")}</Typography>
           <Stack gap={1} direction={"row"} alignItems={"center"}>
             <Hidden mdDown>
-              <CachedIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.refetch")} onClick={() => managerSeriesForTableRefetch()} />
-              <SearchIcon tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.search")} onClick={handleOnDeleteMultipleSeries} />
-              <DeleteIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.deleteSelected")} color="error" onClick={handleOnDeleteMultipleSeries} loading={isDeleteMultipleSeriesLoading} />
-              <EditIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.editSelected")} color="primary" onClick={() => {}} />
+              <CachedIcon tooltip={t("Feature.Series.SeriesScreen.refetch")} onClick={() => managerSeriesForTableRefetch()} />
+              <SearchIcon tooltip={t("Feature.Series.SeriesScreen.search")} onClick={handleOnDeleteMultipleSeries} />
+              <DeleteIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" onClick={handleOnDeleteMultipleSeries} loading={isDeleteMultipleSeriesLoading} />
+              <EditIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" onClick={() => {}} />
             </Hidden>
             <Hidden smDown>
-              <Button onClick={handleOnCreateSeriesClick}>{t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")}</Button>
+              <Button onClick={handleOnCreateSeriesClick}>{t("Feature.Series.SeriesScreen.createSeries")}</Button>
             </Hidden>
             <Hidden smUp>
-              <AddIcon iconButtonProps={{ color: "primary" }} onClick={handleOnCreateSeriesClick} tooltip={t("Feature.SeriesManagement.SeriesManagementScreen.createSeries")} />
+              <AddIcon iconButtonProps={{ color: "primary" }} onClick={handleOnCreateSeriesClick} tooltip={t("Feature.Series.SeriesScreen.createSeries")} />
             </Hidden>
             <Hidden mdUp>
               <MoreVertIcon onClick={(e) => setActionMenuEnchorEl(e.currentTarget)} />
@@ -120,9 +119,9 @@ export default function SeriesManagementScreen() {
           isMutateLoading={isUpdateSeriesLoading || isDeleteMultipleSeriesLoading}
         />
         <Stack direction={"row"} justifyContent={"end"} mt={2} gap={1}>
-          <Button variant="text">{t("Feature.SeriesManagement.SeriesManagementScreen.cancel")}</Button>
+          <Button variant="text">{t("Feature.Series.SeriesScreen.cancel")}</Button>
           <Button endIcon={<SaveIcon />} variant="contained">
-            {t("Feature.SeriesManagement.SeriesManagementScreen.save")}
+            {t("Feature.Series.SeriesScreen.save")}
           </Button>
         </Stack>
       </Card>

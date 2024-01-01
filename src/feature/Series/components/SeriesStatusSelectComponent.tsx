@@ -19,7 +19,7 @@ export default function SeriesStatusSelectComponent({ setCreateSeriesFormValue, 
   };
 
   return (
-    <SelectInput label={t("Feature.SeriesManagement.SeriesAdditionalInfoForm.selectStatus")} fullWidth value={watchCreateSeriesFormValue("status")} onChange={handleChange}>
+    <SelectInput label={t("Feature.Series.SeriesAdditionalInfoForm.selectStatus")} fullWidth value={watchCreateSeriesFormValue("status")} onChange={handleChange}>
       {seriesStatusesList.map((seriesStatus) => {
         return (
           <MenuItem value={seriesStatus}>

@@ -17,7 +17,7 @@ export default function LayoutAppBar() {
   const { toggleTheme } = useTheme();
 
   const handleOnClickUpload = () => {
-    navigation.navigate("/video-upload/movie");
+    navigation.navigate("/upload/movie");
   };
 
   const appBarStyle: SxProps = {

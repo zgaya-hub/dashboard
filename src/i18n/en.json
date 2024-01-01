@@ -101,7 +101,7 @@
         "back": "Back"
       }
     },
-    "SeriesManagement": {
+    "Series": {
       "SeriesRowContextMenu": {
         "preview": "Preview",
         "refresh": "Refresh",
@@ -111,7 +111,7 @@
         "delete": "Delete",
         "details": "Details"
       },
-      "SeriesManagementScreen": {
+      "SeriesScreen": {
         "createSeries": "Create series",
         "createSeason": "Create season",
         "uploadEpisode": "Upload episode",

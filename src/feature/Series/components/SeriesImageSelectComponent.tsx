@@ -34,7 +34,7 @@ export default function SeriesImageSelectComponent({ onImageDrop, isLoading, err
     <Card {...getRootProps()} sx={containerStyle}>
       <Stack alignItems={"center"} justifyContent={"center"} height={"100%"} sx={dropzoneStyle} gap={2} width={"100%"}>
         <UploadIcon fontSize="medium" />
-        <Typography variant="body1">{t("Feature.SeriesManagement.SeriesImageSelectComponent.title")}</Typography>
+        <Typography variant="body1">{t("Feature.Series.SeriesImageSelectComponent.title")}</Typography>
         {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
       </Stack>
       {isLoading ? <LinearProgress /> : null}

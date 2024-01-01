@@ -2,9 +2,7 @@ import { ReactNode } from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { CardHeader, SxProps, Box, CardContent, Typography } from "@mui/material";
-import Avatar from "@/components/Avatar";
-import { MoreVertIcon } from "@/components/icons";
+import { SxProps, CardContent, Typography } from "@mui/material";
 import { handleOnTruncateText } from "@/utils";
 
 interface HorizontalCardProps {

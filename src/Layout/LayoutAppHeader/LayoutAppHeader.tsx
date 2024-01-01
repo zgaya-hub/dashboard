@@ -1,5 +1,4 @@
 import { SxProps } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import { Fragment } from "react";
 import AppBar from "@/components/AppBar";
@@ -25,7 +24,7 @@ export default function LayoutHeader() {
     <Fragment>
       <AppBar sx={appBarStyle}>
         <Toolbar sx={toolbarStyle}>
-          <Button onClick={() => navigation.navigate("/video-upload/movie")} startIcon={<UploadIcon />}>
+          <Button onClick={() => navigation.navigate("/upload/movie")} startIcon={<UploadIcon />}>
             {t("AuthenticatedRoutes.uploadMovie")}
           </Button>
         </Toolbar>
