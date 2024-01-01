@@ -19,7 +19,7 @@ export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) 
   const { data: mediaBasicInfoData, isLoading: isMediaBasicInfoLoading } = useGetMediaBasicInfoByMediaId({ MediaId: seriesId });
 
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
-    minHeight: theme.spacing(24),
+    minHeight: theme.spacing(32),
     backgroundSize: "cover",
   }));
 

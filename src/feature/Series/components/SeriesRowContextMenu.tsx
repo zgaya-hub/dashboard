@@ -31,7 +31,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnDetails = () => {
-    navigation.navigate(`/series/series-details`, { seriesId });
+    navigation.navigate(`/series/details`, { seriesId });
   };
 
   const handleOnCreateSeason = () => {
