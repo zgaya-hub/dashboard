@@ -29,7 +29,7 @@ export default function SeriesTableScreen() {
   }, [paginationModel]);
 
   const handleOnCreateSeriesClick = () => {
-    navigation.navigate("/seriescreate");
+    navigation.navigate("/series/create");
   };
 
   const handleOnSelect = (selectedRowId: string) => {

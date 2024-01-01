@@ -68,7 +68,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   const renderSeasonListFooter = (
     <>
       <ChevronLeftIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.back")} tooltipPlacement="top" onClick={handleOnClearBothState} />
-      {getManagerSeriesError ? <ErrorIcon tooltip={getManagerSeriesError?.message} onClick={() => {}} color="error" /> : null}
+      {getManagerSeriesError ? <ErrorIcon tooltip={getManagerSeriesError?.message} iconButton color="error" /> : null}
       <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={handleOnCreateSeason} />
       <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isSeasonFetching} onClick={() => handleOnFetchSeasons(selectedSeries!)} />
       <Button disabled={!selectedSeasonId} onClick={handleOnNext}>
@@ -79,7 +79,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
 
   const renderSeriesListFooter = (
     <>
-      {getManagerSeriesError ? <ErrorIcon tooltip={getManagerSeriesError?.message} onClick={() => {}} color="error" /> : null}
+      {getManagerSeriesError ? <ErrorIcon tooltip={getManagerSeriesError?.message} iconButton color="error" /> : null}
       <AddIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.addNewSeries")} tooltipPlacement="top" onClick={handleOnCreateSeries} />
       <CachedIcon tooltip={t("Feature.VideoUpload.SelectSeriesAndSeasonModal.refreshList")} tooltipPlacement="top" loading={isManagerSeriesFetching} onClick={() => refetchManagerSeries()} />
       <Button variant="outlined" onClick={handleOnMovieNavigation} startIcon={<UploadIcon />}>

@@ -58,7 +58,7 @@ const TranslationMenu: React.FC<TranslationMenuProps> = ({ anchorEl, isVisible, 
     <MenuItem onClick={onClick} sx={menuItemStyle}>
       {icon}
       <ListItemText>{label}</ListItemText>
-      <SignalBarIcon onClick={() => {}} />
+      <SignalBarIcon iconButton />
     </MenuItem>
   );
 

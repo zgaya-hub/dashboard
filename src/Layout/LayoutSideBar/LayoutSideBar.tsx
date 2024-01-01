@@ -72,6 +72,7 @@ export default function LayoutSidebar() {
         label: t("Layout.Sidebar.manageSeries"),
         onClick: () => {
           setActiveItemLabel(t("Layout.Sidebar.manageSeries"));
+          navigation.navigate("/series");
         },
         isActive: activeItemLabel === t("Layout.Sidebar.manageSeries"),
       },
