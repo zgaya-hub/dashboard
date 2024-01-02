@@ -1,20 +1,20 @@
 import { ListItemText, MenuItem } from "@mui/material";
 import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SeriesCreateFormFieldInterface } from "../types";
+import { CineastCreateFormFieldInterface } from "../types";
 import { values } from "lodash";
-import { MediaStatusEnum } from "@/types/enum";
+import { CineastProfessionEnum } from "@/types/enum";
 import { SelectInput } from "@/components/Form";
 
-interface SeriesStatusSelectComponentProps {
-  formRegister: UseFormRegister<SeriesCreateFormFieldInterface>;
+interface ProfessionSelectorProps {
+  formRegister: UseFormRegister<CineastCreateFormFieldInterface>;
 }
 
-export default function SeriesStatusSelectComponent({ formRegister }: SeriesStatusSelectComponentProps) {
+export default function ProfessionSelector({ formRegister }: ProfessionSelectorProps) {
   const { t } = useTranslation();
 
   return (
-    <SelectInput label={t("Feature.Series.SeriesAdditionalInfoForm.selectStatus")} fullWidth name="status" register={formRegister}>
+    <SelectInput label={t("Feature.Quick.CineastCreateForm.profession")} fullWidth name="profession" register={formRegister}>
       {seriesStatusesList.map((seriesStatus) => {
         return (
           <MenuItem value={seriesStatus}>
@@ -26,4 +26,4 @@ export default function SeriesStatusSelectComponent({ formRegister }: SeriesStat
   );
 }
 
-const seriesStatusesList = values(MediaStatusEnum);
+const seriesStatusesList = values(CineastProfessionEnum);

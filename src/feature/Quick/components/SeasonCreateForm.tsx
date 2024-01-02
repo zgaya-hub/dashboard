@@ -35,7 +35,7 @@ export default function SeasonCreateForm({ register, control, errors, onImageSel
             <TextField register={register} name={"number"} autoFocus type="number" />
           </Popover>
         </Stack>
-        <FileSelectInput label={t("Feature.Quick.SeasonCreateForm.selectABackdropImage")} fullWidth onFileSelect={onImageSelect} loading={isLoading} helperText={errors.mediaImageId?.message} error={!!errors.mediaImageId} />
+        <FileSelectInput label={t("Feature.Quick.SeasonCreateForm.selectABackdropImage")} fullWidth onFileSelect={onImageSelect} loading={isLoading} helperText={errors.imageId?.message} error={!!errors.imageId} />
       </Stack>
       <TextField register={register} name="plotSummary" label={t("Feature.Quick.SeasonCreateForm.plotSummary")} helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
       <DevTool control={control} />

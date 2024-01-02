@@ -6,3 +6,5 @@ export { default as AvatarTitleAndDescCardSkeleton } from "./AvatarTitleAndDescC
 export { default as VideoPlayCard } from "./VideoPlayCard(48X32)/Card";
 export { default as MediaTableCard } from "./MediaTableCard/Card";
 export { default as MediaTableCardSkeleton } from "./MediaTableCard/Skeleton";
+export { default as SimpleCineastCard } from "./SimpleCineastCard(24X24)/Card";
+export { default as SimpleCineastCardSkeleton } from "./SimpleCineastCard(24X24)/Skeleton";

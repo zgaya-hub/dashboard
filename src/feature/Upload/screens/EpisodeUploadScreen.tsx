@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { CreateEpisodeFormFieldType, EpisodeUploadModal, EpisodeUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
-import { useCreateEpisode, useCreateMediaImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
+import { useCreateEpisode, useCreateImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
 import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractThumbnailFromVideo, extractVideoMetadata } from "metalyzer";
-import { MediaImageVariantEnum, MovierMediaEnum } from "@/types/enum";
+import { ImageVariantEnum, MovierMediaEnum } from "@/types/enum";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
 
@@ -15,7 +15,7 @@ export default function EpisodeUploadScreen() {
   const [isEpisodeUploadModalVisible, setIsEpisodeUploadModalVisible] = useState(true);
   const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending: isGetUploadEpisodeUrlLoading, data: getUploadSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync } = useUploadVideoOnAwsS3();
-  const { mutateAsync: createImageMutateAsync, data: mediaImageData, isPending: isCreateImageLoading } = useCreateMediaImage();
+  const { mutateAsync: createImageMutateAsync, data: imageData, isPending: isCreateImageLoading } = useCreateImage();
   const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisodeLoading, data: createEpisodeData } = useCreateEpisode();
 
   const handleOnEpisodeDrop = async (episode: File) => {
@@ -36,7 +36,7 @@ export default function EpisodeUploadScreen() {
   const handleOnCreateEpisode = async (input: CreateEpisodeFormFieldType) => {
     await createEpisodeMutateAsync({
       Number: input.number,
-      MediaImageId: mediaImageData?.ID,
+      ImageId: imageData?.ID,
       SeasonId: selectedSeasonId,
       SignedUrlKeyId: getUploadSignedUrlData?.signedUrlKeyId,
       VideoId: getUploadSignedUrlData?.videoId,
@@ -53,7 +53,7 @@ export default function EpisodeUploadScreen() {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
     setThumbnailUrl(await extractImageUrl(image));
-    await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: MediaImageVariantEnum.THUMBNAIL });
+    await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.THUMBNAIL });
   };
 
   const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {

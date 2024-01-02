@@ -1,26 +1,37 @@
-import { CountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaImageVariantEnum, MediaStatusEnum } from "@/types/enum";
+import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, ImageVariantEnum, MediaStatusEnum, CineastProfessionEnum, GenderEnum } from "@/types/enum";
 
-export type CreateMediaImageInput = {
+export type CreateImageInput = {
   Base64: string;
   Mime: string;
-  Variant: MediaImageVariantEnum;
+  Variant: ImageVariantEnum;
 };
 
 export type CreateSeriesInput = {
-  MediaImageId: string;
+  ImageId: string;
   MediaBasicInfo: CreateMediaBasicInfoInput;
   MediaAdditionalInfo: MediaAdditionalInfoInput;
 };
 
 export type CreateSeasonInput = {
   MediaBasicInfo: CreateMediaBasicInfoInput;
-  MediaImageId: string;
+  ImageId: string;
   Number: number;
   SeriesId: string;
 };
 
+export type CreateCineastInput = {
+  ImageId: string;
+  FullName: string;
+  Profession: CineastProfessionEnum;
+  DateOfBirth: number;
+  Bio: string;
+  Gender: GenderEnum;
+  Country: MediaCountriesEnum;
+  Award: string[];
+};
+
 export type MediaAdditionalInfoInput = {
-  OriginCountry?: CountriesEnum;
+  OriginCountry?: MediaCountriesEnum;
   OriginalLanguage?: LanguagiesEnum;
   Genre?: MediaGenriesEnum;
   Status?: MediaStatusEnum;
@@ -36,7 +47,7 @@ export type GetNextSeasonNumberParams = {
   SeriesId: string;
 };
 
-export type MediaImageIdOutput = {
+export type ImageIdOutput = {
   ID: string;
 };
 

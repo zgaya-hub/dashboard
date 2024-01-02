@@ -1,26 +1,26 @@
-import { CreateMediaImageInput, MediaImageIdOutput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams } from "./queryHooks.types";
+import { CreateImageInput, ImageIdOutput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, CreateCineastInput } from "./queryHooks.types";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-export function useCreateMediaImage() {
-  const [apiCaller, status] = useMutation<{ createMediaImage: MediaImageIdOutput }, { input: CreateMediaImageInput }>(
+export function useCreateImage() {
+  const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
-      mutation ($input: CreateMediaImageInput!) {
-        createMediaImage(CreateMediaImageInput: $input) {
+      mutation ($input: CreateImageInput!) {
+        createImage(CreateImageInput: $input) {
           ID
         }
       }
     `
   );
-  const mutateAsync = async (input: CreateMediaImageInput) => {
+  const mutateAsync = async (input: CreateImageInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
-      return result.data?.createMediaImage;
+      return result.data?.createImage;
     } catch (error) {
       console.error(error);
     }
   };
 
-  return { mutateAsync, data: status.data?.createMediaImage, isPending: status.loading, ...status };
+  return { mutateAsync, data: status.data?.createImage, isPending: status.loading, ...status };
 }
 
 export function useCreateSeries() {
@@ -81,4 +81,25 @@ export function useCreateSeason() {
   };
 
   return { mutateAsync, data: status.data?.createSeason, isPending: status.loading, ...status };
+}
+export function useCreateCineast() {
+  const [apiCaller, status] = useMutation<{ createCineast: CommonSuccessOutput }, { input: CreateCineastInput }>(
+    gql`
+      mutation ($input: CreateSeasonInput!) {
+        createCineast(CreateSeasonInput: $input) {
+          isSuccess
+        }
+      }
+    `
+  );
+  const mutateAsync = async (input: CreateCineastInput) => {
+    try {
+      const result = await apiCaller({ variables: { input } });
+      return result.data?.createCineast;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { mutateAsync, data: status.data?.createCineast, isPending: status.loading, ...status };
 }

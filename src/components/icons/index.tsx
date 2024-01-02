@@ -1,55 +1,56 @@
 import React, { MouseEvent } from "react";
 import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
-import { default as MuiAddIcon } from "@mui/icons-material/Add";
-import { default as MuiBrightness4Icon } from "@mui/icons-material/Brightness4";
-import { default as MuiChevronRightIcon } from "@mui/icons-material/ChevronRight";
-import { default as MuiChevronLeftIcon } from "@mui/icons-material/ChevronLeft";
-import { default as MuiComputerIcon } from "@mui/icons-material/Computer";
-import { default as MuiFeedbackIcon } from "@mui/icons-material/Feedback";
-import { default as FileUploadIcon } from "@mui/icons-material/FileUpload";
-import { default as InsertLinkIcon } from "@mui/icons-material/InsertLink";
-import { default as MuiLightModeIcon } from "@mui/icons-material/LightMode";
-import { default as MuiLogoutIcon } from "@mui/icons-material/Logout";
-import { default as MuiMenuOpenIcon } from "@mui/icons-material/MenuOpen";
-import { default as MuiNightsStayIcon } from "@mui/icons-material/NightsStay";
-import { default as MuiQuestionAnswerIcon } from "@mui/icons-material/QuestionAnswer";
-import { default as MuiAirplanemodeActiveIcon } from "@mui/icons-material/AirplanemodeActive";
-import { default as MuiDeleteIcon } from "@mui/icons-material/Delete";
-import { default as MuiOpenInNewIcon } from "@mui/icons-material/OpenInNew";
-import { default as MuiRefreshIcon } from "@mui/icons-material/Refresh";
-import { default as MuiPreviewIcon } from "@mui/icons-material/Preview";
-import { default as MuiEditIcon } from "@mui/icons-material/Edit";
-import { default as MuiSelectAll } from "@mui/icons-material/SelectAll";
-import { default as MuiSearchIcon } from "@mui/icons-material/Search";
-import { default as MuiSettingsInputvideoIcon } from "@mui/icons-material/SettingsInputSvideo";
-import { default as MuiSlideshowIcon } from "@mui/icons-material/Slideshow";
-import { default as MuiSpaceDashboardIcon } from "@mui/icons-material/SpaceDashboard";
-import { default as MuiErrorOutlineIcon } from "@mui/icons-material/Error";
-import { default as MuiArrowDropDownIcon } from "@mui/icons-material/ArrowDropDown";
-import { default as MuiFileUploadIcon } from "@mui/icons-material/FileUpload";
-import { default as MuiSwitchAccountIcon } from "@mui/icons-material/SwitchAccount";
-import { default as MuiTimelineIcon } from "@mui/icons-material/Timeline";
-import { default as MuiStreetviewIcon } from "@mui/icons-material/Streetview";
-import { default as MuiSaveIcon } from "@mui/icons-material/Save";
-import { default as MuiTranslateIcon } from "@mui/icons-material/Translate";
-import { default as MuiCancelIcon } from "@mui/icons-material/Cancel";
-import { default as MuiVideoLibraryIcon } from "@mui/icons-material/VideoLibrary";
-import { default as MuiClearIcon } from "@mui/icons-material/Clear";
-import { default as MuiFastForwardIcon } from "@mui/icons-material/FastForward";
-import { default as MuiPlayArrowIcon } from "@mui/icons-material/PlayArrow";
-import { default as MuiFastRewindIcon } from "@mui/icons-material/FastRewind";
-import { default as MuiCachedIcon } from "@mui/icons-material/Cached";
-import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/RadioButtonUnchecked";
-import { default as MuiLibraryAddCheckIcon } from "@mui/icons-material/LibraryAddCheck";
-import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVert";
-import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonChecked";
-import { default as MuiCheckBoxIcon } from "@mui/icons-material/CheckBox";
-import { default as MuiSignalCellularAlt1BarIcon } from "@mui/icons-material/SignalCellularAlt1Bar";
-import { default as MuiAttachFileIcon } from "@mui/icons-material/AttachFile";
-import { default as MuiDoneIcon } from "@mui/icons-material/Done";
-import { default as MuiAddCircleOutlineIcon } from "@mui/icons-material/AddCircleOutline";
-import { default as MuiDetails } from "@mui/icons-material/Details";
-import { default as MuiInfoOutlinedIcon } from "@mui/icons-material/InfoOutlined";
+import { default as MuiAddIcon } from "@mui/icons-material/AddOutlined";
+import { default as MuiBrightness4Icon } from "@mui/icons-material/Brightness4Outlined";
+import { default as MuiChevronRightIcon } from "@mui/icons-material/ChevronRightOutlined";
+import { default as MuiChevronLeftIcon } from "@mui/icons-material/ChevronLeftOutlined";
+import { default as MuiComputerIcon } from "@mui/icons-material/ComputerOutlined";
+import { default as MuiFeedbackIcon } from "@mui/icons-material/FeedbackOutlined";
+import { default as FileUploadIcon } from "@mui/icons-material/FileUploadOutlined";
+import { default as InsertLinkIcon } from "@mui/icons-material/InsertLinkOutlined";
+import { default as MuiLightModeIcon } from "@mui/icons-material/LightModeOutlined";
+import { default as MuiLogoutIcon } from "@mui/icons-material/LogoutOutlined";
+import { default as MuiMenuOpenIcon } from "@mui/icons-material/MenuOpenOutlined";
+import { default as MuiNightsStayIcon } from "@mui/icons-material/NightsStayOutlined";
+import { default as MuiQuestionAnswerIcon } from "@mui/icons-material/QuestionAnswerOutlined";
+import { default as MuiAirplanemodeActiveIcon } from "@mui/icons-material/AirplanemodeActiveOutlined";
+import { default as MuiDeleteIcon } from "@mui/icons-material/DeleteOutlined";
+import { default as MuiOpenInNewIcon } from "@mui/icons-material/OpenInNewOutlined";
+import { default as MuiRefreshIcon } from "@mui/icons-material/RefreshOutlined";
+import { default as MuiPreviewIcon } from "@mui/icons-material/PreviewOutlined";
+import { default as MuiEditIcon } from "@mui/icons-material/EditOutlined";
+import { default as MuiSelectAll } from "@mui/icons-material/SelectAllOutlined";
+import { default as MuiSearchIcon } from "@mui/icons-material/SearchOutlined";
+import { default as MuiSettingsInputvideoIcon } from "@mui/icons-material/SettingsInputSvideoOutlined";
+import { default as MuiSlideshowIcon } from "@mui/icons-material/SlideshowOutlined";
+import { default as MuiSpaceDashboardIcon } from "@mui/icons-material/SpaceDashboardOutlined";
+import { default as MuiErrorIcon } from "@mui/icons-material/ErrorOutlined";
+import { default as MuiArrowDropDownIcon } from "@mui/icons-material/ArrowDropDownOutlined";
+import { default as MuiFileUploadIcon } from "@mui/icons-material/FileUploadOutlined";
+import { default as MuiSwitchAccountIcon } from "@mui/icons-material/SwitchAccountOutlined";
+import { default as MuiTimelineIcon } from "@mui/icons-material/TimelineOutlined";
+import { default as MuiStreetviewIcon } from "@mui/icons-material/StreetviewOutlined";
+import { default as MuiSaveIcon } from "@mui/icons-material/SaveOutlined";
+import { default as MuiTranslateIcon } from "@mui/icons-material/TranslateOutlined";
+import { default as MuiCancelIcon } from "@mui/icons-material/CancelOutlined";
+import { default as MuiVideoLibraryIcon } from "@mui/icons-material/VideoLibraryOutlined";
+import { default as MuiClearIcon } from "@mui/icons-material/ClearOutlined";
+import { default as MuiFastForwardIcon } from "@mui/icons-material/FastForwardOutlined";
+import { default as MuiPlayArrowIcon } from "@mui/icons-material/PlayArrowOutlined";
+import { default as MuiFastRewindIcon } from "@mui/icons-material/FastRewindOutlined";
+import { default as MuiCachedIcon } from "@mui/icons-material/CachedOutlined";
+import { default as MuiRadioButtonUncheckedIcon } from "@mui/icons-material/RadioButtonUncheckedOutlined";
+import { default as MuiLibraryAddCheckIcon } from "@mui/icons-material/LibraryAddCheckOutlined";
+import { default as MuiMoreVertIcon } from "@mui/icons-material/MoreVertOutlined";
+import { default as MuiRadioButtonCheckedIcon } from "@mui/icons-material/RadioButtonCheckedOutlined";
+import { default as MuiCheckBoxIcon } from "@mui/icons-material/CheckBoxOutlined";
+import { default as MuiSignalCellularAlt1BarIcon } from "@mui/icons-material/SignalCellularAlt1BarOutlined";
+import { default as MuiAttachFileIcon } from "@mui/icons-material/AttachFileOutlined";
+import { default as MuiDoneIcon } from "@mui/icons-material/DoneOutlined";
+import { default as MuiAddCircleIcon } from "@mui/icons-material/AddCircleOutlined";
+import { default as MuiDetails } from "@mui/icons-material/DetailsOutlined";
+import {default as MuiEventIcon} from '@mui/icons-material/Event';
+import { default as MuiInfodIcon } from "@mui/icons-material/InfoOutlined";
 import Tooltip from "../Tooltip";
 
 interface IconWrapperProps extends SvgIconProps {
@@ -65,22 +66,25 @@ interface IconWrapperProps extends SvgIconProps {
 }
 
 const withIconWrapper = (WrappedIcon: React.ComponentType<IconWrapperProps>) => {
-  return ({ onClick, disableRipple, isListIcon, tooltip, tooltipPlacement, iconButton, iconButtonProps, loading, disabled, ...restProps }: IconWrapperProps) => {
+  return ({ onClick, disableRipple, isListIcon, tooltip, tooltipPlacement, iconButton, iconButtonProps, loading, disabled, sx, ...restProps }: IconWrapperProps) => {
     const renderIcon = () => <WrappedIcon {...restProps} />;
 
     if (isListIcon) {
-      return <ListItemIcon>{renderIcon()}</ListItemIcon>;
+      return <ListItemIcon sx={sx}>{renderIcon()}</ListItemIcon>;
     }
+
     if (onClick || iconButton) {
       return (
-        <IconButton disableRipple={disableRipple} disabled={loading || disabled} onClick={onClick} color="inherit" {...iconButtonProps}>
-          {loading ? <CircularProgress size={25} /> : renderIcon()}
+        <IconButton disableRipple={disableRipple} sx={sx} disabled={loading || disabled} onClick={onClick} color="inherit" {...iconButtonProps}>
+          <Tooltip title={tooltip} placement={tooltipPlacement}>
+            {loading ? <CircularProgress size={25} /> : renderIcon()}
+          </Tooltip>
         </IconButton>
       );
     }
 
     return (
-      <Tooltip title={tooltip} placement={tooltipPlacement}>
+      <Tooltip title={tooltip} placement={tooltipPlacement} sx={sx}>
         {renderIcon()}
       </Tooltip>
     );
@@ -118,7 +122,7 @@ export const CachedIcon = withIconWrapper(MuiCachedIcon);
 export const RadioButtonUncheckedIcon = withIconWrapper(MuiRadioButtonUncheckedIcon);
 export const RadioButtonCheckedIcon = withIconWrapper(MuiRadioButtonCheckedIcon);
 export const MoreVertIcon = withIconWrapper(MuiMoreVertIcon);
-export const ErrorIcon = withIconWrapper(MuiErrorOutlineIcon);
+export const ErrorIcon = withIconWrapper(MuiErrorIcon);
 export const SaveIcon = withIconWrapper(MuiSaveIcon);
 export const DeleteIcon = withIconWrapper(MuiDeleteIcon);
 export const EditIcon = withIconWrapper(MuiEditIcon);
@@ -134,6 +138,7 @@ export const RefreshIcon = withIconWrapper(MuiRefreshIcon);
 export const OpenTabIcon = withIconWrapper(MuiOpenInNewIcon);
 export const PreviewIcon = withIconWrapper(MuiPreviewIcon);
 export const MultiCheckIcon = withIconWrapper(MuiLibraryAddCheckIcon);
-export const AddCircleIcon = withIconWrapper(MuiAddCircleOutlineIcon);
+export const AddCircleIcon = withIconWrapper(MuiAddCircleIcon);
 export const DetailsIcon = withIconWrapper(MuiDetails);
-export const InfoIcon = withIconWrapper(MuiInfoOutlinedIcon);
+export const InfoIcon = withIconWrapper(MuiInfodIcon);
+export const EventIcon = withIconWrapper(MuiEventIcon);

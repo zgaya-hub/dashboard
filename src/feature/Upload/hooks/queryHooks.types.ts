@@ -1,4 +1,4 @@
-import { MediaImageVariantEnum, MovierMediaEnum } from "@/types/enum";
+import { ImageVariantEnum, MovierMediaEnum } from "@/types/enum";
 
 export type GetUploadVideoSignedUrlInput = {
   MediaType: MovierMediaEnum;
@@ -23,7 +23,7 @@ export type CreateEpisodeInput = {
   SeasonId: string;
   VideoId: string;
   SignedUrlKeyId: string;
-  MediaImageId: string;
+  ImageId: string;
   MediaBasicInfo: BasicInfoInput;
 };
 
@@ -33,10 +33,10 @@ export type BasicInfoInput = {
   ReleaseDate: number;
 };
 
-export type CreateMediaImageInput = {
+export type CreateImageInput = {
   Base64: string;
   Mime: string;
-  Variant: MediaImageVariantEnum;
+  Variant: ImageVariantEnum;
 };
 
 export type GetUploadVideoSignedUrlOutput = {
@@ -46,7 +46,7 @@ export type GetUploadVideoSignedUrlOutput = {
 };
 
 export type GetManagerSeriesWithImageAndBasicInfoOutput = SeriesEntityType & {
-  mediaImage: MediaImageEntityType;
+  image: ImageEntityType;
   mediaBasicInfo: MediaBasicInfoEntityType;
 };
 
@@ -54,7 +54,7 @@ export type GetSeasonBySeriesIdOutput = SeasonEntityType & {
   mediaBasicInfo: MediaBasicInfoEntityType;
 };
 
-export type MediaImageIdOutput = {
+export type ImageIdOutput = {
   ID: string;
 };
 

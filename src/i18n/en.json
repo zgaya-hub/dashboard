@@ -12,6 +12,10 @@
       "FileSelectInput": {
         "dropItHere": "Drop it here",
         "selectAFile": "Select a file"
+      },
+      "SearchInput": {
+        "close": "Close",
+        "search": "Search"
       }
     },
     "Modals": {
@@ -124,7 +128,7 @@
         "save": "Save",
         "cancel": "Cancel"
       },
-      "SeriesDetailsCard" : {
+      "SeriesDetailsCard": {
         "originCountry": "Origin country",
         "originalLanguage": "Original language",
         "genre": "Genre",
@@ -153,6 +157,10 @@
         "createASeries": "Create a series",
         "save": "Save",
         "back": "Back"
+      },
+      "CineastContainer": {
+        "title": "List of cineast",
+        "search": "Search"
       }
     },
     "Quick": {
@@ -177,6 +185,20 @@
         "createASeason": "Create a season",
         "save": "Save",
         "back": "Back"
+      },
+      "CineastCreateScreen": {
+        "createACineast": "Create a cineast",
+        "save": "Save",
+        "back": "Back"
+      },
+      "CineastCreateForm": {
+        "uploadProfileImage": "Upload profile picture",
+        "bio": "Bio",
+        "country": "Country",
+        "dateOfBirth": "Date of birth",
+        "name": "Name",
+        "selectAGender": "Select a gender",
+        "profession": "Profession"
       }
     }
   },

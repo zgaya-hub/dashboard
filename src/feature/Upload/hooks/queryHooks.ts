@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreateEpisodeInput, CreateMediaImageInput, MediaImageIdOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input, GetNextEpisodeNumberParams, GetNextEpisodeNumberOutput } from "./queryHooks.types";
+import { CreateEpisodeInput, CreateImageInput, ImageIdOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input, GetNextEpisodeNumberParams, GetNextEpisodeNumberOutput } from "./queryHooks.types";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
 export function useGetUploadVideoSignedUrl() {
@@ -95,26 +95,26 @@ export function useCreateEpisode() {
   return { ...status, mutateAsync, data: status.data?.createEpisode, isPending: status.loading };
 }
 
-export function useCreateMediaImage() {
-  const [apiCaller, status] = useMutation<{ createMediaImage: MediaImageIdOutput }, { input: CreateMediaImageInput }>(
+export function useCreateImage() {
+  const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
-      mutation ($input: CreateMediaImageInput!) {
-        createMediaImage(CreateMediaImageInput: $input) {
+      mutation ($input: CreateImageInput!) {
+        createImage(CreateImageInput: $input) {
           ID
         }
       }
     `
   );
-  const mutateAsync = async (input: CreateMediaImageInput) => {
+  const mutateAsync = async (input: CreateImageInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
-      return result.data?.createMediaImage;
+      return result.data?.createImage;
     } catch (error) {
       console.error(error);
     }
   };
 
-  return { ...status, mutateAsync, data: status.data?.createMediaImage, isPending: status.loading };
+  return { ...status, mutateAsync, data: status.data?.createImage, isPending: status.loading };
 }
 
 export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
@@ -141,7 +141,7 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
           ID
           isFree
           priceInDollar
-          mediaImage {
+          image {
             ID
             variant
             url

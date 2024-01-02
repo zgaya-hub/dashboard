@@ -49,7 +49,7 @@ export default function SeriesTableScreen() {
           Title: series.title,
         },
         Image: {
-          ImageUrl: series.mediaImageUrl,
+          ImageUrl: series.imageUrl,
         },
       }
     );

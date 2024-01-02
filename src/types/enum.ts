@@ -7,7 +7,12 @@ export enum MovierMediaEnum {
   MOVIE = "Movie",
 }
 
-export enum CountriesEnum {
+export enum GenderEnum {
+  FEMALE = "Female",
+  MALE = "Male",
+}
+
+export enum MediaCountriesEnum {
   USA = "United States of America",
   AUSTRALIA = "Australia",
   AUSTRIA = "Austria",
@@ -60,9 +65,37 @@ export enum LanguagiesEnum {
   TURKISH = "Turkish",
 }
 
-export enum MediaImageVariantEnum {
+export enum CineastProfessionEnum {
+  PRODUCER = "Producer",
+  DIRECTOR = "Director",
+  WRITER = "Writer",
+  ACTOR = "Actor",
+  ACTRESS = "Actress",
+  CINEMATOGRAPHER = "Cinematographer",
+  EDITOR = "Editor",
+  COSTUME_DESIGNER = "Costume Designer",
+  MAKEUP_ARTIST = "Makeup Artist",
+  SOUND_ENGINEER = "Sound Engineer",
+  VISUAL_EFFECTS_ARTIST = "Visual Effects Artist",
+  STUNT_PERFORMER = "Stunt Performer",
+  PRODUCTION_MANAGER = "Production Manager",
+  SET_DESIGNER = "Set Designer",
+  SCRIPT_SUPERVISOR = "Script Supervisor",
+  DISTRIBUTOR = "Distributor",
+  MARKETING_MANAGER = "Marketing Manager",
+  FILM_CRITIC = "Film Critic",
+  CASTING_DIRECTOR = "Casting Director",
+  LOCATION_MANAGER = "Location Manager",
+  POST_PRODUCTION_SUPERVISOR = "Post Production Supervisor",
+  SCREENWRITER = "Screenwriter",
+  EXECUTIVE_PRODUCER = "Executive Producer",
+  CAMERA_OPERATOR = "Camera Operator",
+}
+
+export enum ImageVariantEnum {
   BACKDROP = "Backdrop",
   THUMBNAIL = "Thumbnail",
+  PROFILE = "Profile",
 }
 
 export enum MediaGenriesEnum {

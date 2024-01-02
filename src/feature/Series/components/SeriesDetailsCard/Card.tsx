@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { DEFAULT_DATE_FORMAT } from "@/mock/constants";
 import { handleOnTruncateText } from "@/utils";
-import { useGetMediaAdditionalInfoByMediaId, useGetMediaBasicInfoByMediaId, useGetMediaImageByMediaId } from "../../hooks";
-import SeriesDetailsCardSkeleton from "./SeriesDetailsCardSkeleton";
-import { InfoIcon } from "@/components/icons";
+import { useGetMediaAdditionalInfoByMediaId, useGetMediaBasicInfoByMediaId, useGetImageByMediaId } from "../../hooks";
+import SeriesDetailsCardSkeleton from "./Skeleton";
+import { CachedIcon, ErrorIcon, InfoIcon } from "@/components/icons";
 
 interface SeriesDetailsCardProps {
   seriesId: string;
@@ -15,31 +15,55 @@ interface SeriesDetailsCardProps {
 
 export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) {
   const { t } = useTranslation();
-  const { data: mediaImageData, isLoading: isMediaImageLoading } = useGetMediaImageByMediaId({ MediaId: seriesId });
-  const { data: mediaAdditionalInfoData, isLoading: isMediaAdditionalInfoLoading } = useGetMediaAdditionalInfoByMediaId({ MediaId: seriesId });
-  const { data: mediaBasicInfoData, isLoading: isMediaBasicInfoLoading } = useGetMediaBasicInfoByMediaId({ MediaId: seriesId });
+  const { data: imageData, refetch: imageRefetch, isLoading: isImageLoading, error: getImageByMediaIdError } = useGetImageByMediaId({ MediaId: seriesId });
+  const { data: mediaAdditionalInfoData, refetch: mediaAdditionalInfoRefetch, isLoading: isMediaAdditionalInfoLoading } = useGetMediaAdditionalInfoByMediaId({ MediaId: seriesId });
+  const { data: mediaBasicInfoData, refetch: mediaBasicInfoRefetch, isLoading: isMediaBasicInfoLoading } = useGetMediaBasicInfoByMediaId({ MediaId: seriesId });
 
-  const cardStyle = useThemeStyles<SxProps>((theme) => ({
+  const handleOnRefetch = () => {
+    mediaAdditionalInfoRefetch();
+    mediaBasicInfoRefetch();
+    imageRefetch();
+  };
+
+  const cardStyle: SxProps = {
+    position: "relative",
+  };
+
+  const cardMediaStyle = useThemeStyles<SxProps>((theme) => ({
     minHeight: theme.spacing(32),
     backgroundSize: "cover",
   }));
 
-  if (isMediaImageLoading || isMediaBasicInfoLoading || isMediaAdditionalInfoLoading) {
+  const errorIconStyle = useThemeStyles<SxProps>((theme) => ({
+    position: "absolute",
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+  }));
+
+  const refreshIconStyle = useThemeStyles<SxProps>((theme) => ({
+    position: "absolute",
+    top: theme.spacing(1),
+    right: theme.spacing(6),
+  }));
+
+  if (isImageLoading || isMediaBasicInfoLoading || isMediaAdditionalInfoLoading) {
     return <SeriesDetailsCardSkeleton />;
   }
 
   const renderEditableText = (label: string, value: string, icon?: ReactNode) => (
     <Stack direction={"row"} justifyContent={"space-between"} p={1}>
       <Typography variant="h6">{label}</Typography>
-      <Typography sx={{ position: "relative" }}>
+      <Typography>
         {value} {icon}
       </Typography>
     </Stack>
   );
 
   return (
-    <Card>
-      <CardMedia sx={cardStyle} image={mediaImageData?.url} />
+    <Card sx={cardStyle}>
+      <CardMedia sx={cardMediaStyle} image={imageData?.url} />
+      {getImageByMediaIdError ? <CachedIcon sx={refreshIconStyle} onClick={handleOnRefetch} /> : null}
+      {getImageByMediaIdError ? <ErrorIcon color="error" sx={errorIconStyle} iconButton tooltip={getImageByMediaIdError.message} /> : null}
       <CardContent>
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"), mediaBasicInfoData?.title || "")}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"), format(mediaBasicInfoData?.releaseDate || 0, DEFAULT_DATE_FORMAT))}

@@ -12,7 +12,7 @@ export const getGridData = (page: number, pageSize: number) => {
       title: randMovie(),
       plotSummary: randText({ length: 10 }),
       releaseDate: randPastDate().getTime(),
-      mediaImageUrl: randUrl(),
+      imageUrl: randUrl(),
       createdAt: randPastDate().getTime(),
       updatedAt: randPastDate().getTime(),
     });

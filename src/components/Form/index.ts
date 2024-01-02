@@ -5,3 +5,4 @@ export { default as Form } from "./Form";
 export { default as SelectInput } from "./SelectInput";
 export { default as ModalSelectInput } from "./ModalSelectInput";
 export { default as FileSelectInput } from "./FileSelectInput";
+export { default as GenderSelector } from "./GenderSelector";

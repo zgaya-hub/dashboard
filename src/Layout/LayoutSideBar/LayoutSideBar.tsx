@@ -46,10 +46,8 @@ export default function LayoutSidebar() {
   const [activeItem, setActiveItem] = useState<keyof AuthenticatedRouteParams>("/home");
   const [isHovered] = useState(false);
 
-  console.log(activeItem);
-
   useEffect(() => {
-    setActiveItem(location.pathname as any);
+    setActiveItem(location.pathname);
   }, [location]);
 
   const sections: { sidebar: SidebarItemProps[]; footer: SidebarItemProps[] } = {

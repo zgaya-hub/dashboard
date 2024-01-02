@@ -1,4 +1,6 @@
-import { DatePicker, DatePickerProps } from "@mui/x-date-pickers-pro";
+import { EventIcon } from "@/components/icons";
+import { InputAdornment } from "@mui/material";
+import { MobileDatePicker, DatePickerProps } from "@mui/x-date-pickers-pro";
 
 interface DatePickerModalProps extends DatePickerProps<Date> {
   fullWidth?: boolean;
@@ -7,5 +9,23 @@ interface DatePickerModalProps extends DatePickerProps<Date> {
 }
 
 export default function DatePickerModal({ fullWidth, helperText, error, ...restProps }: DatePickerModalProps) {
-  return <DatePicker slotProps={{ textField: { fullWidth, helperText, error } }} {...restProps} />;
+  return (
+    <MobileDatePicker
+      slotProps={{
+        textField: {
+          fullWidth,
+          helperText,
+          error,
+          InputProps: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <EventIcon iconButton />
+              </InputAdornment>
+            ),
+          },
+        },
+      }}
+      {...restProps}
+    />
+  );
 }

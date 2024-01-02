@@ -3,7 +3,7 @@ type SeriesEntityType = {
   priceInDollar: number;
 } & EntityBaseType;
 
-type MediaImageEntityType = {
+type ImageEntityType = {
   variant: string;
   url: string;
 } & EntityBaseType;
@@ -23,4 +23,14 @@ type MediaAdditionalInfoEntityType = {
 
 type SeasonEntityType = {
   number: number;
+} & EntityBaseType;
+
+type CineastEntityType = {
+  fullName: string;
+  profession: CineastProfessionEnum;
+  dateOfBirth: number;
+  bio: string;
+  gender: GenderEnum;
+  country: MediaCountriesEnum;
+  award: Array<string>;
 } & EntityBaseType;

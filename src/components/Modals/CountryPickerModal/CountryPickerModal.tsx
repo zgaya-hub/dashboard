@@ -10,17 +10,17 @@ import { DoneIcon, SearchIcon } from "@/components/icons";
 import { countryListWithFlag } from "@/mock/countryListWithFlag";
 import { SearchInput } from "@/components/Form";
 import { CountryPickerEmptyComponent } from "..";
-import { CountriesEnum } from "@/types/enum";
+import { MediaCountriesEnum } from "@/types/enum";
 
 interface CountryPickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: CountriesEnum) => void;
+  onOk: (countrName: MediaCountriesEnum) => void;
 }
 
 export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(CountriesEnum.USA);
+  const [value, setValue] = useState(MediaCountriesEnum.USA);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 
