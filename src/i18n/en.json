@@ -78,7 +78,8 @@
       },
       "EpisodeUploadModal": {
         "uploadEpisode": "Upload episode",
-        "addBasicInfo": "Add basic Info",
+        "enterEpisodeDetails": "Enter episode details",
+        "lastStep": "Last step",
         "title": "Drag and drop a episode here",
         "message": "Ready to upload? Just simple upload episode here",
         "movie": "Movie",

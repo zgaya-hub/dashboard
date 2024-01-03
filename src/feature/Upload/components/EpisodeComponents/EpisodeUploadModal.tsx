@@ -9,8 +9,8 @@ import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
 import { Ref, forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
-import EpisodeCreateStep, { CreateEpisodeFormFieldType } from "./EpisodeCreateStep";
-import EpisodeCreateAdditionalInfoStep from "./EpisodeCreateAdditionalInfoStep";
+import EpisodeCreateStep from "./EpisodeCreateStep";
+import { CreateEpisodeFormFieldType } from "../../types";
 
 interface EpisodeUploadModalProps {
   isVisible: boolean;
@@ -20,17 +20,17 @@ interface EpisodeUploadModalProps {
   onThumbnailSelect: (episode: File) => void;
   onCreateEpisode: (input: CreateEpisodeFormFieldType) => void;
   isVideoUploaded: boolean;
-  isEpisodeCreated: boolean;
   isLoading: boolean;
   thumbnailUrl: string;
   seasonId: string;
+  episodeId?: string;
 }
 
 export interface EpisodeUploadModalRef {
   onNext: () => void;
 }
 
-const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, isVideoUploaded, isEpisodeCreated, seasonId }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalRef>) {
+const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, isVideoUploaded, episodeId, seasonId }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalRef>) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const navigate = useNavigation();
@@ -39,9 +39,6 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
 
   const isNextButtonDisabled = useMemo(() => {
     if (isVideoUploaded && activeStep === 0) {
-      return false;
-    }
-    if (isEpisodeCreated && activeStep === 1) {
       return false;
     }
 
@@ -89,12 +86,8 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
       step: <VideoUploadComponent onVideoSelect={handleOnEpisodeSelect} isLoading={isLoading} message={t("Feature.VideoUpload.EpisodeUploadModal.message")} title={t("Feature.VideoUpload.EpisodeUploadModal.title")} />,
     },
     {
-      label: t("Feature.VideoUpload.EpisodeUploadModal.addBasicInfo"),
+      label: t("Feature.VideoUpload.EpisodeUploadModal.enterEpisodeDetails"),
       step: <EpisodeCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateEpisode} thumbnailSrc={thumbnailUrl} seasonId={seasonId} />,
-    },
-    {
-      label: t("Feature.VideoUpload.EpisodeUploadModal.addAdditionalInfo"),
-      step: <EpisodeCreateAdditionalInfoStep />,
     },
   ];
 
@@ -117,7 +110,7 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
       {steps[activeStep].step}
       <MobileStepper
         variant="progress"
-        steps={3}
+        steps={2}
         position="bottom"
         draggable
         activeStep={activeStep}

@@ -16,7 +16,7 @@ export function useCreateImage() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -38,7 +38,7 @@ export function useCreateSeries() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createSeries;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -76,7 +76,7 @@ export function useCreateSeason() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createSeason;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -97,7 +97,7 @@ export function useCreateCineast() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createCineast;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 

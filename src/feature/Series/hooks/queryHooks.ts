@@ -16,7 +16,7 @@ export function useCreateImage() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -39,7 +39,7 @@ export function useCreateSeries() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createSeries;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -59,7 +59,7 @@ export function useDeleteSeriesById() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.deleteSeriesById;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -83,7 +83,7 @@ export function useDeleteMultipleSeriesByIdz() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.deleteMultipleSeriesByIdz;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -105,7 +105,7 @@ export function useUpdateSeries() {
       const result = await apiCaller({ variables: { input, param } });
       return result.data?.updateSeries;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 

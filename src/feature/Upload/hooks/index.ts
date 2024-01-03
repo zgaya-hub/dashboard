@@ -5,6 +5,7 @@ export { useCreateEpisode } from "./queryHooks";
 export { useCreateImage } from "./queryHooks";
 export { useGetNextEpisodeNumber } from "./queryHooks";
 export { useGetManagerSeriesWithImageAndBasicInfo } from "./queryHooks";
+export { useGetSharelink } from "./queryHooks";
 
 export type { GetUploadVideoSignedUrlInput } from "./queryHooks.types";
 export type { UploadVideoOnAwsS3Input } from "./queryHooks.types";

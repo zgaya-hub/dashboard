@@ -39,6 +39,15 @@ export type CreateImageInput = {
   Variant: ImageVariantEnum;
 };
 
+export type GetSharelinkInput = {
+  MediaId: string;
+  MediaType: MovierMediaEnum;
+};
+
+export type GetImageByMediaIdParams = {
+  MediaId: string;
+};
+
 export type GetUploadVideoSignedUrlOutput = {
   signedUrl: string;
   signedUrlKeyId: string;

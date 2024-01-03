@@ -24,8 +24,6 @@ export default function CineastCreateForm({ formRegister, formControl, formError
   const { t } = useTranslation();
   const [isCountryModalVisible, setIsCountryModalVisible] = useState(false);
 
-  console.log(watchFormValue());
-
   const handleOnSelectCountry = (countrName: MediaCountriesEnum) => {
     setFormValue("country", countrName);
     handleOnToggleCountryModalVisible();

@@ -16,7 +16,7 @@ export function useManagerSignIn() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.managerSignIn;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 

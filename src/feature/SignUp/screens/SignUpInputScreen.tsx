@@ -6,7 +6,7 @@ import { useManagerSignIn } from "../hooks";
 export default function SignUpInputScreen() {
   const { mutateAsync: managerLoginMutateAsync } = useManagerSignIn();
   const handleOnCallSignIn = async (formData: SignUpFormDataInterface) => {
-    const result = await managerLoginMutateAsync(formData);
+    const result = managerLoginMutateAsync(formData);
     console.log(result);
   };
   return (

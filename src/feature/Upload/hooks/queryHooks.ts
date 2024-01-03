@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreateEpisodeInput, CreateImageInput, ImageIdOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input, GetNextEpisodeNumberParams, GetNextEpisodeNumberOutput } from "./queryHooks.types";
+import { CreateEpisodeInput, CreateImageInput, ImageIdOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input, GetNextEpisodeNumberParams, GetNextEpisodeNumberOutput, EpisodeIdOutput, CreateExternalLinkInput, GetSharelinkInput, GetImageByMediaIdParams } from "./queryHooks.types";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
 export function useGetUploadVideoSignedUrl() {
@@ -19,29 +19,11 @@ export function useGetUploadVideoSignedUrl() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.getUploadVideoSignedUrl;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
   return { ...status, mutateAsync, data: status.data?.getUploadVideoSignedUrl, isPending: status.loading };
-}
-
-export function useUploadVideoOnAwsS3() {
-  const [loading, setLoading] = useState(false);
-  const mutateAsync = async (input: UploadVideoOnAwsS3Input) => {
-    setLoading(true);
-    const result = await fetch(input.SignedUrl, {
-      method: "PUT",
-      body: input.VideoBlob,
-      headers: {
-        "Content-Type": "video/*",
-      },
-    });
-    setLoading(false);
-    return result;
-  };
-
-  return { mutateAsync, isPending: loading };
 }
 
 export function useGetSeasonBySeriesId() {
@@ -66,7 +48,7 @@ export function useGetSeasonBySeriesId() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.getSeasonBySeriesId;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -74,11 +56,11 @@ export function useGetSeasonBySeriesId() {
 }
 
 export function useCreateEpisode() {
-  const [apiCaller, status] = useMutation<{ createEpisode: CommonSuccessOutput }, { input: CreateEpisodeInput }>(
+  const [apiCaller, status] = useMutation<{ createEpisode: EpisodeIdOutput }, { input: CreateEpisodeInput }>(
     gql`
       mutation ($input: CreateEpisodeInput!) {
         createEpisode(CreateEpisodeInput: $input) {
-          isSuccess
+          ID
         }
       }
     `
@@ -88,7 +70,7 @@ export function useCreateEpisode() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createEpisode;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -110,7 +92,7 @@ export function useCreateImage() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -157,4 +139,77 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
     `
   );
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImageAndBasicInfo };
+}
+
+export function useGetSharelink(input: GetSharelinkInput) {
+  const status = useQuery<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfoOutput[] }>(
+    gql`
+      query GetManagerSeriesWithImageAndBasicInfo {
+        getManagerSeriesWithImageAndBasicInfo {
+          ID
+          isFree
+          priceInDollar
+          image {
+            ID
+            variant
+            url
+          }
+          mediaBasicInfo {
+            plotSummary
+            releaseDate
+            title
+            ID
+          }
+        }
+      }
+    `
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImageAndBasicInfo };
+}
+
+export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
+  const status = useQuery<{ getImageByMediaId: ImageEntityType }>(
+    gql`
+      query ($param: GetImageByMediaIdParams!) {
+        getImageByMediaId(GetImageByMediaIdParams: $param) {
+          ID
+          variant
+          url
+        }
+      }
+    `,
+    {
+      variables: { param },
+    }
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };
+}
+
+export function useUploadVideoOnAwsS3() {
+  const [loading, setLoading] = useState(false);
+
+  const mutateAsync = async (input: UploadVideoOnAwsS3Input) => {
+    try {
+      setLoading(true);
+
+      const result = await fetch(input.SignedUrl, {
+        method: "PUT",
+        body: input.VideoBlob,
+      });
+
+      if (!result.ok) {
+        throw new Error(`Failed to upload video. Status: ${result.status}`);
+      }
+
+      return result;
+    } catch (error) {
+      console.log(error);
+
+      throw new Error(`Error uploading video: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { mutateAsync, isPending: loading };
 }

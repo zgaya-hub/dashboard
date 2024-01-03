@@ -19,10 +19,6 @@ export default function CineastContainer({ seriesId }: CineastContainerProps) {
     setIsSearchInputVisible(!isSearchInputVisible);
   };
 
-  const handleOnAdd = () => {
-    window.open("/quick/cineast-create", "_blank", "width=500,height=800");
-  };
-
   const cardHeaderStyle: SxProps = {};
 
   const listStyle: SxProps = {
@@ -55,7 +51,7 @@ export default function CineastContainer({ seriesId }: CineastContainerProps) {
 
   return (
     <Card>
-      <CardHeader title={t("Feature.Series.CineastContainer.title")} sx={cardHeaderStyle} action={[<SearchIcon onClick={handleOnToggleSearchInput} />, <AddIcon onClick={handleOnAdd} />, <CachedIcon onClick={refetch} />, error ? <ErrorIcon color="error" tooltip={error.message} iconButton /> : null]} />
+      <CardHeader title={t("Feature.Series.CineastContainer.title")} sx={cardHeaderStyle} action={[<SearchIcon onClick={handleOnToggleSearchInput} />, <AddIcon onClick={() => window.open("/quick/cineast-create", "_blank", "width=500,height=800")} />, <CachedIcon onClick={refetch} />, error ? <ErrorIcon color="error" tooltip={error.message} iconButton /> : null]} />
       {isSearchInputVisible ? <SearchInput placeholder={t("Feature.Series.CineastContainer.search")} autoFocus onClose={handleOnToggleSearchInput} /> : null}
       {isLoading ? cineastSkeletonList : cineastList}
     </Card>
