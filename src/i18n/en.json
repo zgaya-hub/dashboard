@@ -84,12 +84,13 @@
         "message": "Ready to upload? Just simple upload episode here",
         "movie": "Movie",
         "next": "Next",
-        "back": "Back",
         "cancel": "Cancel",
         "reUsePrevious": "Reuse previous",
         "addAdditionalInfo": "Add additional information",
         "trailer": "Trailer",
-        "imageUploadComponentTitle": "Drop a thumbnail"
+        "imageUploadComponentTitle": "Drop a thumbnail",
+        "uploading": "Uploading: {{progress}}%",
+        "processComplete": "Process complete you can continue"
       },
       "ImageUploadComponent": {
         "dropItHere": "Drop it here",

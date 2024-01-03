@@ -24,7 +24,9 @@ export default function TrailerUploadScreen() {
     });
 
     const movieBlob = await convertVideoInBlob(trailer);
-    uploadVideoOnAwsS3MutateAsync({ SignedUrl: result.getUploadVideoSignedUrl.signedUrl, VideoBlob: movieBlob });
+    if (result) {
+      uploadVideoOnAwsS3MutateAsync({ SignedUrl: result?.signedUrl, VideoBlob: movieBlob });
+    }
     handleOnToggleTrailerUploadModal();
   };
 

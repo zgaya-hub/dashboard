@@ -1,10 +1,8 @@
-import { DialogContent, Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps, SxProps } from "@mui/material";
+import { Dialog as MuiDialog, DialogProps as MuiDialogProps, Paper, PaperProps } from "@mui/material";
 import DialogHeader, { DialogHeaderProps } from "./DialogHeader";
 import Draggable from "react-draggable";
-import DialogAction, { DialogActionProps } from "./DialogAction";
-import { ReactNode } from "react";
 
-interface DialogProps extends Omit<MuiDialogProps, "sx"> {
+interface DialogProps extends MuiDialogProps {
   headerText?: string;
   headerHidden?: boolean;
   onClose?: () => void;
@@ -12,11 +10,6 @@ interface DialogProps extends Omit<MuiDialogProps, "sx"> {
   isDraggable?: boolean;
   hideCrossButton?: boolean;
   dialogHeaderProps?: DialogHeaderProps;
-  dialogActionProps?: DialogActionProps;
-  dialogAction?: ReactNode;
-  dialogContentSx?: SxProps;
-  dividers?: boolean;
-  sx?: SxProps;
 }
 
 function PaperComponent({ ...restProps }: PaperProps) {
@@ -27,22 +20,12 @@ function PaperComponent({ ...restProps }: PaperProps) {
   );
 }
 
-export default function Dialog({ dialogContentSx, onClose, headerHidden = false, dividers = true, headerText, dialogActionProps, dialogAction, outAreaClose = true, children, isDraggable = false, hideCrossButton, dialogHeaderProps, ...restProps }: DialogProps) {
+export default function Dialog({ onClose, headerHidden = false, headerText, outAreaClose = true, children, isDraggable = false, hideCrossButton, dialogHeaderProps, ...restProps }: DialogProps) {
   if (isDraggable) {
     return (
       <MuiDialog PaperComponent={(paperProps) => <PaperComponent {...paperProps} />} onClose={outAreaClose ? onClose : () => {}} {...restProps}>
         {!headerHidden ? <DialogHeader id="isDraggable-dialog-title" hideCrossButton={hideCrossButton} isDragable={isDraggable} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
-        {dialogAction ? (
-          <>
-            <DialogContent dividers={dividers} sx={dialogContentSx}>
-              {children}
-            </DialogContent>{" "}
-            <DialogAction children={dialogAction} {...dialogActionProps} />
-          </>
-        ) : (
-          children
-        )}
-        {!dialogAction ? <DialogAction children={dialogAction} {...dialogActionProps} /> : null}
+        {children}
       </MuiDialog>
     );
   }
@@ -50,16 +33,7 @@ export default function Dialog({ dialogContentSx, onClose, headerHidden = false,
   return (
     <MuiDialog onClose={outAreaClose ? onClose : () => {}} {...restProps}>
       {!headerHidden ? <DialogHeader hideCrossButton={hideCrossButton} title={headerText} onClose={onClose} {...dialogHeaderProps} /> : null}
-      {dialogAction ? (
-        <>
-          <DialogContent dividers={dividers} sx={dialogContentSx}>
-            {children}
-          </DialogContent>{" "}
-          <DialogAction children={dialogAction} {...dialogActionProps} />
-        </>
-      ) : (
-        children
-      )}
+      {children}
     </MuiDialog>
   );
 }

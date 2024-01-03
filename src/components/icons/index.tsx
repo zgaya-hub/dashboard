@@ -51,6 +51,7 @@ import { default as MuiAddCircleOutlinedIcon } from "@mui/icons-material/AddCirc
 import { default as MuiDetOutlinedails } from "@mui/icons-material/DetailsOutlined";
 import { default as MuiEventOutlinedIcon } from "@mui/icons-material/Event";
 import { default as MuiInfodOutlinedIcon } from "@mui/icons-material/InfoOutlined";
+import { default as MuiSdOutlinedIcon } from "@mui/icons-material/SdOutlined";
 
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4Icon } from "@mui/icons-material/Brightness4";
@@ -103,6 +104,8 @@ import { default as MuiAddCircleIcon } from "@mui/icons-material/AddCircle";
 import { default as MuiDetails } from "@mui/icons-material/Details";
 import { default as MuiEventIcon } from "@mui/icons-material/Event";
 import { default as MuiInfodIcon } from "@mui/icons-material/Info";
+import { default as MuiSdIcon } from "@mui/icons-material/Sd";
+
 import Tooltip from "../Tooltip";
 
 export interface IconWrapperProps extends SvgIconProps {
@@ -195,3 +198,4 @@ export const AddCircleIcon = withIconWrapper(MuiAddCircleOutlinedIcon, MuiAddCir
 export const DetailsIcon = withIconWrapper(MuiDetOutlinedails, MuiDetails);
 export const InfoIcon = withIconWrapper(MuiInfodOutlinedIcon, MuiInfodIcon);
 export const EventIcon = withIconWrapper(MuiEventOutlinedIcon, MuiEventIcon);
+export const SdIcon = withIconWrapper(MuiSdOutlinedIcon, MuiSdIcon);

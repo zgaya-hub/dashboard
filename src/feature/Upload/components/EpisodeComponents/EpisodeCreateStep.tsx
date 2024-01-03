@@ -21,9 +21,10 @@ interface EpisodeCreateStepProps {
   isLoading: boolean;
   isCreateImageLoading: boolean;
   seasonId: string;
+  isSaveButtonDisabled: boolean;
 }
 
-export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, isCreateImageLoading, seasonId }: EpisodeCreateStepProps) {
+export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, isCreateImageLoading, seasonId, isSaveButtonDisabled }: EpisodeCreateStepProps) {
   const { t } = useTranslation();
   const [episodeNumberPopoverAnchorEl, setEpisodeNumberPopoverAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { data: nextSeasonNumberData } = useGetNextEpisodeNumber({ SeasonId: seasonId });
@@ -74,7 +75,7 @@ export default function EpisodeCreateStep({ thumbnailSrc, onSave, onThumbnailSel
         <ImageUploadComponent isLoading={isCreateImageLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.EpisodeUploadModal.imageUploadComponentTitle")} />
         <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={1}>
           <Button variant="text">{t("Feature.VideoUpload.EpisodeUploadModal.cancel")}</Button>
-          <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)}>
+          <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)} disabled={isSaveButtonDisabled}>
             {t("Feature.VideoUpload.EpisodeUploadModal.next")}
           </Button>
         </Stack>

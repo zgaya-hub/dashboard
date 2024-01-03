@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
 import { MovierMediaEnum } from "@/types/enum";
-import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
+import { convertVideoInBlob, extractImageBase64, extractImageMetadata, extractImageUrl, extractVideoMetadata } from "metalyzer";
 import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
 import MovieUploadModal from "../components/MovieUploadModal";
 
@@ -23,10 +23,19 @@ export default function MovieUploadScreen() {
       MediaType: MovierMediaEnum.MOVIE,
     });
 
-    const movieBlob = await convertVideoInBlob(movie);
-    if (result) {
-      uploadVideoOnAwsS3MutateAsync({ SignedUrl: result?.signedUrl, VideoBlob: movieBlob });
-    }
+    handleOnUploadOnAwsS3(movie, result?.signedUrl);
+  };
+
+  const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {
+    const videoBlob = await convertVideoInBlob(episode);
+    await uploadVideoOnAwsS3MutateAsync({ SignedUrl: signedUrl, VideoBlob: videoBlob });
+  };
+
+  const handleOnThumbnailSelect = async (image: File) => {
+    const { mimeType } = await extractImageMetadata(image);
+    const imageBase64 = await extractImageBase64(image);
+    setThumbnailUrl(await extractImageUrl(image));
+    await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.THUMBNAIL });
   };
 
   const handleOnToggleMovieUploadModal = () => {

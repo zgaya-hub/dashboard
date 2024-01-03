@@ -1,4 +1,4 @@
-import { SxProps, useMediaQuery } from "@mui/material";
+import { DialogContent, SxProps, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
 import VideoUploadComponent from "./VideoUploadComponent";
@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/useNavigation";
 import useTheme from "@/theme/Theme.context";
 import Button from "@/components/Button";
+import DialogAction from "@/components/Dialog/DialogActions";
 
 interface MovieUploadModalProps {
   isVisible: boolean;
@@ -42,23 +43,22 @@ export default function MovieUploadModal({ isVisible, onClose, onFeedback, onVid
     },
   }));
 
-  const dialogFooter = (
-    <>
-      <Button onClick={onFeedback} variant="text">
-        <FeedbackIcon />
-      </Button>
-      <Button onClick={handleOnTrailer} startIcon={<UploadIcon />}>
-        {t("Feature.VideoUpload.MovieUploadModal.trailer")}
-      </Button>
-      <Button onClick={handleOnEpisode} startIcon={<UploadIcon />}>
-        {t("Feature.VideoUpload.MovieUploadModal.episode")}
-      </Button>
-    </>
-  );
-
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.MovieUploadModal.headerText")} onClose={onClose} outAreaClose={false} dialogAction={dialogFooter}>
-      <VideoUploadComponent onVideoSelect={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={t("Feature.VideoUpload.MovieUploadModal.headerText")} onClose={onClose} outAreaClose={false}>
+      <DialogContent dividers>
+        <VideoUploadComponent onVideoSelect={onVideoDrop} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />
+      </DialogContent>
+      <DialogAction>
+        <Button onClick={onFeedback} variant="text">
+          <FeedbackIcon />
+        </Button>
+        <Button onClick={handleOnTrailer} startIcon={<UploadIcon />}>
+          {t("Feature.VideoUpload.MovieUploadModal.trailer")}
+        </Button>
+        <Button onClick={handleOnEpisode} startIcon={<UploadIcon />}>
+          {t("Feature.VideoUpload.MovieUploadModal.episode")}
+        </Button>
+      </DialogAction>
     </Dialog>
   );
 }
