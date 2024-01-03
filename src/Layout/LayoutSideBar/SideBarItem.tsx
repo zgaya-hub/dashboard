@@ -2,11 +2,12 @@ import { CSSProperties, cloneElement } from "react";
 import { ReactElement } from "react";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { MenuItem } from "react-pro-sidebar";
-import { Drawer, IconProps, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import Tooltip from "@/components/Tooltip";
+import { IconWrapperProps } from "@/components/icons";
 
 export interface SidebarItemProps {
-  icon: ReactElement<IconProps>;
+  icon: ReactElement<IconWrapperProps>;
   label: string;
   onClick: () => void;
   isActive: boolean;
@@ -14,19 +15,19 @@ export interface SidebarItemProps {
 }
 
 export default function SidebarItem({ icon, label, onClick, isActive }: SidebarItemProps) {
-  const containerStyle: CSSProperties = {
+  const containerStyle = useThemeStyles<CSSProperties>((theme) => ({
     cursor: "pointer",
-  };
+    background: isActive ? theme.palette.action.selected : "",
+  }));
 
   const activeLineStyle = useThemeStyles((theme) => ({
-    width: 0.02,
+    width: theme.spacing(0.5),
     background: theme.palette.primary.main,
     position: "absolute",
     top: 0,
     left: 0,
     height: "100%",
-    borderBottomRightRadius: theme.shape.borderRadius,
-    borderTopRightRadius: theme.shape.borderRadius,
+    borderRadius: theme.shape.borderRadius,
   }));
 
   return (
@@ -36,6 +37,8 @@ export default function SidebarItem({ icon, label, onClick, isActive }: SidebarI
         onClick={onClick}
         icon={cloneElement(icon, {
           fontSize: "small",
+          solid: isActive,
+          color: isActive ? "primary" : "inherit",
         })}
       >
         {isActive ? <Stack sx={activeLineStyle} /> : null}
