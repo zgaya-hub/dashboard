@@ -5,7 +5,7 @@ export { default as SeasonListForSelection } from "./EpisodeComponents/SeasonLis
 export { default as SelectSeriesAndSeasonModal } from "./EpisodeComponents/SelectSeriesAndSeasonModal";
 export { default as SeriesListForSelection } from "./EpisodeComponents/SeriesListForSelection";
 export { default as ImageUploadComponent } from "./ImageUploadComponent";
-export { default as MovieUploadModal } from "./MovieUploadModal";
+export { default as MovieUploadModal } from "./MovieComponents/MovieUploadModal";
 export { default as TrailerUploadModal } from "./TrailerUploadModal";
 export { default as VideoUploadCircleIcon } from "./VideoUploadCircleIcon";
 export { default as VideoUploadComponent } from "./VideoUploadComponent";
