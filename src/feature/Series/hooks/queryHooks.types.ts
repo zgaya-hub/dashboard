@@ -1,4 +1,4 @@
-import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, ImageVariantEnum, MediaStatusEnum } from "@/types/enum";
+import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaStatusEnum, ImageVariantEnum } from "@/types/enum";
 import { TableSeriesInterface } from "../types";
 
 export type CreateImageInput = {
@@ -15,10 +15,10 @@ export type GetManagerSeriesForTableInput = {
 export type CreateSeriesInput = {
   ImageId: string;
   MediaBasicInfo: CreateMediaBasicInfoInput;
-  MediaAdditionalInfo: Partial<CreateMediaAdditionalInfoInput>;
+  AdditionalInfo: Partial<CreateAdditionalInfoInput>;
 };
 
-export type CreateMediaAdditionalInfoInput = {
+export type CreateAdditionalInfoInput = {
   OriginCountry: MediaCountriesEnum;
   OriginalLanguage: LanguagiesEnum;
   Genre: MediaGenriesEnum;
@@ -42,7 +42,7 @@ export type DeleteSeriesByIdParams = {
 
 export type UpdateSeriesInput = {
   MediaBasicInfo: Partial<CreateMediaBasicInfoInput>;
-  MediaAdditionalInfo: Partial<CreateMediaAdditionalInfoInput>;
+  AdditionalInfo: Partial<CreateAdditionalInfoInput>;
   Image: Partial<UpdateImageInput>;
 };
 
@@ -54,7 +54,7 @@ export type GetMediaBasicInfoByMediaIdParams = {
   MediaId: string;
 };
 
-export type GetMediaAdditionalInfoByMediaIdParams = {
+export type GetAdditionalInfoByMediaIdParams = {
   MediaId: string;
 };
 

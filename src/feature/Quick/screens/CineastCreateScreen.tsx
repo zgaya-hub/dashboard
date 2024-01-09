@@ -31,7 +31,7 @@ export default function CineastCreateScreen() {
   const handleOnImageSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.PROFILE });
+    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.BACKDROP });
     if (result) {
       setFormValue("imageId", result.ID);
     }

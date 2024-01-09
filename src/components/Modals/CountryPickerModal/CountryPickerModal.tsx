@@ -10,8 +10,8 @@ import { DoneIcon, SearchIcon } from "@/components/icons";
 import { countryListWithFlag } from "@/mock/countryListWithFlag";
 import { SearchInput } from "@/components/Form";
 import { CountryPickerEmptyComponent } from "..";
-import { MediaCountriesEnum } from "move-types/lib";
 import DialogAction from "@/components/Dialog/DialogActions";
+import { MediaCountriesEnum } from "mirra-scope-client-types/lib";
 
 interface CountryPickerModalProps {
   isOpen: boolean;
@@ -76,14 +76,14 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
         </RadioGroup>
       </DialogContent>
       <DialogAction>
-      <SearchIcon onClick={handleOnSearchInputVisible} />
-      <Button onClick={handleOnClose} variant="text">
-        {t("Components.Modals.CountryPickerModal.cancel")}
-      </Button>
-      <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Components.Modals.CountryPickerModal.ok")}
-      </Button>
-    </DialogAction>
+        <SearchIcon onClick={handleOnSearchInputVisible} />
+        <Button onClick={handleOnClose} variant="text">
+          {t("Components.Modals.CountryPickerModal.cancel")}
+        </Button>
+        <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
+          {t("Components.Modals.CountryPickerModal.ok")}
+        </Button>
+      </DialogAction>
     </Dialog>
   );
 }

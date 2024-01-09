@@ -10,10 +10,10 @@ import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
 import { useCreateImage, useCreateSeason, useGetNextSeasonNumber } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { ImageVariantEnum } from "@/types/enum";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { ImageVariantEnum } from "@/types/enum";
 
 export default function SeasonCreateScreen() {
   const { t } = useTranslation();

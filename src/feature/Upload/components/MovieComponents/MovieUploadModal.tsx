@@ -2,7 +2,7 @@
 import { Box, DialogContent, Divider, Step, StepLabel, Stepper, SxProps, Typography, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Dialog } from "@/components/Dialog";
-import { CheckBoxIcon, FeedbackIcon, SdIcon, UploadIcon } from "@/components/icons";
+import { FeedbackIcon, SdIcon, UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/useNavigation";
 import useTheme from "@/theme/Theme.context";
@@ -11,6 +11,7 @@ import { Ref, forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
 import { CreateMovieFormFieldType } from "../../types";
 import DialogActions from "@/components/Dialog/DialogActions";
+import MovieCreateStep from "./MovieCreateStep";
 
 interface MovieUploadModalProps {
   isVisible: boolean;
@@ -83,9 +84,8 @@ const MovieUploadModal = forwardRef(function MovieUploadModal({ isVisible, onClo
     },
     {
       label: t("Feature.VideoUpload.MovieUploadModal.enterMovieDetails"),
-      step: <VideoUploadComponent onVideoSelect={handleOnMovieSelect} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />,
 
-      // step: <MovieCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateMovie} thumbnailSrc={thumbnailUrl} seasonId={seasonId} isSaveButtonDisabled={isSaveButtonDisabled} />,
+      step: <MovieCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateMovie} thumbnailSrc={thumbnailUrl} seasonId={seasonId} isSaveButtonDisabled={isSaveButtonDisabled} />,
     },
   ];
 

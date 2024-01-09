@@ -14,7 +14,7 @@ type MediaBasicInfoEntityType = {
   title: string;
 } & EntityBaseType;
 
-type MediaAdditionalInfoEntityType = {
+type AdditionalInfoEntityType = {
   originCountry: MediaCountriesEnum;
   originalLanguage: MediaLanguagiesEnum;
   genre: MediaGenriesEnum;

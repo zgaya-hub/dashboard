@@ -40,7 +40,7 @@ export default function SeriesTableScreen() {
     await updateSeriesMutateAsync(
       { SeriesId: series.ID },
       {
-        MediaAdditionalInfo: {
+        AdditionalInfo: {
           Genre: series.genre,
           Status: series.status,
         },

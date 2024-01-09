@@ -9,7 +9,7 @@ export type CreateImageInput = {
 export type CreateSeriesInput = {
   ImageId: string;
   MediaBasicInfo: CreateMediaBasicInfoInput;
-  MediaAdditionalInfo: MediaAdditionalInfoInput;
+  AdditionalInfo: AdditionalInfoInput;
 };
 
 export type CreateSeasonInput = {
@@ -30,7 +30,7 @@ export type CreateCineastInput = {
   Award: string[];
 };
 
-export type MediaAdditionalInfoInput = {
+export type AdditionalInfoInput = {
   OriginCountry?: MediaCountriesEnum;
   OriginalLanguage?: LanguagiesEnum;
   Genre?: MediaGenriesEnum;

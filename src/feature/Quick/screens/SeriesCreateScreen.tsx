@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
 import { useCreateImage, useCreateSeries } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { ImageVariantEnum } from "@/types/enum";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
+import { ImageVariantEnum } from "@/types/enum";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
@@ -50,7 +50,7 @@ export default function SeriesCreateScreen() {
         Title: input.title,
         ReleaseDate: +input.releaseDate,
       },
-      MediaAdditionalInfo: {},
+      AdditionalInfo: {},
     });
     window.close();
   };

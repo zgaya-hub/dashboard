@@ -53,12 +53,10 @@ export default function SeriesCreateScreen() {
   const handleOnCreateEpisode = async (input: SeriesCreateFormFieldInterface) => {
     await createSeriesMutateAsync({
       ImageId: input.imageId,
-      MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: +input.releaseDate,
-      },
-      MediaAdditionalInfo: {
+      PlotSummary: input.plotSummary,
+      Title: input.title,
+      ReleaseDate: +input.releaseDate,
+      AdditionalInfo: {
         Genre: input.genre,
         OriginalLanguage: input.originalLanguage,
         OriginCountry: input.originCountry,
@@ -105,11 +103,7 @@ export default function SeriesCreateScreen() {
           </Grid>
         </Grid>
         <Grid xs={12} item lg={5.9}>
-          <SeriesAdditionalInfoForm
-            setFormValue={setFormValue}
-            watchFormValue={watchFormValue}
-            formRegister={formRegister}
-          />
+          <SeriesAdditionalInfoForm setFormValue={setFormValue} watchFormValue={watchFormValue} formRegister={formRegister} />
         </Grid>
       </Grid>
     </Page>
