@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
-import { SearchIcon } from "../icons";
+import { useTranslation } from "react-i18next";
+import { SearchIcon, ClearIcon } from "../icons";
 import Tooltip from "../Tooltip";
 import { OutlinedInput, OutlinedInputProps, SxProps } from "@mui/material";
 
@@ -8,9 +9,12 @@ interface SearchInputProps extends Omit<OutlinedInputProps, "sx" | "onChange"> {
   onChange?: (text: string) => void;
   tooltip?: string;
   sx?: SxProps;
+  onClose?: () => void;
 }
 
-export default function SearchInput({ onChange, sx, tooltip, ...restProps }: SearchInputProps) {
+export default function SearchInput({ onChange, sx, tooltip, onClose, ...restProps }: SearchInputProps) {
+  const { t } = useTranslation();
+
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newText = event.target.value;
     if (onChange) {
@@ -34,8 +38,15 @@ export default function SearchInput({ onChange, sx, tooltip, ...restProps }: Sea
         onChange={handleOnChange}
         startAdornment={
           <InputAdornment position="start">
-            <SearchIcon />
+            <SearchIcon tooltip={t("Components.Form.SearchInput.search")} />
           </InputAdornment>
+        }
+        endAdornment={
+          onClose ? (
+            <InputAdornment position="end">
+              <ClearIcon onClick={onClose} tooltip={t("Components.Form.SearchInput.close")} />
+            </InputAdornment>
+          ) : null
         }
       />
     </Tooltip>

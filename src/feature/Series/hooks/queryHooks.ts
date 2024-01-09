@@ -1,44 +1,28 @@
-import {
-  CreateMediaImageInput,
-  MediaImageIdOutput,
-  CreateSeriesInput,
-  DeleteMultipleSeriesByIdzOutput,
-  DeleteMultipleSeriesByIdzParams,
-  DeleteSeriesByIdOutput,
-  DeleteSeriesByIdParams,
-  GetManagerSeriesForTableInput,
-  GetManagerSeriesForTableOutput,
-  UpdateSeriesInput,
-  UpdateSeriesOutput,
-  UpdateSeriesParams,
-  GetMediaBasicInfoByMediaIdParams,
-  GetMediaAdditionalInfoByMediaIdParams,
-  GetMediaImageByMediaIdParams,
-} from "./queryHooks.types";
+import { CreateImageInput, ImageIdOutput, CreateSeriesInput, DeleteMultipleSeriesByIdzOutput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdOutput, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, UpdateSeriesInput, UpdateSeriesOutput, UpdateSeriesParams, GetMediaBasicInfoByMediaIdParams, GetMediaAdditionalInfoByMediaIdParams, GetImageByMediaIdParams, GetCineastsBySeriesIdParams } from "./queryHooks.types";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-export function useCreateMediaImage() {
-  const [apiCaller, status] = useMutation<{ createMediaImage: MediaImageIdOutput }, { input: CreateMediaImageInput }>(
+export function useCreateImage() {
+  const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
-      mutation ($input: CreateMediaImageInput!) {
-        createMediaImage(CreateMediaImageInput: $input) {
+      mutation ($input: CreateImageInput!) {
+        createImage(CreateImageInput: $input) {
           ID
         }
       }
     `
   );
-  const mutateAsync = async (input: CreateMediaImageInput) => {
+  const mutateAsync = async (input: CreateImageInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
-      return result.data?.createMediaImage;
+      return result.data?.createImage;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
   status;
 
-  return { mutateAsync, data: status.data?.createMediaImage, isPending: status.loading, ...status };
+  return { mutateAsync, data: status.data?.createImage, isPending: status.loading, ...status };
 }
 
 export function useCreateSeries() {
@@ -55,7 +39,7 @@ export function useCreateSeries() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createSeries;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -75,7 +59,7 @@ export function useDeleteSeriesById() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.deleteSeriesById;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -99,7 +83,7 @@ export function useDeleteMultipleSeriesByIdz() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.deleteMultipleSeriesByIdz;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -121,7 +105,7 @@ export function useUpdateSeries() {
       const result = await apiCaller({ variables: { input, param } });
       return result.data?.updateSeries;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -167,11 +151,11 @@ export function useGetMediaAdditionalInfoByMediaId(param: GetMediaAdditionalInfo
   return { ...status, isLoading: status.loading, data: status.data?.getMediaAdditionalInfoByMediaId };
 }
 
-export function useGetMediaImageByMediaId(param: GetMediaImageByMediaIdParams) {
-  const status = useQuery<{ getMediaImageByMediaId: MediaImageEntityType }>(
+export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
+  const status = useQuery<{ getImageByMediaId: ImageEntityType }>(
     gql`
-      query ($param: GetMediaImageByMediaIdParams!) {
-        getMediaImageByMediaId(GetMediaImageByMediaIdParams: $param) {
+      query ($param: GetImageByMediaIdParams!) {
+        getImageByMediaId(GetImageByMediaIdParams: $param) {
           ID
           variant
           url
@@ -182,7 +166,29 @@ export function useGetMediaImageByMediaId(param: GetMediaImageByMediaIdParams) {
       variables: { param },
     }
   );
-  return { ...status, isLoading: status.loading, data: status.data?.getMediaImageByMediaId };
+  return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };
+}
+
+export function useGetCineastsBySeriesId(param: GetCineastsBySeriesIdParams) {
+  const status = useQuery<{ getCineastsBySeriesId: CineastEntityType[] }>(
+    gql`
+      query ($param: GetCineastsBySeriesIdParams!) {
+        getCineastsBySeriesId(GetCineastsBySeriesIdParams: $param) {
+          fullName
+          profession
+          dateOfBirth
+          bio
+          gender
+          country
+          award
+        }
+      }
+    `,
+    {
+      variables: { param },
+    }
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getCineastsBySeriesId };
 }
 
 export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput) {
@@ -196,7 +202,7 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
             createdAt
             updatedAt
             genre
-            mediaImageUrl
+            imageUrl
             originCountry
             originalLanguage
             plotSummary

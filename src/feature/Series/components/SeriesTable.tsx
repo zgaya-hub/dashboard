@@ -6,10 +6,10 @@ import { format } from "date-fns";
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 import { MoreVertIcon, OpenTabIcon } from "@/components/icons";
 import { values as convertEnumToArray } from "lodash";
-import { CountriesEnum, MediaGenriesEnum, LanguagiesEnum, MediaStatusEnum } from "@/types/enum";
+import { MediaCountriesEnum, MediaGenriesEnum, LanguagiesEnum, MediaStatusEnum } from "@/types/enum";
 import { DataGridPro } from "@/components/DataGridPro";
 import { LinearProgress, PopoverPosition } from "@mui/material";
-import { HorizontalCard } from "@/components/Cards";
+import { MediaTableCard } from "@/components/Cards";
 
 interface SeriesTableProps {
   rows: TableSeriesInterface[];
@@ -43,16 +43,16 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
   const SeriesTableColumn: GridColDef[] = [
     {
       field: "series",
-      headerName: "Origin country",
+      headerName: "Series",
       width: 500,
-      renderCell: (params) => <HorizontalCard imageSrc={params.row.mediaImageUrl} title={params.row.title} description={params.row.plotSummary} />,
+      renderCell: (params) => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
       field: "originCountry",
       headerName: "Origin country",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(CountriesEnum),
+      valueOptions: convertEnumToArray(MediaCountriesEnum),
       editable: true,
     },
     {
@@ -88,7 +88,7 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
       valueFormatter: (params) => format(params.value, DEFAULT_MONTH_YEAR_FORMAT),
     },
     {
-      field: "mediaImageUrl",
+      field: "imageUrl",
       headerName: "Image url",
       width: 100,
       editable: true,
@@ -145,7 +145,7 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
           },
         }}
       />
-      <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition} onSelect={() => onSelect(selectedRowId)} onRefresh={onRefresh} onClose={() => setContextMenuAnchorPosition(null)} />
+      <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => onSelect(selectedRowId)} onRefresh={onRefresh} onClose={() => setContextMenuAnchorPosition(null)} />
     </Fragment>
   );
 }

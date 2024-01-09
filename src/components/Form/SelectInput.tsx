@@ -1,22 +1,25 @@
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
-import Select, { SelectProps } from "@mui/material/Select";
+import Select from "@mui/material/Select";
+import { FormControlProps } from "@mui/material/FormControl";
+import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
-interface SelectInputProps extends SelectProps {
+interface SelectInputProps<T extends FieldValues> extends Omit<FormControlProps, "name"> {
+  register: UseFormRegister<T>;
+  name: Path<T>;
   helperText?: string;
+  label?: string;
 }
 
-export default function SelectInput({ error, helperText, label, fullWidth, children, ...restProps }: SelectInputProps) {
+export default function SelectInput<T extends FieldValues>({ helperText, label, name, children, register, ...restProps }: SelectInputProps<T>) {
   return (
-    <FormControl fullWidth={fullWidth}>
-      <InputLabel id="demo-simple-select-label" error={error}>
-        {label}
-      </InputLabel>
-      <Select label={label} fullWidth={fullWidth} error={error} {...restProps}>
+    <FormControl {...restProps}>
+      <InputLabel>{label}</InputLabel>
+      <Select {...register(name!)} name={name} label={label}>
         {children}
       </Select>
-      <FormHelperText error={error}>{helperText}</FormHelperText>
+      <FormHelperText>{helperText}</FormHelperText>
     </FormControl>
   );
 }

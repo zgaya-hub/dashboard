@@ -1,8 +1,21 @@
+import { CineastProfessionEnum, GenderEnum, MediaCountriesEnum } from "@/types/enum";
+
 export interface SeriesCreateFormFieldInterface {
   title: string;
   plotSummary: string;
   releaseDate: number;
-  mediaImageId: string;
+  imageId: string;
+}
+
+export interface CineastCreateFormFieldInterface {
+  imageId: string;
+  fullName: string;
+  profession: CineastProfessionEnum;
+  dateOfBirth: number;
+  bio: string;
+  gender: GenderEnum;
+  country: MediaCountriesEnum;
+  award: string[];
 }
 
 export interface SeasonCreateFormFieldInterface {
@@ -10,5 +23,5 @@ export interface SeasonCreateFormFieldInterface {
   plotSummary: string;
   releaseDate: number;
   number: number;
-  mediaImageId: string;
+  imageId: string;
 }

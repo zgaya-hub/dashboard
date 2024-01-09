@@ -2,8 +2,8 @@ import React from "react";
 import { ListItemText, Divider, Menu, MenuItem, SxProps } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { LaptopIcon, LightModeIcon, MoonIcon, SignalBarIcon } from "@/components/icons";
-import { MenuHeader } from "@/components/Menu";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { ListSubheader } from "@/components/Tags";
 
 interface AppearanceMenuProps {
   anchorEl: null | HTMLElement;
@@ -28,9 +28,7 @@ export default function AppearanceMenu({ anchorEl, isVisible, onClose }: Appeara
 
   return (
     <Menu anchorEl={anchorEl} open={isVisible} onClose={onClose} onClick={onClose}>
-      <MenuHeader>
-        <ListItemText>{t("Layout.AppBar.AppearanceMenu.title")}</ListItemText>
-      </MenuHeader>
+      <ListSubheader>{t("Layout.AppBar.AppearanceMenu.title")}</ListSubheader>
       <Divider />
       {createMenuItem(<LaptopIcon isListIcon />, t("Layout.AppBar.AppearanceMenu.systemDefault"), () => {})}
       {createMenuItem(<MoonIcon isListIcon />, t("Layout.AppBar.AppearanceMenu.darkTheme"), () => {})}

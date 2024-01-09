@@ -120,6 +120,20 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
+  MuiButtonBase: {
+    styleOverrides: {
+      root: {
+        height: "max-content",
+      },
+    },
+  },
+  MuiListSubheader: {
+    styleOverrides: {
+      root: {
+        background: "#ffffff",
+      },
+    },
+  },
 };
 
 export const darkThemeComponents: ThemeOptions["components"] = {

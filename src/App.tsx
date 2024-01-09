@@ -11,6 +11,7 @@ import { LicenseInfo as DataGridLicenseInfo } from "@mui/x-data-grid-pro";
 import { ApolloProvider } from "@apollo/client";
 import { queryClient } from "./api/queryClient";
 import "./i18n";
+import { SidebarContextProvider } from "./context/SidebarContext";
 
 /* const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +36,9 @@ function App() {
             <ThemeProvider>
               <UserDetailProvider>
                 <GqlErrorProvider>
-                  <MainStack />
+                  <SidebarContextProvider>
+                    <MainStack />
+                  </SidebarContextProvider>
                 </GqlErrorProvider>
               </UserDetailProvider>
             </ThemeProvider>

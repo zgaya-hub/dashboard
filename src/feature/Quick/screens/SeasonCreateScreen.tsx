@@ -8,9 +8,9 @@ import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
-import { useCreateMediaImage, useCreateSeason, useGetNextSeasonNumber } from "../hooks";
+import { useCreateImage, useCreateSeason, useGetNextSeasonNumber } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { MediaImageVariantEnum } from "@/types/enum";
+import { ImageVariantEnum } from "@/types/enum";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -20,7 +20,7 @@ export default function SeasonCreateScreen() {
   const params = useParams();
   const { data: nextSeasonNumberData } = useGetNextSeasonNumber({ SeriesId: params.seriesId! });
   const { mutateAsync: createSeasonMutateAsync, isPending: isCreateSeasonLoading } = useCreateSeason();
-  const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateMediaImage();
+  const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateImage();
 
   useEffect(() => {
     if (nextSeasonNumberData) {
@@ -48,15 +48,15 @@ export default function SeasonCreateScreen() {
   const handleOnImageSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: MediaImageVariantEnum.BACKDROP });
+    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.BACKDROP });
     if (result) {
-      setSeasonFormValue("mediaImageId", result.ID);
+      setSeasonFormValue("imageId", result.ID);
     }
   };
 
   const handleOnCreateEpisode = async (input: SeasonCreateFormFieldInterface) => {
     await createSeasonMutateAsync({
-      MediaImageId: input.mediaImageId,
+      ImageId: input.imageId,
       MediaBasicInfo: {
         PlotSummary: input.plotSummary,
         Title: input.title,
@@ -70,11 +70,11 @@ export default function SeasonCreateScreen() {
 
   const pageHeader = (
     <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.QuickMediaManagement.SeasonCreateScreen.createASeason")}</Typography>
+      <Typography variant="h5">{t("Feature.Quick.SeasonCreateScreen.createASeason")}</Typography>
       <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.QuickMediaManagement.SeasonCreateScreen.back")}</Button>
+        <Button variant="text">{t("Feature.Quick.SeasonCreateScreen.back")}</Button>
         <Button loading={isCreateSeasonLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.QuickMediaManagement.SeasonCreateScreen.save")}
+          {t("Feature.Quick.SeasonCreateScreen.save")}
         </Button>
       </Stack>
     </Elevator>
@@ -93,5 +93,5 @@ const validationSchema = yup.object().shape({
   plotSummary: yup.string().required("Plot summary is required"),
   number: yup.number().required("Plot summary is required").min(1),
   releaseDate: yup.number().required("Release date is required"),
-  mediaImageId: yup.string().required("Backdrop is required"),
+  imageId: yup.string().required("Backdrop is required"),
 });

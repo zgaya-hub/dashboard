@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Menu, Sidebar, SubMenu } from "react-pro-sidebar";
 import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon, QuestionAnswerIcon, SettingIcon, UploadIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import useNavigation from "@/navigation/useNavigation";
 import SidebarItem, { SidebarItemProps } from "./SidebarItem";
 import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
+import { AuthenticatedRouteParams, useLocation } from "@/navigation";
 
 interface SidebarSectionProps {
   listItems: SidebarItemProps[];
@@ -40,9 +41,14 @@ function SidebarSection({ listItems }: SidebarSectionProps) {
 
 export default function LayoutSidebar() {
   const { t } = useTranslation();
+  const location = useLocation();
   const navigation = useNavigation();
-  const [activeItemLabel, setActiveItemLabel] = useState("");
-  const [isHovered, setIsHovered] = useState(false);
+  const [activeItem, setActiveItem] = useState<keyof AuthenticatedRouteParams>("/home");
+  const [isHovered] = useState(false);
+
+  useEffect(() => {
+    setActiveItem(location.pathname);
+  }, [location]);
 
   const sections: { sidebar: SidebarItemProps[]; footer: SidebarItemProps[] } = {
     sidebar: [
@@ -50,70 +56,67 @@ export default function LayoutSidebar() {
         icon: <DashboardIcon />,
         label: t("Layout.Sidebar.dashboard"),
         onClick: () => {
-          setActiveItemLabel(t("Layout.Sidebar.dashboard"));
           navigation.navigate("/home");
         },
-        isActive: activeItemLabel === t("Layout.Sidebar.dashboard"),
+        isActive: activeItem.startsWith('/home'),
       },
       {
         icon: <AnalyticsIcon />,
         label: t("Layout.Sidebar.analytics"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.analytics")),
-        isActive: activeItemLabel === t("Layout.Sidebar.analytics"),
+        onClick: () => {
+          alert("Analytics");
+        },
+        isActive: activeItem === t("Layout.Sidebar.analytics"),
       },
       {
         icon: <PlaySquareIcon />,
         label: t("Layout.Sidebar.manageMovie"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.manageMovie")),
-        isActive: activeItemLabel === t("Layout.Sidebar.manageMovie"),
+        onClick: () => alert(t("Layout.Sidebar.manageMovie")),
+        isActive: activeItem === t("Layout.Sidebar.manageMovie"),
       },
       {
         icon: <PlayDoubleIcon />,
         label: t("Layout.Sidebar.manageSeries"),
         onClick: () => {
-          setActiveItemLabel(t("Layout.Sidebar.manageSeries"));
           navigation.navigate("/series");
         },
-        isActive: activeItemLabel === t("Layout.Sidebar.manageSeries"),
+        isActive: activeItem.startsWith('/series'),
       },
       {
         icon: <LinkIcon />,
         label: t("Layout.Sidebar.socialLinking"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.socialLinking")),
-        isActive: activeItemLabel === t("Layout.Sidebar.socialLinking"),
+        onClick: () => alert(t("Layout.Sidebar.socialLinking")),
+        isActive: activeItem === t("Layout.Sidebar.socialLinking"),
       },
       {
         icon: <UploadIcon />,
         label: t("Layout.Sidebar.manageUpload"),
         onClick: () => {},
-        isActive: activeItemLabel === t("Layout.Sidebar.manageUpload"),
+        isActive: activeItem === t("Layout.Sidebar.manageUpload"),
         childrens: [
           {
             icon: <UploadIcon />,
             label: t("Layout.Sidebar.uploadMovie"),
             onClick: () => {
-              setActiveItemLabel(t("Layout.Sidebar.uploadMovie"));
               navigation.navigate("/upload/movie");
             },
-            isActive: activeItemLabel === t("Layout.Sidebar.uploadMovie"),
+            isActive: activeItem.startsWith('/upload/movie'),
           },
           {
             icon: <UploadIcon />,
             label: t("Layout.Sidebar.uploadTrailer"),
             onClick: () => {
-              setActiveItemLabel(t("Layout.Sidebar.uploadTrailer"));
               navigation.navigate("/upload/trailer");
             },
-            isActive: activeItemLabel === t("Layout.Sidebar.uploadTrailer"),
+            isActive: activeItem.startsWith('/upload/trailer'),
           },
           {
             icon: <UploadIcon />,
             label: t("Layout.Sidebar.uploadEpisode"),
             onClick: () => {
-              setActiveItemLabel(t("Layout.Sidebar.uploadEpisode"));
               navigation.navigate("/upload/episode");
             },
-            isActive: activeItemLabel === t("Layout.Sidebar.uploadEpisode"),
+            isActive: activeItem.startsWith('/upload/episode'),
           },
         ],
       },
@@ -122,14 +125,14 @@ export default function LayoutSidebar() {
       {
         icon: <SettingIcon />,
         label: t("Layout.Sidebar.settings"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.settings")),
-        isActive: activeItemLabel === t("Layout.Sidebar.settings"),
+        onClick: () => alert(t("Layout.Sidebar.settings")),
+        isActive: activeItem === t("Layout.Sidebar.settings"),
       },
       {
         icon: <QuestionAnswerIcon />,
         label: t("Layout.Sidebar.askAnyQuestion"),
-        onClick: () => setActiveItemLabel(t("Layout.Sidebar.askAnyQuestion")),
-        isActive: activeItemLabel === t("Layout.Sidebar.askAnyQuestion"),
+        onClick: () => alert(t("Layout.Sidebar.askAnyQuestion")),
+        isActive: activeItem === t("Layout.Sidebar.askAnyQuestion"),
       },
     ],
   };
@@ -148,7 +151,7 @@ export default function LayoutSidebar() {
   const sideBarBackground = useThemeStyles((theme) => theme.palette.background.default);
 
   return (
-    <Sidebar collapsed={!isHovered} style={containerStyle} backgroundColor={sideBarBackground} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <Sidebar collapsed={!isHovered} style={containerStyle} backgroundColor={sideBarBackground}>
       <Stack justifyContent={"space-between"} height={"100vh"}>
         <Stack gap={1}>
           {!isHovered ? <CollapsedSidebarUserCard /> : <ExpandSidebarUserCard />}

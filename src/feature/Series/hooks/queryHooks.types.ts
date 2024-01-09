@@ -1,10 +1,10 @@
-import { CountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaImageVariantEnum, MediaStatusEnum } from "@/types/enum";
+import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, ImageVariantEnum, MediaStatusEnum } from "@/types/enum";
 import { TableSeriesInterface } from "../types";
 
-export type CreateMediaImageInput = {
+export type CreateImageInput = {
   Base64: string;
   Mime: string;
-  Variant: MediaImageVariantEnum;
+  Variant: ImageVariantEnum;
 };
 
 export type GetManagerSeriesForTableInput = {
@@ -13,13 +13,13 @@ export type GetManagerSeriesForTableInput = {
 };
 
 export type CreateSeriesInput = {
-  MediaImageId: string;
+  ImageId: string;
   MediaBasicInfo: CreateMediaBasicInfoInput;
   MediaAdditionalInfo: Partial<CreateMediaAdditionalInfoInput>;
 };
 
 export type CreateMediaAdditionalInfoInput = {
-  OriginCountry: CountriesEnum;
+  OriginCountry: MediaCountriesEnum;
   OriginalLanguage: LanguagiesEnum;
   Genre: MediaGenriesEnum;
   Status: MediaStatusEnum;
@@ -27,7 +27,7 @@ export type CreateMediaAdditionalInfoInput = {
 
 export type UpdateImageInput = {
   ImageUrl: string;
-  ImageType: MediaImageVariantEnum;
+  ImageType: ImageVariantEnum;
 };
 
 export type CreateMediaBasicInfoInput = {
@@ -58,15 +58,19 @@ export type GetMediaAdditionalInfoByMediaIdParams = {
   MediaId: string;
 };
 
-export type GetMediaImageByMediaIdParams = {
+export type GetImageByMediaIdParams = {
   MediaId: string;
+};
+
+export type GetCineastsBySeriesIdParams = {
+  SeriesId: string;
 };
 
 export type DeleteMultipleSeriesByIdzParams = {
   SeriesIdz: string[];
 };
 
-export type MediaImageIdOutput = {
+export type ImageIdOutput = {
   ID: string;
 };
 

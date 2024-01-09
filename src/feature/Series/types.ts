@@ -1,11 +1,11 @@
-import { CountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaStatusEnum } from "@/types/enum";
+import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaStatusEnum } from "@/types/enum";
 
 export interface SeriesCreateFormFieldInterface {
   title: string;
   plotSummary: string;
   releaseDate: number;
-  mediaImageId: string;
-  originCountry: CountriesEnum;
+  imageId: string;
+  originCountry: MediaCountriesEnum;
   originalLanguage: LanguagiesEnum;
   genre: MediaGenriesEnum;
   status: MediaStatusEnum;
@@ -13,14 +13,14 @@ export interface SeriesCreateFormFieldInterface {
 
 export interface TableSeriesInterface {
   ID: string;
-  originCountry: CountriesEnum;
+  originCountry: MediaCountriesEnum;
   originalLanguage: LanguagiesEnum;
   genre: MediaGenriesEnum;
   status: MediaStatusEnum;
   title: string;
   plotSummary: string;
   releaseDate: number;
-  mediaImageUrl: string;
+  imageUrl: string;
   createdAt: number;
   updatedAt: number;
 }

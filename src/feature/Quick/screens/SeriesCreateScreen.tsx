@@ -8,15 +8,15 @@ import { Elevator } from "@/components/Tags";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
-import { useCreateMediaImage, useCreateSeries } from "../hooks";
+import { useCreateImage, useCreateSeries } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { MediaImageVariantEnum } from "@/types/enum";
+import { ImageVariantEnum } from "@/types/enum";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
   const { mutateAsync: createSeriesMutateAsync, isPending: isCreateSeriesLoading } = useCreateSeries();
-  const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateMediaImage();
+  const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateImage();
 
   const {
     control,
@@ -24,7 +24,6 @@ export default function SeriesCreateScreen() {
     register,
     handleSubmit: handleOnSubmit,
     setValue: setCreateSeriesFormValue,
-    watch: watchCreateSeriesFormValue,
   } = useForm<SeriesCreateFormFieldInterface>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -37,15 +36,15 @@ export default function SeriesCreateScreen() {
   const handleOnImageSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: MediaImageVariantEnum.BACKDROP });
+    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.BACKDROP });
     if (result) {
-      setCreateSeriesFormValue("mediaImageId", result.ID);
+      setCreateSeriesFormValue("imageId", result.ID);
     }
   };
 
   const handleOnCreateEpisode = async (input: SeriesCreateFormFieldInterface) => {
     await createSeriesMutateAsync({
-      MediaImageId: watchCreateSeriesFormValue("mediaImageId"),
+      ImageId: input.imageId,
       MediaBasicInfo: {
         PlotSummary: input.plotSummary,
         Title: input.title,
@@ -58,11 +57,13 @@ export default function SeriesCreateScreen() {
 
   const pageHeader = (
     <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.QuickMediaManagement.SeriesCreateScreen.createASeries")}</Typography>
+      <Typography variant="h5">{t("Feature.Quick.SeriesCreateScreen.createASeries")}</Typography>
       <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.QuickMediaManagement.SeriesCreateScreen.back")}</Button>
+        <Button variant="text" onClick={() => window.close()}>
+          {t("Feature.Quick.SeriesCreateScreen.back")}
+        </Button>
         <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.QuickMediaManagement.SeriesCreateScreen.save")}
+          {t("Feature.Quick.SeriesCreateScreen.save")}
         </Button>
       </Stack>
     </Elevator>
@@ -80,5 +81,5 @@ const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.string().required("Release date is required"),
-  mediaImageId: yup.string().required("Backdrop is required"),
+  imageId: yup.string().required("Backdrop is required"),
 });

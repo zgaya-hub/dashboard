@@ -1,6 +1,23 @@
-import { useState } from "react";
-import { CreateEpisodeInput, CreateMediaImageInput, MediaImageIdOutput, GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdInput, GetSeasonBySeriesIdOutput, GetUploadVideoSignedUrlInput, GetUploadVideoSignedUrlOutput, UploadVideoOnAwsS3Input, GetNextEpisodeNumberParams, GetNextEpisodeNumberOutput } from "./queryHooks.types";
+import { useCallback, useEffect, useState } from "react";
+import {
+  CreateEpisodeInput,
+  CreateImageInput,
+  ImageIdOutput,
+  GetManagerSeriesWithImageAndBasicInfoOutput,
+  GetSeasonBySeriesIdInput,
+  GetSeasonBySeriesIdOutput,
+  GetUploadVideoSignedUrlInput,
+  GetUploadVideoSignedUrlOutput,
+  UploadVideoOnAwsS3Input,
+  GetNextEpisodeNumberParams,
+  GetNextEpisodeNumberOutput,
+  EpisodeIdOutput,
+  CreateExternalLinkInput,
+  GetSharelinkInput,
+  GetImageByMediaIdParams,
+} from "./queryHooks.types";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import * as S3 from "@aws-sdk/client-s3";
 
 export function useGetUploadVideoSignedUrl() {
   const [apiCaller, status] = useMutation<{ getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput }, { input: GetUploadVideoSignedUrlInput }>(
@@ -19,29 +36,11 @@ export function useGetUploadVideoSignedUrl() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.getUploadVideoSignedUrl;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
   return { ...status, mutateAsync, data: status.data?.getUploadVideoSignedUrl, isPending: status.loading };
-}
-
-export function useUploadVideoOnAwsS3() {
-  const [loading, setLoading] = useState(false);
-  const mutateAsync = async (input: UploadVideoOnAwsS3Input) => {
-    setLoading(true);
-    const result = await fetch(input.SignedUrl, {
-      method: "PUT",
-      body: input.VideoBlob,
-      headers: {
-        "Content-Type": "video/*",
-      },
-    });
-    setLoading(false);
-    return result;
-  };
-
-  return { mutateAsync, isPending: loading };
 }
 
 export function useGetSeasonBySeriesId() {
@@ -66,7 +65,7 @@ export function useGetSeasonBySeriesId() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.getSeasonBySeriesId;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -74,11 +73,11 @@ export function useGetSeasonBySeriesId() {
 }
 
 export function useCreateEpisode() {
-  const [apiCaller, status] = useMutation<{ createEpisode: CommonSuccessOutput }, { input: CreateEpisodeInput }>(
+  const [apiCaller, status] = useMutation<{ createEpisode: EpisodeIdOutput }, { input: CreateEpisodeInput }>(
     gql`
       mutation ($input: CreateEpisodeInput!) {
         createEpisode(CreateEpisodeInput: $input) {
-          isSuccess
+          ID
         }
       }
     `
@@ -88,33 +87,33 @@ export function useCreateEpisode() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createEpisode;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
   return { ...status, mutateAsync, data: status.data?.createEpisode, isPending: status.loading };
 }
 
-export function useCreateMediaImage() {
-  const [apiCaller, status] = useMutation<{ createMediaImage: MediaImageIdOutput }, { input: CreateMediaImageInput }>(
+export function useCreateImage() {
+  const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
-      mutation ($input: CreateMediaImageInput!) {
-        createMediaImage(CreateMediaImageInput: $input) {
+      mutation ($input: CreateImageInput!) {
+        createImage(CreateImageInput: $input) {
           ID
         }
       }
     `
   );
-  const mutateAsync = async (input: CreateMediaImageInput) => {
+  const mutateAsync = async (input: CreateImageInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
-      return result.data?.createMediaImage;
+      return result.data?.createImage;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
-  return { ...status, mutateAsync, data: status.data?.createMediaImage, isPending: status.loading };
+  return { ...status, mutateAsync, data: status.data?.createImage, isPending: status.loading };
 }
 
 export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
@@ -141,7 +140,7 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
           ID
           isFree
           priceInDollar
-          mediaImage {
+          image {
             ID
             variant
             url
@@ -157,4 +156,54 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
     `
   );
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImageAndBasicInfo };
+}
+
+export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
+  const status = useQuery<{ getImageByMediaId: ImageEntityType }>(
+    gql`
+      query ($param: GetImageByMediaIdParams!) {
+        getImageByMediaId(GetImageByMediaIdParams: $param) {
+          ID
+          variant
+          url
+        }
+      }
+    `,
+    {
+      variables: { param },
+    }
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };
+}
+
+export function useUploadVideoOnAwsS3() {
+  const [isPending, setIsPending] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const xhr = new XMLHttpRequest();
+
+  const onProgress = (event: ProgressEvent) => {
+    if (event.lengthComputable) {
+      const percentComplete = (event.loaded / event.total) * 100;
+      setProgress(+percentComplete.toFixed(1));
+    }
+  };
+
+  useEffect(() => {
+    xhr.upload.onprogress = onProgress;
+  }, [xhr.upload]);
+
+  const mutateAsync = async (input: UploadVideoOnAwsS3Input) => {
+    try {
+      setIsPending(true);
+      xhr.open("PUT", input.SignedUrl);
+      xhr.send(input.VideoBlob);
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      setIsPending(false);
+      setProgress(0);
+    }
+  };
+
+  return { mutateAsync, isPending, progress };
 }
