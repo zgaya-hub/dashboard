@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { MovieUploadModal, MovieUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
-import {  useCreateMovie, useCreateImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
+import { MovieUploadModal, EpisodeUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
+import {  useCreateImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
 import { extractImageBase64, extractImageMetadata, extractImageUrl, extractThumbnailFromVideo, extractVideoMetadata, convertVideoInBlob } from "metalyzer";
 import { ImageVariantEnum, MovierMediaEnum } from "@/types/enum";
 import Button from "@/components/Button";
@@ -9,7 +9,7 @@ import { CreateMovieFormFieldType } from "../types";
 import { VideoShareModal } from "@/AddtionalFeatures/VideoShare";
 
 export default function MovieUploadScreen() {
-  const episodeUploadModalRef = useRef<MovieUploadModalRef>(null);
+  const episodeUploadModalRef = useRef<EpisodeUploadModalRef>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [selectedSeasonId, setSelectedSeasonId] = useState("");
   const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState(true);
@@ -18,7 +18,7 @@ export default function MovieUploadScreen() {
   const { mutateAsync: getUploadMovieUrlMutateAsync, isPending: isGetUploadMovieUrlLoading, data: getSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync, progress: episodeUploadProgress } = useUploadVideoOnAwsS3();
   const { mutateAsync: createImageMutateAsync, data: imageData, isPending: isCreateImageLoading } = useCreateImage();
-  const { mutateAsync: createMovieMutateAsync, isPending: isCreateMovieLoading, data: createMovieData } = useCreateMovie();
+  const { mutateAsync: createMovieMutateAsync, isPending: isCreateMovieLoading, data: createMovieData } = useCreateImage();
 
   const handleOnMovieDrop = async (episode: File) => {
     const episodeMetadata = await extractVideoMetadata(episode);

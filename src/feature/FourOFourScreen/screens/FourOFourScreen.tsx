@@ -14,7 +14,7 @@ export default function FourOFourScreen() {
         const newProgress = prevProgress + 5;
         if (newProgress === 100) {
           clearInterval(interval);
-          if (isAuthenticated) {
+          if (!isAuthenticated) {
             navigation.navigate("/home");
           } else {
             navigation.navigate("/sign-in");
