@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useGetManagerSeriesWithImage, useGetSeasonBySeriesId } from "../../hooks";
 import { useTranslation } from "react-i18next";
-import { AddIcon, CachedIcon, ChevronLeftIcon, ErrorIcon, UploadIcon } from "@/components/icons";
-import { Dialog, DialogActions } from "@/components/Dialog";
+import { AddIcon, CachedIcon, ChevronLeftIcon, ClearIcon, ErrorIcon, UploadIcon } from "@/components/icons";
+import { Dialog, DialogActions, DialogTitle } from "@/components/Dialog";
 import Button from "@/components/Button";
 import useNavigation from "@/navigation/useNavigation";
 import SeasonListForSelection from "./SeasonListForSelection";
 import SeriesListForSelection from "./SeriesListForSelection";
 import { DialogContent } from "@mui/material";
+import { GetManagerSeriesWithImageOutput, Season } from "mirra-scope-client-types/lib";
 
 interface SelectSeriesAndSeasonModalProps {
   isVisible: boolean;
@@ -92,7 +93,11 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   );
 
   return (
-    <Dialog onClose={handleOnClose} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.title : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")} hideCrossButton open={isVisible}>
+    <Dialog onClose={handleOnClose} open={isVisible}>
+      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        {selectedSeries ? selectedSeries.mediaBasicInfo.title : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")}
+        <ClearIcon onClick={onClose} />
+      </DialogTitle>
       <DialogContent sx={{ p: 0 }} dividers>
         {selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={(id) => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries ?? []} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}
       </DialogContent>

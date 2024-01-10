@@ -11,3 +11,4 @@ export { default as VideoUploadCircleIcon } from "./VideoUploadCircleIcon";
 export { default as VideoUploadComponent } from "./VideoUploadComponent";
 
 export type { EpisodeUploadModalRef } from "./EpisodeComponents/EpisodeUploadModal";
+export type { MovieUploadModalRef } from "./MovieComponents/MovieUploadModal";

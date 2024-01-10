@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateEpisodeInput, CreateImageInput, EpisodeIdOutput, GetImageByMediaIdParams, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput, GetManagerSeriesWithImageOutput } from "mirra-scope-client-types/lib";
+import { CreateEpisodeInput, CreateImageInput, EpisodeIdOutput, GetImageByMediaIdParams, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput, GetManagerSeriesWithImageOutput, CreateMovieInput } from "mirra-scope-client-types/lib";
 import { UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
@@ -67,6 +67,28 @@ export function useCreateEpisode() {
     `
   );
   const mutateAsync = async (input: CreateEpisodeInput) => {
+    try {
+      const result = await apiCaller({ variables: { input } });
+      return result.data?.createEpisode;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  return { ...status, mutateAsync, data: status.data?.createEpisode, isPending: status.loading };
+}
+
+export function useCreateMovie() {
+  const [apiCaller, status] = useMutation<{ createEpisode: EpisodeIdOutput }, { input: CreateMovieInput }>(
+    gql`
+      mutation ($input: CreateMovieInput!) {
+        createMovie(CreateMovieInput: $input) {
+          ID
+        }
+      }
+    `
+  );
+  const mutateAsync = async (input: CreateMovieInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createEpisode;

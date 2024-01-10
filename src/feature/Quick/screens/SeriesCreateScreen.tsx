@@ -45,11 +45,9 @@ export default function SeriesCreateScreen() {
   const handleOnCreateEpisode = async (input: SeriesCreateFormFieldInterface) => {
     await createSeriesMutateAsync({
       ImageId: input.imageId,
-      MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: +input.releaseDate,
-      },
+      PlotSummary: input.plotSummary,
+      Title: input.title,
+      ReleaseDate: +input.releaseDate,
       AdditionalInfo: {},
     });
     window.close();

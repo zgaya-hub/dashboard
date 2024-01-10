@@ -1,4 +1,4 @@
-import { Dialog } from "@/components/Dialog";
+import { Dialog, DialogTitle } from "@/components/Dialog";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
@@ -6,7 +6,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { DialogContent, ListItemIcon, ListItemText, MenuItem, SxProps } from "@mui/material";
-import { DoneIcon, SearchIcon } from "@/components/icons";
+import { ClearIcon, DoneIcon, SearchIcon } from "@/components/icons";
 import { countryListWithFlag } from "@/mock/countryListWithFlag";
 import { SearchInput } from "@/components/Form";
 import { CountryPickerEmptyComponent } from "..";
@@ -59,8 +59,12 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
   }));
 
   return (
-    <Dialog open={isOpen} onClose={onClose} headerText={t("Components.Modals.CountryPickerModal.pickACountry")} sx={dialogBoxStyle} hideCrossButton>
-      <DialogContent>
+    <Dialog open={isOpen} onClose={onClose} sx={dialogBoxStyle}>
+      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        {t("Components.Modals.CountryPickerModal.pickACountry")}
+        <ClearIcon onClick={handleOnClose} />
+      </DialogTitle>
+      <DialogContent dividers sx={{ padding: 0 }}>
         {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.CountryPickerModal.search")} /> : null}
         <RadioGroup value={value} onChange={handleOnChange}>
           {filteredCountries.map((country) => {

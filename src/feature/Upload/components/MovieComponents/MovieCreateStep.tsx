@@ -1,6 +1,6 @@
 import { Hidden, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, Path, PathValue } from "react-hook-form";
 import { DatePickerModal, Form, TextField } from "@/components/Form";
 import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,14 +11,14 @@ import { SaveIcon } from "@/components/icons";
 import * as yup from "yup";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../../constants";
 import { CreateMovieFormFieldType } from "../../types";
+import MovieAdditionalInfoComponent from "./MovieAdditionalInfoComponent";
 
 interface MovieCreateStepProps {
   thumbnailSrc: string;
   onSave: (fields: CreateMovieFormFieldType) => void;
-  onThumbnailSelect: (episode: File) => void;
+  onThumbnailSelect: (movie: File) => void;
   isLoading: boolean;
   isCreateImageLoading: boolean;
-  seasonId: string;
   isSaveButtonDisabled: boolean;
 }
 
@@ -31,6 +31,7 @@ export default function MovieCreateStep({ thumbnailSrc, onSave, onThumbnailSelec
     handleSubmit,
     register,
     watch,
+    setValue: setFormValue,
   } = useForm<CreateMovieFormFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -55,6 +56,7 @@ export default function MovieCreateStep({ thumbnailSrc, onSave, onThumbnailSelec
           <DevTool control={control} />
         </Form>
         <ImageUploadComponent isLoading={isCreateImageLoading} onImageDrop={onThumbnailSelect} title={t("Feature.VideoUpload.MovieUploadModal.imageUploadComponentTitle")} />
+        <MovieAdditionalInfoComponent formRegister={register} setFormValue={setFormValue} watchFormValue={watch} />
         <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={1}>
           <Button variant="text">{t("Feature.VideoUpload.MovieUploadModal.cancel")}</Button>
           <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleSubmit(onSave)} disabled={isSaveButtonDisabled}>

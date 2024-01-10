@@ -2,6 +2,7 @@ export { useGetUploadVideoSignedUrl } from "./queryHooks";
 export { useUploadVideoOnAwsS3 } from "./queryHooks";
 export { useGetSeasonBySeriesId } from "./queryHooks";
 export { useCreateEpisode } from "./queryHooks";
+export { useCreateMovie } from "./queryHooks";
 export { useCreateImage } from "./queryHooks";
 export { useGetNextEpisodeNumber } from "./queryHooks";
 export { useGetManagerSeriesWithImage } from "./queryHooks";

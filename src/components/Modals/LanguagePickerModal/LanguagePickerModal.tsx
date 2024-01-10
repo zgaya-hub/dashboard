@@ -1,11 +1,11 @@
-import { Dialog } from "@/components/Dialog";
+import { Dialog, DialogActions, DialogTitle } from "@/components/Dialog";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import RadioGroup from "@mui/material/RadioGroup";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
-import { DoneIcon, SearchIcon, TranslateIcon } from "@/components/icons";
+import { DialogContent, ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
+import { ClearIcon, DoneIcon, SearchIcon, TranslateIcon } from "@/components/icons";
 import { languageListWithCode } from "@/mock/languageListWithCode";
 import { SearchInput } from "@/components/Form";
 import { LanguagePickerEmptyComponent } from "..";
@@ -56,33 +56,36 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
     },
   }));
 
-  const dialogActions = (
-    <>
-      <SearchIcon onClick={handleOnSearchInputToggle} />
-      <Button onClick={handleOnClose} variant="text">
-        {t("Components.Modals.LanguagePickerModal.cancel")}
-      </Button>
-      <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Components.Modals.LanguagePickerModal.ok")}
-      </Button>
-    </>
-  );
-
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.LanguagePickerModal.pickALanguage")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
-      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.LanguagePickerModal.search")} /> : null}
-      <RadioGroup value={value} onChange={handleOnChange}>
-        {filteredLanguages.map((language) => {
-          return (
-            <MenuItem onClick={() => setValue(language.name)}>
-              <TranslateIcon isListIcon />
-              <ListItemText>{language.name}</ListItemText>
-              <Radio value={language.name} />
-            </MenuItem>
-          );
-        })}
-        {!filteredLanguages.length ? <LanguagePickerEmptyComponent height={32} /> : null}
-      </RadioGroup>
+    <Dialog open={isOpen} onClose={onClose} sx={dialogBoxStyle}>
+      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"}>
+        {t("Components.Modals.LanguagePickerModal.pickALanguage")}
+        <ClearIcon onClick={handleOnClose} />
+      </DialogTitle>
+      <DialogContent dividers sx={{ padding: 0 }}>
+        {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.LanguagePickerModal.search")} /> : null}
+        <RadioGroup value={value} onChange={handleOnChange}>
+          {filteredLanguages.map((language) => {
+            return (
+              <MenuItem onClick={() => setValue(language.name)}>
+                <TranslateIcon isListIcon />
+                <ListItemText>{language.name}</ListItemText>
+                <Radio value={language.name} />
+              </MenuItem>
+            );
+          })}
+          {!filteredLanguages.length ? <LanguagePickerEmptyComponent height={32} /> : null}
+        </RadioGroup>
+      </DialogContent>
+      <DialogActions>
+        <SearchIcon onClick={handleOnSearchInputToggle} />
+        <Button onClick={handleOnClose} variant="text">
+          {t("Components.Modals.LanguagePickerModal.cancel")}
+        </Button>
+        <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
+          {t("Components.Modals.LanguagePickerModal.ok")}
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.8",
+    "@apollo/client": "^3.8.9",
     "@aws-sdk/client-s3": "^3.485.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -33,8 +33,7 @@
     "i18next": "^23.7.16",
     "lodash": "^4.17.21",
     "metalyzer": "^1.0.12",
-    "mirra-scope-client-types": "^1.0.1",
-    "pnpm": "^8.14.0",
+    "mirra-scope-client-types": "^1.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",

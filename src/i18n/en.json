@@ -63,11 +63,24 @@
         "confirmationModalMessage": "Do you want to extract thumbnail for video"
       },
       "MovieUploadModal": {
-        "headerText": "Upload movie",
+        "uploadMovie": "Upload movie",
+        "enterMovieDetails": "Enter movie details",
+        "lastStep": "Last step",
         "title": "Drag and drop a movie here",
         "message": "Ready to upload? Just simple upload movie here",
+        "episode": "Episode",
+        "next": "Next",
+        "cancel": "Cancel",
+        "reUsePrevious": "Reuse previous",
+        "addAdditionalInfo": "Add additional information",
         "trailer": "Trailer",
-        "episode": "Episode"
+        "imageUploadComponentTitle": "Drop a thumbnail",
+        "uploading": "Uploading: {{progress}}%",
+        "processComplete": "Process complete you can continue",
+        "originCountry": "Origin country",
+        "originalLanguage": "Original language",
+        "pickAGenre": "Pick a genre",
+        "selectStatus": "Select status"
       },
       "TrailerUploadModal": {
         "headerText": "Upload trailer",

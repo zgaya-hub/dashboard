@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink, from } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
 
-const graphqlEndpoint = "http://127.0.0.1:9090/graphql";
+const graphqlEndpoint = "http://127.0.0.1:8083/graphql";
 type Headers = Record<string, string>;
 
 let authenticationHeaders: Headers = {};

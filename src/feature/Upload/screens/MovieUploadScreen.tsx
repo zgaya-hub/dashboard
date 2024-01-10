@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { MovieUploadModal, EpisodeUploadModalRef, SelectSeriesAndSeasonModal } from "../components";
-import { useCreateImage, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
+import { MovieUploadModal, MovieUploadModalRef } from "../components";
+import { useCreateImage, useCreateMovie, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
 import { extractImageBase64, extractImageMetadata, extractImageUrl, extractThumbnailFromVideo, extractVideoMetadata, convertVideoInBlob } from "metalyzer";
 import Button from "@/components/Button";
 import Page from "@/components/Page";
@@ -10,17 +10,15 @@ import { ImageVariantEnum, MirraScopeMediaEnum } from "mirra-scope-client-types/
 import { useSidebarContext } from "@/context/SidebarContext";
 
 export default function MovieUploadScreen() {
-  const episodeUploadModalRef = useRef<EpisodeUploadModalRef>(null);
+  const episodeUploadModalRef = useRef<MovieUploadModalRef>(null);
   const { handleOnToggleFeedbackSidebar } = useSidebarContext();
   const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [selectedSeasonId, setSelectedSeasonId] = useState("");
-  const [isSelectSeriesModalVisible, setIsSelectSeriesModalVisible] = useState(true);
   const [isMovieUploadModalVisible, setIsMovieUploadModalVisible] = useState(true);
   const [isVideoShareModalVisible, setIsVideoShareModalVisible] = useState(false);
   const { mutateAsync: getUploadMovieUrlMutateAsync, isPending: isGetUploadMovieUrlLoading, data: getSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync, progress: episodeUploadProgress } = useUploadVideoOnAwsS3();
   const { mutateAsync: createImageMutateAsync, data: imageData, isPending: isCreateImageLoading } = useCreateImage();
-  const { mutateAsync: createMovieMutateAsync, isPending: isCreateMovieLoading, data: createMovieData } = useCreateImage();
+  const { mutateAsync: createMovieMutateAsync, isPending: isCreateMovieLoading, data: createMovieData } = useCreateMovie();
 
   const handleOnMovieDrop = async (episode: File) => {
     const episodeMetadata = await extractVideoMetadata(episode);
@@ -39,15 +37,17 @@ export default function MovieUploadScreen() {
 
   const handleOnCreateMovie = async (input: CreateMovieFormFieldType) => {
     await createMovieMutateAsync({
-      Number: input.number,
       ImageId: imageData?.ID,
-      SeasonId: selectedSeasonId,
       SignedUrlKeyId: getSignedUrlData?.signedUrlKeyId,
       VideoId: getSignedUrlData?.videoId,
-      MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: input.releaseDate,
+      PlotSummary: input.plotSummary,
+      Title: input.title,
+      ReleaseDate: input.releaseDate,
+      AdditionalInfo: {
+        Genre: input.genre,
+        OriginalLanguage: input.originalLanguage,
+        OriginCountry: input.originCountry,
+        Status: input.status,
       },
     });
     handleOnToggleVideoShareModal();
@@ -71,7 +71,6 @@ export default function MovieUploadScreen() {
   };
 
   const handleOnToggleSelectSeriesModal = () => {
-    setIsSelectSeriesModalVisible(!isMovieUploadModalVisible);
     handleOnToggleMovieUploadModal();
   };
 
@@ -79,16 +78,10 @@ export default function MovieUploadScreen() {
     setIsVideoShareModalVisible(!isVideoShareModalVisible);
   };
 
-  const handleOnNextSelectSeriesAndSeasonModal = (seasonId: string) => {
-    setSelectedSeasonId(seasonId);
-    setIsSelectSeriesModalVisible(!isMovieUploadModalVisible);
-  };
-
   return (
     <Page>
       <Button onClick={handleOnToggleSelectSeriesModal}>Upload</Button>
-      <MovieUploadModal isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onMovieSelect={handleOnMovieDrop} isLoading={isCreateImageLoading || isGetUploadMovieUrlLoading || isCreateMovieLoading} onFeedback={handleOnToggleFeedbackSidebar} onThumbnailSelect={handleOnThumbnailSelect} onCreateMovie={handleOnCreateMovie} thumbnailUrl={thumbnailUrl} ref={episodeUploadModalRef} seasonId={selectedSeasonId} episodeId={createMovieData?.ID} progress={episodeUploadProgress} />
-      <SelectSeriesAndSeasonModal onNext={handleOnNextSelectSeriesAndSeasonModal} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModal} />
+      <MovieUploadModal isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onMovieSelect={handleOnMovieDrop} isLoading={isCreateImageLoading || isGetUploadMovieUrlLoading || isCreateMovieLoading} onFeedback={handleOnToggleFeedbackSidebar} onThumbnailSelect={handleOnThumbnailSelect} onCreateMovie={handleOnCreateMovie} thumbnailUrl={thumbnailUrl} ref={episodeUploadModalRef} progress={episodeUploadProgress} />
       <VideoShareModal mediaId={createMovieData?.ID} mediaType={MirraScopeMediaEnum.EPISODE} isVisible={isVideoShareModalVisible} onClose={handleOnToggleVideoShareModal} />
     </Page>
   );
