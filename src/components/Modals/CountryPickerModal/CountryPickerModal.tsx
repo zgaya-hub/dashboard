@@ -43,7 +43,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
     setIsSearchInputVisible(false);
   };
 
-  const handleOnSearchInputVisible = () => {
+  const handleOnSearchInput = () => {
     setIsSearchInputVisible(!isSearchInputVisible);
   };
 
@@ -76,7 +76,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
         </RadioGroup>
       </DialogContent>
       <DialogAction>
-        <SearchIcon onClick={handleOnSearchInputVisible} />
+        <SearchIcon onClick={handleOnSearchInput} />
         <Button onClick={handleOnClose} variant="text">
           {t("Components.Modals.CountryPickerModal.cancel")}
         </Button>

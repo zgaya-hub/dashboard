@@ -1,4 +1,4 @@
-import { CreateImageInput, ImageIdOutput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, UpdateSeriesInput, UpdateSeriesParams, GetImageByMediaIdParams, SuccessOutput, GetAdditionalInfoByMediaIdParams } from "move-types/lib";
+import { CreateImageInput, ImageIdOutput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, UpdateSeriesInput, UpdateSeriesParams, GetImageByMediaIdParams, SuccessOutput, GetAdditionalInfoByMediaIdParams } from "mirra-scope-client-types/lib";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { GetCineastsBySeriesIdParams, GetMediaBasicInfoByMediaIdParams } from "./queryHooks.types";
 

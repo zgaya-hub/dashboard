@@ -1,4 +1,5 @@
-import { CineastProfessionEnum, GenderEnum, MediaCountriesEnum } from "@/types/enum";
+import { CineastProfessionEnum } from "@/types/enum";
+import { GenderEnum, MediaCountriesEnum } from "mirra-scope-client-types/lib";
 
 export interface SeriesCreateFormFieldInterface {
   title: string;

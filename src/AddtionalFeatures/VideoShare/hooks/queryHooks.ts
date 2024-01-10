@@ -5,7 +5,7 @@ export function useGetSharelink(_input: GetSharelinkInput) {
   const status = useQuery(
     gql`
       query GetManagerSeriesWithImageAndBasicInfo {
-        getManagerSeriesWithImageAndBasicInfo {
+        getManagerSeriesWithImage {
           ID
           isFree
           priceInDollar
@@ -24,7 +24,7 @@ export function useGetSharelink(_input: GetSharelinkInput) {
       }
     `
   );
-  return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImageAndBasicInfo };
+  return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImage };
 }
 
 export function useGetImageByMediaId(param: GetImageByMediaIdParams) {

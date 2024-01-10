@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useGetManagerSeriesWithImageAndBasicInfo, useGetSeasonBySeriesId } from "../../hooks";
-import { GetManagerSeriesWithImageAndBasicInfoOutput, GetSeasonBySeriesIdOutput } from "../../hooks";
+import { useGetManagerSeriesWithImage, useGetSeasonBySeriesId } from "../../hooks";
 import { useTranslation } from "react-i18next";
 import { AddIcon, CachedIcon, ChevronLeftIcon, ErrorIcon, UploadIcon } from "@/components/icons";
 import { Dialog, DialogActions } from "@/components/Dialog";
@@ -20,12 +19,12 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   const { t } = useTranslation();
   const navigate = useNavigation();
   const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
-  const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<GetSeasonBySeriesIdOutput[]>([]);
-  const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageAndBasicInfoOutput | null>(null);
+  const [selectedSeriesSeasons, setSelectedSeriesSeasons] = useState<Season[]>([]);
+  const [selectedSeries, setSelectedSeries] = useState<GetManagerSeriesWithImageOutput | null>(null);
   const { mutateAsync: getSeasonBySeriesIdMutateAsync, isPending: isSeasonFetching } = useGetSeasonBySeriesId();
-  const { isLoading: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries, error: getManagerSeriesError } = useGetManagerSeriesWithImageAndBasicInfo();
+  const { isLoading: isManagerSeriesFetching, refetch: refetchManagerSeries, data: managerSeries, error: getManagerSeriesError } = useGetManagerSeriesWithImage();
 
-  const handleOnFetchSeasons = async (series: GetManagerSeriesWithImageAndBasicInfoOutput) => {
+  const handleOnFetchSeasons = async (series: GetManagerSeriesWithImageOutput) => {
     setSelectedSeries(series);
     const result = await getSeasonBySeriesIdMutateAsync({
       SeriesId: series.ID,
@@ -94,7 +93,9 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
 
   return (
     <Dialog onClose={handleOnClose} headerText={selectedSeries ? selectedSeries.mediaBasicInfo.title : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")} hideCrossButton open={isVisible}>
-      <DialogContent sx={{ p: 0 }} dividers>{selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={(id) => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries ?? []} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}</DialogContent>
+      <DialogContent sx={{ p: 0 }} dividers>
+        {selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={(id) => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries ?? []} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}
+      </DialogContent>
       {selectedSeries ? renderSeasonListFooter : renderSeriesListFooter}
     </Dialog>
   );

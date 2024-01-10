@@ -2,7 +2,6 @@ import Page from "@/components/Page";
 import { useState } from "react";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import { useCreateImage, useCreateSeries } from "../hooks";
-import { ImageVariantEnum } from "@/types/enum";
 import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { SeriesAdditionalInfoForm, SeriesBasicInfoForm, SeriesImageSelectComponent } from "../components";
 import useNavigation from "@/navigation/useNavigation";
+import { ImageVariantEnum } from "mirra-scope-client-types/lib";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();

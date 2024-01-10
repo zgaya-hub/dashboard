@@ -7,9 +7,9 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
 import { DoneIcon, SearchIcon, StreetViewIcon } from "@/components/icons";
 import { SearchInput } from "@/components/Form";
-import { MediaGenriesEnum } from "@/types/enum";
 import { GenrePickerEmptyComponent } from "..";
 import { mediaGenreList } from "../constants";
+import { MediaGenriesEnum } from "mirra-scope-client-types/lib";
 
 interface GenrePickerModalProps {
   isOpen: boolean;
@@ -41,7 +41,7 @@ export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerM
     setIsSearchInputVisible(false);
   };
 
-  const handleOnSearchInputVisible = () => {
+  const handleOnToggleSearchInput = () => {
     setIsSearchInputVisible(!isSearchInputVisible);
   };
 
@@ -58,7 +58,7 @@ export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerM
 
   const dialogActions = (
     <>
-      <SearchIcon onClick={handleOnSearchInputVisible} />
+      <SearchIcon onClick={handleOnToggleSearchInput} />
       <Button onClick={handleOnClose} variant="text">
         {t("Components.Modals.GenrePickerModal.cancel")}
       </Button>

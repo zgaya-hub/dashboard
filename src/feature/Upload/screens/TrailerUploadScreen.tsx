@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Page from "@/components/Page";
-import { MovierMediaEnum } from "@/types/enum";
 import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
 import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
 import Button from "@/components/Button";
 import TrailerUploadModal from "../components/TrailerUploadModal";
+import { MirraScopeMediaEnum } from "mirra-scope-client-types/lib";
 
 export default function TrailerUploadScreen() {
   const [isTrailerUploadModalVisible, setIsTrailerUploadModalVisible] = useState(true);
@@ -20,7 +20,7 @@ export default function TrailerUploadScreen() {
       Mime: trailerMetadata.mimeType,
       RunTime: trailerMetadata.videoDuration,
       SizeInKb: trailerMetadata.fileSizeKB,
-      MediaType: MovierMediaEnum.TRAILER,
+      MediaType: MirraScopeMediaEnum.TRAILER,
     });
 
     const movieBlob = await convertVideoInBlob(trailer);

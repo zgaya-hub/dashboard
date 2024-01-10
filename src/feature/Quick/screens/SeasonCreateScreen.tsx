@@ -13,7 +13,7 @@ import { extractImageBase64, extractImageMetadata } from "metalyzer";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { ImageVariantEnum } from "@/types/enum";
+import { ImageVariantEnum } from "mirra-scope-client-types/lib";
 
 export default function SeasonCreateScreen() {
   const { t } = useTranslation();

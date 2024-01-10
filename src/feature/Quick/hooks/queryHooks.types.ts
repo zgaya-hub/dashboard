@@ -1,4 +1,5 @@
-import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, ImageVariantEnum, MediaStatusEnum, CineastProfessionEnum, GenderEnum } from "@/types/enum";
+import { CineastProfessionEnum } from "@/types/enum";
+import { GenderEnum, ImageVariantEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 export type CreateImageInput = {
   Base64: string;
@@ -32,7 +33,7 @@ export type CreateCineastInput = {
 
 export type AdditionalInfoInput = {
   OriginCountry?: MediaCountriesEnum;
-  OriginalLanguage?: LanguagiesEnum;
+  OriginalLanguage?: MediaLanguagiesEnum;
   Genre?: MediaGenriesEnum;
   Status?: MediaStatusEnum;
 };

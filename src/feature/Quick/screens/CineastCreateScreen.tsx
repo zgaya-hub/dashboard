@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
 import { useCreateImage, useCreateCineast } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { ImageVariantEnum } from "@/types/enum";
+import { ImageVariantEnum } from "mirra-scope-client-types/lib";
 
 export default function CineastCreateScreen() {
   const { t } = useTranslation();

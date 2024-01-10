@@ -6,10 +6,10 @@ import { format } from "date-fns";
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 import { MoreVertIcon, OpenTabIcon } from "@/components/icons";
 import { values as convertEnumToArray } from "lodash";
-import { MediaCountriesEnum, MediaGenriesEnum, LanguagiesEnum, MediaStatusEnum } from "@/types/enum";
 import { DataGridPro } from "@/components/DataGridPro";
 import { LinearProgress, PopoverPosition } from "@mui/material";
 import { MediaTableCard } from "@/components/Cards";
+import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 interface SeriesTableProps {
   rows: TableSeriesInterface[];
@@ -60,7 +60,7 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
       headerName: "Original language",
       width: 200,
       type: "singleSelect",
-      valueOptions: convertEnumToArray(LanguagiesEnum),
+      valueOptions: convertEnumToArray(MediaLanguagiesEnum),
       editable: true,
     },
     {

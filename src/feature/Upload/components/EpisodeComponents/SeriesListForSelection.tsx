@@ -1,11 +1,11 @@
 import { ImagePlusTitleCard, ImagePlusTitleCardSkeleton } from "@/components/Cards";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { List, ListItem, SxProps } from "@mui/material";
-import { GetManagerSeriesWithImageAndBasicInfoOutput } from "../../hooks";
+import { GetManagerSeriesWithImageOutput } from "mirra-scope-client-types/lib";
 
 interface SeriesListForSelectionProps {
-  seriesList: GetManagerSeriesWithImageAndBasicInfoOutput[];
-  onSelectedSeries: (series: GetManagerSeriesWithImageAndBasicInfoOutput) => void;
+  seriesList: GetManagerSeriesWithImageOutput[];
+  onSelectedSeries: (series: GetManagerSeriesWithImageOutput) => void;
   isLoading: boolean;
 }
 

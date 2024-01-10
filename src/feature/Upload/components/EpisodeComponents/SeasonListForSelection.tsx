@@ -2,10 +2,10 @@ import { AvatarTitleAndDescCard, AvatarTitleAndDescCardSkeleton } from "@/compon
 import { RadioButtonCheckedIcon, RadioButtonUncheckedIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { List, ListItem, SxProps } from "@mui/material";
-import { GetSeasonBySeriesIdOutput } from "../../hooks";
+import { Season } from "mirra-scope-client-types/lib";
 
 interface SeasonListForSelectionProps {
-  seasons: GetSeasonBySeriesIdOutput[];
+  seasons: Season[];
   selectedSeasonId: string | null;
   onSelectedSeason: (seasonId: string) => void;
   isLoading: boolean;
@@ -35,7 +35,7 @@ export default function SeasonListForSelection({ seasons, selectedSeasonId, onSe
         const isSelected = selectedSeasonId === season.ID;
         return (
           <ListItem key={season.ID} onClick={() => onSelectedSeason(season.ID)}>
-            <AvatarTitleAndDescCard action={isSelected ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />} title={season.mediaBasicInfo.title} description={season.mediaBasicInfo.plotSummary} avatar={season.number} />
+            <AvatarTitleAndDescCard action={isSelected ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />} title={season.title} description={season.plotSummary} avatar={season.number} />
           </ListItem>
         );
       })}

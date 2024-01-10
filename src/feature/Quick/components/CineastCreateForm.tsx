@@ -7,8 +7,8 @@ import { CineastCreateFormFieldInterface } from "../types";
 import { DEFAULT_DATE_FORMAT } from "@/mock/constants";
 import { useState } from "react";
 import { CountryPickerModal } from "@/components/Modals";
-import { MediaCountriesEnum } from "@/types/enum";
 import { ProfessionSelector } from ".";
+import { MediaCountriesEnum } from "mirra-scope-client-types/lib";
 
 interface CineastCreateFormProps {
   formRegister: UseFormRegister<CineastCreateFormFieldInterface>;
@@ -26,10 +26,10 @@ export default function CineastCreateForm({ formRegister, formControl, formError
 
   const handleOnSelectCountry = (countrName: MediaCountriesEnum) => {
     setFormValue("country", countrName);
-    handleOnToggleCountryModalVisible();
+    handleOnToggleCountryModal();
   };
 
-  const handleOnToggleCountryModalVisible = () => {
+  const handleOnToggleCountryModal = () => {
     setIsCountryModalVisible(!isCountryModalVisible);
   };
 
@@ -40,8 +40,8 @@ export default function CineastCreateForm({ formRegister, formControl, formError
       <FileSelectInput label={t("Feature.Quick.CineastCreateForm.uploadProfileImage")} fullWidth onFileSelect={onImageSelect} loading={isLoading} helperText={formErrors.imageId?.message} error={!!formErrors.imageId} />
       <ProfessionSelector formRegister={formRegister} />
       <GenderSelector required label={t("Feature.Quick.CineastCreateForm.selectAGender")} name="gender" register={formRegister} helperText={formErrors.gender?.message} error={!!formErrors.gender} />
-      <ModalSelectInput required isModalVisible={isCountryModalVisible} label={t("Feature.Quick.CineastCreateForm.country")} value={watchFormValue("country")} onClick={handleOnToggleCountryModalVisible} helperText={formErrors.country?.message} error={!!formErrors.country} fullWidth />
-      <CountryPickerModal isOpen={isCountryModalVisible} onClose={handleOnToggleCountryModalVisible} onOk={handleOnSelectCountry} />
+      <ModalSelectInput required isModalVisible={isCountryModalVisible} label={t("Feature.Quick.CineastCreateForm.country")} value={watchFormValue("country")} onClick={handleOnToggleCountryModal} helperText={formErrors.country?.message} error={!!formErrors.country} fullWidth />
+      <CountryPickerModal isOpen={isCountryModalVisible} onClose={handleOnToggleCountryModal} onOk={handleOnSelectCountry} />
       <TextField register={formRegister} name="bio" label={t("Feature.Quick.CineastCreateForm.bio")} helperText={formErrors.bio?.message} error={!!formErrors.bio} multiline rows={3} fullWidth required />
       <DevTool control={formControl} />
     </Stack>

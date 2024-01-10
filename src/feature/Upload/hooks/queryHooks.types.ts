@@ -1,7 +1,7 @@
-import { ImageVariantEnum, MovierMediaEnum } from "@/types/enum";
+import { ImageVariantEnum, MirraScopeMediaEnum } from "mirra-scope-client-types/lib";
 
 export type GetUploadVideoSignedUrlInput = {
-  MediaType: MovierMediaEnum;
+  MediaType: MirraScopeMediaEnum;
   Width: number;
   Height: number;
   RunTime: number;
@@ -41,7 +41,7 @@ export type CreateImageInput = {
 
 export type GetSharelinkInput = {
   MediaId: string;
-  MediaType: MovierMediaEnum;
+  MediaType: MirraScopeMediaEnum;
 };
 
 export type GetImageByMediaIdParams = {
@@ -52,11 +52,6 @@ export type GetUploadVideoSignedUrlOutput = {
   signedUrl: string;
   signedUrlKeyId: string;
   videoId: string;
-};
-
-export type GetManagerSeriesWithImageAndBasicInfoOutput = SeriesEntityType & {
-  image: ImageEntityType;
-  mediaBasicInfo: MediaBasicInfoEntityType;
 };
 
 export type GetSeasonBySeriesIdOutput = SeasonEntityType & {

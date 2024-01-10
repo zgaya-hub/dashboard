@@ -1,5 +1,5 @@
-import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaStatusEnum, ImageVariantEnum } from "@/types/enum";
 import { TableSeriesInterface } from "../types";
+import { ImageVariantEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 export type CreateImageInput = {
   Base64: string;
@@ -20,7 +20,7 @@ export type CreateSeriesInput = {
 
 export type CreateAdditionalInfoInput = {
   OriginCountry: MediaCountriesEnum;
-  OriginalLanguage: LanguagiesEnum;
+  OriginalLanguage: MediaLanguagiesEnum;
   Genre: MediaGenriesEnum;
   Status: MediaStatusEnum;
 };

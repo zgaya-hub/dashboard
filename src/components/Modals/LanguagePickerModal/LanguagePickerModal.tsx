@@ -8,18 +8,18 @@ import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
 import { DoneIcon, SearchIcon, TranslateIcon } from "@/components/icons";
 import { languageListWithCode } from "@/mock/languageListWithCode";
 import { SearchInput } from "@/components/Form";
-import { LanguagiesEnum } from "@/types/enum";
 import { LanguagePickerEmptyComponent } from "..";
+import { MediaLanguagiesEnum } from "mirra-scope-client-types/lib";
 
 interface LanguagePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOk: (countrName: LanguagiesEnum) => void;
+  onOk: (countrName: MediaLanguagiesEnum) => void;
 }
 
 export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguagePickerModalProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(LanguagiesEnum.URDU);
+  const [value, setValue] = useState(MediaLanguagiesEnum.URDU);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
 
@@ -41,7 +41,7 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
     setIsSearchInputVisible(false);
   };
 
-  const handleOnSearchInputVisible = () => {
+  const handleOnSearchInputToggle = () => {
     setIsSearchInputVisible(!isSearchInputVisible);
   };
 
@@ -58,7 +58,7 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
 
   const dialogActions = (
     <>
-      <SearchIcon onClick={handleOnSearchInputVisible} />
+      <SearchIcon onClick={handleOnSearchInputToggle} />
       <Button onClick={handleOnClose} variant="text">
         {t("Components.Modals.LanguagePickerModal.cancel")}
       </Button>
