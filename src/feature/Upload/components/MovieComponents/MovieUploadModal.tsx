@@ -18,10 +18,8 @@ interface MovieUploadModalProps {
   onClose: () => void;
   onFeedback: () => void;
   onMovieSelect: (episode: File) => void;
-  onThumbnailSelect: (episode: File) => void;
   onCreateMovie: (input: CreateMovieFormFieldType) => void;
   isLoading: boolean;
-  thumbnailUrl: string;
   progress: number;
 }
 
@@ -29,7 +27,7 @@ export interface MovieUploadModalRef {
   onNext: () => void;
 }
 
-const MovieUploadModal = forwardRef(function MovieUploadModal({ isVisible, onClose, onFeedback, onCreateMovie, isLoading, thumbnailUrl, onMovieSelect, onThumbnailSelect, progress }: MovieUploadModalProps, ref: Ref<MovieUploadModalRef>) {
+const MovieUploadModal = forwardRef(function MovieUploadModal({ isVisible, onClose, onFeedback, onCreateMovie, isLoading, onMovieSelect, onThumbnailSelect, progress }: MovieUploadModalProps, ref: Ref<MovieUploadModalRef>) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const navigate = useNavigation();
@@ -81,7 +79,7 @@ const MovieUploadModal = forwardRef(function MovieUploadModal({ isVisible, onClo
     },
     {
       label: t("Feature.VideoUpload.MovieUploadModal.enterMovieDetails"),
-      step: <MovieCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateMovie} thumbnailSrc={thumbnailUrl} isSaveButtonDisabled={isSaveButtonDisabled} />,
+      step: <MovieCreateStep isLoading={isLoading} onSave={onCreateMovie} isSaveButtonDisabled={isSaveButtonDisabled} />,
     },
   ];
 

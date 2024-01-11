@@ -4,21 +4,20 @@ import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { UploadIcon } from "@/components/icons";
 
 interface SeriesImageSelectComponentProps {
-  onImageDrop: (image: File) => void;
+  onImageSelect: (image: File) => void;
   isLoading: boolean;
   title: string;
 }
 
-export default function SeriesImageSelectComponent({ onImageDrop, isLoading, title }: SeriesImageSelectComponentProps) {
+export default function SeriesImageSelectComponent({ onImageSelect, isLoading, title }: SeriesImageSelectComponentProps) {
   const onDrop = ([video]: File[]) => {
-    onImageDrop(video);
+    onImageSelect(video);
   };
 
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(16),
-    bgcolor: "red",
     width: theme.spacing(36),
     pointerEvents: isLoading ? "none" : "all",
     padding: theme.spacing(1),

@@ -12,12 +12,11 @@ import { useSidebarContext } from "@/context/SidebarContext";
 export default function MovieUploadScreen() {
   const episodeUploadModalRef = useRef<MovieUploadModalRef>(null);
   const { handleOnToggleFeedbackSidebar } = useSidebarContext();
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [isMovieUploadModalVisible, setIsMovieUploadModalVisible] = useState(true);
   const [isVideoShareModalVisible, setIsVideoShareModalVisible] = useState(false);
   const { mutateAsync: getUploadMovieUrlMutateAsync, isPending: isGetUploadMovieUrlLoading, data: getSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync, progress: episodeUploadProgress } = useUploadVideoOnAwsS3();
-  const { mutateAsync: createImageMutateAsync, data: imageData, isPending: isCreateImageLoading } = useCreateImage();
+
   const { mutateAsync: createMovieMutateAsync, isPending: isCreateMovieLoading, data: createMovieData } = useCreateMovie();
 
   const handleOnMovieDrop = async (episode: File) => {
@@ -37,7 +36,7 @@ export default function MovieUploadScreen() {
 
   const handleOnCreateMovie = async (input: CreateMovieFormFieldType) => {
     await createMovieMutateAsync({
-      ImageId: imageData?.ID,
+      ImageId: input.imageId,
       SignedUrlKeyId: getSignedUrlData?.signedUrlKeyId,
       VideoId: getSignedUrlData?.videoId,
       PlotSummary: input.plotSummary,
@@ -53,13 +52,12 @@ export default function MovieUploadScreen() {
     handleOnToggleVideoShareModal();
     handleOnToggleMovieUploadModal();
   };
-
-  const handleOnThumbnailSelect = async (image: File) => {
-    const { mimeType } = await extractImageMetadata(image);
-    const imageBase64 = await extractImageBase64(image);
-    setThumbnailUrl(await extractImageUrl(image));
-    await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.THUMBNAIL });
-  };
+  //
+  // const handleOnThumbnailSelect = async (image: File) => {
+  // const { mimeType } = await extractImageMetadata(image);
+  // const imageBase64 = await extractImageBase64(image);
+  // await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.THUMBNAIL });
+  // };
 
   const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {
     const videoBlob = await convertVideoInBlob(episode);
@@ -81,7 +79,16 @@ export default function MovieUploadScreen() {
   return (
     <Page>
       <Button onClick={handleOnToggleSelectSeriesModal}>Upload</Button>
-      <MovieUploadModal isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onMovieSelect={handleOnMovieDrop} isLoading={isCreateImageLoading || isGetUploadMovieUrlLoading || isCreateMovieLoading} onFeedback={handleOnToggleFeedbackSidebar} onThumbnailSelect={handleOnThumbnailSelect} onCreateMovie={handleOnCreateMovie} thumbnailUrl={thumbnailUrl} ref={episodeUploadModalRef} progress={episodeUploadProgress} />
+      <MovieUploadModal
+        isVisible={isMovieUploadModalVisible}
+        onClose={handleOnToggleMovieUploadModal}
+        onMovieSelect={handleOnMovieDrop}
+        isLoading={isGetUploadMovieUrlLoading || isCreateMovieLoading}
+        onFeedback={handleOnToggleFeedbackSidebar}
+        onCreateMovie={handleOnCreateMovie}
+        ref={episodeUploadModalRef}
+        progress={episodeUploadProgress}
+      />
       <VideoShareModal mediaId={createMovieData?.ID} mediaType={MirraScopeMediaEnum.EPISODE} isVisible={isVideoShareModalVisible} onClose={handleOnToggleVideoShareModal} />
     </Page>
   );
