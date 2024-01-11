@@ -12,18 +12,17 @@ import * as yup from "yup";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../../constants";
 import { CreateMovieFormFieldType } from "../../types";
 import MovieAdditionalInfoComponent from "./MovieAdditionalInfoComponent";
+import { useCreateImage } from "../../hooks";
 
 interface MovieCreateStepProps {
-  thumbnailSrc: string;
   onSave: (fields: CreateMovieFormFieldType) => void;
-  onThumbnailSelect: (movie: File) => void;
   isLoading: boolean;
-  isCreateImageLoading: boolean;
   isSaveButtonDisabled: boolean;
 }
 
-export default function MovieCreateStep({ thumbnailSrc, onSave, onThumbnailSelect, isLoading, isCreateImageLoading, isSaveButtonDisabled }: MovieCreateStepProps) {
+export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisabled }: MovieCreateStepProps) {
   const { t } = useTranslation();
+  const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateImage();
 
   const {
     control,
