@@ -31,7 +31,7 @@ export default function FileSelectInput({ onFileSelect, loading, error, maxSize,
         readOnly: true,
         startAdornment: (
           <InputAdornment position="start">
-            <AttachFileIcon />
+            <AttachFileIcon fontSize="small" />
           </InputAdornment>
         ),
         endAdornment: <InputAdornment position="end">{loading ? <CircularProgress size={20} /> : error ? <ErrorIcon color="error" /> : null}</InputAdornment>,

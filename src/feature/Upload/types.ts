@@ -11,6 +11,7 @@ export interface CreateMovieFormFieldType {
   title: string;
   plotSummary: string;
   releaseDate: number;
+  imageId: string;
   originCountry: MediaCountriesEnum;
   originalLanguage: MediaLanguagiesEnum;
   genre: MediaGenriesEnum;
