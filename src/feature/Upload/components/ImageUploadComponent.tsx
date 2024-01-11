@@ -18,6 +18,7 @@ export default function SeriesImageSelectComponent({ onImageDrop, isLoading, tit
 
   const containerStyle = useThemeStyles<SxProps>((theme) => ({
     height: theme.spacing(16),
+    bgcolor: "red",
     width: theme.spacing(36),
     pointerEvents: isLoading ? "none" : "all",
     padding: theme.spacing(1),

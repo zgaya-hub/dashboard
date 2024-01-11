@@ -1,26 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
-import {
-  CreateEpisodeInput,
-  CreateImageInput,
-  ImageIdOutput,
-  GetManagerSeriesWithImageAndBasicInfoOutput,
-  GetSeasonBySeriesIdInput,
-  GetSeasonBySeriesIdOutput,
-  GetUploadVideoSignedUrlInput,
-  GetUploadVideoSignedUrlOutput,
-  UploadVideoOnAwsS3Input,
-  GetNextEpisodeNumberParams,
-  GetNextEpisodeNumberOutput,
-  EpisodeIdOutput,
-  CreateExternalLinkInput,
-  GetSharelinkInput,
-  GetImageByMediaIdParams,
-} from "./queryHooks.types";
+import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import * as S3 from "@aws-sdk/client-s3";
+import { CreateEpisodeInput, CreateImageInput, EpisodeIdOutput, GetImageByMediaIdParams, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput, GetManagerSeriesWithImageOutput, CreateMovieInput } from "mirra-scope-client-types/lib";
+import { UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
-  const [apiCaller, status] = useMutation<{ getUploadVideoSignedUrl: GetUploadVideoSignedUrlOutput }, { input: GetUploadVideoSignedUrlInput }>(
+  const [apiCaller, status] = useMutation<{ getUploadVideoSignedUrl: UploadVideoSignedUrlOutput }, { input: GetUploadVideoSignedUrlInput }>(
     gql`
       mutation ($input: GetUploadVideoSignedUrlInput!) {
         getUploadVideoSignedUrl(GetUploadVideoSignedUrlInput: $input) {
@@ -45,7 +29,7 @@ export function useGetUploadVideoSignedUrl() {
 
 export function useGetSeasonBySeriesId() {
   // TODO: this is actually a query in BE but here due to Error i have change it into mutation it will change in the future
-  const [apiCaller, status] = useMutation<{ getSeasonBySeriesId: GetSeasonBySeriesIdOutput[] }, { param: GetSeasonBySeriesIdInput }>(
+  const [apiCaller, status] = useMutation<{ getSeasonBySeriesId: Season[] }, { param: GetSeasonBySeriesIdParams }>(
     gql`
       mutation ($param: GetSeasonBySeriesIdParams!) {
         getSeasonBySeriesId(GetSeasonBySeriesIdParams: $param) {
@@ -60,7 +44,7 @@ export function useGetSeasonBySeriesId() {
       }
     `
   );
-  const mutateAsync = async (param: GetSeasonBySeriesIdInput) => {
+  const mutateAsync = async (param: GetSeasonBySeriesIdParams) => {
     try {
       const result = await apiCaller({ variables: { param } });
       return result.data?.getSeasonBySeriesId;
@@ -83,6 +67,28 @@ export function useCreateEpisode() {
     `
   );
   const mutateAsync = async (input: CreateEpisodeInput) => {
+    try {
+      const result = await apiCaller({ variables: { input } });
+      return result.data?.createEpisode;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  return { ...status, mutateAsync, data: status.data?.createEpisode, isPending: status.loading };
+}
+
+export function useCreateMovie() {
+  const [apiCaller, status] = useMutation<{ createEpisode: EpisodeIdOutput }, { input: CreateMovieInput }>(
+    gql`
+      mutation ($input: CreateMovieInput!) {
+        createMovie(CreateMovieInput: $input) {
+          ID
+        }
+      }
+    `
+  );
+  const mutateAsync = async (input: CreateMovieInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createEpisode;
@@ -132,11 +138,12 @@ export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
   return { ...status, isLoading: status.loading, data: status.data?.getNextEpisodeNumber };
 }
 
-export function useGetManagerSeriesWithImageAndBasicInfo() {
-  const status = useQuery<{ getManagerSeriesWithImageAndBasicInfo: GetManagerSeriesWithImageAndBasicInfoOutput[] }>(
+export function useGetManagerSeriesWithImage() {
+  //TODO: this return type will change
+  const status = useQuery<{ getManagerSeriesWithImage: GetManagerSeriesWithImageOutput[] }>(
     gql`
-      query GetManagerSeriesWithImageAndBasicInfo {
-        getManagerSeriesWithImageAndBasicInfo {
+      query GetManagerSeriesWithImage {
+        getManagerSeriesWithImage {
           ID
           isFree
           priceInDollar
@@ -155,7 +162,7 @@ export function useGetManagerSeriesWithImageAndBasicInfo() {
       }
     `
   );
-  return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImageAndBasicInfo };
+  return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImage };
 }
 
 export function useGetImageByMediaId(param: GetImageByMediaIdParams) {

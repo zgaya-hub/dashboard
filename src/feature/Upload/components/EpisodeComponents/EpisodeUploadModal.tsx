@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, DialogContent, Divider, Step, StepLabel, Stepper, SxProps, Typography, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Dialog } from "@/components/Dialog";
-import { CheckBoxIcon, FeedbackIcon, SdIcon, UploadIcon } from "@/components/icons";
+import { Dialog, DialogTitle } from "@/components/Dialog";
+import { ClearIcon, FeedbackIcon, SdIcon, UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/useNavigation";
 import useTheme from "@/theme/Theme.context";
@@ -24,15 +24,13 @@ interface EpisodeUploadModalProps {
   thumbnailUrl: string;
   seasonId: string;
   progress: number;
-  // TODO: we not using it but will need to share video
-  episodeId?: string;
 }
 
 export interface EpisodeUploadModalRef {
   onNext: () => void;
 }
 
-const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, progress, seasonId, episodeId }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalRef>) {
+const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, onClose, onFeedback, onCreateEpisode, isLoading, thumbnailUrl, onEpisodeSelect, onThumbnailSelect, progress, seasonId }: EpisodeUploadModalProps, ref: Ref<EpisodeUploadModalRef>) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const navigate = useNavigation();
@@ -89,7 +87,11 @@ const EpisodeUploadModal = forwardRef(function EpisodeUploadModal({ isVisible, o
   ];
 
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={steps[activeStep].label} onClose={onClose} outAreaClose={false}>
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible}>
+      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        {steps[activeStep].label}
+        <ClearIcon onClick={onClose} />
+      </DialogTitle>
       <Divider />
       <Box p={2} bgcolor={"Background"}>
         <Stepper activeStep={activeStep}>

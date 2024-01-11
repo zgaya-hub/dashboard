@@ -1,4 +1,4 @@
-import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, MediaStatusEnum } from "@/types/enum";
+import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 export interface SeriesCreateFormFieldInterface {
   title: string;
@@ -6,7 +6,7 @@ export interface SeriesCreateFormFieldInterface {
   releaseDate: number;
   imageId: string;
   originCountry: MediaCountriesEnum;
-  originalLanguage: LanguagiesEnum;
+  originalLanguage: MediaLanguagiesEnum;
   genre: MediaGenriesEnum;
   status: MediaStatusEnum;
 }
@@ -14,7 +14,7 @@ export interface SeriesCreateFormFieldInterface {
 export interface TableSeriesInterface {
   ID: string;
   originCountry: MediaCountriesEnum;
-  originalLanguage: LanguagiesEnum;
+  originalLanguage: MediaLanguagiesEnum;
   genre: MediaGenriesEnum;
   status: MediaStatusEnum;
   title: string;

@@ -3,8 +3,8 @@ import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SeriesCreateFormFieldInterface } from "../types";
 import { values } from "lodash";
-import { MediaStatusEnum } from "@/types/enum";
 import { SelectInput } from "@/components/Form";
+import { MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 interface SeriesStatusSelectComponentProps {
   formRegister: UseFormRegister<SeriesCreateFormFieldInterface>;

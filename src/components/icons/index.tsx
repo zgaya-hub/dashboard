@@ -129,7 +129,7 @@ const withIconWrapper = (WrappedOutlinedIcon: ComponentType<IconWrapperProps>, W
       return <ListItemIcon sx={sx}>{renderIcon()}</ListItemIcon>;
     }
 
-    if (onClick || iconButton) {
+    if ((onClick || iconButton) && iconButton !== false) {
       return (
         <IconButton disableRipple={disableRipple} sx={sx} disabled={loading || disabled} onClick={onClick} color="inherit" {...iconButtonProps}>
           <Tooltip title={tooltip} placement={tooltipPlacement}>
@@ -140,7 +140,7 @@ const withIconWrapper = (WrappedOutlinedIcon: ComponentType<IconWrapperProps>, W
     }
 
     return (
-      <Tooltip title={tooltip} placement={tooltipPlacement} sx={sx}>
+      <Tooltip title={tooltip} placement={tooltipPlacement} sx={sx} onClick={onClick}>
         {renderIcon()}
       </Tooltip>
     );

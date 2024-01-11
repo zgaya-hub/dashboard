@@ -1,5 +1,6 @@
-import { CreateImageInput, ImageIdOutput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, CreateCineastInput } from "./queryHooks.types";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, ImageIdOutput } from "mirra-scope-client-types/lib";
+import { CreateCineastInput } from "./queryHooks.types";
 
 export function useCreateImage() {
   const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(

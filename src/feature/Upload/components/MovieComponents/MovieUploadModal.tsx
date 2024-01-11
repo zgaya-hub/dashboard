@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, DialogContent, Divider, Step, StepLabel, Stepper, SxProps, Typography, useMediaQuery } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { Dialog } from "@/components/Dialog";
-import { CheckBoxIcon, FeedbackIcon, SdIcon, UploadIcon } from "@/components/icons";
+import { Dialog, DialogTitle } from "@/components/Dialog";
+import { ClearIcon, FeedbackIcon, SdIcon, UploadIcon } from "@/components/icons";
 import { useTranslation } from "react-i18next";
 import useNavigation from "@/navigation/useNavigation";
 import useTheme from "@/theme/Theme.context";
@@ -11,6 +11,7 @@ import { Ref, forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import VideoUploadComponent from "../VideoUploadComponent";
 import { CreateMovieFormFieldType } from "../../types";
 import DialogActions from "@/components/Dialog/DialogActions";
+import MovieCreateStep from "./MovieCreateStep";
 
 interface MovieUploadModalProps {
   isVisible: boolean;
@@ -21,17 +22,14 @@ interface MovieUploadModalProps {
   onCreateMovie: (input: CreateMovieFormFieldType) => void;
   isLoading: boolean;
   thumbnailUrl: string;
-  seasonId: string;
   progress: number;
-  // TODO: we not using it but will need to share video
-  episodeId?: string;
 }
 
 export interface MovieUploadModalRef {
   onNext: () => void;
 }
 
-const MovieUploadModal = forwardRef(function MovieUploadModal({ isVisible, onClose, onFeedback, onCreateMovie, isLoading, thumbnailUrl, onMovieSelect, onThumbnailSelect, progress, seasonId, episodeId }: MovieUploadModalProps, ref: Ref<MovieUploadModalRef>) {
+const MovieUploadModal = forwardRef(function MovieUploadModal({ isVisible, onClose, onFeedback, onCreateMovie, isLoading, thumbnailUrl, onMovieSelect, onThumbnailSelect, progress }: MovieUploadModalProps, ref: Ref<MovieUploadModalRef>) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const navigate = useNavigation();
@@ -83,14 +81,16 @@ const MovieUploadModal = forwardRef(function MovieUploadModal({ isVisible, onClo
     },
     {
       label: t("Feature.VideoUpload.MovieUploadModal.enterMovieDetails"),
-      step: <VideoUploadComponent onVideoSelect={handleOnMovieSelect} isLoading={isLoading} message={t("Feature.VideoUpload.MovieUploadModal.message")} title={t("Feature.VideoUpload.MovieUploadModal.title")} />,
-
-      // step: <MovieCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateMovie} thumbnailSrc={thumbnailUrl} seasonId={seasonId} isSaveButtonDisabled={isSaveButtonDisabled} />,
+      step: <MovieCreateStep isCreateImageLoading={isLoading} onThumbnailSelect={onThumbnailSelect} isLoading={isLoading} onSave={onCreateMovie} thumbnailSrc={thumbnailUrl} isSaveButtonDisabled={isSaveButtonDisabled} />,
     },
   ];
 
   return (
-    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible} headerText={steps[activeStep].label} onClose={onClose} outAreaClose={false}>
+    <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible}>
+      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        {steps[activeStep].label}
+        <ClearIcon onClick={onClose} />
+      </DialogTitle>
       <Divider />
       <Box p={2} bgcolor={"Background"}>
         <Stepper activeStep={activeStep}>

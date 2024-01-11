@@ -1,15 +1,15 @@
-import { Dialog } from "@/components/Dialog";
+import { Dialog, DialogActions, DialogTitle } from "@/components/Dialog";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import RadioGroup from "@mui/material/RadioGroup";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
-import { DoneIcon, SearchIcon, StreetViewIcon } from "@/components/icons";
+import { DialogContent, ListItemText, MenuItem, Radio, SxProps } from "@mui/material";
+import { ClearIcon, DoneIcon, SearchIcon, StreetViewIcon } from "@/components/icons";
 import { SearchInput } from "@/components/Form";
-import { MediaGenriesEnum } from "@/types/enum";
 import { GenrePickerEmptyComponent } from "..";
 import { mediaGenreList } from "../constants";
+import { MediaGenriesEnum } from "mirra-scope-client-types/lib";
 
 interface GenrePickerModalProps {
   isOpen: boolean;
@@ -41,7 +41,7 @@ export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerM
     setIsSearchInputVisible(false);
   };
 
-  const handleOnSearchInputVisible = () => {
+  const handleOnToggleSearchInput = () => {
     setIsSearchInputVisible(!isSearchInputVisible);
   };
 
@@ -56,33 +56,36 @@ export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerM
     },
   }));
 
-  const dialogActions = (
-    <>
-      <SearchIcon onClick={handleOnSearchInputVisible} />
-      <Button onClick={handleOnClose} variant="text">
-        {t("Components.Modals.GenrePickerModal.cancel")}
-      </Button>
-      <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
-        {t("Components.Modals.GenrePickerModal.ok")}
-      </Button>
-    </>
-  );
-
   return (
-    <Dialog dialogContentSx={{ padding: 0 }} open={isOpen} onClose={onClose} headerText={t("Components.Modals.GenrePickerModal.pickAGenre")} dialogAction={dialogActions} sx={dialogBoxStyle} hideCrossButton>
-      {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.GenrePickerModal.search")} /> : null}
-      <RadioGroup value={value} onChange={handleOnChange}>
-        {filteredGenres.map((genre) => {
-          return (
-            <MenuItem onClick={() => setValue(genre)}>
-              <StreetViewIcon isListIcon />
-              <ListItemText>{genre}</ListItemText>
-              <Radio value={genre} />
-            </MenuItem>
-          );
-        })}
-        {!filteredGenres.length ? <GenrePickerEmptyComponent height={32} /> : null}
-      </RadioGroup>
+    <Dialog open={isOpen} onClose={onClose} sx={dialogBoxStyle}>
+      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"}>
+        {t("Components.Modals.GenrePickerModal.pickAGenre")}
+        <ClearIcon onClick={handleOnClose} />
+      </DialogTitle>
+      <DialogContent dividers sx={{ padding: 0 }}>
+        {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.GenrePickerModal.search")} /> : null}
+        <RadioGroup value={value} onChange={handleOnChange}>
+          {filteredGenres.map((genre) => {
+            return (
+              <MenuItem onClick={() => setValue(genre)}>
+                <StreetViewIcon isListIcon />
+                <ListItemText>{genre}</ListItemText>
+                <Radio value={genre} />
+              </MenuItem>
+            );
+          })}
+          {!filteredGenres.length ? <GenrePickerEmptyComponent height={32} /> : null}
+        </RadioGroup>
+      </DialogContent>
+      <DialogActions>
+        <SearchIcon onClick={handleOnToggleSearchInput} />
+        <Button onClick={handleOnClose} variant="text">
+          {t("Components.Modals.GenrePickerModal.cancel")}
+        </Button>
+        <Button onClick={handleOnConfirm} variant="contained" endIcon={<DoneIcon />}>
+          {t("Components.Modals.GenrePickerModal.ok")}
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

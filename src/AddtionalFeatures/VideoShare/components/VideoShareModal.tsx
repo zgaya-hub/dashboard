@@ -1,5 +1,4 @@
 import { Dialog, DialogActions } from "@/components/Dialog";
-import { MovierMediaEnum } from "@/types/enum";
 import { useGetSharelink, useGetImageByMediaId } from "../hooks";
 import { VideoShareModalCard } from "@/components/Cards";
 import Button from "@/components/Button";
@@ -7,10 +6,11 @@ import { DialogContent, List, ListItem, SxProps } from "@mui/material";
 import { LinkIcon } from "@/components/icons";
 import { RedditIcon, FacebookIcon } from "../assets";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { MirraScopeMediaEnum } from "mirra-scope-client-types/lib";
 
 interface VideoShareModalProps {
   mediaId: string;
-  mediaType: MovierMediaEnum;
+  mediaType: MirraScopeMediaEnum;
   isVisible: boolean;
   onClose: () => void;
 }

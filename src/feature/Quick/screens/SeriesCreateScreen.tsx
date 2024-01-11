@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
 import { useCreateImage, useCreateSeries } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { ImageVariantEnum } from "@/types/enum";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
+import { ImageVariantEnum } from "mirra-scope-client-types/lib";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
@@ -45,12 +45,10 @@ export default function SeriesCreateScreen() {
   const handleOnCreateEpisode = async (input: SeriesCreateFormFieldInterface) => {
     await createSeriesMutateAsync({
       ImageId: input.imageId,
-      MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: +input.releaseDate,
-      },
-      MediaAdditionalInfo: {},
+      PlotSummary: input.plotSummary,
+      Title: input.title,
+      ReleaseDate: +input.releaseDate,
+      AdditionalInfo: {},
     });
     window.close();
   };

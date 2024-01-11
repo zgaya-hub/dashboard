@@ -1,4 +1,4 @@
-import { MediaCountriesEnum } from "@/types/enum";
+import { MediaCountriesEnum } from "mirra-scope-client-types/lib";
 
 export const countryListWithFlag = [
   { name: MediaCountriesEnum.USA, flag: "🇺🇸" },

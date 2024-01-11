@@ -1,5 +1,6 @@
-import { CreateImageInput, ImageIdOutput, CreateSeriesInput, DeleteMultipleSeriesByIdzOutput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdOutput, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, UpdateSeriesInput, UpdateSeriesOutput, UpdateSeriesParams, GetMediaBasicInfoByMediaIdParams, GetMediaAdditionalInfoByMediaIdParams, GetImageByMediaIdParams, GetCineastsBySeriesIdParams } from "./queryHooks.types";
+import { CreateImageInput, ImageIdOutput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, UpdateSeriesInput, UpdateSeriesParams, GetImageByMediaIdParams, SuccessOutput, GetAdditionalInfoByMediaIdParams } from "mirra-scope-client-types/lib";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { GetCineastsBySeriesIdParams, GetMediaBasicInfoByMediaIdParams } from "./queryHooks.types";
 
 export function useCreateImage() {
   const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
@@ -47,7 +48,7 @@ export function useCreateSeries() {
 }
 
 export function useDeleteSeriesById() {
-  const [apiCaller, status] = useMutation<{ deleteSeriesById: DeleteSeriesByIdOutput }, { param: DeleteSeriesByIdParams }>(gql`
+  const [apiCaller, status] = useMutation<{ deleteSeriesById: SuccessOutput }, { param: DeleteSeriesByIdParams }>(gql`
     mutation ($param: DeleteSeriesByIdParams!) {
       deleteSeriesById(DeleteSeriesByIdParams: $param) {
         isSuccess
@@ -69,7 +70,7 @@ export function useDeleteSeriesById() {
 }
 
 export function useDeleteMultipleSeriesByIdz() {
-  const [apiCaller, status] = useMutation<{ deleteMultipleSeriesByIdz: DeleteMultipleSeriesByIdzOutput }, { param: DeleteMultipleSeriesByIdzParams }>(
+  const [apiCaller, status] = useMutation<{ deleteMultipleSeriesByIdz: SuccessOutput }, { param: DeleteMultipleSeriesByIdzParams }>(
     gql`
       mutation ($param: DeleteMultipleSeriesByIdzParams!) {
         deleteMultipleSeriesByIdz(DeleteMultipleSeriesByIdzParams: $param) {
@@ -91,7 +92,7 @@ export function useDeleteMultipleSeriesByIdz() {
 }
 
 export function useUpdateSeries() {
-  const [apiCaller, status] = useMutation<{ updateSeries: UpdateSeriesOutput }, { param: UpdateSeriesParams; input: UpdateSeriesInput }>(
+  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { param: UpdateSeriesParams; input: UpdateSeriesInput }>(
     gql`
       mutation ($param: UpdateSeriesParams!, $input: UpdateSeriesInput!) {
         updateSeries(UpdateSeriesParams: $param, UpdateSeriesInput: $input) {
@@ -131,11 +132,11 @@ export function useGetMediaBasicInfoByMediaId(param: GetMediaBasicInfoByMediaIdP
   return { ...status, isLoading: status.loading, data: status.data?.getMediaBasicInfoByMediaId };
 }
 
-export function useGetMediaAdditionalInfoByMediaId(param: GetMediaAdditionalInfoByMediaIdParams) {
-  const status = useQuery<{ getMediaAdditionalInfoByMediaId: MediaAdditionalInfoEntityType }>(
+export function useGetAdditionalInfoByMediaId(param: GetAdditionalInfoByMediaIdParams) {
+  const status = useQuery<{ getAdditionalInfoByMediaId: AdditionalInfoEntityType }>(
     gql`
-      query ($param: GetMediaAdditionalInfoByMediaIdParams!) {
-        getMediaAdditionalInfoByMediaId(GetMediaAdditionalInfoByMediaIdParams: $param) {
+      query ($param: GetAdditionalInfoByMediaIdParams!) {
+        getAdditionalInfoByMediaId(GetAdditionalInfoByMediaIdParams: $param) {
           ID
           originCountry
           originalLanguage
@@ -148,7 +149,7 @@ export function useGetMediaAdditionalInfoByMediaId(param: GetMediaAdditionalInfo
       variables: { param },
     }
   );
-  return { ...status, isLoading: status.loading, data: status.data?.getMediaAdditionalInfoByMediaId };
+  return { ...status, isLoading: status.loading, data: status.data?.getAdditionalInfoByMediaId };
 }
 
 export function useGetImageByMediaId(param: GetImageByMediaIdParams) {

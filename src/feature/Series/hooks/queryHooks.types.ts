@@ -1,5 +1,5 @@
-import { MediaCountriesEnum, LanguagiesEnum, MediaGenriesEnum, ImageVariantEnum, MediaStatusEnum } from "@/types/enum";
 import { TableSeriesInterface } from "../types";
+import { ImageVariantEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 export type CreateImageInput = {
   Base64: string;
@@ -15,12 +15,12 @@ export type GetManagerSeriesForTableInput = {
 export type CreateSeriesInput = {
   ImageId: string;
   MediaBasicInfo: CreateMediaBasicInfoInput;
-  MediaAdditionalInfo: Partial<CreateMediaAdditionalInfoInput>;
+  AdditionalInfo: Partial<CreateAdditionalInfoInput>;
 };
 
-export type CreateMediaAdditionalInfoInput = {
+export type CreateAdditionalInfoInput = {
   OriginCountry: MediaCountriesEnum;
-  OriginalLanguage: LanguagiesEnum;
+  OriginalLanguage: MediaLanguagiesEnum;
   Genre: MediaGenriesEnum;
   Status: MediaStatusEnum;
 };
@@ -42,7 +42,7 @@ export type DeleteSeriesByIdParams = {
 
 export type UpdateSeriesInput = {
   MediaBasicInfo: Partial<CreateMediaBasicInfoInput>;
-  MediaAdditionalInfo: Partial<CreateMediaAdditionalInfoInput>;
+  AdditionalInfo: Partial<CreateAdditionalInfoInput>;
   Image: Partial<UpdateImageInput>;
 };
 
@@ -54,7 +54,7 @@ export type GetMediaBasicInfoByMediaIdParams = {
   MediaId: string;
 };
 
-export type GetMediaAdditionalInfoByMediaIdParams = {
+export type GetAdditionalInfoByMediaIdParams = {
   MediaId: string;
 };
 

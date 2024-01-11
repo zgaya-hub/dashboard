@@ -134,6 +134,26 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
+  MuiMenuItem: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
+  MuiButton: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
+  MuiIconButton: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
+  MuiRadio: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
 };
 
 export const darkThemeComponents: ThemeOptions["components"] = {
@@ -181,6 +201,26 @@ export const darkThemeComponents: ThemeOptions["components"] = {
           strokeLinecap: "round",
         },
       },
+    },
+  },
+  MuiMenuItem: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
+  MuiButton: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
+  MuiIconButton: {
+    defaultProps: {
+      disableRipple: true,
+    },
+  },
+  MuiRadio: {
+    defaultProps: {
+      disableRipple: true,
     },
   },
 };

@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { SaveIcon } from "@/components/icons";
 import { useCreateImage, useCreateCineast } from "../hooks";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { ImageVariantEnum } from "@/types/enum";
+import { ImageVariantEnum } from "mirra-scope-client-types/lib";
 
 export default function CineastCreateScreen() {
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ export default function CineastCreateScreen() {
   const handleOnImageSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = await extractImageBase64(image);
-    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.PROFILE });
+    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.BACKDROP });
     if (result) {
       setFormValue("imageId", result.ID);
     }

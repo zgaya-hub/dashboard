@@ -4,14 +4,14 @@ export { useDeleteSeriesById } from "./queryHooks";
 export { useDeleteMultipleSeriesByIdz } from "./queryHooks";
 export { useUpdateSeries } from "./queryHooks";
 export { useGetMediaBasicInfoByMediaId } from "./queryHooks";
-export { useGetMediaAdditionalInfoByMediaId } from "./queryHooks";
+export { useGetAdditionalInfoByMediaId } from "./queryHooks";
 export { useGetManagerSeriesForTable } from "./queryHooks";
 export { useGetImageByMediaId } from "./queryHooks";
 
 export type { CreateImageInput } from "./queryHooks.types";
 export type { GetManagerSeriesForTableInput } from "./queryHooks.types";
 export type { CreateSeriesInput } from "./queryHooks.types";
-export type { CreateMediaAdditionalInfoInput } from "./queryHooks.types";
+export type { CreateAdditionalInfoInput } from "./queryHooks.types";
 export type { UpdateImageInput } from "./queryHooks.types";
 export type { CreateMediaBasicInfoInput } from "./queryHooks.types";
 export type { DeleteSeriesByIdParams } from "./queryHooks.types";
