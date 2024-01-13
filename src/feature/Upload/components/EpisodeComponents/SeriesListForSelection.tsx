@@ -1,7 +1,8 @@
+import { List, ListItem, SxProps } from "@mui/material";
+import { GetManagerSeriesWithImageOutput } from "zgaya.hub-client-types/lib";
+
 import { ImagePlusTitleCard, ImagePlusTitleCardSkeleton } from "@/components/Cards";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { List, ListItem, SxProps } from "@mui/material";
-import { GetManagerSeriesWithImageOutput } from "mirra-scope-client-types/lib";
 
 interface SeriesListForSelectionProps {
   seriesList: GetManagerSeriesWithImageOutput[];
@@ -10,7 +11,7 @@ interface SeriesListForSelectionProps {
 }
 
 export default function SeriesListForSelection({ seriesList, onSelectedSeries, isLoading }: SeriesListForSelectionProps) {
-  const listStyle = useThemeStyles<SxProps>((theme) => ({
+  const listStyle = useThemeStyles<SxProps>(theme => ({
     maxHeight: theme.spacing(96),
     overflowY: "auto",
   }));
@@ -29,9 +30,9 @@ export default function SeriesListForSelection({ seriesList, onSelectedSeries, i
 
   return (
     <List sx={listStyle}>
-      {seriesList.map((series) => (
+      {seriesList.map(series => (
         <ListItem key={series.ID} onClick={() => onSelectedSeries(series)}>
-          <ImagePlusTitleCard thumbnail={series.image.url} title={series.mediaBasicInfo.title} />
+          <ImagePlusTitleCard thumbnail={series.imageUrl} title={series.title} />
         </ListItem>
       ))}
     </List>

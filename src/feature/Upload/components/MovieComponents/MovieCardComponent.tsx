@@ -1,20 +1,21 @@
-import { VideoPlayCard } from "@/components/Cards";
 import { Box } from "@mui/material";
+
+import { VideoPlayCard } from "@/components/Cards";
 
 interface MovieCardComponentProps {
   title: string;
   plotSummary: string;
-  thumbnail: string;
+  source: string;
 }
 
-export default function MovieCardComponent({ plotSummary, thumbnail, title }: MovieCardComponentProps) {
+export default function MovieCardComponent({ plotSummary, source, title }: MovieCardComponentProps) {
   const handleOnClickMenuIcon = () => {
-    console.log("click");
+    alert("click");
   };
 
   return (
     <Box>
-      <VideoPlayCard onClickMenuIcon={handleOnClickMenuIcon} thumbnail={thumbnail} title={title} description={plotSummary}></VideoPlayCard>
+      <VideoPlayCard onClickMenuIcon={handleOnClickMenuIcon} videoUrl={source} title={title} description={plotSummary}></VideoPlayCard>
     </Box>
   );
 }

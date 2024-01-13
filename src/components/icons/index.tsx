@@ -105,6 +105,8 @@ import { default as MuiDetails } from "@mui/icons-material/Details";
 import { default as MuiEventIcon } from "@mui/icons-material/Event";
 import { default as MuiInfodIcon } from "@mui/icons-material/Info";
 import { default as MuiSdIcon } from "@mui/icons-material/Sd";
+import {default as MuiAddPhotoAlternateOutlinedIcon} from '@mui/icons-material/AddPhotoAlternateOutlined';
+import {default as MuiAddPhotoAlternateIcon} from '@mui/icons-material/AddPhotoAlternate';
 
 import Tooltip from "../Tooltip";
 
@@ -138,10 +140,10 @@ const withIconWrapper = (WrappedOutlinedIcon: ComponentType<IconWrapperProps>, W
         </IconButton>
       );
     }
-
+    
     return (
       <Tooltip title={tooltip} placement={tooltipPlacement} sx={sx} onClick={onClick}>
-        {renderIcon()}
+        {loading ? <CircularProgress size={25} /> : renderIcon()}
       </Tooltip>
     );
   };
@@ -199,3 +201,4 @@ export const DetailsIcon = withIconWrapper(MuiDetOutlinedails, MuiDetails);
 export const InfoIcon = withIconWrapper(MuiInfodOutlinedIcon, MuiInfodIcon);
 export const EventIcon = withIconWrapper(MuiEventOutlinedIcon, MuiEventIcon);
 export const SdIcon = withIconWrapper(MuiSdOutlinedIcon, MuiSdIcon);
+export const AddImageIcon = withIconWrapper(MuiAddPhotoAlternateOutlinedIcon, MuiAddPhotoAlternateIcon);

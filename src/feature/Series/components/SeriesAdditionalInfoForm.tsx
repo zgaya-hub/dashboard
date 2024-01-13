@@ -1,13 +1,16 @@
-import Elevator from "@/components/Tags/Elevator";
-import { Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SeriesCreateFormFieldInterface } from "../types";
-import { useState } from "react";
+import { Stack, Typography } from "@mui/material";
+import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum } from "zgaya.hub-client-types/lib";
+
 import { ModalSelectInput } from "@/components/Form";
-import { CountryPickerModal, LanguagePickerModal, GenrePickerModal } from "@/components/Modals";
+import { CountryPickerModal, GenrePickerModal,LanguagePickerModal } from "@/components/Modals";
+import Elevator from "@/components/Tags/Elevator";
+
+import { SeriesCreateFormFieldInterface } from "../types";
+
 import SeriesStatusSelectComponent from "./SeriesStatusSelectComponent";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum } from "mirra-scope-client-types/lib";
 
 interface SeriesAdditionalInfoFormProps {
   setFormValue: UseFormSetValue<SeriesCreateFormFieldInterface>;

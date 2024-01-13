@@ -1,5 +1,6 @@
+import { ImageVariantEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
+
 import { TableSeriesInterface } from "../types";
-import { ImageVariantEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 export type CreateImageInput = {
   Base64: string;

@@ -1,14 +1,20 @@
-import { useState } from "react";
-import { useGetManagerSeriesWithImage, useGetSeasonBySeriesId } from "../../hooks";
+import { lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AddIcon, CachedIcon, ChevronLeftIcon, ClearIcon, ErrorIcon, UploadIcon } from "@/components/icons";
-import { Dialog, DialogActions, DialogTitle } from "@/components/Dialog";
-import Button from "@/components/Button";
+import { lazily } from "react-lazily";
+import { CircularProgress } from "@mui/material";
+import { GetManagerSeriesWithImageOutput, Season } from "zgaya.hub-client-types/lib";
+
 import useNavigation from "@/navigation/useNavigation";
+
+import { useGetManagerSeriesWithImage, useGetSeasonBySeriesId } from "../../hooks";
+
 import SeasonListForSelection from "./SeasonListForSelection";
 import SeriesListForSelection from "./SeriesListForSelection";
-import { DialogContent } from "@mui/material";
-import { GetManagerSeriesWithImageOutput, Season } from "mirra-scope-client-types/lib";
+
+const { DialogContent } = lazily(() => import("@mui/material"));
+const Button = lazy(() => import("@/components/Button"));
+const { Dialog, DialogActions, DialogTitle } = lazily(() => import("@/components/Dialog"));
+const { AddIcon, CachedIcon, ChevronLeftIcon, ClearIcon, ErrorIcon, UploadIcon } = lazily(() => import("@/components/icons"));
 
 interface SelectSeriesAndSeasonModalProps {
   isVisible: boolean;
@@ -93,15 +99,17 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   );
 
   return (
-    <Dialog onClose={handleOnClose} open={isVisible}>
-      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
-        {selectedSeries ? selectedSeries.mediaBasicInfo.title : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")}
-        <ClearIcon onClick={onClose} />
-      </DialogTitle>
-      <DialogContent sx={{ p: 0 }} dividers>
-        {selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={(id) => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries ?? []} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}
-      </DialogContent>
-      {selectedSeries ? renderSeasonListFooter : renderSeriesListFooter}
-    </Dialog>
+    <Suspense fallback={<CircularProgress />}>
+      <Dialog onClose={handleOnClose} open={isVisible}>
+        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+          {selectedSeries ? selectedSeries.title : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")}
+          <ClearIcon iconButton={false} onClick={onClose} />
+        </DialogTitle>
+        <DialogContent sx={{ p: 0 }} dividers>
+          {selectedSeries ? <SeasonListForSelection isLoading={isSeasonFetching} seasons={selectedSeriesSeasons} selectedSeasonId={selectedSeasonId} onSelectedSeason={id => setSelectedSeasonId(id)} /> : <SeriesListForSelection seriesList={managerSeries ?? []} onSelectedSeries={handleOnFetchSeasons} isLoading={isManagerSeriesFetching} />}
+        </DialogContent>
+        {selectedSeries ? renderSeasonListFooter : renderSeriesListFooter}
+      </Dialog>
+    </Suspense>
   );
 }

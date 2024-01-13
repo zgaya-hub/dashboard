@@ -1,37 +1,47 @@
-import { Card, LinearProgress, Stack, SxProps, Typography } from "@mui/material";
 import { useDropzone } from "react-dropzone";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { UploadIcon } from "@/components/icons";
+import { Card, LinearProgress, Stack, SxProps, Typography } from "@mui/material";
 
-interface SeriesImageSelectComponentProps {
+import { AddImageIcon,ErrorIcon } from "@/components/icons";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
+
+interface ImageUploadComponentProps {
   onImageSelect: (image: File) => void;
   isLoading: boolean;
+  errorMessage?: string;
   title: string;
 }
 
-export default function SeriesImageSelectComponent({ onImageSelect, isLoading, title }: SeriesImageSelectComponentProps) {
+export default function ImageUploadComponent({ onImageSelect, isLoading, title, errorMessage }: ImageUploadComponentProps) {
   const onDrop = ([video]: File[]) => {
     onImageSelect(video);
   };
 
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
-  const containerStyle = useThemeStyles<SxProps>((theme) => ({
-    height: theme.spacing(16),
-    width: theme.spacing(36),
+  const containerStyle = useThemeStyles<SxProps>(theme => ({
+    height: theme.spacing(12),
+    width: theme.spacing(24),
     pointerEvents: isLoading ? "none" : "all",
     padding: theme.spacing(1),
+    position: "relative",
   }));
 
-  const dropzoneStyle = useThemeStyles<SxProps>((theme) => ({
+  const dropzoneStyle = useThemeStyles<SxProps>(theme => ({
     border: isDragActive ? `2px dashed ${theme.palette.primary.main}` : "none",
     color: isDragActive ? theme.palette.primary.main : theme.palette.text.primary,
   }));
 
+  const errorIconStyle = useThemeStyles<SxProps>(theme => ({
+    position: "absolute",
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+  }));
+
   return (
     <Card {...getRootProps()} sx={containerStyle}>
-      <Stack alignItems={"center"} justifyContent={"center"} height={"100%"} sx={dropzoneStyle} gap={2}>
-        <UploadIcon fontSize="medium" />
+      {errorMessage ? <ErrorIcon sx={errorIconStyle} color="error" tooltip={errorMessage} /> : null}
+      <Stack alignItems={"center"} justifyContent={"center"} height={"100%"} sx={dropzoneStyle} gap={1}>
+        <AddImageIcon fontSize="medium" />
         <Typography>{title}</Typography>
       </Stack>
       {isLoading ? <LinearProgress /> : null}

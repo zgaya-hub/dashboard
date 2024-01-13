@@ -1,4 +1,4 @@
-import { MediaCountriesEnum } from "mirra-scope-client-types/lib";
+import { MediaCountriesEnum } from "zgaya.hub-client-types/lib";
 
 export const countryListWithFlag = [
   { name: MediaCountriesEnum.USA, flag: "🇺🇸" },

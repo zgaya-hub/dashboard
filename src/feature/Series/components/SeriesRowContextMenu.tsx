@@ -27,7 +27,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnEdit = () => {
-    console.log("Edit clicked for row ID:", seriesId);
+    alert("Edit clicked for row ID:", seriesId);
   };
 
   const handleOnDetails = () => {
@@ -35,7 +35,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnCreateSeason = () => {
-    console.log("Edit clicked for row ID:", seriesId);
+    alert("Edit clicked for row ID:", seriesId);
   };
 
   const menuItemStyle = useThemeStyles<SxProps>((theme) => ({

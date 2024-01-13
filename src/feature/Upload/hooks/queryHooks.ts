@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateEpisodeInput, CreateImageInput, EpisodeIdOutput, GetImageByMediaIdParams, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput, GetManagerSeriesWithImageOutput, CreateMovieInput } from "mirra-scope-client-types/lib";
+import { CreateEpisodeInput, CreateImageByUrlInput, CreateImageInput, CreateMovieInput, EpisodeIdOutput, GetImageByMediaIdParams, GetManagerSeriesWithImageOutput, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput } from "zgaya.hub-client-types/lib";
+import { Image } from "zgaya.hub-client-types/lib/videoHub";
+
+import { useCreateImageError } from "./errorHooks";
 import { UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
@@ -101,6 +104,7 @@ export function useCreateMovie() {
 }
 
 export function useCreateImage() {
+  const imageError = useCreateImageError();
   const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
       mutation ($input: CreateImageInput!) {
@@ -115,11 +119,34 @@ export function useCreateImage() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      throw new Error(error);
+      imageError.handleError(error as ServerErrorResponse);
     }
   };
 
   return { ...status, mutateAsync, data: status.data?.createImage, isPending: status.loading };
+}
+
+export function useCreateImageByUrl() {
+  const imageError = useCreateImageError();
+  const [apiCaller, status] = useMutation<{ createImageByUrl: ImageIdOutput }, { input: CreateImageByUrlInput }>(
+    gql`
+      mutation ($input: CreateImageByUrlInput!) {
+        createImageByUrl(CreateImageByUrlInput: $input) {
+          ID
+        }
+      }
+    `
+  );
+  const mutateAsync = async (input: CreateImageByUrlInput) => {
+    try {
+      const result = await apiCaller({ variables: { input } });
+      return result.data?.createImageByUrl;
+    } catch (error) {
+      imageError.handleError(error as ServerErrorResponse);
+    }
+  };
+
+  return { ...status, mutateAsync, data: status.data?.createImageByUrl, isPending: status.loading };
 }
 
 export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
@@ -147,17 +174,10 @@ export function useGetManagerSeriesWithImage() {
           ID
           isFree
           priceInDollar
-          image {
-            ID
-            variant
-            url
-          }
-          mediaBasicInfo {
-            plotSummary
-            releaseDate
-            title
-            ID
-          }
+          imageUrl
+          plotSummary
+          releaseDate
+          title
         }
       }
     `
@@ -166,7 +186,7 @@ export function useGetManagerSeriesWithImage() {
 }
 
 export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
-  const status = useQuery<{ getImageByMediaId: ImageEntityType }>(
+  const status = useQuery<{ getImageByMediaId: Image }>(
     gql`
       query ($param: GetImageByMediaIdParams!) {
         getImageByMediaId(GetImageByMediaIdParams: $param) {
@@ -213,4 +233,22 @@ export function useUploadVideoOnAwsS3() {
   };
 
   return { mutateAsync, isPending, progress };
+}
+
+export function useGetVideoResourceById(param: GetImageByMediaIdParams) {
+  const status = useQuery<{ getImageByMediaId: Image }>(
+    gql`
+      query ($param: GetImageByMediaIdParams!) {
+        getImageByMediaId(GetImageByMediaIdParams: $param) {
+          ID
+          variant
+          url
+        }
+      }
+    `,
+    {
+      variables: { param },
+    }
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };
 }

@@ -1,4 +1,4 @@
-import { MediaLanguagiesEnum } from "mirra-scope-client-types/lib";
+import { MediaLanguagiesEnum } from "zgaya.hub-client-types/lib";
 
 export const languageListWithCode = [
   { languageCode: "en", name: MediaLanguagiesEnum.ENGLISH },

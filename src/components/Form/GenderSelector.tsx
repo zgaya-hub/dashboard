@@ -1,6 +1,6 @@
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { FormControlProps, Radio, RadioGroup, FormControlLabel, FormLabel, FormControl, FormHelperText, SxProps } from "@mui/material";
-import { GenderEnum } from "mirra-scope-client-types/lib";
+import { GenderEnum } from "zgaya.hub-client-types/lib";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 interface GenderSelectorProps<T extends FieldValues> extends Omit<FormControlProps, "name"> {

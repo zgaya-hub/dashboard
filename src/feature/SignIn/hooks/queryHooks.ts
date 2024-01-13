@@ -1,5 +1,6 @@
-import { ManagerSignInInput, ManagerSignInOutput } from "./queryHooks.types";
 import { gql, useMutation } from "@apollo/client";
+
+import { ManagerSignInInput, ManagerSignInOutput } from "./queryHooks.types";
 
 export function useManagerSignIn() {
   const [apiCaller, status] = useMutation<{ managerSignIn: ManagerSignInOutput }, { input: ManagerSignInInput }>(

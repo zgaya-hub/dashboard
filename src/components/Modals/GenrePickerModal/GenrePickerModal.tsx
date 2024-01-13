@@ -9,7 +9,7 @@ import { ClearIcon, DoneIcon, SearchIcon, StreetViewIcon } from "@/components/ic
 import { SearchInput } from "@/components/Form";
 import { GenrePickerEmptyComponent } from "..";
 import { mediaGenreList } from "../constants";
-import { MediaGenriesEnum } from "mirra-scope-client-types/lib";
+import { MediaGenriesEnum } from "zgaya.hub-client-types/lib";
 
 interface GenrePickerModalProps {
   isOpen: boolean;
@@ -60,7 +60,7 @@ export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerM
     <Dialog open={isOpen} onClose={onClose} sx={dialogBoxStyle}>
       <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"}>
         {t("Components.Modals.GenrePickerModal.pickAGenre")}
-        <ClearIcon onClick={handleOnClose} />
+        <ClearIcon iconButton={false} onClick={handleOnClose} />
       </DialogTitle>
       <DialogContent dividers sx={{ padding: 0 }}>
         {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.GenrePickerModal.search")} /> : null}

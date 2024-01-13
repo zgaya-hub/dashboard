@@ -44,7 +44,7 @@ export default function SearchInput({ onChange, sx, tooltip, onClose, ...restPro
         endAdornment={
           onClose ? (
             <InputAdornment position="end">
-              <ClearIcon onClick={onClose} tooltip={t("Components.Form.SearchInput.close")} />
+              <ClearIcon iconButton={false} onClick={onClose} tooltip={t("Components.Form.SearchInput.close")} />
             </InputAdornment>
           ) : null
         }

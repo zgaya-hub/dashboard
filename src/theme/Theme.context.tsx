@@ -1,7 +1,8 @@
+import { createContext, ReactNode, useContext, useState } from "react";
 import { Theme, ThemeProvider as MuiThemeProvider } from "@mui/material";
-import { createContext, useContext, ReactNode, useState } from "react";
-import { lightTheme, darkTheme } from "./theme";
 import CssBaseline from "@mui/material/CssBaseline";
+
+import { darkTheme,lightTheme } from "./theme";
 
 interface ThemeContextProps {
   theme: Theme;

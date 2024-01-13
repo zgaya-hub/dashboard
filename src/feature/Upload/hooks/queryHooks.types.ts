@@ -1,4 +1,4 @@
-import { ImageVariantEnum, MirraScopeMediaEnum } from "mirra-scope-client-types/lib";
+import { ImageVariantEnum, MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
 
 export type GetUploadVideoSignedUrlInput = {
   MediaType: MirraScopeMediaEnum;

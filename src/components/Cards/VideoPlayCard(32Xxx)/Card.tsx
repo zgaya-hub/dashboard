@@ -2,17 +2,16 @@ import { ReactNode } from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { CardHeader, SxProps, Box, Stack, alpha, CardContent } from "@mui/material";
+import { CardHeader, SxProps, Box, CardContent } from "@mui/material";
 import Avatar from "@/components/Avatar";
 import { MoreVertIcon } from "@/components/icons";
 
 interface VideoPlayCardProps {
-  thumbnail: string;
+  videoUrl: string;
   title: string;
   description: string;
   onClickMenuIcon?: () => void;
-  avatarSrc?: string;
-  episodeNumber?: number;
+  avatar?: string;
   children?: ReactNode;
 }
 
@@ -20,7 +19,7 @@ const truncateText = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 };
 
-export default function VideoPlayCard({ thumbnail, children, title, description, onClickMenuIcon, avatarSrc, episodeNumber }: VideoPlayCardProps) {
+export default function VideoPlayCard({ videoUrl, children, title, description, onClickMenuIcon, avatar }: VideoPlayCardProps) {
   const cardStyle = useThemeStyles<SxProps>((theme) => ({
     width: theme.spacing(32),
   }));
@@ -48,26 +47,12 @@ export default function VideoPlayCard({ thumbnail, children, title, description,
     padding: `${theme.spacing(1)} !important`,
   }));
 
-  const badgeStyle = useThemeStyles<SxProps>((theme) => ({
-    position: "absolute",
-    top: theme.spacing(1),
-    left: theme.spacing(1),
-    background: alpha(theme.palette.primary.main, 0.4),
-    minWidth: theme.spacing(4),
-    minHeight: theme.spacing(4),
-  }));
-
   return (
     <Card sx={cardStyle}>
       <Box sx={cardImageContainerStyle}>
-        <CardMedia sx={cardImageStyle} component="img" image={thumbnail} />
-        {episodeNumber ? (
-          <Stack sx={badgeStyle} justifyContent={"center"} alignItems={"center"}>
-            {episodeNumber}
-          </Stack>
-        ) : null}
+        <CardMedia sx={cardImageStyle} controllers component="video" src={videoUrl} />
       </Box>
-      <CardHeader sx={cardHeaderStyle} avatar={<Avatar sx={cardAvatarStyle} src={avatarSrc} />} title={truncateText((title, 15))} subheader={truncateText(description, 18)} action={<MoreVertIcon onClick={onClickMenuIcon} />} />
+      <CardHeader sx={cardHeaderStyle} avatar={<Avatar sx={cardAvatarStyle} src={avatar} />} title={truncateText(title, 15)} subheader={truncateText(description, 18)} action={<MoreVertIcon onClick={onClickMenuIcon} />} />
       <CardContent sx={cardContentStyle}>{children}</CardContent>
     </Card>
   );

@@ -1,12 +1,14 @@
-import Elevator from "@/components/Tags/Elevator";
-import { ListItemText, MenuItem, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import { ModalSelectInput, SelectInput } from "@/components/Form";
-import { CountryPickerModal, LanguagePickerModal, GenrePickerModal } from "@/components/Modals";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
+import { ListItemText, MenuItem, Stack, Typography } from "@mui/material";
 import { values } from "lodash";
+import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
+
+import { ModalSelectInput, SelectInput } from "@/components/Form";
+import { CountryPickerModal, GenrePickerModal,LanguagePickerModal } from "@/components/Modals";
+import Elevator from "@/components/Tags/Elevator";
+
 import { CreateMovieFormFieldType } from "../../types";
 
 interface MovieAdditionalInfoComponentProps {
@@ -61,7 +63,7 @@ export default function MovieAdditionalInfoComponent({ setFormValue, watchFormVa
         <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.VideoUpload.MovieUploadModal.pickAGenre")} value={watchFormValue("genre")} onClick={handleOnToggleGenreModal} fullWidth />
         <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModal} onOk={handleOnSelectGenre} />
         <SelectInput label={t("Feature.VideoUpload.MovieUploadModal.selectStatus")} fullWidth name="status" register={formRegister}>
-          {movieStatusesList.map((movieStatus) => {
+          {movieStatusesList.map(movieStatus => {
             return (
               <MenuItem value={movieStatus}>
                 <ListItemText>{movieStatus}</ListItemText>

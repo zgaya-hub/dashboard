@@ -1,21 +1,23 @@
-import Page from "@/components/Page";
 import { useState } from "react";
-import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
-import { useCreateImage, useCreateSeries } from "../hooks";
-import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { SeriesCreateFormFieldInterface } from "../types";
-import { Elevator } from "@/components/Tags";
+import { useTranslation } from "react-i18next";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
+import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
+import * as yup from "yup";
+import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
+
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
-import { useTranslation } from "react-i18next";
-import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
-import { SeriesAdditionalInfoForm, SeriesBasicInfoForm, SeriesImageSelectComponent } from "../components";
+import Page from "@/components/Page";
+import { Elevator } from "@/components/Tags";
 import useNavigation from "@/navigation/useNavigation";
-import { ImageVariantEnum } from "mirra-scope-client-types/lib";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
+
+import { SeriesAdditionalInfoForm, SeriesBasicInfoForm, SeriesImageSelectComponent } from "../components";
+import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
+import { useCreateImage, useCreateSeries } from "../hooks";
+import { SeriesCreateFormFieldInterface } from "../types";
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
@@ -66,7 +68,7 @@ export default function SeriesCreateScreen() {
     navigation.goBack();
   };
 
-  const cardStyle = useThemeStyles<SxProps>((theme) => ({
+  const cardStyle = useThemeStyles<SxProps>(theme => ({
     height: "100%",
     minHeight: theme.spacing(16),
     backgroundSize: "contain",

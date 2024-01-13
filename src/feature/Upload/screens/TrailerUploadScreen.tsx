@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Page from "@/components/Page";
 import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
-import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
+import { MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
+
 import Button from "@/components/Button";
+import Page from "@/components/Page";
+
 import TrailerUploadModal from "../components/TrailerUploadModal";
-import { MirraScopeMediaEnum } from "mirra-scope-client-types/lib";
+import { useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";
 
 export default function TrailerUploadScreen() {
   const [isTrailerUploadModalVisible, setIsTrailerUploadModalVisible] = useState(true);

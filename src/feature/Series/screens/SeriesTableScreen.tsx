@@ -33,7 +33,7 @@ export default function SeriesTableScreen() {
   };
 
   const handleOnSelect = (selectedRowId: string) => {
-    console.log("Delete clicked for row ID:", selectedRowId);
+    alert("Delete clicked for row ID:", selectedRowId);
   };
 
   const handleOnUpdateSeries = async (series: TableSeriesInterface) => {
@@ -60,7 +60,7 @@ export default function SeriesTableScreen() {
     managerSeriesForTableRefetch();
   };
 
-  const cardStyle = useThemeStyles<SxProps>((theme) => ({
+  const cardStyle = useThemeStyles<SxProps>(theme => ({
     padding: theme.spacing(4),
   }));
 
@@ -100,7 +100,7 @@ export default function SeriesTableScreen() {
               <AddIcon iconButtonProps={{ color: "primary" }} onClick={handleOnCreateSeriesClick} tooltip={t("Feature.Series.SeriesScreen.createSeries")} />
             </Hidden>
             <Hidden mdUp>
-              <MoreVertIcon onClick={(e) => setActionMenuEnchorEl(e.currentTarget)} />
+              <MoreVertIcon onClick={e => setActionMenuEnchorEl(e.currentTarget)} />
               {actionMenu}
             </Hidden>
           </Stack>

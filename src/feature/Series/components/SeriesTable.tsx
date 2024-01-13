@@ -1,15 +1,18 @@
-import { useState, MouseEvent, Fragment } from "react";
-import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
-import { SeriesRowContextMenu } from ".";
-import { TableSeriesInterface } from "../types";
-import { format } from "date-fns";
-import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
-import { MoreVertIcon, OpenTabIcon } from "@/components/icons";
-import { values as convertEnumToArray } from "lodash";
-import { DataGridPro } from "@/components/DataGridPro";
+import { Fragment,MouseEvent, useState } from "react";
 import { LinearProgress, PopoverPosition } from "@mui/material";
+import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
+import { format } from "date-fns";
+import { values as convertEnumToArray } from "lodash";
+import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
+
 import { MediaTableCard } from "@/components/Cards";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
+import { DataGridPro } from "@/components/DataGridPro";
+import { MoreVertIcon, OpenTabIcon } from "@/components/icons";
+import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
+
+import { TableSeriesInterface } from "../types";
+
+import { SeriesRowContextMenu } from ".";
 
 interface SeriesTableProps {
   rows: TableSeriesInterface[];
@@ -45,7 +48,7 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
       field: "series",
       headerName: "Series",
       width: 500,
-      renderCell: (params) => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
+      renderCell: params => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
       field: "originCountry",
@@ -85,26 +88,26 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
       width: 200,
       type: "dateTime",
       editable: true,
-      valueFormatter: (params) => format(params.value, DEFAULT_MONTH_YEAR_FORMAT),
+      valueFormatter: params => format(params.value, DEFAULT_MONTH_YEAR_FORMAT),
     },
     {
       field: "imageUrl",
       headerName: "Image url",
       width: 100,
       editable: true,
-      renderCell: (params) => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
+      renderCell: params => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
     },
     {
       field: "createdAt",
       headerName: "Created at",
       width: 200,
-      valueFormatter: (params) => format(params.value, DEFAULT_DATE_FORMAT),
+      valueFormatter: params => format(params.value, DEFAULT_DATE_FORMAT),
     },
     {
       field: "updatedAt",
       headerName: "Updated at",
       width: 200,
-      valueFormatter: (params) => (params.value ? format(params.value, DEFAULT_DATE_FORMAT) : null),
+      valueFormatter: params => (params.value ? format(params.value, DEFAULT_DATE_FORMAT) : null),
     },
     {
       field: "actions",
@@ -124,7 +127,7 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
         checkboxSelection
         disableRowSelectionOnClick
         loading={isQueryLoading}
-        getRowId={(row) => row.ID}
+        getRowId={row => row.ID}
         columns={SeriesTableColumn}
         rowCount={totalRecords}
         pageSizeOptions={[7, 15, 20]}

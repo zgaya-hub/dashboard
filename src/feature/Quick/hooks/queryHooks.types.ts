@@ -1,5 +1,6 @@
+import { GenderEnum, ImageVariantEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
+
 import { CineastProfessionEnum } from "@/types/enum";
-import { GenderEnum, ImageVariantEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "mirra-scope-client-types/lib";
 
 export type CreateImageInput = {
   Base64: string;

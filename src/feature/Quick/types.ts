@@ -1,5 +1,6 @@
+import { GenderEnum, MediaCountriesEnum } from "zgaya.hub-client-types/lib";
+
 import { CineastProfessionEnum } from "@/types/enum";
-import { GenderEnum, MediaCountriesEnum } from "mirra-scope-client-types/lib";
 
 export interface SeriesCreateFormFieldInterface {
   title: string;

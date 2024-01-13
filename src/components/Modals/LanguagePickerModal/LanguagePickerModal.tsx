@@ -9,7 +9,7 @@ import { ClearIcon, DoneIcon, SearchIcon, TranslateIcon } from "@/components/ico
 import { languageListWithCode } from "@/mock/languageListWithCode";
 import { SearchInput } from "@/components/Form";
 import { LanguagePickerEmptyComponent } from "..";
-import { MediaLanguagiesEnum } from "mirra-scope-client-types/lib";
+import { MediaLanguagiesEnum } from "zgaya.hub-client-types/lib";
 
 interface LanguagePickerModalProps {
   isOpen: boolean;
@@ -60,7 +60,7 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
     <Dialog open={isOpen} onClose={onClose} sx={dialogBoxStyle}>
       <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"}>
         {t("Components.Modals.LanguagePickerModal.pickALanguage")}
-        <ClearIcon onClick={handleOnClose} />
+        <ClearIcon iconButton={false} onClick={handleOnClose} />
       </DialogTitle>
       <DialogContent dividers sx={{ padding: 0 }}>
         {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.LanguagePickerModal.search")} /> : null}

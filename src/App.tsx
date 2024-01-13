@@ -4,7 +4,7 @@ import { i18n } from "./i18n";
 import { ThemeProvider } from "./theme/Theme.context";
 import { UserDetailProvider } from "./context/UserDetail.context";
 import { AuthContextProvider } from "./context/AuthContext";
-import { GqlErrorProvider } from "./context/GqlErrorContext";
+import { GraphQlErrorProvider } from "./context/GraphQlErrorContext";
 import { LocalizationProvider, LicenseInfo as DatePickerLicenseInfo } from "@mui/x-date-pickers-pro";
 import { AdapterDateFns } from "@mui/x-date-pickers-pro/AdapterDateFns";
 import { LicenseInfo as DataGridLicenseInfo } from "@mui/x-data-grid-pro";
@@ -35,11 +35,11 @@ function App() {
           <AuthContextProvider>
             <ThemeProvider>
               <UserDetailProvider>
-                <GqlErrorProvider>
+                <GraphQlErrorProvider>
                   <SidebarContextProvider>
                     <MainStack />
                   </SidebarContextProvider>
-                </GqlErrorProvider>
+                </GraphQlErrorProvider>
               </UserDetailProvider>
             </ThemeProvider>
           </AuthContextProvider>

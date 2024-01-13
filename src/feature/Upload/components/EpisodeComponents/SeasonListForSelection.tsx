@@ -1,8 +1,9 @@
+import { List, ListItem, SxProps } from "@mui/material";
+import { Season } from "zgaya.hub-client-types/lib";
+
 import { AvatarTitleAndDescCard, AvatarTitleAndDescCardSkeleton } from "@/components/Cards";
 import { RadioButtonCheckedIcon, RadioButtonUncheckedIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { List, ListItem, SxProps } from "@mui/material";
-import { Season } from "mirra-scope-client-types/lib";
 
 interface SeasonListForSelectionProps {
   seasons: Season[];
@@ -12,7 +13,7 @@ interface SeasonListForSelectionProps {
 }
 
 export default function SeasonListForSelection({ seasons, selectedSeasonId, onSelectedSeason, isLoading }: SeasonListForSelectionProps) {
-  const listStyle = useThemeStyles<SxProps>((theme) => ({
+  const listStyle = useThemeStyles<SxProps>(theme => ({
     maxHeight: theme.spacing(96),
     overflowY: "auto",
   }));
@@ -31,7 +32,7 @@ export default function SeasonListForSelection({ seasons, selectedSeasonId, onSe
 
   return (
     <List sx={listStyle}>
-      {seasons.map((season) => {
+      {seasons.map(season => {
         const isSelected = selectedSeasonId === season.ID;
         return (
           <ListItem key={season.ID} onClick={() => onSelectedSeason(season.ID)}>

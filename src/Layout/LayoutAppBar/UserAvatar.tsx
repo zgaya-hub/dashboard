@@ -1,10 +1,12 @@
 import React, { Fragment, useState } from "react";
-import useUserDetail from "@/context/UserDetail.context";
-import UserMenu from "./UserMenu";
-import AppearanceMenu from "./AppearanceMenu";
-import TranslationMenu from "./TranslationMenu";
+
 import Avatar from "@/components/Avatar";
 import { useAuthContext } from "@/context/AuthContext";
+import useUserDetail from "@/context/UserDetail.context";
+
+import AppearanceMenu from "./AppearanceMenu";
+import TranslationMenu from "./TranslationMenu";
+import UserMenu from "./UserMenu";
 
 export default function UserAvatar() {
   const { imageUrl } = useUserDetail();
@@ -40,15 +42,15 @@ export default function UserAvatar() {
   };
 
   const handleOnSwitchAccount = () => {
-    console.log("handleOnSwitchAccount");
+    alert("handleOnSwitchAccount");
   };
 
   const handleOnSetting = () => {
-    console.log("handleOnSetting");
+    alert("handleOnSetting");
   };
 
   const handleOnShareFeedback = () => {
-    console.log("handleOnShareFeedback");
+    alert("handleOnShareFeedback");
   };
 
   return (

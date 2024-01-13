@@ -1,5 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, ImageIdOutput } from "mirra-scope-client-types/lib";
+import { CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, ImageIdOutput, SuccessOutput } from "zgaya.hub-client-types/lib";
+
 import { CreateCineastInput } from "./queryHooks.types";
 
 export function useCreateImage() {
@@ -25,7 +26,7 @@ export function useCreateImage() {
 }
 
 export function useCreateSeries() {
-  const [apiCaller, status] = useMutation<{ createSeries: CommonSuccessOutput }, { input: CreateSeriesInput }>(
+  const [apiCaller, status] = useMutation<{ createSeries: SuccessOutput }, { input: CreateSeriesInput }>(
     gql`
       mutation ($input: CreateSeriesInput!) {
         createSeries(CreateSeriesInput: $input) {
@@ -63,7 +64,7 @@ export function useGetNextSeasonNumber(param: GetNextSeasonNumberParams) {
 }
 
 export function useCreateSeason() {
-  const [apiCaller, status] = useMutation<{ createSeason: CommonSuccessOutput }, { input: CreateSeasonInput }>(
+  const [apiCaller, status] = useMutation<{ createSeason: SuccessOutput }, { input: CreateSeasonInput }>(
     gql`
       mutation ($input: CreateSeasonInput!) {
         createSeason(CreateSeasonInput: $input) {
@@ -84,7 +85,7 @@ export function useCreateSeason() {
   return { mutateAsync, data: status.data?.createSeason, isPending: status.loading, ...status };
 }
 export function useCreateCineast() {
-  const [apiCaller, status] = useMutation<{ createCineast: CommonSuccessOutput }, { input: CreateCineastInput }>(
+  const [apiCaller, status] = useMutation<{ createCineast: SuccessOutput }, { input: CreateCineastInput }>(
     gql`
       mutation ($input: CreateSeasonInput!) {
         createCineast(CreateSeasonInput: $input) {

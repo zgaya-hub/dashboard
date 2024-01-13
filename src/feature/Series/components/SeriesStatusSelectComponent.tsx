@@ -1,10 +1,12 @@
-import { ListItemText, MenuItem } from "@mui/material";
 import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SeriesCreateFormFieldInterface } from "../types";
+import { ListItemText, MenuItem } from "@mui/material";
 import { values } from "lodash";
+import { MediaStatusEnum } from "zgaya.hub-client-types/lib";
+
 import { SelectInput } from "@/components/Form";
-import { MediaStatusEnum } from "mirra-scope-client-types/lib";
+
+import { SeriesCreateFormFieldInterface } from "../types";
 
 interface SeriesStatusSelectComponentProps {
   formRegister: UseFormRegister<SeriesCreateFormFieldInterface>;
@@ -15,7 +17,7 @@ export default function SeriesStatusSelectComponent({ formRegister }: SeriesStat
 
   return (
     <SelectInput label={t("Feature.Series.SeriesAdditionalInfoForm.selectStatus")} fullWidth name="status" register={formRegister}>
-      {seriesStatusesList.map((seriesStatus) => {
+      {seriesStatusesList.map(seriesStatus => {
         return (
           <MenuItem value={seriesStatus}>
             <ListItemText>{seriesStatus}</ListItemText>

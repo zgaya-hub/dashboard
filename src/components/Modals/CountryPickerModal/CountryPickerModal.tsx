@@ -11,7 +11,7 @@ import { countryListWithFlag } from "@/mock/countryListWithFlag";
 import { SearchInput } from "@/components/Form";
 import { CountryPickerEmptyComponent } from "..";
 import DialogAction from "@/components/Dialog/DialogActions";
-import { MediaCountriesEnum } from "mirra-scope-client-types/lib";
+import { MediaCountriesEnum } from "zgaya.hub-client-types/lib";
 
 interface CountryPickerModalProps {
   isOpen: boolean;
@@ -62,7 +62,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
     <Dialog open={isOpen} onClose={onClose} sx={dialogBoxStyle}>
       <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
         {t("Components.Modals.CountryPickerModal.pickACountry")}
-        <ClearIcon onClick={handleOnClose} />
+        <ClearIcon iconButton={false} onClick={handleOnClose} />
       </DialogTitle>
       <DialogContent dividers sx={{ padding: 0 }}>
         {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.CountryPickerModal.search")} /> : null}

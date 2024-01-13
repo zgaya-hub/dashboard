@@ -1,16 +1,18 @@
-import { Stack, Typography } from "@mui/material";
-import CineastCreateForm from "../components/CineastCreateForm";
-import { CineastCreateFormFieldInterface } from "../types";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Elevator } from "@/components/Tags";
-import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
-import { SaveIcon } from "@/components/icons";
-import { useCreateImage, useCreateCineast } from "../hooks";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Stack, Typography } from "@mui/material";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { ImageVariantEnum } from "mirra-scope-client-types/lib";
+import * as yup from "yup";
+import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
+
+import Button from "@/components/Button";
+import { SaveIcon } from "@/components/icons";
+import { Elevator } from "@/components/Tags";
+
+import CineastCreateForm from "../components/CineastCreateForm";
+import { useCreateCineast,useCreateImage } from "../hooks";
+import { CineastCreateFormFieldInterface } from "../types";
 
 export default function CineastCreateScreen() {
   const { t } = useTranslation();

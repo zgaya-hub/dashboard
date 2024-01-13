@@ -1,19 +1,21 @@
-import { Stack, Typography } from "@mui/material";
-import SeasonCreateForm from "../components/SeasonCreateForm";
-import { SeasonCreateFormFieldInterface } from "../types";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Elevator } from "@/components/Tags";
-import Button from "@/components/Button";
-import { useTranslation } from "react-i18next";
-import { SaveIcon } from "@/components/icons";
-import { useCreateImage, useCreateSeason, useGetNextSeasonNumber } from "../hooks";
-import { extractImageBase64, extractImageMetadata } from "metalyzer";
-import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
-import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { ImageVariantEnum } from "mirra-scope-client-types/lib";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Stack, Typography } from "@mui/material";
+import { extractImageBase64, extractImageMetadata } from "metalyzer";
+import * as yup from "yup";
+import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
+
+import Button from "@/components/Button";
+import { SaveIcon } from "@/components/icons";
+import { Elevator } from "@/components/Tags";
+
+import SeasonCreateForm from "../components/SeasonCreateForm";
+import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
+import { useCreateImage, useCreateSeason, useGetNextSeasonNumber } from "../hooks";
+import { SeasonCreateFormFieldInterface } from "../types";
 
 export default function SeasonCreateScreen() {
   const { t } = useTranslation();

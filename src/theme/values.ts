@@ -1,32 +1,6 @@
-import { PaletteOptions } from "@mui/material/styles/createPalette";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
+/* eslint-disable no-restricted-imports */
 import { ThemeOptions } from "@mui/material";
-
-export const lightThemePalette: PaletteOptions = {
-  mode: "light",
-  primary: {
-    main: "#1976d2",
-    light: "#42a5f5",
-    dark: "#1565c0",
-  },
-  background: {
-    default: "#fff",
-    paper: "#ededed",
-  },
-};
-
-export const darkThemePalette: PaletteOptions = {
-  mode: "dark",
-  primary: {
-    main: "#1976d2",
-    light: "#42a5f5",
-    dark: "#1565c0",
-  },
-  background: {
-    default: "#1e1e1f",
-    paper: "#1e1e1f",
-  },
-};
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 export const typography: TypographyOptions = {
   fontFamily: ["Roboto", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Arial", "sans-serif"].join(","),

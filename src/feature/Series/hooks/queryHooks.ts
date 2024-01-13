@@ -1,5 +1,6 @@
-import { CreateImageInput, ImageIdOutput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, UpdateSeriesInput, UpdateSeriesParams, GetImageByMediaIdParams, SuccessOutput, GetAdditionalInfoByMediaIdParams } from "mirra-scope-client-types/lib";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { CreateImageInput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetAdditionalInfoByMediaIdParams,GetImageByMediaIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, ImageIdOutput, SuccessOutput, UpdateSeriesInput, UpdateSeriesParams } from "zgaya.hub-client-types/lib";
+
 import { GetCineastsBySeriesIdParams, GetMediaBasicInfoByMediaIdParams } from "./queryHooks.types";
 
 export function useCreateImage() {
@@ -27,7 +28,7 @@ export function useCreateImage() {
 }
 
 export function useCreateSeries() {
-  const [apiCaller, status] = useMutation<{ createSeries: CommonSuccessOutput }, { input: CreateSeriesInput }>(gql`
+  const [apiCaller, status] = useMutation<{ createSeries: SuccessOutput }, { input: CreateSeriesInput }>(gql`
     mutation ($input: CreateSeriesInput!) {
       createSeries(CreateSeriesInput: $input) {
         isSuccess
