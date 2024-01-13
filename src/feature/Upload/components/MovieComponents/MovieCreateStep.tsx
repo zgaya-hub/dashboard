@@ -1,23 +1,26 @@
+import { lazy } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { lazily } from "react-lazily";
 import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Hidden, Stack } from "@mui/material";
-import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
+import { extractImageMetadata, extractImageUrl } from "metalyzer";
 import * as yup from "yup";
 import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
-
-import Button from "@/components/Button";
-import { DatePickerModal, Form, TextField } from "@/components/Form";
-import { AttachFileIcon, SaveIcon } from "@/components/icons";
 
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../../constants";
 import { useCreateImage, useCreateImageByUrl } from "../../hooks";
 import { CreateMovieFormFieldType } from "../../types";
 import ImageUploadComponent from "../ImageUploadComponent";
 
-import MovieAdditionalInfoComponent from "./MovieAdditionalInfoComponent";
-import MovieCardComponent from "./MovieCardComponent";
+
+const Button = lazy(() => import("@/components/Button"));
+const MovieCardComponent = lazy(() => import("./MovieCardComponent"));
+const { AttachFileIcon, SaveIcon } = lazily(() => import("@/components/icons"));
+const { ImageDisplay24X12Skeleton } = lazily(() => import("@/components/Cards"));
+const { DatePickerModal, Form, TextField } = lazily(() => import("@/components/Form"));
+const MovieAdditionalInfoComponent = lazy(() => import("./MovieAdditionalInfoComponent"));
 
 interface MovieCreateStepProps {
   onSave: (fields: CreateMovieFormFieldType) => void;
@@ -31,8 +34,6 @@ export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisable
   const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateImage();
   const { mutateAsync: createImageByUrlMutateAsync, isPending: isCreateImageByUrlLoading } = useCreateImageByUrl();
 
-  console.log("±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±", movieSource);
-  
   const {
     control,
     formState: { errors },
@@ -51,7 +52,7 @@ export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisable
 
   const handleOnThumbnailSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
-    const imageBase64 = await extractImageBase64(image);
+    const imageBase64 = URL.createObjectURL(image);
     setFormValue("thumbnailUrl", await extractImageUrl(image));
     const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.THUMBNAIL });
     setFormValue("imageId", result?.ID);
@@ -82,6 +83,7 @@ export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisable
           <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
           <Stack direction={"row"} alignItems={"flex-end"} gap={2}>
             <ImageUploadComponent isLoading={isCreateImageLoading} onImageSelect={handleOnThumbnailSelect} title={t("Feature.VideoUpload.MovieUploadModal.imageUploadComponentTitle")} errorMessage={errors.imageId?.message} />
+            <ImageDisplay24X12Skeleton /* src={watch("thumbnailUrl")} */ />
             <TextField register={register} name="thumbnailUrl" size="small" endIcon={<AttachFileIcon fontSize="inherit" loading={isCreateImageByUrlLoading} />} label="Image url" />
           </Stack>
           <DevTool control={control} />

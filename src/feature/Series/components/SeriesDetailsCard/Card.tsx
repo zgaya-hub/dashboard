@@ -1,13 +1,19 @@
-import { ReactNode } from "react";
-import { Card, CardContent, CardMedia, Stack, SxProps, Typography } from "@mui/material";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Box, Card, CardActions, CardContent, CardMedia, Fade, Icon, Paper, Popover, Stack, SxProps, Typography } from "@mui/material";
 import { format } from "date-fns";
+
+import { CachedIcon, EditIcon, ErrorIcon, InfoIcon, SaveIcon } from "@/components/icons";
 import { DEFAULT_DATE_FORMAT } from "@/mock/constants";
+import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { handleOnTruncateText } from "@/utils";
-import { useGetAdditionalInfoByMediaId, useGetMediaBasicInfoByMediaId, useGetImageByMediaId } from "../../hooks";
+
+import { useGetSeriesDetailsById } from "../../hooks";
+
 import SeriesDetailsCardSkeleton from "./Skeleton";
-import { CachedIcon, ErrorIcon, InfoIcon } from "@/components/icons";
+import { TextField } from "@/components/Form";
+import { useForm } from "react-hook-form";
+import Button from "@/components/Button";
 
 interface SeriesDetailsCardProps {
   seriesId: string;
@@ -15,14 +21,16 @@ interface SeriesDetailsCardProps {
 
 export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) {
   const { t } = useTranslation();
-  const { data: imageData, refetch: imageRefetch, isLoading: isImageLoading, error: getImageByMediaIdError } = useGetImageByMediaId({ MediaId: seriesId });
-  const { data: additionalInfoData, refetch: additionalInfoRefetch, isLoading: isAdditionalInfoLoading } = useGetAdditionalInfoByMediaId({ MediaId: seriesId });
-  const { data: mediaBasicInfoData, refetch: mediaBasicInfoRefetch, isLoading: isMediaBasicInfoLoading } = useGetMediaBasicInfoByMediaId({ MediaId: seriesId });
+  const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
+  const [editableField, setEditableField] = useState<string | null>(null);
+  const [bannerOpen, setBannerOpen] = useState(true);
 
-  const handleOnRefetch = () => {
-    additionalInfoRefetch();
-    mediaBasicInfoRefetch();
-    imageRefetch();
+  const { data, refetch, isLoading: isLoading, error } = useGetSeriesDetailsById({ SeriesId: seriesId });
+
+  const { register } = useForm<{ text: string }>({});
+
+  const closeBanner = () => {
+    setBannerOpen(false);
   };
 
   const cardStyle: SxProps = {
@@ -46,33 +54,74 @@ export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) 
     right: theme.spacing(6),
   }));
 
-  if (isImageLoading || isMediaBasicInfoLoading || isAdditionalInfoLoading) {
+  const editIconStyle = useThemeStyles<SxProps>((theme) => ({
+    position: "absolute",
+    right: theme.spacing(0),
+    background: theme.palette.background.default,
+  }));
+
+  if (isLoading) {
     return <SeriesDetailsCardSkeleton />;
   }
 
-  const renderEditableText = (label: string, value: string, icon?: ReactNode) => (
-    <Stack direction={"row"} justifyContent={"space-between"} p={1}>
+  const renderEditableText = (label: string, value: string) => (
+    <Stack direction="row" justifyContent="space-between" p={1} alignItems="end" onMouseEnter={() => setEditableField(label)} onMouseLeave={() => setEditableField(null)} position="relative">
       <Typography variant="h6">{label}</Typography>
       <Typography>
-        {value} {icon}
+        {value}
+        {editableField === label ? (
+          <>
+            <EditIcon fontSize="inherit" sx={editIconStyle} onClick={(event) => setAnchorEl(event.currentTarget)} iconButton={false} tooltip="Edit" />
+            <Popover
+              open={!!anchorEl}
+              anchorEl={anchorEl}
+              onClose={() => setAnchorEl(null)}
+              transformOrigin={{
+                horizontal: "right",
+                vertical: "top",
+              }}
+              anchorReference="anchorEl"
+              anchorOrigin={{
+                horizontal: "left",
+                vertical: "top",
+              }}
+            >
+              <TextField register={register} name={"text"} autoFocus type="number" />
+            </Popover>
+          </>
+        ) : null}
       </Typography>
     </Stack>
   );
 
   return (
     <Card sx={cardStyle}>
-      <CardMedia sx={cardMediaStyle} image={imageData?.url} />
-      {getImageByMediaIdError ? <CachedIcon sx={refreshIconStyle} onClick={handleOnRefetch} /> : null}
-      {getImageByMediaIdError ? <ErrorIcon color="error" sx={errorIconStyle} iconButton tooltip={getImageByMediaIdError.message} /> : null}
+      <CardMedia sx={cardMediaStyle} image={data?.imageUrl} />
+      <CachedIcon sx={refreshIconStyle} onClick={refetch} />
+      {error ? <ErrorIcon color="error" sx={errorIconStyle} iconButton tooltip={error.message} /> : null}
       <CardContent>
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"), mediaBasicInfoData?.title || "")}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"), format(mediaBasicInfoData?.releaseDate || 0, DEFAULT_DATE_FORMAT))}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"), additionalInfoData?.genre || "")}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"), additionalInfoData?.originCountry || "")}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"), additionalInfoData?.originalLanguage || "")}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"), additionalInfoData?.status || "")}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"), handleOnTruncateText(mediaBasicInfoData?.plotSummary || "", 20), <InfoIcon fontSize="inherit" className="edit-icon" tooltip={mediaBasicInfoData?.plotSummary} />)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"), data?.title || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"), format(data?.releaseDate || 0, DEFAULT_DATE_FORMAT))}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"), data?.genre || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"), data?.originCountry || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"), data?.originalLanguage || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"), data?.status || "")}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.netProfit"), `${data?.netProfit ?? 0}.$`)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.revenue"), `${data?.revenue ?? 0}.$`)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.budget"), `${data?.budget ?? 0}.$`)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"), handleOnTruncateText(data?.plotSummary || "", 20))}
       </CardContent>
+      <Fade appear={false} in={bannerOpen}>
+        <CardActions>
+          <Box flex={"1 0 0"} />
+          <Button onClick={closeBanner} variant="text">
+            {t("Feature.Series.SeriesDetailsCard.cancel")}
+          </Button>
+          <Button onClick={closeBanner} variant="contained" endIcon={<SaveIcon />}>
+            {t("Feature.Series.SeriesDetailsCard.save")}
+          </Button>
+        </CardActions>
+      </Fade>
     </Card>
   );
 }

@@ -12,6 +12,8 @@ export default function MovieCardComponent({ plotSummary, source, title }: Movie
   const handleOnClickMenuIcon = () => {
     alert("click");
   };
+  console.log(source);
+  
 
   return (
     <Box>

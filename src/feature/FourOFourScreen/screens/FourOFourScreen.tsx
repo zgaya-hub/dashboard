@@ -10,22 +10,22 @@ export default function FourOFourScreen() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // const interval = setInterval(() => {
-    //   setProgress(prevProgress => {
-    //     const newProgress = prevProgress + 5;
-    //     if (newProgress === 100) {
-    //       clearInterval(interval);
-    //       if (!isAuthenticated) {
-    //         navigation.navigate("/home");
-    //       } else {
-    //         navigation.navigate("/sign-in");
-    //       }
-    //     }
-    //     return newProgress;
-    //   });
-    // }, 100);
+    const interval = setInterval(() => {
+      setProgress(prevProgress => {
+        const newProgress = prevProgress + 5;
+        if (newProgress === 100) {
+          clearInterval(interval);
+          if (!isAuthenticated) {
+            navigation.navigate("/home");
+          } else {
+            navigation.navigate("/sign-in");
+          }
+        }
+        return newProgress;
+      });
+    }, 100);
 
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, [isAuthenticated, navigation]);
 
   return (

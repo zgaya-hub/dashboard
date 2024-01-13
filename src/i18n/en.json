@@ -150,7 +150,12 @@
         "status": "Status",
         "title": "Title",
         "plotSummary": "Plot summary",
-        "releaseDate": "Release date"
+        "releaseDate": "Release date",
+        "netProfit": "Net profit",
+        "revenue": "Revenue",
+        "budget": "Budget",
+        "save": "Save",
+        "cancel": "Cancel"
       },
       "SeriesBasicInfoForm": {
         "addBasicInfo": "Add basic Info",

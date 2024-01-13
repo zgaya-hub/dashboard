@@ -1,8 +1,7 @@
 import { DatePickerModal, TextField } from "@/components/Form";
 import Elevator from "@/components/Tags/Elevator";
 import { DevTool } from "@hookform/devtools";
-import { Typography } from "@mui/material";
-import Stack from "@mui/material/Stack";
+import { Typography, Stack } from "@mui/material";
 import { Control, Controller, FieldErrors, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SeriesCreateFormFieldInterface } from "../types";

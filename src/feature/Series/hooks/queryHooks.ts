@@ -1,9 +1,11 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateImageInput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetAdditionalInfoByMediaIdParams,GetImageByMediaIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, ImageIdOutput, SuccessOutput, UpdateSeriesInput, UpdateSeriesParams } from "zgaya.hub-client-types/lib";
+import { CreateImageInput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetImageByMediaIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, GetSeriesDetailsByIdOutput, Image, ImageIdOutput, SeriesIdParams, SuccessOutput, UpdateSeriesInput } from "zgaya.hub-client-types/lib";
 
-import { GetCineastsBySeriesIdParams, GetMediaBasicInfoByMediaIdParams } from "./queryHooks.types";
+import { useSeriesError } from "./errorHooks";
+import { GetCineastsBySeriesIdParams } from "./queryHooks.types";
 
 export function useCreateImage() {
+  const seriesError = useSeriesError();
   const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
       mutation ($input: CreateImageInput!) {
@@ -18,7 +20,7 @@ export function useCreateImage() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      throw new Error(error);
+      seriesError.handleError(error);
     }
   };
 
@@ -28,6 +30,7 @@ export function useCreateImage() {
 }
 
 export function useCreateSeries() {
+  const seriesError = useSeriesError();
   const [apiCaller, status] = useMutation<{ createSeries: SuccessOutput }, { input: CreateSeriesInput }>(gql`
     mutation ($input: CreateSeriesInput!) {
       createSeries(CreateSeriesInput: $input) {
@@ -41,7 +44,7 @@ export function useCreateSeries() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createSeries;
     } catch (error) {
-      throw new Error(error);
+      seriesError.handleError(error);
     }
   };
 
@@ -49,6 +52,7 @@ export function useCreateSeries() {
 }
 
 export function useDeleteSeriesById() {
+  const seriesError = useSeriesError();
   const [apiCaller, status] = useMutation<{ deleteSeriesById: SuccessOutput }, { param: DeleteSeriesByIdParams }>(gql`
     mutation ($param: DeleteSeriesByIdParams!) {
       deleteSeriesById(DeleteSeriesByIdParams: $param) {
@@ -61,7 +65,7 @@ export function useDeleteSeriesById() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.deleteSeriesById;
     } catch (error) {
-      throw new Error(error);
+      seriesError.handleError(error);
     }
   };
 
@@ -71,6 +75,7 @@ export function useDeleteSeriesById() {
 }
 
 export function useDeleteMultipleSeriesByIdz() {
+  const seriesError = useSeriesError();
   const [apiCaller, status] = useMutation<{ deleteMultipleSeriesByIdz: SuccessOutput }, { param: DeleteMultipleSeriesByIdzParams }>(
     gql`
       mutation ($param: DeleteMultipleSeriesByIdzParams!) {
@@ -85,7 +90,7 @@ export function useDeleteMultipleSeriesByIdz() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.deleteMultipleSeriesByIdz;
     } catch (error) {
-      throw new Error(error);
+      seriesError.handleError(error);
     }
   };
 
@@ -93,56 +98,47 @@ export function useDeleteMultipleSeriesByIdz() {
 }
 
 export function useUpdateSeries() {
-  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { param: UpdateSeriesParams; input: UpdateSeriesInput }>(
+  const seriesError = useSeriesError();
+  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { param: SeriesIdParams; input: UpdateSeriesInput }>(
     gql`
-      mutation ($param: UpdateSeriesParams!, $input: UpdateSeriesInput!) {
-        updateSeries(UpdateSeriesParams: $param, UpdateSeriesInput: $input) {
+      mutation ($param: SeriesIdParams!, $input: UpdateSeriesInput!) {
+        updateSeries(SeriesIdParams: $param, UpdateSeriesInput: $input) {
           isSuccess
         }
       }
     `
   );
-  const mutateAsync = async (param: UpdateSeriesParams, input: UpdateSeriesInput) => {
+  const mutateAsync = async (param: SeriesIdParams, input: UpdateSeriesInput) => {
     try {
       const result = await apiCaller({ variables: { input, param } });
       return result.data?.updateSeries;
     } catch (error) {
-      throw new Error(error);
+      seriesError.handleError(error);
     }
   };
 
   return { mutateAsync, data: status.data?.updateSeries, isPending: status.loading, ...status };
 }
 
-export function useGetMediaBasicInfoByMediaId(param: GetMediaBasicInfoByMediaIdParams) {
-  const status = useQuery<{ getMediaBasicInfoByMediaId: MediaBasicInfoEntityType }>(
+export function useGetSeriesDetailsById(param: SeriesIdParams) {
+  const status = useQuery<{ getSeriesDetailsById: GetSeriesDetailsByIdOutput }>(
     gql`
-      query ($param: GetMediaBasicInfoByMediaIdParams!) {
-        getMediaBasicInfoByMediaId(GetMediaBasicInfoByMediaIdParams: $param) {
-          ID
-          title
-          plotSummary
-          releaseDate
-        }
-      }
-    `,
-    {
-      variables: { param },
-    }
-  );
-  return { ...status, isLoading: status.loading, data: status.data?.getMediaBasicInfoByMediaId };
-}
-
-export function useGetAdditionalInfoByMediaId(param: GetAdditionalInfoByMediaIdParams) {
-  const status = useQuery<{ getAdditionalInfoByMediaId: AdditionalInfoEntityType }>(
-    gql`
-      query ($param: GetAdditionalInfoByMediaIdParams!) {
-        getAdditionalInfoByMediaId(GetAdditionalInfoByMediaIdParams: $param) {
+      query ($param: SeriesIdParams!) {
+        getSeriesDetailsById(SeriesIdParams: $param) {
           ID
           originCountry
           originalLanguage
           genre
           status
+          title
+          plotSummary
+          releaseDate
+          imageUrl
+          uploadDate
+          netProfit
+          budget
+          revenue
+          isFree
         }
       }
     `,
@@ -150,25 +146,7 @@ export function useGetAdditionalInfoByMediaId(param: GetAdditionalInfoByMediaIdP
       variables: { param },
     }
   );
-  return { ...status, isLoading: status.loading, data: status.data?.getAdditionalInfoByMediaId };
-}
-
-export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
-  const status = useQuery<{ getImageByMediaId: ImageEntityType }>(
-    gql`
-      query ($param: GetImageByMediaIdParams!) {
-        getImageByMediaId(GetImageByMediaIdParams: $param) {
-          ID
-          variant
-          url
-        }
-      }
-    `,
-    {
-      variables: { param },
-    }
-  );
-  return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };
+  return { ...status, isLoading: status.loading, data: status.data?.getSeriesDetailsById };
 }
 
 export function useGetCineastsBySeriesId(param: GetCineastsBySeriesIdParams) {
@@ -201,8 +179,7 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
           totalRecords
           seriesList {
             ID
-            createdAt
-            updatedAt
+            uploadDate
             genre
             imageUrl
             originCountry
@@ -211,6 +188,7 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
             releaseDate
             status
             title
+            uploadDate
           }
         }
       }

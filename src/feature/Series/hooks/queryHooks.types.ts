@@ -47,7 +47,7 @@ export type UpdateSeriesInput = {
   Image: Partial<UpdateImageInput>;
 };
 
-export type UpdateSeriesParams = {
+export type SeriesIdParams = {
   SeriesId: string;
 };
 

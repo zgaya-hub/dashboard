@@ -1,4 +1,4 @@
-import { ComponentType, MouseEvent } from "react";
+import { ComponentType, MouseEvent, MouseEventHandler } from "react";
 import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
 import { default as MuiAddOutlinedIcon } from "@mui/icons-material/AddOutlined";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
@@ -105,16 +105,16 @@ import { default as MuiDetails } from "@mui/icons-material/Details";
 import { default as MuiEventIcon } from "@mui/icons-material/Event";
 import { default as MuiInfodIcon } from "@mui/icons-material/Info";
 import { default as MuiSdIcon } from "@mui/icons-material/Sd";
-import {default as MuiAddPhotoAlternateOutlinedIcon} from '@mui/icons-material/AddPhotoAlternateOutlined';
-import {default as MuiAddPhotoAlternateIcon} from '@mui/icons-material/AddPhotoAlternate';
+import { default as MuiAddPhotoAlternateOutlinedIcon } from "@mui/icons-material/AddPhotoAlternateOutlined";
+import { default as MuiAddPhotoAlternateIcon } from "@mui/icons-material/AddPhotoAlternate";
 
 import Tooltip from "../Tooltip";
 
 export interface IconWrapperProps extends SvgIconProps {
-  onClick?: (event: MouseEvent) => void;
   iconButton?: boolean;
   disableRipple?: boolean;
   tooltip?: string;
+  onClick?: (e: MouseEvent<EventTarget>) => void;
   tooltipPlacement?: TooltipProps["placement"];
   isListIcon?: boolean;
   iconButtonProps?: IconButtonProps;
@@ -140,7 +140,7 @@ const withIconWrapper = (WrappedOutlinedIcon: ComponentType<IconWrapperProps>, W
         </IconButton>
       );
     }
-    
+
     return (
       <Tooltip title={tooltip} placement={tooltipPlacement} sx={sx} onClick={onClick}>
         {loading ? <CircularProgress size={25} /> : renderIcon()}

@@ -119,7 +119,7 @@ export function useCreateImage() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      imageError.handleError(error as ServerErrorResponse);
+      imageError.handleError(error);
     }
   };
 
@@ -142,7 +142,7 @@ export function useCreateImageByUrl() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImageByUrl;
     } catch (error) {
-      imageError.handleError(error as ServerErrorResponse);
+      imageError.handleError(error);
     }
   };
 
@@ -183,24 +183,6 @@ export function useGetManagerSeriesWithImage() {
     `
   );
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImage };
-}
-
-export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
-  const status = useQuery<{ getImageByMediaId: Image }>(
-    gql`
-      query ($param: GetImageByMediaIdParams!) {
-        getImageByMediaId(GetImageByMediaIdParams: $param) {
-          ID
-          variant
-          url
-        }
-      }
-    `,
-    {
-      variables: { param },
-    }
-  );
-  return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };
 }
 
 export function useUploadVideoOnAwsS3() {

@@ -1,4 +1,4 @@
-import { lazy, useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { lazily } from "react-lazily";
 import { MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
 
@@ -32,11 +32,13 @@ export default function EpisodeUploadScreen() {
   };
 
   return (
-    <Page>
-      <Button onClick={handleOnToggleSelectSeriesModal}>Upload</Button>
-      <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} seasonId={selectedSeasonId} onOpenShareModal={handleOnToggleVideoShareModal} />
-      <SelectSeriesAndSeasonModal onNext={handleOnNextSelectSeriesAndSeasonModal} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModal} />
-      <VideoShareModal mediaId={""} mediaType={MirraScopeMediaEnum.EPISODE} isVisible={isVideoShareModalVisible} onClose={handleOnToggleVideoShareModal} />
-    </Page>
+    <Suspense>
+      <Page>
+        <Button onClick={handleOnToggleSelectSeriesModal}>Upload</Button>
+        <EpisodeUploadModal isVisible={isEpisodeUploadModalVisible} onClose={handleOnToggleEpisodeUploadModal} seasonId={selectedSeasonId} onOpenShareModal={handleOnToggleVideoShareModal} />
+        <SelectSeriesAndSeasonModal onNext={handleOnNextSelectSeriesAndSeasonModal} isVisible={isSelectSeriesModalVisible} onClose={handleOnToggleSelectSeriesModal} />
+        <VideoShareModal mediaId={""} mediaType={MirraScopeMediaEnum.EPISODE} isVisible={isVideoShareModalVisible} onClose={handleOnToggleVideoShareModal} />
+      </Page>
+    </Suspense>
   );
 }

@@ -50,7 +50,7 @@ export default function VideoPlayCard({ videoUrl, children, title, description, 
   return (
     <Card sx={cardStyle}>
       <Box sx={cardImageContainerStyle}>
-        <CardMedia sx={cardImageStyle} controllers component="video" src={videoUrl} />
+        <CardMedia sx={cardImageStyle} controls component="video" src={videoUrl} />
       </Box>
       <CardHeader sx={cardHeaderStyle} avatar={<Avatar sx={cardAvatarStyle} src={avatar} />} title={truncateText(title, 15)} subheader={truncateText(description, 18)} action={<MoreVertIcon onClick={onClickMenuIcon} />} />
       <CardContent sx={cardContentStyle}>{children}</CardContent>

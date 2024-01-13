@@ -48,7 +48,7 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
-  MuiDialogContent: {
+/*   MuiDialogContent: {
     styleOverrides: {
       root: {
         background: "#ffffff",
@@ -107,23 +107,8 @@ export const lightThemeComponents: ThemeOptions["components"] = {
         background: "#ffffff",
       },
     },
-  },
+  }, */
   MuiMenuItem: {
-    defaultProps: {
-      disableRipple: true,
-    },
-  },
-  MuiButton: {
-    defaultProps: {
-      disableRipple: true,
-    },
-  },
-  MuiIconButton: {
-    defaultProps: {
-      disableRipple: true,
-    },
-  },
-  MuiRadio: {
     defaultProps: {
       disableRipple: true,
     },
@@ -140,7 +125,7 @@ export const darkThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
-  MuiDialogContent: {
+ /*  MuiDialogContent: {
     styleOverrides: {
       root: {
         background: "#1c1b1b",
@@ -176,23 +161,8 @@ export const darkThemeComponents: ThemeOptions["components"] = {
         },
       },
     },
-  },
+  }, */
   MuiMenuItem: {
-    defaultProps: {
-      disableRipple: true,
-    },
-  },
-  MuiButton: {
-    defaultProps: {
-      disableRipple: true,
-    },
-  },
-  MuiIconButton: {
-    defaultProps: {
-      disableRipple: true,
-    },
-  },
-  MuiRadio: {
     defaultProps: {
       disableRipple: true,
     },

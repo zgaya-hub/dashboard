@@ -1,63 +1,23 @@
-import { useEffect, useState } from "react";
-import Page from "@/components/Page";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, Hidden, Menu, MenuItem, Stack, SxProps, Typography } from "@mui/material";
+
 import Button from "@/components/Button";
+import { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SaveIcon, SearchIcon } from "@/components/icons";
+import Page from "@/components/Page";
 import useNavigation from "@/navigation/useNavigation";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { useTranslation } from "react-i18next";
-import { DEFAULT_PAGINATION_DATE } from "../constants";
-import { GridPaginationModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
-import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks";
-import { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SaveIcon, SearchIcon } from "@/components/icons";
-import { SeriesTable } from "../components";
-import { TableSeriesInterface } from "../types";
+
+import { SeriesTable, SeriesTableRefInterface } from "../components";
 
 export default function SeriesTableScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
+  const seriesTableRef = useRef<SeriesTableRefInterface>(null);
   const [actionMenuEnchorEl, setActionMenuEnchorEl] = useState<HTMLElement | null>(null);
-  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
-  const { mutateAsync: deleteMultipleSeriesByIdzMutateAsync, isPending: isDeleteMultipleSeriesLoading } = useDeleteMultipleSeriesByIdz();
-  const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
-  const { data: managerSeriesForTableData, refetch: managerSeriesForTableRefetch, isLoading: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize });
-
-  useEffect(() => {
-    if (managerSeriesForTableData) {
-      managerSeriesForTableRefetch();
-    }
-  }, [paginationModel]);
 
   const handleOnCreateSeriesClick = () => {
     navigation.navigate("/series/create");
-  };
-
-  const handleOnSelect = (selectedRowId: string) => {
-    alert("Delete clicked for row ID:", selectedRowId);
-  };
-
-  const handleOnUpdateSeries = async (series: TableSeriesInterface) => {
-    await updateSeriesMutateAsync(
-      { SeriesId: series.ID },
-      {
-        AdditionalInfo: {
-          Genre: series.genre,
-          Status: series.status,
-        },
-        MediaBasicInfo: {
-          ReleaseDate: series.releaseDate,
-          Title: series.title,
-        },
-        Image: {
-          ImageUrl: series.imageUrl,
-        },
-      }
-    );
-  };
-
-  const handleOnDeleteMultipleSeries = async () => {
-    await deleteMultipleSeriesByIdzMutateAsync({ SeriesIdz: rowSelectionModel });
-    managerSeriesForTableRefetch();
   };
 
   const cardStyle = useThemeStyles<SxProps>(theme => ({
@@ -66,17 +26,17 @@ export default function SeriesTableScreen() {
 
   const actionMenu = (
     <Menu open={!!actionMenuEnchorEl} onClose={() => setActionMenuEnchorEl(null)} anchorEl={actionMenuEnchorEl} onClick={() => setActionMenuEnchorEl(null)}>
-      <MenuItem onClick={() => managerSeriesForTableRefetch()}>
+      <MenuItem onClick={seriesTableRef.current?.onRefresh}>
         <CachedIcon tooltip={t("Feature.Series.SeriesScreen.refetch")} />
       </MenuItem>
-      <MenuItem onClick={handleOnDeleteMultipleSeries}>
+      <MenuItem onClick={seriesTableRef.current?.onDeleteMultipleSeries}>
         <SearchIcon tooltip={t("Feature.Series.SeriesScreen.search")} />
       </MenuItem>
-      <MenuItem disabled={!rowSelectionModel.length} onClick={handleOnDeleteMultipleSeries}>
-        <DeleteIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" loading={isDeleteMultipleSeriesLoading} />
+      <MenuItem onClick={seriesTableRef.current?.onDeleteMultipleSeries}>
+        <DeleteIcon tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" />
       </MenuItem>
-      <MenuItem disabled={!rowSelectionModel.length} onClick={() => {}}>
-        <EditIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" />
+      <MenuItem onClick={seriesTableRef.current?.onEditMultipleSeries}>
+        <EditIcon tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" />
       </MenuItem>
     </Menu>
   );
@@ -88,10 +48,10 @@ export default function SeriesTableScreen() {
           <Typography variant="h5">{t("Feature.Series.SeriesScreen.manageSeries")}</Typography>
           <Stack gap={1} direction={"row"} alignItems={"center"}>
             <Hidden mdDown>
-              <CachedIcon tooltip={t("Feature.Series.SeriesScreen.refetch")} onClick={() => managerSeriesForTableRefetch()} />
-              <SearchIcon tooltip={t("Feature.Series.SeriesScreen.search")} onClick={handleOnDeleteMultipleSeries} />
-              <DeleteIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" onClick={handleOnDeleteMultipleSeries} loading={isDeleteMultipleSeriesLoading} />
-              <EditIcon disabled={!rowSelectionModel.length} tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" onClick={() => {}} />
+              <CachedIcon tooltip={t("Feature.Series.SeriesScreen.refetch")} iconButton onClick={seriesTableRef.current?.onRefresh} />
+              <SearchIcon tooltip={t("Feature.Series.SeriesScreen.search")} iconButton onClick={seriesTableRef.current?.onSearchToogle} />
+              <DeleteIcon tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" iconButton onClick={seriesTableRef.current?.onDeleteMultipleSeries} />
+              <EditIcon tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" iconButton onClick={seriesTableRef.current?.onEditMultipleSeries} />
             </Hidden>
             <Hidden smDown>
               <Button onClick={handleOnCreateSeriesClick}>{t("Feature.Series.SeriesScreen.createSeries")}</Button>
@@ -105,19 +65,7 @@ export default function SeriesTableScreen() {
             </Hidden>
           </Stack>
         </Stack>
-        <SeriesTable
-          onSeriesUpdate={handleOnUpdateSeries}
-          rows={managerSeriesForTableData?.seriesList ?? []}
-          onRefresh={managerSeriesForTableRefetch}
-          onSelect={handleOnSelect}
-          paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
-          totalRecords={managerSeriesForTableData?.totalRecords ?? 0}
-          rowSelectionModel={rowSelectionModel}
-          onRowSelectionModelChange={setRowSelectionModel}
-          isQueryLoading={isManagerSeriesForTableLoading}
-          isMutateLoading={isUpdateSeriesLoading || isDeleteMultipleSeriesLoading}
-        />
+        <SeriesTable />
         <Stack direction={"row"} justifyContent={"end"} mt={2} gap={1}>
           <Button variant="text">{t("Feature.Series.SeriesScreen.cancel")}</Button>
           <Button endIcon={<SaveIcon />} variant="contained">

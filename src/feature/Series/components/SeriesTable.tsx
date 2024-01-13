@@ -1,36 +1,54 @@
-import { Fragment,MouseEvent, useState } from "react";
-import { LinearProgress, PopoverPosition } from "@mui/material";
+import { forwardRef, Fragment, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
+import { lazily } from "react-lazily";
+import { PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
-import { values as convertEnumToArray } from "lodash";
+import { noop, values as convertEnumToArray } from "lodash";
 import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
-import { MediaTableCard } from "@/components/Cards";
-import { DataGridPro } from "@/components/DataGridPro";
-import { MoreVertIcon, OpenTabIcon } from "@/components/icons";
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 
+import { DEFAULT_PAGINATION_DATE } from "../constants";
+import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks";
 import { TableSeriesInterface } from "../types";
 
-import { SeriesRowContextMenu } from ".";
+const { SeriesRowContextMenu } = lazily(() => import("."));
+const { MediaTableCard } = lazily(() => import("@/components/Cards"));
+const { DataGridPro } = lazily(() => import("@/components/DataGridPro"));
+const { MoreVertIcon, OpenTabIcon } = lazily(() => import("@/components/icons"));
+const { LinearProgress } = lazily(() => import("@mui/material"));
 
-interface SeriesTableProps {
-  rows: TableSeriesInterface[];
-  isQueryLoading: boolean;
-  isMutateLoading: boolean;
-  totalRecords: number;
-  paginationModel: GridPaginationModel;
-  rowSelectionModel: GridRowSelectionModel;
+export interface SeriesTableRefInterface {
+  onDeleteMultipleSeries: () => void;
+  onSearchToogle: () => void;
   onRefresh: () => void;
-  onSelect: (seriesId: string) => void;
-  onPaginationModelChange: (model: GridPaginationModel) => void;
-  onRowSelectionModelChange: (model: GridRowSelectionModel) => void;
-  onSeriesUpdate: (series: TableSeriesInterface) => void;
+  onEditMultipleSeries: () => void;
 }
 
-export default function SeriesTable({ rows, totalRecords, paginationModel, isMutateLoading, onPaginationModelChange, isQueryLoading, onRefresh, onSelect, onRowSelectionModelChange, onSeriesUpdate, rowSelectionModel }: SeriesTableProps) {
+const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefInterface>) {
   const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
+  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
+  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
   const [selectedRowId, setSelectedRowId] = useState("");
+
+  const { mutateAsync: deleteMultipleSeriesByIdzMutateAsync, isPending: isDeleteMultipleSeriesLoading } = useDeleteMultipleSeriesByIdz();
+  const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
+  const { data: managerSeriesForTableData, refetch: managerSeriesForTableRefetch, isLoading: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize });
+
+  useImperativeHandle(ref, () => ({
+    onRefresh: () => {
+      console.log("Refresh");
+    },
+    onDeleteMultipleSeries: handleOnDeleteMultipleSeries,
+    onEditMultipleSeries: noop,
+    onSearchToogle: noop,
+  }));
+
+  useEffect(() => {
+    if (managerSeriesForTableData) {
+      managerSeriesForTableRefetch();
+    }
+  }, [paginationModel]);
 
   const handleOnContextMenu = (event: MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -39,8 +57,33 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
   };
 
   const processRowUpdate = async (series: GridRowModel<TableSeriesInterface>) => {
-    onSeriesUpdate(series);
+    await updateSeriesMutateAsync(
+      { SeriesId: series.ID },
+      {
+        AdditionalInfo: {
+          Genre: series.genre,
+          Status: series.status,
+          OriginalLanguage: series.originalLanguage,
+          OriginCountry: series.originCountry,
+        },
+        ReleaseDate: +series.releaseDate,
+        Title: series.title,
+        PlotSummary: series.plotSummary,
+        Image: {
+          Url: series.imageUrl,
+        },
+      }
+    );
     return series;
+  };
+
+  const handleOnDeleteMultipleSeries = async () => {
+    await deleteMultipleSeriesByIdzMutateAsync({ SeriesIdz: rowSelectionModel });
+    managerSeriesForTableRefetch();
+  };
+
+  const handleOnSelect = (selectedRowId: string) => {
+    alert(selectedRowId);
   };
 
   const SeriesTableColumn: GridColDef[] = [
@@ -98,16 +141,10 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
       renderCell: params => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
     },
     {
-      field: "createdAt",
-      headerName: "Created at",
+      field: "uploadDate",
+      headerName: "Upload date",
       width: 200,
       valueFormatter: params => format(params.value, DEFAULT_DATE_FORMAT),
-    },
-    {
-      field: "updatedAt",
-      headerName: "Updated at",
-      width: 200,
-      valueFormatter: params => (params.value ? format(params.value, DEFAULT_DATE_FORMAT) : null),
     },
     {
       field: "actions",
@@ -119,28 +156,27 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
   ];
 
   return (
-    <Fragment>
-      {isMutateLoading ? <LinearProgress /> : null}
+    <Suspense>
+      {isUpdateSeriesLoading || isDeleteMultipleSeriesLoading ? <LinearProgress /> : null}
       <DataGridPro
         pagination
-        rows={rows ?? []}
+        getRowHeight={() => "auto"}
+        rows={managerSeriesForTableData?.seriesList ?? []}
         checkboxSelection
         disableRowSelectionOnClick
-        loading={isQueryLoading}
+        loading={isManagerSeriesForTableLoading}
         getRowId={row => row.ID}
         columns={SeriesTableColumn}
-        rowCount={totalRecords}
+        rowCount={managerSeriesForTableData?.totalRecords}
         pageSizeOptions={[7, 15, 20]}
         paginationModel={paginationModel}
-        onPaginationModelChange={onPaginationModelChange}
+        onPaginationModelChange={setPaginationModel}
         paginationMode="server"
-        onRowSelectionModelChange={onRowSelectionModelChange}
+        onRowSelectionModelChange={setRowSelectionModel}
         rowSelectionModel={rowSelectionModel}
         processRowUpdate={processRowUpdate}
-        density={"comfortable"}
         pinnedColumns={{
           right: ["actions"],
-          left: ["series"],
         }}
         slotProps={{
           row: {
@@ -148,7 +184,8 @@ export default function SeriesTable({ rows, totalRecords, paginationModel, isMut
           },
         }}
       />
-      <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => onSelect(selectedRowId)} onRefresh={onRefresh} onClose={() => setContextMenuAnchorPosition(null)} />
-    </Fragment>
+      <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={managerSeriesForTableRefetch} onClose={() => setContextMenuAnchorPosition(null)} />
+    </Suspense>
   );
-}
+});
+export default SeriesTable;

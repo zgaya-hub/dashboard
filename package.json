@@ -42,7 +42,7 @@
     "react-router-dom": "^6.21.2",
     "react-youtube": "^10.1.0",
     "yup": "^1.3.3",
-    "zgaya.hub-client-types": "^1.0.3"
+    "zgaya.hub-client-types": "^1.0.8"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",

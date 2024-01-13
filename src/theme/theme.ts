@@ -1,10 +1,12 @@
 // themes.ts
 
 import { createTheme } from "@mui/material/styles";
-import { typography } from "./values";
+
+import { darkThemeComponents, lightThemeComponents, typography } from "./values";
 
 export const lightTheme = createTheme({
   typography: typography,
+  components: lightThemeComponents,
   palette: {
     mode: "light",
   },
@@ -12,6 +14,7 @@ export const lightTheme = createTheme({
 
 export const darkTheme = createTheme({
   typography: typography,
+  components: darkThemeComponents,
   palette: {
     mode: "dark",
   },

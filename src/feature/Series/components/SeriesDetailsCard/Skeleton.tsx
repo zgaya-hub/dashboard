@@ -20,7 +20,7 @@ export default function SeriesDetailsCardSkeleton() {
 
   return (
     <Card>
-      <CardMedia sx={cardStyle} />
+      <Skeleton sx={cardStyle} variant="rectangular" />
       <CardContent>
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"))}

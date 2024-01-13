@@ -13,10 +13,10 @@ import useTheme from "@/theme/Theme.context";
 import { useCreateMovie, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../../hooks";
 import { CreateMovieFormFieldType } from "../../types";
 
-const { Dialog, DialogActions, DialogTitle } = lazily(() => import("@/components/Dialog"));
-const { ClearIcon, FeedbackIcon, SdIcon, UploadIcon } = lazily(() => import("@/components/icons"));
 const Button = lazy(() => import("@/components/Button"));
 const { VideoUploadComponent, MovieCreateStep } = lazily(() => import(".."));
+const { Dialog, DialogActions, DialogTitle } = lazily(() => import("@/components/Dialog"));
+const { ClearIcon, FeedbackIcon, SdIcon, UploadIcon } = lazily(() => import("@/components/icons"));
 const { Box, DialogContent, Divider, Step, StepLabel, Stepper, Typography } = lazily(() => import("@mui/material"));
 
 interface MovieUploadModalProps {

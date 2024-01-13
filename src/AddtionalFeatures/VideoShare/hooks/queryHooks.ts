@@ -1,4 +1,5 @@
 import { GetSharelinkInput, GetImageByMediaIdParams } from "./queryHooks.types";
+import { Image } from "zgaya.hub-client-types/lib";
 import { gql, useQuery } from "@apollo/client";
 
 export function useGetSharelink(_input: GetSharelinkInput) {
@@ -28,7 +29,7 @@ export function useGetSharelink(_input: GetSharelinkInput) {
 }
 
 export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
-  const status = useQuery<{ getImageByMediaId: ImageEntityType }>(
+  const status = useQuery<{ getImageByMediaId: Image }>(
     gql`
       query ($param: GetImageByMediaIdParams!) {
         getImageByMediaId(GetImageByMediaIdParams: $param) {
