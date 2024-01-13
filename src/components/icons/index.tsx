@@ -52,6 +52,7 @@ import { default as MuiDetOutlinedails } from "@mui/icons-material/DetailsOutlin
 import { default as MuiEventOutlinedIcon } from "@mui/icons-material/Event";
 import { default as MuiInfodOutlinedIcon } from "@mui/icons-material/InfoOutlined";
 import { default as MuiSdOutlinedIcon } from "@mui/icons-material/SdOutlined";
+import { default as AttachMoneyOutlinedIcon } from "@mui/icons-material/AttachMoneyOutlined";
 
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4Icon } from "@mui/icons-material/Brightness4";
@@ -107,6 +108,7 @@ import { default as MuiInfodIcon } from "@mui/icons-material/Info";
 import { default as MuiSdIcon } from "@mui/icons-material/Sd";
 import { default as MuiAddPhotoAlternateOutlinedIcon } from "@mui/icons-material/AddPhotoAlternateOutlined";
 import { default as MuiAddPhotoAlternateIcon } from "@mui/icons-material/AddPhotoAlternate";
+import { default as AttachMoneyIcon } from "@mui/icons-material/AttachMoney";
 
 import Tooltip from "../Tooltip";
 
@@ -202,3 +204,4 @@ export const InfoIcon = withIconWrapper(MuiInfodOutlinedIcon, MuiInfodIcon);
 export const EventIcon = withIconWrapper(MuiEventOutlinedIcon, MuiEventIcon);
 export const SdIcon = withIconWrapper(MuiSdOutlinedIcon, MuiSdIcon);
 export const AddImageIcon = withIconWrapper(MuiAddPhotoAlternateOutlinedIcon, MuiAddPhotoAlternateIcon);
+export const DollarIcon = withIconWrapper(AttachMoneyOutlinedIcon, AttachMoneyIcon);
