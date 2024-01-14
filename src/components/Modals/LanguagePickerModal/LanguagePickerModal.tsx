@@ -14,10 +14,11 @@ import { MediaLanguagiesEnum } from "zgaya.hub-client-types/lib";
 interface LanguagePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultValue?: MediaLanguagiesEnum
   onOk: (countrName: MediaLanguagiesEnum) => void;
 }
 
-export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguagePickerModalProps) {
+export default function LanguagePickerModal({ isOpen, onClose, onOk, defaultValue }: LanguagePickerModalProps) {
   const { t } = useTranslation();
   const [value, setValue] = useState(MediaLanguagiesEnum.URDU);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
@@ -64,7 +65,7 @@ export default function LanguagePickerModal({ isOpen, onClose, onOk }: LanguageP
       </DialogTitle>
       <DialogContent dividers sx={{ padding: 0 }}>
         {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.LanguagePickerModal.search")} /> : null}
-        <RadioGroup value={value} onChange={handleOnChange}>
+        <RadioGroup value={value} onChange={handleOnChange} defaultValue={defaultValue}>
           {filteredLanguages.map((language) => {
             return (
               <MenuItem onClick={() => setValue(language.name)}>

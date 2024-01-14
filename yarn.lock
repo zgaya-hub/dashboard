@@ -3637,6 +3637,13 @@ react-lazily@^0.9.2:
   resolved "https://registry.yarnpkg.com/react-lazily/-/react-lazily-0.9.2.tgz#74596dbde43c8e0f607445da5c4839cf6cc48ab5"
   integrity sha512-oBVRDQ+SuMPWenBO/0Kq+iZk34lOYJEmjiTto4bYRufndf8pux3E50BT3mJZbsq0vBsAVbX3fpQjlUvsXgDVag==
 
+react-number-format@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-5.3.1.tgz#840c257da9cb4b248990d8db46e4d23e8bac67ff"
+  integrity sha512-qpYcQLauIeEhCZUZY9jXZnnroOtdy3jYaS1zQ3M1Sr6r/KMOBEIGNIb7eKT19g2N1wbYgFgvDzs19hw5TrB8XQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-pro-sidebar@1.1.0-alpha.1:
   version "1.1.0-alpha.1"
   resolved "https://registry.yarnpkg.com/react-pro-sidebar/-/react-pro-sidebar-1.1.0-alpha.1.tgz#0cecf4ca829da51f6d94770260ebc22791a61cdd"
@@ -4197,9 +4204,9 @@ zen-observable@0.8.15:
   integrity sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
 
 zgaya.hub-client-types@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/zgaya.hub-client-types/-/zgaya.hub-client-types-1.0.8.tgz#81a38944eef3359214657b42972df8022fd83c4c"
-  integrity sha512-SiozI7vh2BquMUvp2zzlqCRrIpoCbpkS3lrcb4RnvXSpzo5S07dceUE1VBlVZPSwpPzykRsInmWrQin9JMtq3g==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/zgaya.hub-client-types/-/zgaya.hub-client-types-1.0.10.tgz#d43ef4aa043d5ba00e7cdb006f9fdd243d3cfd7c"
+  integrity sha512-kIFBkLcS52fjZO+O9nx/j8wzQz6X2u97e8s0w91XPnoAczb0PNG6LH8dxBBRFfcj3qMZ/0QlJVF7d3nspbww+g==
 
 zip-stream@^4.1.0:
   version "4.1.1"

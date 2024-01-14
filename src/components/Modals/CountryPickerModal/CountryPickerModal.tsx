@@ -16,10 +16,11 @@ import { MediaCountriesEnum } from "zgaya.hub-client-types/lib";
 interface CountryPickerModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultValue?: MediaCountriesEnum
   onOk: (countrName: MediaCountriesEnum) => void;
 }
 
-export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPickerModalProps) {
+export default function CountryPickerModal({ isOpen, onClose, onOk, defaultValue }: CountryPickerModalProps) {
   const { t } = useTranslation();
   const [value, setValue] = useState(MediaCountriesEnum.USA);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
@@ -66,7 +67,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk }: CountryPic
       </DialogTitle>
       <DialogContent dividers sx={{ padding: 0 }}>
         {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.CountryPickerModal.search")} /> : null}
-        <RadioGroup value={value} onChange={handleOnChange}>
+        <RadioGroup value={value} onChange={handleOnChange} defaultValue={defaultValue}>
           {filteredCountries.map((country) => {
             return (
               <MenuItem onClick={() => setValue(country.name)}>

@@ -14,10 +14,11 @@ import { MediaGenriesEnum } from "zgaya.hub-client-types/lib";
 interface GenrePickerModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultValue?: MediaGenriesEnum
   onOk: (countrName: MediaGenriesEnum) => void;
 }
 
-export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerModalProps) {
+export default function GenrePickerModal({ isOpen, onClose, onOk, defaultValue }: GenrePickerModalProps) {
   const { t } = useTranslation();
   const [value, setValue] = useState(MediaGenriesEnum.ACTION);
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
@@ -64,7 +65,7 @@ export default function GenrePickerModal({ isOpen, onClose, onOk }: GenrePickerM
       </DialogTitle>
       <DialogContent dividers sx={{ padding: 0 }}>
         {isSearchInputVisible ? <SearchInput autoFocus onChange={handleOnSearchChange} placeholder={t("Components.Modals.GenrePickerModal.search")} /> : null}
-        <RadioGroup value={value} onChange={handleOnChange}>
+        <RadioGroup value={value} onChange={handleOnChange} defaultValue={defaultValue}>
           {filteredGenres.map((genre) => {
             return (
               <MenuItem onClick={() => setValue(genre)}>

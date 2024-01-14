@@ -1,32 +1,68 @@
 import { InputAdornment, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import { DollarIcon, ErrorIcon } from "../icons";
-import { FieldValues, Path, UseFormRegister } from "react-hook-form";
-import { ReactNode } from "react";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
+import { ReactNode, forwardRef } from "react";
+import { NumericFormat as ReactNumericFormat, NumericFormatProps as ReactNumericFormatProps } from "react-number-format";
 
 interface PriceFieldProps<T extends FieldValues> extends Omit<MuiTextFieldProps, "name"> {
-  register: UseFormRegister<T>;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   name: Path<T>;
+  control: Control<T>;
 }
 
-export default function PriceField<T extends FieldValues>({ register, name, startIcon, endIcon, ...restProps }: PriceFieldProps<T>) {
+export default function PriceField<T extends FieldValues>({ name, startIcon, endIcon, control, ...restProps }: PriceFieldProps<T>) {
   return (
-    <MuiTextField
-      {...register(name!)}
+    <Controller
+      control={control}
       name={name}
-      InputProps={{
-        endAdornment: restProps.error ? (
-          <InputAdornment position="end">
-            <ErrorIcon color="error" />
-          </InputAdornment>
-        ) : endIcon ? (
-          <InputAdornment position="end">{endIcon}</InputAdornment>
-        ) : null,
-        startAdornment: <InputAdornment position="start">{startIcon ?? <DollarIcon fontSize="small" />}</InputAdornment>,
-      }}
-      inputProps={{ maxLength: 12 }}
-      {...restProps}
+      render={({ field: { onChange, name, value } }) => (
+        <MuiTextField
+          name={name}
+          value={value}
+          onChange={onChange}
+          autoFocus
+          InputProps={{
+            endAdornment: restProps.error ? (
+              <InputAdornment position="end">
+                <ErrorIcon color="error" />
+              </InputAdornment>
+            ) : endIcon ? (
+              <InputAdornment position="end">{endIcon}</InputAdornment>
+            ) : null,
+            inputComponent: NumericFormat as any,
+          }}
+          inputProps={{ maxLength: 12 }}
+          {...restProps}
+        />
+      )}
     />
   );
 }
+
+interface NumericFormatProps {
+  onChange: (event: { target: { name: string; value: string } }) => void;
+  name: string;
+}
+
+const NumericFormat = forwardRef<ReactNumericFormatProps, NumericFormatProps>(function NumericFormat(props, ref) {
+  const { onChange, ...other } = props;
+
+  return (
+    <ReactNumericFormat
+      {...other}
+      getInputRef={ref}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      prefix="$"
+      thousandSeparator
+      valueIsNumericString
+    />
+  );
+});
