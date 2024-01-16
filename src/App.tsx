@@ -12,6 +12,7 @@ import { ApolloProvider } from "@apollo/client";
 import { queryClient } from "./api/queryClient";
 import "./i18n";
 import { SidebarContextProvider } from "./context/SidebarContext";
+import { FirebaseProvider } from "./context/FirebaseContext";
 
 /* const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,21 +31,23 @@ DatePickerLicenseInfo.setLicenseKey("76c34ab47f811b623345476a6f326e4aTz01NzA5OSx
 function App() {
   return (
     <ApolloProvider client={queryClient}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <I18nextProvider i18n={i18n}>
-          <AuthContextProvider>
-            <ThemeProvider>
-              <UserDetailProvider>
-                <GraphQlErrorProvider>
-                  <SidebarContextProvider>
-                    <MainStack />
-                  </SidebarContextProvider>
-                </GraphQlErrorProvider>
-              </UserDetailProvider>
-            </ThemeProvider>
-          </AuthContextProvider>
-        </I18nextProvider>
-      </LocalizationProvider>
+      <FirebaseProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <I18nextProvider i18n={i18n}>
+            <AuthContextProvider>
+              <ThemeProvider>
+                <UserDetailProvider>
+                  <GraphQlErrorProvider>
+                    <SidebarContextProvider>
+                      <MainStack />
+                    </SidebarContextProvider>
+                  </GraphQlErrorProvider>
+                </UserDetailProvider>
+              </ThemeProvider>
+            </AuthContextProvider>
+          </I18nextProvider>
+        </LocalizationProvider>
+      </FirebaseProvider>
     </ApolloProvider>
   );
 }

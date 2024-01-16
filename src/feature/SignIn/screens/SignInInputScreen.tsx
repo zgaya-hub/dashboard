@@ -1,18 +1,19 @@
 import SignInForm from "../components/SignInForm";
-import { useManagerSignIn } from "../hooks/queryHooks";
 import { useAuthContext } from "@/context/AuthContext";
 import Page from "@/components/Page";
 import { SignInFormFieldInterface } from "../types";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import useFirebase from "@/context/FirebaseContext";
 
 export default function SignInInputScreen() {
+  const { auth } = useFirebase();
   const { handleOnAuthenticate } = useAuthContext();
-  const { mutateAsync: managerLoginMutateAsync } = useManagerSignIn();
 
   const handleOnSignIn = async (input: SignInFormFieldInterface) => {
-    const result = await managerLoginMutateAsync({ Email: input.email, Password: input.password });
-    if (result) {
-      handleOnAuthenticate(result?.token);
-    }
+    const result = await signInWithEmailAndPassword(auth, input.email, input.password);
+    console.log(result);
+
+    handleOnAuthenticate(await result.user.getIdToken());
   };
 
   return (

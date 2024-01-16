@@ -25,6 +25,7 @@
     "@types/node": "^20.11.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
+    "firebase": "^10.7.1",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "i18next": "^23.7.16",

@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { SignUpInputScreen } from "./screens";
 
 export type SignUpRouteParams = {
-  "/signin": undefined;
+  "/sign-up": undefined;
 };
 
 const SignUpRoutes = () => {

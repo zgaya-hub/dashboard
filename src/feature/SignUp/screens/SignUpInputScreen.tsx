@@ -1,12 +1,14 @@
 import Page from "@/components/Page";
 import SignUpForm from "../components/SignUpForm";
 import { SignUpFormDataInterface } from "../types";
-import { useManagerSignIn } from "../hooks";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import useFirebase from "@/context/FirebaseContext";
 
 export default function SignUpInputScreen() {
-  const { mutateAsync: managerLoginMutateAsync } = useManagerSignIn();
+  const { auth } = useFirebase();
   const handleOnCallSignIn = async (formData: SignUpFormDataInterface) => {
-    managerLoginMutateAsync(formData);
+    const result = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+    console.log(result);
   };
   return (
     <Page>

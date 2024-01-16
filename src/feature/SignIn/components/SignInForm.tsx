@@ -1,10 +1,11 @@
-import { CssBaseline, Stack, Paper, Typography, Link } from "@mui/material";
+import { CssBaseline, Stack, Paper, Typography } from "@mui/material";
 import Button from "@/components/Button";
 import { Form, TextField } from "@/components/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { SignInFormFieldInterface } from "../types";
+import { Link } from "react-router-dom";
 
 
 interface SignInFormProps {
@@ -39,7 +40,7 @@ export default function SignInForm({ onSubmit, isLoading }: SignInFormProps) {
         </Button>
       </Form>
       <Typography variant="body2" mt={2} textAlign="center">
-        <Link href="#" color="primary">
+        <Link to="/sign-up" color="primary">
           Forgot password?
         </Link>
       </Typography>
