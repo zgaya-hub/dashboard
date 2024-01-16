@@ -1,5 +1,5 @@
+import { Alert, Snackbar } from "@mui/material";
 import { createContext, useContext, useState, ReactNode } from "react";
-import Snackbar from "@/components/Snackbar";
 
 interface GraphQlErrorContextProps {
   showGraphQlError: (error: ServerErrorResponse) => void;
@@ -19,14 +19,18 @@ export function GraphQlErrorProvider({ children }: { children: ReactNode }) {
     setErrorMessage(error);
   };
 
-  const handleClose = () => {
+  const handleOnClose = () => {
     setErrorMessage(null);
   };
 
   return (
     <GraphQlErrorContext.Provider value={{ showGraphQlError, showSnackbar }}>
       {children}
-      {!!errorMessage && <Snackbar open={true} onClose={handleClose} message={errorMessage} AlertProps={{ onClose: handleClose }} />}
+      <Snackbar open={!!errorMessage}>
+        <Alert onClose={handleOnClose} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </GraphQlErrorContext.Provider>
   );
 }

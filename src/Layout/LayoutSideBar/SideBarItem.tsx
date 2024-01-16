@@ -2,8 +2,7 @@ import { CSSProperties, cloneElement } from "react";
 import { ReactElement } from "react";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { MenuItem } from "react-pro-sidebar";
-import { ButtonBase, Stack } from "@mui/material";
-import Tooltip from "@/components/Tooltip";
+import { Stack, Tooltip } from "@mui/material";
 import { IconWrapperProps } from "@/components/icons";
 
 export interface SidebarItemProps {

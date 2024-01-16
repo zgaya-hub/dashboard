@@ -7,8 +7,7 @@ import useTheme from "@/theme/Theme.context";
 import useNavigation from "@/navigation/useNavigation";
 import { MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
 import UserAvatar from "./UserAvatar";
-import AppBar from "@/components/AppBar";
-import { Fab } from "@mui/material";
+import { AppBar, Fab } from "@mui/material";
 
 export default function LayoutAppBar() {
   const navigation = useNavigation();

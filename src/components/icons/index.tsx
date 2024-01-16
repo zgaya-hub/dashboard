@@ -1,5 +1,5 @@
-import { ComponentType, MouseEvent, MouseEventHandler } from "react";
-import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, TooltipProps } from "@mui/material";
+import { ComponentType, MouseEvent } from "react";
+import { CircularProgress, IconButton, IconButtonProps, ListItemIcon, SvgIconProps, Tooltip, TooltipProps } from "@mui/material";
 import { default as MuiAddOutlinedIcon } from "@mui/icons-material/AddOutlined";
 import { default as MuiBrightness4OutlinedIcon } from "@mui/icons-material/Brightness4Outlined";
 import { default as MuiChevronRightOutlinedIcon } from "@mui/icons-material/ChevronRightOutlined";
@@ -110,7 +110,6 @@ import { default as MuiAddPhotoAlternateOutlinedIcon } from "@mui/icons-material
 import { default as MuiAddPhotoAlternateIcon } from "@mui/icons-material/AddPhotoAlternate";
 import { default as AttachMoneyIcon } from "@mui/icons-material/AttachMoney";
 
-import Tooltip from "../Tooltip";
 
 export interface IconWrapperProps extends SvgIconProps {
   iconButton?: boolean;

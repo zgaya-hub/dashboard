@@ -2,8 +2,7 @@ import { ChangeEvent } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useTranslation } from "react-i18next";
 import { SearchIcon, ClearIcon } from "../icons";
-import Tooltip from "../Tooltip";
-import { OutlinedInput, OutlinedInputProps, SxProps } from "@mui/material";
+import { OutlinedInput, OutlinedInputProps, SxProps, Tooltip } from "@mui/material";
 
 interface SearchInputProps extends Omit<OutlinedInputProps, "sx" | "onChange"> {
   onChange?: (text: string) => void;
