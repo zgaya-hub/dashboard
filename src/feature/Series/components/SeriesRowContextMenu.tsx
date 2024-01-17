@@ -27,7 +27,9 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnEdit = () => {
-    alert("Edit clicked for row ID:", seriesId);
+    window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=1000");
+    window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=1000");
+    window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=1000");
   };
 
   const handleOnDetails = () => {
@@ -35,7 +37,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnCreateSeason = () => {
-    alert("Edit clicked for row ID:", seriesId);
+    alert("Edit clicked for row ID:" + seriesId);
   };
 
   const menuItemStyle = useThemeStyles<SxProps>((theme) => ({

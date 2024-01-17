@@ -48,10 +48,10 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
-  MuiTextField: {
+  MuiAppBar: {
     styleOverrides: {
       root: {
-        width: 64 * 8
+        background: "#ffffff",
       },
     },
   },
@@ -129,6 +129,13 @@ export const darkThemeComponents: ThemeOptions["components"] = {
         "&::-webkit-scrollbar": {
           display: "none",
         },
+      },
+    },
+  },
+  MuiAppBar: {
+    styleOverrides: {
+      root: {
+        background: "#1c1b1b",
       },
     },
   },

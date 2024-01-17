@@ -26,6 +26,6 @@ export interface TableSeriesInterface {
 }
 export interface FinancialInfoCreateFormFieldInterface {
   revenue: number;
-  netPorfit: number;
+  netProfit: number;
   budget: number;
 }

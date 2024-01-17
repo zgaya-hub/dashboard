@@ -1,4 +1,4 @@
-import { GenderEnum, MediaCountriesEnum } from "zgaya.hub-client-types/lib";
+import { GenderEnum, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { CineastProfessionEnum } from "@/types/enum";
 
@@ -7,6 +7,20 @@ export interface SeriesCreateFormFieldInterface {
   plotSummary: string;
   releaseDate: number;
   imageId: string;
+}
+
+export interface SeriesUpdateFormFieldInterface {
+  title: string;
+  plotSummary: string;
+  releaseDate: number;
+  imageId: string;
+  originCountry: MediaCountriesEnum;
+  originalLanguage: MediaLanguagiesEnum;
+  genre: MediaGenriesEnum;
+  status: MediaStatusEnum;
+  netProfit: number
+  revenue: number
+  budget: number
 }
 
 export interface CineastCreateFormFieldInterface {

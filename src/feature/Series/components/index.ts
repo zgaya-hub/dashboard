@@ -5,7 +5,7 @@ export { default as SeriesDetailsCard } from "./SeriesDetailsCard/Card";
 export { default as SeriesDetailsCardSkeleton } from "./SeriesDetailsCard/Skeleton";
 export { default as SeriesImageSelectComponent } from "./SeriesImageSelectComponent";
 export { default as SeriesRowContextMenu } from "./SeriesRowContextMenu";
-export { default as SeriesStatusSelectComponent } from "./SeriesStatusSelectComponent";
 export { default as SeriesDetailsEditForm } from "./SeriesDetailsCard/SeriesDetailsEditForm";
+export { default as SeriesDetailsErrorCard } from "./SeriesDetailsCard/ErrorCard";
 export type { SeriesTableRefInterface } from "./SeriesTable";
 export { default as SeriesTable } from "./SeriesTable";

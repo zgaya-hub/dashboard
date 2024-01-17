@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Stack, Typography, Paper } from "@mui/material";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum } from "zgaya.hub-client-types/lib";
+import { Stack, Typography, Paper, MenuItem } from "@mui/material";
+import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
-import { ModalSelectInput } from "@/components/Form";
-import { CountryPickerModal, GenrePickerModal,LanguagePickerModal } from "@/components/Modals";
-
+import { ModalSelectInput, SelectInput } from "@/components/Form";
+import { CountryPickerModal, GenrePickerModal, LanguagePickerModal } from "@/components/Modals";
 import { SeriesCreateFormFieldInterface } from "../types";
-
-import SeriesStatusSelectComponent from "./SeriesStatusSelectComponent";
+import { values } from "lodash";
 
 interface SeriesAdditionalInfoFormProps {
   setFormValue: UseFormSetValue<SeriesCreateFormFieldInterface>;
@@ -62,8 +60,14 @@ export default function SeriesAdditionalInfoForm({ setFormValue, watchFormValue,
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.Series.SeriesAdditionalInfoForm.pickAGenre")} value={watchFormValue("genre")} onClick={handleOnToggleGenreModal} fullWidth />
         <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModal} onOk={handleOnSelectGenre} />
-        <SeriesStatusSelectComponent formRegister={formRegister} />
+        <SelectInput label={t("Feature.Series.SeriesAdditionalInfoForm.selectStatus")} fullWidth name="status" register={formRegister}>
+          {seriesStatusesList.map((seriesStatus) => (
+            <MenuItem value={seriesStatus}>{seriesStatus}</MenuItem>
+          ))}
+        </SelectInput>
       </Stack>
     </Stack>
   );
 }
+
+const seriesStatusesList = values(MediaStatusEnum);

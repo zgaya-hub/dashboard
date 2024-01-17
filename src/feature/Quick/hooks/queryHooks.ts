@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, ImageIdOutput, SuccessOutput } from "zgaya.hub-client-types/lib";
+import { CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, GetSeriesDetailsByIdOutput, ImageIdOutput, SeriesIdParams, SuccessOutput } from "zgaya.hub-client-types/lib";
 
 import { CreateCineastInput } from "./queryHooks.types";
 
@@ -104,4 +104,33 @@ export function useCreateCineast() {
   };
 
   return { mutateAsync, data: status.data?.createCineast, isPending: status.loading, ...status };
+}
+
+export function useGetSeriesDetailsById(param: SeriesIdParams) {
+  const status = useQuery<{ getSeriesDetailsById: GetSeriesDetailsByIdOutput }>(
+    gql`
+      query ($param: SeriesIdParams!) {
+        getSeriesDetailsById(SeriesIdParams: $param) {
+          ID
+          originCountry
+          originalLanguage
+          genre
+          status
+          title
+          plotSummary
+          releaseDate
+          imageUrl
+          uploadDate
+          netProfit
+          budget
+          revenue
+          isFree
+        }
+      }
+    `,
+    {
+      variables: { param },
+    }
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getSeriesDetailsById };
 }

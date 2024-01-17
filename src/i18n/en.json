@@ -223,6 +223,24 @@
         "name": "Name",
         "selectAGender": "Select a gender",
         "profession": "Profession"
+      },
+      "SeriesUpdateScreen": {
+        "updateService": "Update series",
+        "save": "Save",
+        "back": "Back"
+      },
+      "SeriesUpdateForm": {
+        "title": "Title",
+        "releaseDate": "Release date",
+        "plotSummary": "Plot summary",
+        "originCountry": "Origin country",
+        "originalLanguage": "Original language",
+        "pickAGenre": "Pick a genre",
+        "selectStatus": "Select status",
+        "netProfit": "Net profit",
+        "revenue": "Revenue",
+        "budget": "Budget",
+        "selectBackdropImage": "Upload backdrop image"
       }
     }
   },

@@ -1,6 +1,7 @@
-import { Card, CardContent, CardMedia, Skeleton, Stack, SxProps, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Skeleton, Stack, SxProps, Typography } from "@mui/material";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { useTranslation } from "react-i18next";
+import { CachedIcon } from "@/components/icons";
 
 export default function SeriesDetailsCardSkeleton() {
   const { t } = useTranslation();
@@ -20,15 +21,26 @@ export default function SeriesDetailsCardSkeleton() {
 
   return (
     <Card>
+      <CardHeader action={<CachedIcon iconButton disabled />} />
       <Skeleton sx={cardStyle} variant="rectangular" />
       <CardContent>
+        <Typography variant="h5" py={1}>
+          {t("Feature.Series.SeriesDetailsCard.seriesDetails")}
+        </Typography>
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"))}
+        <Typography variant="h5" py={1}>
+          {t("Feature.Series.SeriesDetailsCard.additionalInfo")}
+        </Typography>
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"))}
+        <Typography variant="h5">{t("Feature.Series.SeriesDetailsCard.financialInfo")}</Typography>
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.netProfit"))}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.revenue"))}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.budget"))}
       </CardContent>
     </Card>
   );

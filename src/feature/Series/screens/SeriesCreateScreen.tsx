@@ -35,7 +35,6 @@ export default function SeriesCreateScreen() {
   } = useForm<SeriesCreateFormFieldInterface>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      title: "",
       plotSummary: DEFAULT_PLOT_SUMMARY,
       releaseDate: DEFAULT_RELEASE_DATE,
     },
@@ -67,30 +66,28 @@ export default function SeriesCreateScreen() {
     navigation.goBack();
   };
 
-  const cardStyle = useThemeStyles<SxProps>(theme => ({
+  console.log({ ssss: watchFormValue("status") });
+
+  const cardStyle = useThemeStyles<SxProps>((theme) => ({
     height: "100%",
     minHeight: theme.spacing(16),
     backgroundSize: "contain",
     backgroundPosition: "top",
   }));
 
-  const pageHeader = (
-    <Stack component={Paper} p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.Series.SeriesCreateScreen.createASeries")}</Typography>
-      <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.Series.SeriesCreateScreen.back")}</Button>
-        <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.Series.SeriesCreateScreen.save")}
-        </Button>
-      </Stack>
-    </Stack>
-  );
-
   return (
     <Page>
       <Grid container justifyContent={"space-between"} rowGap={4}>
         <Grid xs={12} item lg={12}>
-          {pageHeader}
+          <Stack component={Paper} p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
+            <Typography variant="h5">{t("Feature.Series.SeriesCreateScreen.createASeries")}</Typography>
+            <Stack direction={"row"} gap={1}>
+              <Button variant="text">{t("Feature.Series.SeriesCreateScreen.back")}</Button>
+              <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
+                {t("Feature.Series.SeriesCreateScreen.save")}
+              </Button>
+            </Stack>
+          </Stack>
         </Grid>
         <Grid xs={12} item lg={5.9}>
           <SeriesBasicInfoForm control={control} formRegister={formRegister} errors={errors} />

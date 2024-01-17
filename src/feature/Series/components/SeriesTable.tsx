@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
 import { lazily } from "react-lazily";
 import { PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
@@ -83,7 +83,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
   };
 
   const handleOnSelect = (selectedRowId: string) => {
-    alert(selectedRowId);
+    setRowSelectionModel(v => [...v, selectedRowId]);
   };
 
   const SeriesTableColumn: GridColDef[] = [
@@ -91,7 +91,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
       field: "series",
       headerName: "Series",
       width: 500,
-      renderCell: params => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
+      renderCell: (params) => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
       field: "originCountry",
@@ -131,20 +131,20 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
       width: 200,
       type: "dateTime",
       editable: true,
-      valueFormatter: params => format(params.value, DEFAULT_MONTH_YEAR_FORMAT),
+      valueFormatter: (params) => format(params.value, DEFAULT_MONTH_YEAR_FORMAT),
     },
     {
       field: "imageUrl",
       headerName: "Image url",
       width: 100,
       editable: true,
-      renderCell: params => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
+      renderCell: (params) => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
     },
     {
       field: "uploadDate",
       headerName: "Upload date",
       width: 200,
-      valueFormatter: params => format(params.value, DEFAULT_DATE_FORMAT),
+      valueFormatter: (params) => format(params.value, DEFAULT_DATE_FORMAT),
     },
     {
       field: "actions",
@@ -165,7 +165,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
         checkboxSelection
         disableRowSelectionOnClick
         loading={isManagerSeriesForTableLoading}
-        getRowId={row => row.ID}
+        getRowId={(row) => row.ID}
         columns={SeriesTableColumn}
         rowCount={managerSeriesForTableData?.totalRecords}
         pageSizeOptions={[7, 15, 20]}

@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Card, CardActions, CardContent, CardMedia, Fade, Popover, Stack, SxProps, Typography } from "@mui/material";
+import { Box, Card, CardActions, CardContent, CardHeader, CardMedia, Fade, Popover, Stack, SxProps, Typography } from "@mui/material";
 import { format } from "date-fns";
 import FinancialInfoCreatePopper from "./FinancialInfoCreatePopper";
 
@@ -15,6 +15,7 @@ import SeriesDetailsCardSkeleton from "./Skeleton";
 import Button from "@/components/Button";
 import SeriesDetailsEditForm from "./SeriesDetailsEditForm";
 import { GetSeriesDetailsByIdOutput } from "zgaya.hub-client-types/lib";
+import { SeriesDetailsErrorCard } from "..";
 
 interface SeriesDetailsCardProps {
   seriesId: string;
@@ -27,11 +28,11 @@ export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) 
   const [financialInfoCreateMolalAnchorEl, setFinancialInfoCreateMolalAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [editableField, setEditableField] = useState<string | null>(null);
   const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
-  const { data, refetch, isLoading, error } = useGetSeriesDetailsById({ SeriesId: seriesId });
+  const { data: seriesDetailsData, refetch: seriesDetailsRefetch, isLoading: isSeriesDetailsLoading, error: seriesDetailsError } = useGetSeriesDetailsById({ SeriesId: seriesId });
 
   const handleOnSave = async (input: GetSeriesDetailsByIdOutput) => {
     await updateSeriesMutateAsync(
-      { SeriesId: data.ID },
+      { SeriesId: seriesDetailsData.ID },
       {
         AdditionalInfo: {
           Genre: input.genre,
@@ -67,104 +68,98 @@ export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) 
     backgroundSize: "cover",
   }));
 
-  const errorIconStyle = useThemeStyles<SxProps>((theme) => ({
-    position: "absolute",
-    top: theme.spacing(1),
-    right: theme.spacing(1),
-  }));
-
-  const refreshIconStyle = useThemeStyles<SxProps>((theme) => ({
-    position: "absolute",
-    top: theme.spacing(1),
-    right: theme.spacing(6),
-  }));
-
   const editIconStyle = useThemeStyles<SxProps>((theme) => ({
     position: "absolute",
     right: theme.spacing(0),
     background: theme.palette.background.default,
   }));
 
-  if (isLoading) {
+  if (isSeriesDetailsLoading) {
     return <SeriesDetailsCardSkeleton />;
   }
 
+  if (seriesDetailsError) {
+    return <SeriesDetailsErrorCard errorMessage={seriesDetailsError.message} onRefetch={() => seriesDetailsRefetch()} />;
+    // error.message
+  }
+
   const renderEditableText = (label: string, value: string | number, popoverField: ReactNode) => (
-    <Stack direction="row" justifyContent="space-between" p={ 1 } alignItems="end" onMouseEnter={ () => setEditableField(label) } onMouseLeave={ () => setEditableField(null) } position="relative">
-      <Typography variant="h6">{ label }</Typography>
+    <Stack direction="row" justifyContent="space-between" p={1} alignItems="end" onMouseEnter={() => setEditableField(label)} onMouseLeave={() => setEditableField(null)} position="relative">
+      <Typography variant="h6">{label}</Typography>
       <Typography>
-        { value }
-        { editableField === label ? (
+        {value}
+        {editableField === label ? (
           <>
-            <EditIcon fontSize="inherit" sx={ editIconStyle } onClick={ (event) => setAnchorEl(event.currentTarget) } iconButton={ false } tooltip="Edit" />
+            <EditIcon fontSize="inherit" sx={editIconStyle} onClick={(event) => setAnchorEl(event.currentTarget)} iconButton={false} tooltip="Edit" />
             <Popover
-              open={ !!anchorEl }
-              anchorEl={ anchorEl }
-              onClose={ () => setAnchorEl(null) }
+              open={!!anchorEl}
+              anchorEl={anchorEl}
+              onClose={() => setAnchorEl(null)}
               anchorReference="anchorEl"
-              transformOrigin={ {
+              transformOrigin={{
                 horizontal: "right",
                 vertical: "top",
-              } }
-              anchorOrigin={ {
+              }}
+              anchorOrigin={{
                 horizontal: "left",
                 vertical: "top",
-              } }
+              }}
             >
-              <Stack p={ 1 }>{ popoverField }</Stack>
+              <Stack p={1}>{popoverField}</Stack>
             </Popover>
           </>
-        ) : null }
+        ) : null}
       </Typography>
     </Stack>
   );
 
   return (
-    <Card sx={ cardStyle }>
-      <CardMedia sx={ cardMediaStyle } image={ data?.imageUrl } />
-      <CachedIcon sx={ refreshIconStyle } onClick={ refetch } />
-      { error ? <ErrorIcon color="error" sx={ errorIconStyle } iconButton tooltip={ error.message } /> : null }
+    <Card sx={cardStyle}>
+      <CardHeader action={<CachedIcon onClick={() => seriesDetailsRefetch()} />} />
+
+      <CardMedia sx={cardMediaStyle} image={seriesDetailsData?.imageUrl} />
+
       <CardContent>
-        <Typography variant="h5" py={ 1 }>
-          { t("Feature.Series.SeriesDetailsCard.seriesDetails") }
+        <Typography variant="h5" py={1}>
+          {t("Feature.Series.SeriesDetailsCard.seriesDetails")}
         </Typography>
-        { renderEditableText(t("Feature.Series.SeriesDetailsCard.title"), (watchFormValue("title") ?? data?.title), <TextField name="title" label={ t("Feature.Series.SeriesDetailsCard.title") } defaultValue={ data?.title } />) }
-        { renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"), handleOnTruncateText(watchFormValue("plotSummary") ?? (data?.plotSummary || ""), 20), <TextField name="title" label={ t("Feature.Series.SeriesDetailsCard.plotSummary") } defaultValue={ data?.plotSummary } />) }
-        { renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"), watchFormValue("releaseDate") ?? format(data?.releaseDate || 0, DEFAULT_DATE_FORMAT), <DateChanger name="releaseDate" label={ t("Feature.Series.SeriesDetailsCard.releaseDate") } defaultValue={ data?.releaseDate || 0 } />) }
-        <Typography variant="h5" py={ 1 }>
-          { t("Feature.Series.SeriesDetailsCard.additionalInfo") }
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"), watchFormValue("title") ?? seriesDetailsData?.title, <TextField name="title" label={t("Feature.Series.SeriesDetailsCard.title")} defaultValue={seriesDetailsData?.title} />)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"), handleOnTruncateText(watchFormValue("plotSummary") ?? (seriesDetailsData?.plotSummary || ""), 20), <TextField name="title" label={t("Feature.Series.SeriesDetailsCard.plotSummary")} defaultValue={seriesDetailsData?.plotSummary} />)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"), watchFormValue("releaseDate") ?? format(seriesDetailsData?.releaseDate || 0, DEFAULT_DATE_FORMAT), <DateChanger name="releaseDate" label={t("Feature.Series.SeriesDetailsCard.releaseDate")} defaultValue={seriesDetailsData?.releaseDate || 0} />)}
+        <Typography variant="h5" py={1}>
+          {t("Feature.Series.SeriesDetailsCard.additionalInfo")}
         </Typography>
-        { renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"), watchFormValue("genre") ?? (data?.genre || ""), <GenreChanger label={ t("Feature.Series.SeriesDetailsCard.genre") } defaultValue={ data?.genre } />) }
-        { renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"), watchFormValue("originCountry") ?? (data?.originCountry || ""), <CountryChanger label={ t("Feature.Series.SeriesDetailsCard.originCountry") } defaultValue={ data?.originCountry } />) }
-        { renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"), watchFormValue("originalLanguage") ?? (data?.originalLanguage || ""), <LanguageChanger label={ t("Feature.Series.SeriesDetailsCard.originalLanguage") } defaultValue={ data?.originalLanguage } />) }
-        { renderEditableText(t("Feature.Series.SeriesDetailsCard.status"), watchFormValue("status") ?? (data?.status || ""), <StatusChanger label={ t("Feature.Series.SeriesDetailsCard.status") } defaultValue={ data?.status } />) }
-        <Stack direction={ 'row' } justifyContent={ 'space-between' } py={ 1 }>
-          <Typography variant="h5">
-            { t("Feature.Series.SeriesDetailsCard.financialInfo") }
-          </Typography>
-          { !data?.netProfit ?
-            <Button endIcon={ <AddIcon /> } onClick={ (e) => setFinancialInfoCreateMolalAnchorEl(e.currentTarget) }>
-              { t("Feature.Series.SeriesDetailsCard.add") }
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"), watchFormValue("genre") ?? (seriesDetailsData?.genre || ""), <GenreChanger label={t("Feature.Series.SeriesDetailsCard.genre")} defaultValue={seriesDetailsData?.genre} />)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"), watchFormValue("originCountry") ?? (seriesDetailsData?.originCountry || ""), <CountryChanger label={t("Feature.Series.SeriesDetailsCard.originCountry")} defaultValue={seriesDetailsData?.originCountry} />)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"), watchFormValue("originalLanguage") ?? (seriesDetailsData?.originalLanguage || ""), <LanguageChanger label={t("Feature.Series.SeriesDetailsCard.originalLanguage")} defaultValue={seriesDetailsData?.originalLanguage} />)}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"), watchFormValue("status") ?? (seriesDetailsData?.status || ""), <StatusChanger label={t("Feature.Series.SeriesDetailsCard.status")} defaultValue={seriesDetailsData?.status} />)}
+
+        <Stack direction={"row"} justifyContent={"space-between"} py={1}>
+          <Typography variant="h5">{t("Feature.Series.SeriesDetailsCard.financialInfo")}</Typography>
+          {!seriesDetailsData?.netProfit && seriesDetailsData?.netProfit !== 0 ? (
+            <Button endIcon={<AddIcon />} onClick={(e) => setFinancialInfoCreateMolalAnchorEl(e.currentTarget)}>
+              {t("Feature.Series.SeriesDetailsCard.add")}
             </Button>
-            : null }
-          <FinancialInfoCreatePopper anchorEl={ financialInfoCreateMolalAnchorEl } onClose={ () => setFinancialInfoCreateMolalAnchorEl(null) } />
+          ) : null}
+          <FinancialInfoCreatePopper onSuccess={() => seriesDetailsRefetch()} seriesId={seriesId} anchorEl={financialInfoCreateMolalAnchorEl} onClose={() => setFinancialInfoCreateMolalAnchorEl(null)} />
         </Stack>
-        { data?.netProfit ?
+        {seriesDetailsData?.netProfit || seriesDetailsData?.netProfit === 0 ? (
           <>
-            { renderEditableText(t("Feature.Series.SeriesDetailsCard.netProfit"), watchFormValue("netProfit") ?? `${data?.netProfit ?? 0} $`, <PriceChanger name="netProfit" label={ t("Feature.Series.SeriesDetailsCard.netProfit") } defaultValue={ data?.netProfit ?? 0 } />) }
-            { renderEditableText(t("Feature.Series.SeriesDetailsCard.revenue"), `${watchFormValue("revenue") ?? data?.revenue ?? 0} $`, <PriceChanger name="revenue" label={ t("Feature.Series.SeriesDetailsCard.revenue") } defaultValue={ data?.revenue ?? 0 } />) }
-            { renderEditableText(t("Feature.Series.SeriesDetailsCard.budget"), `${watchFormValue("budget") ?? data?.budget ?? 0} $`, <PriceChanger name="budget" label={ t("Feature.Series.SeriesDetailsCard.budget") } defaultValue={ data?.budget ?? 0 } />) }
-          </> : null
-        }
+            {renderEditableText(t("Feature.Series.SeriesDetailsCard.netProfit"), `${watchFormValue("netProfit") ?? seriesDetailsData?.netProfit ?? 0} $`, <PriceChanger name="netProfit" label={t("Feature.Series.SeriesDetailsCard.netProfit")} defaultValue={seriesDetailsData?.netProfit ?? 0} />)}
+            {renderEditableText(t("Feature.Series.SeriesDetailsCard.revenue"), `${watchFormValue("revenue") ?? seriesDetailsData?.revenue ?? 0} $`, <PriceChanger name="revenue" label={t("Feature.Series.SeriesDetailsCard.revenue")} defaultValue={seriesDetailsData?.revenue ?? 0} />)}
+            {renderEditableText(t("Feature.Series.SeriesDetailsCard.budget"), `${watchFormValue("budget") ?? seriesDetailsData?.budget ?? 0} $`, <PriceChanger name="budget" label={t("Feature.Series.SeriesDetailsCard.budget")} defaultValue={seriesDetailsData?.budget ?? 0} />)}
+          </>
+        ) : null}
       </CardContent>
-      <Fade appear={ false } in={ !!formState.isDirty }>
+
+      <Fade appear={false} in={!!formState.isDirty}>
         <CardActions>
-          <Box flex={ "1 0 0" } />
-          <Button onClick={ handleOnCancel } variant="text">
-            { t("Feature.Series.SeriesDetailsCard.cancel") }
+          <Box flex={"1 0 0"} />
+          <Button onClick={handleOnCancel} variant="text">
+            {t("Feature.Series.SeriesDetailsCard.cancel")}
           </Button>
-          <Button onClick={ handleSubmitForm(handleOnSave) } loading={ isUpdateSeriesLoading } variant="contained" endIcon={ <SaveIcon /> }>
-            { t("Feature.Series.SeriesDetailsCard.save") }
+          <Button onClick={handleSubmitForm(handleOnSave)} loading={isUpdateSeriesLoading} variant="contained" endIcon={<SaveIcon />}>
+            {t("Feature.Series.SeriesDetailsCard.save")}
           </Button>
         </CardActions>
       </Fade>
