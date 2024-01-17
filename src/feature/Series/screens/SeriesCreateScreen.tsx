@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CardMedia, Grid, Stack, SxProps, Typography } from "@mui/material";
+import { CardMedia, Grid, Stack, SxProps, Typography, Paper } from "@mui/material";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import * as yup from "yup";
 import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
@@ -10,7 +10,6 @@ import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
 import Page from "@/components/Page";
-import { Elevator } from "@/components/Tags";
 import useNavigation from "@/navigation/useNavigation";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
@@ -76,7 +75,7 @@ export default function SeriesCreateScreen() {
   }));
 
   const pageHeader = (
-    <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
+    <Stack component={Paper} p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
       <Typography variant="h5">{t("Feature.Series.SeriesCreateScreen.createASeries")}</Typography>
       <Stack direction={"row"} gap={1}>
         <Button variant="text">{t("Feature.Series.SeriesCreateScreen.back")}</Button>
@@ -84,7 +83,7 @@ export default function SeriesCreateScreen() {
           {t("Feature.Series.SeriesCreateScreen.save")}
         </Button>
       </Stack>
-    </Elevator>
+    </Stack>
   );
 
   return (

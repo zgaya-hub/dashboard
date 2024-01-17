@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { lazily } from "react-lazily";
-import { MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
+import { ZgayaHubMediaEnum } from "zgaya.hub-client-types/lib";
 
 const { VideoShareModal } = lazily(() => import("@/AddtionalFeatures/VideoShare"));
 const Button = lazy(() => import("@/components/Button"));
@@ -28,7 +28,7 @@ export default function MovieUploadScreen() {
       <Page>
         <Button onClick={handleOnToggleSelectSeriesModal}>Upload</Button>
         <MovieUploadModal isVisible={isMovieUploadModalVisible} onClose={handleOnToggleMovieUploadModal} onOpenShareModal={handleOnToggleVideoShareModal} />
-        <VideoShareModal mediaId={""} mediaType={MirraScopeMediaEnum.EPISODE} isVisible={isVideoShareModalVisible} onClose={handleOnToggleVideoShareModal} />
+        <VideoShareModal mediaId={""} mediaType={ZgayaHubMediaEnum.EPISODE} isVisible={isVideoShareModalVisible} onClose={handleOnToggleVideoShareModal} />
       </Page>
     </Suspense>
   );

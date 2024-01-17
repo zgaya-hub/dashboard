@@ -1,8 +1,8 @@
-import { MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
+import { ZgayaHubMediaEnum } from "zgaya.hub-client-types/lib";
 
 export type GetSharelinkInput = {
   MediaId: string;
-  MediaType: MirraScopeMediaEnum;
+  MediaType: ZgayaHubMediaEnum;
 };
 
 export type GetImageByMediaIdParams = {

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { lazily } from "react-lazily";
 import { SxProps, useMediaQuery } from "@mui/material";
 import { convertVideoInBlob, extractVideoMetadata, extractVideoUrl } from "metalyzer";
-import { MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
+import { ZgayaHubMediaEnum } from "zgaya.hub-client-types/lib";
 
 import { useSidebarContext } from "@/context/SidebarContext";
 import useNavigation from "@/navigation/useNavigation";
@@ -52,7 +52,7 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
     const result = await getUploadMovieUrlMutateAsync({
       Height: episodeMetadata.videoHeight!,
       Width: episodeMetadata.videoWidth!,
-      MediaType: MirraScopeMediaEnum.EPISODE,
+      MediaType: ZgayaHubMediaEnum.EPISODE,
       Mime: episodeMetadata.mimeType,
       RunTime: episodeMetadata.videoDuration,
       SizeInKb: episodeMetadata.fileSizeKB,

@@ -24,3 +24,8 @@ export interface TableSeriesInterface {
   createdAt: number;
   updatedAt: number;
 }
+export interface FinancialInfoCreateFormFieldInterface {
+  revenue: number;
+  netPorfit: number;
+  budget: number;
+}

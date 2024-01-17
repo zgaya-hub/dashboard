@@ -6,11 +6,11 @@ import { DialogContent, List, ListItem, SxProps } from "@mui/material";
 import { LinkIcon } from "@/components/icons";
 import { RedditIcon, FacebookIcon } from "../assets";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
+import { ZgayaHubMediaEnum } from "zgaya.hub-client-types/lib";
 
 interface VideoShareModalProps {
   mediaId: string;
-  mediaType: MirraScopeMediaEnum;
+  mediaType: ZgayaHubMediaEnum;
   isVisible: boolean;
   onClose: () => void;
 }

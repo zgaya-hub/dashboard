@@ -11,13 +11,14 @@ interface PriceFieldProps<T extends FieldValues> extends Omit<MuiTextFieldProps,
   control: Control<T>;
 }
 
-export default function PriceField<T extends FieldValues>({ name, startIcon, endIcon, control, ...restProps }: PriceFieldProps<T>) {
+export default function PriceField<T extends FieldValues>({ name, startIcon, endIcon, control, ...restProps }: Readonly<PriceFieldProps<T>>) {
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, name, value } }) => (
-        <MuiTextField
+      render={({ field: { onChange, name, value } }) => {
+        value = !value || value === 0 ? 0 : value
+        return <MuiTextField
           name={name}
           value={value}
           onChange={onChange}
@@ -35,7 +36,8 @@ export default function PriceField<T extends FieldValues>({ name, startIcon, end
           inputProps={{ maxLength: 12 }}
           {...restProps}
         />
-      )}
+      }
+      }
     />
   );
 }

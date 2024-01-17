@@ -1,14 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Paper } from "@mui/material";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
 import * as yup from "yup";
 import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
 
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
-import { Elevator } from "@/components/Tags";
 
 import SeriesCreateForm from "../components/SeriesCreateForm";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
@@ -55,24 +54,20 @@ export default function SeriesCreateScreen() {
     window.close();
   };
 
-  const pageHeader = (
-    <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.Quick.SeriesCreateScreen.createASeries")}</Typography>
-      <Stack direction={"row"} gap={1}>
-        <Button variant="text" onClick={() => window.close()}>
-          {t("Feature.Quick.SeriesCreateScreen.back")}
-        </Button>
-        <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.Quick.SeriesCreateScreen.save")}
-        </Button>
-      </Stack>
-    </Elevator>
-  );
-
   return (
     <Stack>
-      {pageHeader}
-      <SeriesCreateForm control={control} errors={errors} register={register} onImageSelect={handleOnImageSelect} isLoading={isCreateImageLoading} />
+      <Stack component={ Paper } p={ 2 } justifyContent={ "space-between" } direction={ "row" } gap={ 1 } alignItems={ "center" }>
+        <Typography variant="h5">{ t("Feature.Quick.SeriesCreateScreen.createASeries") }</Typography>
+        <Stack direction={ "row" } gap={ 1 }>
+          <Button variant="text" onClick={ () => window.close() }>
+            { t("Feature.Quick.SeriesCreateScreen.back") }
+          </Button>
+          <Button loading={ isCreateSeriesLoading } endIcon={ <SaveIcon /> } variant="contained" onClick={ handleOnSubmit(handleOnCreateEpisode) }>
+            { t("Feature.Quick.SeriesCreateScreen.save") }
+          </Button>
+        </Stack>
+      </Stack>
+      <SeriesCreateForm control={ control } errors={ errors } register={ register } onImageSelect={ handleOnImageSelect } isLoading={ isCreateImageLoading } />
     </Stack>
   );
 }

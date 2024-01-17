@@ -3,14 +3,13 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Paper } from "@mui/material";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
 import * as yup from "yup";
 import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
 
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
-import { Elevator } from "@/components/Tags";
 
 import SeasonCreateForm from "../components/SeasonCreateForm";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
@@ -59,33 +58,27 @@ export default function SeasonCreateScreen() {
   const handleOnCreateEpisode = async (input: SeasonCreateFormFieldInterface) => {
     await createSeasonMutateAsync({
       ImageId: input.imageId,
-      MediaBasicInfo: {
-        PlotSummary: input.plotSummary,
-        Title: input.title,
-        ReleaseDate: +input.releaseDate,
-      },
+      PlotSummary: input.plotSummary,
+      Title: input.title,
+      ReleaseDate: +input.releaseDate,
       Number: input.number,
       SeriesId: params.seriesId!,
     });
     window.close();
   };
 
-  const pageHeader = (
-    <Elevator p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
-      <Typography variant="h5">{t("Feature.Quick.SeasonCreateScreen.createASeason")}</Typography>
-      <Stack direction={"row"} gap={1}>
-        <Button variant="text">{t("Feature.Quick.SeasonCreateScreen.back")}</Button>
-        <Button loading={isCreateSeasonLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
-          {t("Feature.Quick.SeasonCreateScreen.save")}
-        </Button>
-      </Stack>
-    </Elevator>
-  );
-
   return (
     <Stack>
-      {pageHeader}
-      <SeasonCreateForm control={control} errors={errors} register={register} onImageSelect={handleOnImageSelect} isLoading={isCreateImageLoading} watch={seasonFormWatch} />
+      <Stack component={ Paper } p={ 2 } justifyContent={ "space-between" } direction={ "row" } gap={ 1 } alignItems={ "center" }>
+        <Typography variant="h5">{ t("Feature.Quick.SeasonCreateScreen.createASeason") }</Typography>
+        <Stack direction={ "row" } gap={ 1 }>
+          <Button variant="text">{ t("Feature.Quick.SeasonCreateScreen.back") }</Button>
+          <Button loading={ isCreateSeasonLoading } endIcon={ <SaveIcon /> } variant="contained" onClick={ handleOnSubmit(handleOnCreateEpisode) }>
+            { t("Feature.Quick.SeasonCreateScreen.save") }
+          </Button>
+        </Stack>
+      </Stack>
+      <SeasonCreateForm control={ control } errors={ errors } register={ register } onImageSelect={ handleOnImageSelect } isLoading={ isCreateImageLoading } watch={ seasonFormWatch } />
     </Stack>
   );
 }

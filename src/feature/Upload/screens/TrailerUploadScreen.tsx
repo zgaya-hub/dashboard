@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { convertVideoInBlob, extractVideoMetadata } from "metalyzer";
-import { MirraScopeMediaEnum } from "zgaya.hub-client-types/lib";
+import { ZgayaHubMediaEnum } from "zgaya.hub-client-types/lib";
 
 import Button from "@/components/Button";
 import Page from "@/components/Page";
@@ -22,7 +22,7 @@ export default function TrailerUploadScreen() {
       Mime: trailerMetadata.mimeType,
       RunTime: trailerMetadata.videoDuration,
       SizeInKb: trailerMetadata.fileSizeKB,
-      MediaType: MirraScopeMediaEnum.TRAILER,
+      MediaType: ZgayaHubMediaEnum.TRAILER,
     });
 
     const movieBlob = await convertVideoInBlob(trailer);

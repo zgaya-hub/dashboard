@@ -36,7 +36,7 @@ export const typography: TypographyOptions = {
 };
 
 // kindly use this types for spacing
-export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 54, 64, 96];
+export const spacing = [1, 2, 4, 8, 12, 16, 18, 24, 32, 36, 48, 56, 64, 96];
 
 export const lightThemeComponents: ThemeOptions["components"] = {
   MuiList: {
@@ -48,66 +48,73 @@ export const lightThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
-/*   MuiDialogContent: {
+  MuiTextField: {
     styleOverrides: {
       root: {
-        background: "#ffffff",
+        width: 64 * 8
       },
     },
   },
-  MuiAppBar: {
-    defaultProps: {
-      elevation: 1,
-    },
-  },
-  MuiMenu: {
-    styleOverrides: {
-      root: {
-        "& .MuiMenu-list": {
+  /*   MuiDialogContent: {
+      styleOverrides: {
+        root: {
           background: "#ffffff",
         },
       },
     },
-  },
-  MuiCard: {
-    styleOverrides: {
-      root: {
-        background: "#ffffff",
+    MuiAppBar: {
+      defaultProps: {
+        elevation: 1,
       },
     },
-  },
-  MuiPopover: {
-    styleOverrides: {
-      root: {
-        "& .MuiPopover-root": {
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          "& .MuiMenu-list": {
+            background: "#ffffff",
+          },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
           background: "#ffffff",
         },
       },
     },
-  },
-  MuiCircularProgress: {
-    styleOverrides: {
-      root: {
-        "& .MuiCircularProgress-circle": {
-          strokeLinecap: "round",
+    MuiPopover: {
+      styleOverrides: {
+        root: {
+          "& .MuiPopover-root": {
+            background: "#ffffff",
+          },
         },
       },
     },
-  },
-  MuiButtonBase: {
-    styleOverrides: {
-      root: {
-        height: "max-content",
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          "& .MuiCircularProgress-circle": {
+            strokeLinecap: "round",
+          },
+        },
       },
     },
-  },
-  MuiListSubheader: {
-    styleOverrides: {
-      root: {
-        background: "#ffffff",
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          height: "max-content",
+        },
       },
     },
-  }, */
+    MuiListSubheader: {
+      styleOverrides: {
+        root: {
+          background: "#ffffff",
+        },
+      },
+    }, */
   MuiMenuItem: {
     defaultProps: {
       disableRipple: true,
@@ -125,43 +132,43 @@ export const darkThemeComponents: ThemeOptions["components"] = {
       },
     },
   },
- /*  MuiDialogContent: {
-    styleOverrides: {
-      root: {
-        background: "#1c1b1b",
-      },
-    },
-  },
-  MuiAppBar: {
-    defaultProps: {
-      elevation: 1,
-    },
-  },
-  MuiMenu: {
-    styleOverrides: {
-      root: {
-        "& .MuiMenu-list": {
-          background: "#1c1b1b",
-        },
-      },
-    },
-  },
-  MuiCard: {
-    styleOverrides: {
-      root: {
-        background: "#1c1b1b",
-      },
-    },
-  },
-  MuiCircularProgress: {
-    styleOverrides: {
-      root: {
-        "& .MuiCircularProgress-circle": {
-          strokeLinecap: "round",
-        },
-      },
-    },
-  }, */
+  /*  MuiDialogContent: {
+     styleOverrides: {
+       root: {
+         background: "#1c1b1b",
+       },
+     },
+   },
+   MuiAppBar: {
+     defaultProps: {
+       elevation: 1,
+     },
+   },
+   MuiMenu: {
+     styleOverrides: {
+       root: {
+         "& .MuiMenu-list": {
+           background: "#1c1b1b",
+         },
+       },
+     },
+   },
+   MuiCard: {
+     styleOverrides: {
+       root: {
+         background: "#1c1b1b",
+       },
+     },
+   },
+   MuiCircularProgress: {
+     styleOverrides: {
+       root: {
+         "& .MuiCircularProgress-circle": {
+           strokeLinecap: "round",
+         },
+       },
+     },
+   }, */
   MuiMenuItem: {
     defaultProps: {
       disableRipple: true,

@@ -155,7 +155,11 @@
         "revenue": "Revenue",
         "budget": "Budget",
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "add": "Add",
+        "seriesDetails": "Series details",
+        "additionalInfo": "Additional info",
+        "financialInfo": "Financial info"
       },
       "SeriesBasicInfoForm": {
         "addBasicInfo": "Add basic Info",

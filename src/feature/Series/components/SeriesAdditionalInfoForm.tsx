@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Paper } from "@mui/material";
 import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum } from "zgaya.hub-client-types/lib";
 
 import { ModalSelectInput } from "@/components/Form";
 import { CountryPickerModal, GenrePickerModal,LanguagePickerModal } from "@/components/Modals";
-import Elevator from "@/components/Tags/Elevator";
 
 import { SeriesCreateFormFieldInterface } from "../types";
 
@@ -18,7 +17,7 @@ interface SeriesAdditionalInfoFormProps {
   formRegister: UseFormRegister<SeriesCreateFormFieldInterface>;
 }
 
-export default function SeriesAdditionalInfoForm({ setFormValue, watchFormValue, formRegister }: SeriesAdditionalInfoFormProps) {
+export default function SeriesAdditionalInfoForm({ setFormValue, watchFormValue, formRegister }: Readonly<SeriesAdditionalInfoFormProps>) {
   const { t } = useTranslation();
   const [isCountryModalVisible, setIsCountryModalVisible] = useState(false);
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
@@ -52,7 +51,7 @@ export default function SeriesAdditionalInfoForm({ setFormValue, watchFormValue,
   };
 
   return (
-    <Elevator padding={4} gap={2}>
+    <Stack component={Paper} padding={4} gap={2}>
       <Typography variant="h5">{t("Feature.Series.SeriesAdditionalInfoForm.addAdditionalInfo")}</Typography>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.Series.SeriesAdditionalInfoForm.originCountry")} value={watchFormValue("originCountry")} onClick={handleOnToggleCountryModal} fullWidth />
@@ -65,6 +64,6 @@ export default function SeriesAdditionalInfoForm({ setFormValue, watchFormValue,
         <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModal} onOk={handleOnSelectGenre} />
         <SeriesStatusSelectComponent formRegister={formRegister} />
       </Stack>
-    </Elevator>
+    </Stack>
   );
 }
