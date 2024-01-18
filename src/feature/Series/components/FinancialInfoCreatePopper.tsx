@@ -1,9 +1,9 @@
 import { Popover, Stack, Typography } from "@mui/material";
-import { useCreateFinancialInfoForSeries } from "../../hooks";
+import { useCreateFinancialInfoForSeries } from "../hooks";
 import { Form, PriceField } from "@/components/Form";
 import * as yup from "yup";
 import Button from "@/components/Button";
-import { FinancialInfoCreateFormFieldInterface } from "../../types";
+import { FinancialInfoCreateFormFieldInterface } from "../types";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SaveIcon } from "@/components/icons";

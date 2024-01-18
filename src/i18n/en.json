@@ -240,7 +240,9 @@
         "netProfit": "Net profit",
         "revenue": "Revenue",
         "budget": "Budget",
-        "selectBackdropImage": "Upload backdrop image"
+        "selectBackdropImage": "Upload backdrop image",
+        "financialInfo": "Financial info",
+        "additionalInfo": "Additional info"
       }
     }
   },

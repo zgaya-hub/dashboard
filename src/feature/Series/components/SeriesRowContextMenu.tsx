@@ -47,34 +47,34 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   return (
     <Menu id="series-context-menu" anchorReference="anchorPosition" anchorPosition={anchorPosition} onClose={onClose} open={isOpen} onClick={onClose}>
       <MenuItem sx={menuItemStyle}>
-        <OpenTabIcon isListIcon fontSize="small" />
+        <OpenTabIcon isListIcon />
         <ListItemText>{t("Feature.Series.SeriesRowContextMenu.preview")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={onRefresh} sx={menuItemStyle}>
-        <RefreshIcon isListIcon fontSize="small" />
+        <RefreshIcon isListIcon />
         <ListItemText>{t("Feature.Series.SeriesRowContextMenu.refresh")}</ListItemText>
       </MenuItem>
       <MenuItem sx={menuItemStyle} onClick={handleOnCreateSeason}>
-        <PlaySquareIcon isListIcon fontSize="small" />
+        <PlaySquareIcon isListIcon />
         <ListItemText>{t("Feature.Series.SeriesRowContextMenu.createSeason")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={onSelect} sx={menuItemStyle}>
-        <CheckBoxIcon isListIcon fontSize="small" />
+        <CheckBoxIcon isListIcon />
         <ListItemText>{t("Feature.Series.SeriesRowContextMenu.select")}</ListItemText>
       </MenuItem>
       <MenuItem onClick={handleOnEdit} sx={menuItemStyle}>
-        <EditIcon isListIcon fontSize="small" color="primary" />
+        <EditIcon isListIcon color="primary" />
         <ListItemText>{t("Feature.Series.SeriesRowContextMenu.edit")}</ListItemText>
       </MenuItem>
       <MenuItem onClick={handleOnDeleteSeries} sx={menuItemStyle}>
-        <DeleteIcon isListIcon fontSize="small" color="error" />
+        <DeleteIcon isListIcon color="error" />
         <ListItemText>{t("Feature.Series.SeriesRowContextMenu.delete")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={handleOnDetails} sx={menuItemStyle}>
-        <DetailsIcon isListIcon fontSize="small" />
+        <DetailsIcon isListIcon />
         <ListItemText>{t("Feature.Series.SeriesRowContextMenu.details")}</ListItemText>
       </MenuItem>
     </Menu>

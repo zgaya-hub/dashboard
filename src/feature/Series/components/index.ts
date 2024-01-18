@@ -1,11 +1,10 @@
 export { default as CineastContainer } from "./CineastContainer";
 export { default as SeriesAdditionalInfoForm } from "./SeriesAdditionalInfoForm";
 export { default as SeriesBasicInfoForm } from "./SeriesBasicInfoForm";
-export { default as SeriesDetailsCard } from "./SeriesDetailsCard/Card";
-export { default as SeriesDetailsCardSkeleton } from "./SeriesDetailsCard/Skeleton";
+export { default as SeriesDetailsCard } from "./SeriesDetailsCard";
+export { default as FinancialInfoCreatePopper } from "./FinancialInfoCreatePopper";
+export { default as SeriesDetailsCardSkeleton } from "./SeriesDetailsCardSkeleton";
 export { default as SeriesImageSelectComponent } from "./SeriesImageSelectComponent";
 export { default as SeriesRowContextMenu } from "./SeriesRowContextMenu";
-export { default as SeriesDetailsEditForm } from "./SeriesDetailsCard/SeriesDetailsEditForm";
-export { default as SeriesDetailsErrorCard } from "./SeriesDetailsCard/ErrorCard";
 export type { SeriesTableRefInterface } from "./SeriesTable";
 export { default as SeriesTable } from "./SeriesTable";

@@ -11,3 +11,4 @@ export { default as SimpleCineastCardSkeleton } from "./SimpleCineastCard(24X24)
 export { default as VideoShareModalCard } from "./VideoShareModalCard/Card";
 export { default as ImageDisplay24X12Card } from "./ImageDisplayCard(24X12)/Card";
 export { default as ImageDisplay24X12Skeleton } from "./ImageDisplayCard(24X12)/Skeleton";
+export { default as ErrorCard } from "./ErrorCard/Card";

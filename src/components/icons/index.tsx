@@ -53,7 +53,7 @@ import { default as MuiEventOutlinedIcon } from "@mui/icons-material/Event";
 import { default as MuiInfodOutlinedIcon } from "@mui/icons-material/InfoOutlined";
 import { default as MuiSdOutlinedIcon } from "@mui/icons-material/SdOutlined";
 import { default as AttachMoneyOutlinedIcon } from "@mui/icons-material/AttachMoneyOutlined";
-import {default as MuiReportProblemOutlineIcon} from '@mui/icons-material/ReportProblemOutlined';
+import { default as MuiReportProblemOutlineIcon } from "@mui/icons-material/ReportProblemOutlined";
 
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4Icon } from "@mui/icons-material/Brightness4";
@@ -110,8 +110,7 @@ import { default as MuiSdIcon } from "@mui/icons-material/Sd";
 import { default as MuiAddPhotoAlternateOutlinedIcon } from "@mui/icons-material/AddPhotoAlternateOutlined";
 import { default as MuiAddPhotoAlternateIcon } from "@mui/icons-material/AddPhotoAlternate";
 import { default as AttachMoneyIcon } from "@mui/icons-material/AttachMoney";
-import {default as MuiReportProblemIcon} from '@mui/icons-material/ReportProblem';
-
+import { default as MuiReportProblemIcon } from "@mui/icons-material/ReportProblem";
 
 export interface IconWrapperProps extends SvgIconProps {
   iconButton?: boolean;
@@ -206,4 +205,4 @@ export const EventIcon = withIconWrapper(MuiEventOutlinedIcon, MuiEventIcon);
 export const SdIcon = withIconWrapper(MuiSdOutlinedIcon, MuiSdIcon);
 export const AddImageIcon = withIconWrapper(MuiAddPhotoAlternateOutlinedIcon, MuiAddPhotoAlternateIcon);
 export const DollarIcon = withIconWrapper(AttachMoneyOutlinedIcon, AttachMoneyIcon);
-export const WarningIcon = withIconWrapper(MuiReportProblemOutlineIcon, MuiReportProblemIcon);
+export const ProblemIcon = withIconWrapper(MuiReportProblemOutlineIcon, MuiReportProblemIcon);

@@ -3,7 +3,7 @@ import { ErrorIcon } from "../icons";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 import { ReactNode } from "react";
 
-interface TextFieldProps<T extends FieldValues> extends Omit<MuiTextFieldProps, "name"> {
+export interface TextFieldProps<T extends FieldValues> extends Omit<MuiTextFieldProps, "name"> {
   register: UseFormRegister<T>;
   startIcon?: ReactNode;
   endIcon?: ReactNode;

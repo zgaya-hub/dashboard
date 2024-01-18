@@ -25,7 +25,7 @@ export default function SeasonCreateForm({ register, control, errors, onImageSel
     <Stack padding={4} gap={2}>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <TextField register={register} name="title" label={t("Feature.Quick.SeasonCreateForm.title")} helperText={errors.title?.message} error={!!errors.title} fullWidth required autoFocus />
-        <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={(date) => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label={t("Feature.Quick.SeasonCreateForm.releaseDate")} views={["year", "month"]} fullWidth />} />
+        <DatePickerModal name="releaseDate" register={register} label={t("Feature.Quick.SeasonCreateForm.releaseDate")} views={["year", "month"]} fullWidth />
         <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
           <Typography color={errors.number ? "red" : ""}>{t("Feature.Quick.SeasonCreateForm.selectABackdropImage")}</Typography>
           <Button onClick={(event) => setEpisodeNumberPopoverAnchorEl(event.currentTarget)} color={errors.number ? "error" : "primary"}>
