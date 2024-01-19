@@ -28,16 +28,16 @@ export default function SeriesDetailsCardSkeleton() {
           {t("Feature.Series.SeriesDetailsCard.seriesDetails")}
         </Typography>
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.title"))}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.releaseDate"))}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"))}
         <Typography variant="h5" py={1}>
           {t("Feature.Series.SeriesDetailsCard.additionalInfo")}
         </Typography>
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.genre"))}
+        {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"))}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"))}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.plotSummary"))}
-        <Typography variant="h5">{t("Feature.Series.SeriesDetailsCard.financialInfo")}</Typography>
+        <Typography variant="h5" py={1}>{t("Feature.Series.SeriesDetailsCard.financialInfo")}</Typography>
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.netProfit"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.revenue"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.budget"))}

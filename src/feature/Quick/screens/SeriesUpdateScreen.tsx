@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Stack, Typography, AppBar, Toolbar, Paper } from "@mui/material";
+import { Stack, Typography, Paper } from "@mui/material";
 
 import Button from "@/components/Button";
 import { SaveIcon } from "@/components/icons";
@@ -25,9 +25,7 @@ export default function SeriesUpdateScreen() {
           </Button>
         </Stack>
       </Stack>
-      <Stack mt={8}>
-        <SeriesUpdateForm seriesId={params.seriesId!} />
-      </Stack>
+      <SeriesUpdateForm seriesId={params.seriesId!} />
     </Stack>
   );
 }

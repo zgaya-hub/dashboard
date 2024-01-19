@@ -16,7 +16,7 @@ export default function DatePickerModal<T extends FieldValues>({ name, fullWidth
     <MobileDatePicker
       slotProps={{
         textField: {
-          ...register(name!),
+          ...register(name),
           fullWidth,
           helperText,
           error,

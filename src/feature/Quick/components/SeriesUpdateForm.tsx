@@ -1,37 +1,46 @@
-import { DatePickerModal, FileSelectInput, ModalSelectInput, PriceField, SelectInput, TextField } from "@/components/Form";
+import { DatePickerModal, FileSelectInput, Form, ModalSelectInput, PriceField, SelectInput, TextField } from "@/components/Form";
 import { DevTool } from "@hookform/devtools";
 import Stack from "@mui/material/Stack";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SeriesUpdateFormFieldInterface } from "../types";
 import { ConfirmationModal, CountryPickerModal, GenrePickerModal, LanguagePickerModal } from "@/components/Modals";
-import { useEffect, useState } from "react";
+import { Ref, forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 import { values } from "lodash";
-import { Backdrop, CardMedia, CircularProgress, DialogContentText, Divider, FormHelperText, MenuItem, SxProps, Typography } from "@mui/material";
-import { useChangeImageByMediaId, useGetSeriesDetailsById } from "../hooks";
+import { Backdrop, CardMedia, CircularProgress, DialogContentText, MenuItem, SxProps, Typography } from "@mui/material";
+import { useChangeImageByMediaId, useGetSeriesDetailsById, useUpdateSeries } from "../hooks";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 
 export interface SeriesUpdateFormProps {
   seriesId: string;
 }
 
-export default function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps) {
+export interface SeriesTableRefInterface {
+  onSave: () => void;
+}
+
+const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps, ref: Ref<SeriesTableRefInterface>) {
   const { t } = useTranslation();
   const [isCountryModalVisible, setIsCountryModalVisible] = useState(false);
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
   const [isGenreModalVisible, setIsGenreModalVisible] = useState(false);
-  const [isimageChangeConfirmationModalVisible, setisImageChangeConfirmationModalVisible] = useState(false);
+  const [isImageChangeConfirmationModalVisible, setisImageChangeConfirmationModalVisible] = useState(false);
   const [backdropImageUrl, setBackdropImageUrl] = useState("");
   const { data: seriesDetailsData, isLoading: isSeriesDetailsLoading } = useGetSeriesDetailsById({ SeriesId: seriesId });
+  const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
   const { mutateAsync: changeImageMutateAsync, isPending: isChangeImageLoading } = useChangeImageByMediaId();
+
+  useImperativeHandle(ref, () => ({
+    onSave: formSubmit(handleOnUpdateSeries)
+  }));
 
   const {
     control: formControl,
     register: formRegister,
-    formState: { errors: formErrors },
     setValue: setFormValue,
     watch: watchFormValue,
+    handleSubmit: formSubmit
   } = useForm<SeriesUpdateFormFieldInterface>({
     defaultValues: {
       budget: seriesDetailsData?.budget,
@@ -56,18 +65,42 @@ export default function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps) {
     }
   }, [seriesDetailsData]);
 
-  const handleOnImageSelect = async (image: File) => {
-    const { mimeType } = await extractImageMetadata(image);
-    const imageBase64 = await extractImageBase64(image);
-    setBackdropImageUrl(await extractImageUrl(image));
-    const result = await changeImageMutateAsync({ MediaId: seriesId }, { Base64: imageBase64, Mime: mimeType });
-    if (result) {
-      setFormValue("imageId", result.ID);
-    }
+  const handleOnImageUploadConfirm = async () => {
+    const { mimeType } = await extractImageMetadata(watchFormValue("image"));
+    const imageBase64 = await extractImageBase64(watchFormValue("image"));
+    setBackdropImageUrl(await extractImageUrl(watchFormValue("image")));
+    await changeImageMutateAsync({ MediaId: seriesId }, { Base64: imageBase64, Mime: mimeType });
+  };
+
+  const handleOnUpdateSeries = async (input: SeriesUpdateFormFieldInterface) => {
+    await updateSeriesMutateAsync(
+      { SeriesId: seriesId },
+      {
+        AdditionalInfo: {
+          Genre: input.genre,
+          Status: input.status,
+          OriginalLanguage: input.originalLanguage,
+          OriginCountry: input.originCountry,
+        },
+        ReleaseDate: +input.releaseDate,
+        PlotSummary: input.plotSummary,
+        Title: input.title,
+        FinancialInfo: {
+          Budget: input.budget,
+          NetProfit: input.netProfit,
+          Revenue: input.revenue,
+        },
+      }
+    );
+  };
+
+  const handleOnImageSelect = (image: File) => {
+    setFormValue("image", image);
+    handleOnToggleImageChangeConfimationModal();
   };
 
   const handleOnToggleImageChangeConfimationModal = () => {
-    setisImageChangeConfirmationModalVisible(!isimageChangeConfirmationModalVisible);
+    setisImageChangeConfirmationModalVisible(!isImageChangeConfirmationModalVisible);
   };
 
   const handleOnSelectCountry = (countrName: MediaCountriesEnum) => {
@@ -107,8 +140,8 @@ export default function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps) {
   };
 
   return (
-    <Stack padding={4} gap={2}>
-      <Backdrop open={isSeriesDetailsLoading}>
+    <Form padding={4} gap={2} onSubmit={formSubmit(handleOnUpdateSeries)}>
+      <Backdrop open={isSeriesDetailsLoading || isUpdateSeriesLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <TextField
@@ -116,8 +149,6 @@ export default function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps) {
         register={formRegister}
         name="title"
         label={t("Feature.Quick.SeriesUpdateForm.title")}
-        helperText={formErrors.title?.message}
-        error={!!formErrors.title}
         fullWidth
         autoFocus
       />
@@ -131,7 +162,7 @@ export default function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps) {
       />
 
       <Stack sx={fileSelectInputContainerStyle}>
-        <FileSelectInput loading={isChangeImageLoading} label={t("Feature.Quick.SeriesUpdateForm.selectBackdropImage")} fullWidth onFileSelect={handleOnImageSelect} helperText={formErrors.imageId?.message} error={!!formErrors.imageId} />
+        <FileSelectInput loading={isChangeImageLoading} label={t("Feature.Quick.SeriesUpdateForm.selectBackdropImage")} fullWidth onFileSelect={handleOnImageSelect} />
         <CardMedia component="img" className="appear-item" image={backdropImageUrl} />
       </Stack>
 
@@ -140,14 +171,13 @@ export default function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps) {
         register={formRegister}
         name="plotSummary"
         label={t("Feature.Quick.SeriesUpdateForm.plotSummary")}
-        helperText={formErrors.plotSummary?.message}
-        error={!!formErrors.plotSummary}
         multiline
         rows={5}
         fullWidth
       />
       <Stack gap={2} py={1}>
         <Typography variant="h5">{t("Feature.Quick.SeriesUpdateForm.additionalInfo")}</Typography>
+
         <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.Quick.SeriesUpdateForm.originCountry")} value={watchFormValue("originCountry")} onClick={handleOnToggleCountryModal} fullWidth />
         <CountryPickerModal isOpen={isCountryModalVisible} onClose={handleOnToggleCountryModal} onOk={handleOnSelectCountry} />
         <ModalSelectInput isModalVisible={isLanguageModalVisible} label={t("Feature.Quick.SeriesUpdateForm.originalLanguage")} value={watchFormValue("originalLanguage")} onClick={handleOnToggleLanguageModal} fullWidth />
@@ -167,30 +197,22 @@ export default function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps) {
           })}
         </SelectInput>
       </Stack>
+
       <Stack gap={2}>
         <Typography variant="h5">{t("Feature.Quick.SeriesUpdateForm.financialInfo")}</Typography>
         <PriceField label={t("Feature.Quick.SeriesUpdateForm.netProfit")} control={formControl} name="netProfit" />
         <PriceField label={t("Feature.Quick.SeriesUpdateForm.revenue")} control={formControl} name="revenue" />
         <PriceField label={t("Feature.Quick.SeriesUpdateForm.budget")} control={formControl} name="budget" />
       </Stack>
+
       <DevTool control={formControl} />
-      <ConfirmationModal
-        isOpen={isimageChangeConfirmationModalVisible}
-        onClose={handleOnToggleImageChangeConfimationModal}
-        onConfirm={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        title={t("Feature.Quick.SeriesUpdateForm.changeImageWarningModalTitle")}
-      >
+      <ConfirmationModal isOpen={isImageChangeConfirmationModalVisible} onClose={handleOnToggleImageChangeConfimationModal} onConfirm={handleOnImageUploadConfirm} title={t("Feature.Quick.SeriesUpdateForm.changeImageWarningModalTitle")} footerText={t("Feature.Quick.SeriesUpdateForm.changeImageWarningModalSuggestion")}>
         <DialogContentText mb={2}>{t("Feature.Quick.SeriesUpdateForm.changeImageWarningModalMessage")}</DialogContentText>
-        <Divider />
-        <Stack direction={"row"} justifyContent={"flex-end"}>
-          <DialogContentText variant="caption">{t("Feature.Quick.SeriesUpdateForm.changeImageWarningModalSuggestion")}</DialogContentText>
-        </Stack>
-        <Divider />
       </ConfirmationModal>
-    </Stack>
+    </Form>
   );
-}
+});
+
+export default SeriesUpdateForm;
 
 const seriesStatusesList = values(MediaStatusEnum);

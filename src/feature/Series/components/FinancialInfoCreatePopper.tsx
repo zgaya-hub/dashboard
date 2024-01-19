@@ -1,3 +1,4 @@
+//TODO: : this 'component' not using right now it will
 import { Popover, Stack, Typography } from "@mui/material";
 import { useCreateFinancialInfoForSeries } from "../hooks";
 import { Form, PriceField } from "@/components/Form";
@@ -10,9 +11,9 @@ import { SaveIcon } from "@/components/icons";
 
 interface FinancialInfoCreatePopperProps {
   anchorEl: HTMLElement | null;
-  seriesId: string
+  seriesId: string;
   onClose: () => void;
-  onSuccess: () => void
+  onSuccess: () => void;
 }
 
 export default function FinancialInfoCreatePopper({ anchorEl, onClose, seriesId, onSuccess }: Readonly<FinancialInfoCreatePopperProps>) {
@@ -42,7 +43,7 @@ export default function FinancialInfoCreatePopper({ anchorEl, onClose, seriesId,
         Revenue: input.revenue,
       }
     );
-    onSuccess()
+    onSuccess();
   };
 
   return (

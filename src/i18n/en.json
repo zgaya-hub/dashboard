@@ -177,6 +177,12 @@
         "pickAGenre": "Pick a genre",
         "selectStatus": "Select status"
       },
+      "SeriesFinancialInfoForm": {
+        "addFinancialInfo": "Add financial Info",
+        "revenue": "Revenue",
+        "budget": "Budget",
+        "netProfit": "Net profit"
+      },
       "SeriesCreateScreen": {
         "createASeries": "Create a series",
         "save": "Save",

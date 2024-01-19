@@ -71,7 +71,9 @@ export default function LayoutSidebar() {
       {
         icon: <PlaySquareIcon />,
         label: t("Layout.Sidebar.manageMovie"),
-        onClick: () => alert(t("Layout.Sidebar.manageMovie")),
+        onClick: () => {
+          navigation.navigate("/movie");
+        },
         isActive: activeItem === t("Layout.Sidebar.manageMovie"),
       },
       {

@@ -1,4 +1,4 @@
-import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
+/* import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
 import { lazily } from "react-lazily";
 import { PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
@@ -9,42 +9,42 @@ import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusE
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 
 import { DEFAULT_PAGINATION_DATE } from "../constants";
-import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks";
-import { TableSeriesInterface } from "../types";
+import { useDeleteMultipleMovieByIdz, useGetManagerMovieForTable, useUpdateMovie } from "../hooks";
+import { TableMovieInterface } from "../types";
 
-const { SeriesRowContextMenu } = lazily(() => import("."));
+const { MovieRowContextMenu } = lazily(() => import("."));
 const { MediaTableCard } = lazily(() => import("@/components/Cards"));
 const { DataGridPro } = lazily(() => import("@/components/DataGridPro"));
 const { MoreVertIcon, OpenTabIcon } = lazily(() => import("@/components/icons"));
 const { LinearProgress } = lazily(() => import("@mui/material"));
 
-export interface SeriesTableRefInterface {
-  onDeleteMultipleSeries: () => void;
+export interface MovieTableRefInterface {
+  onDeleteMultipleMovie: () => void;
   onSearchToogle: () => void;
   onRefresh: () => void;
-  onEditMultipleSeries: () => void;
+  onEditMultipleMovie: () => void;
 }
 
-const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefInterface>) {
+const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInterface>) {
   const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
   const [selectedRowId, setSelectedRowId] = useState("");
 
-  const { mutateAsync: deleteMultipleSeriesByIdzMutateAsync, isPending: isDeleteMultipleSeriesLoading } = useDeleteMultipleSeriesByIdz();
-  const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
-  const { data: managerSeriesForTableData, refetch: managerSeriesForTableRefetch, isLoading: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize });
+  const { mutateAsync: deleteMultipleMovieByIdzMutateAsync, isPending: isDeleteMultipleMovieLoading } = useDeleteMultipleMovieByIdz();
+  const { mutateAsync: updateMovieMutateAsync, isPending: isUpdateMovieLoading } = useUpdateMovie();
+  const { data: managerMovieForTableData, refetch: managerMovieForTableRefetch, isLoading: isManagerMovieForTableLoading } = useGetManagerMovieForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize });
 
   useImperativeHandle(ref, () => ({
-    onRefresh: () => managerSeriesForTableRefetch(),
-    onDeleteMultipleSeries: handleOnDeleteMultipleSeries,
-    onEditMultipleSeries: noop,
+    onRefresh: () => managerMovieForTableRefetch(),
+    onDeleteMultipleMovie: handleOnDeleteMultipleMovie,
+    onEditMultipleMovie: noop,
     onSearchToogle: noop,
   }));
 
   useEffect(() => {
-    if (managerSeriesForTableData) {
-      managerSeriesForTableRefetch();
+    if (managerMovieForTableData) {
+      managerMovieForTableRefetch();
     }
   }, [paginationModel]);
 
@@ -54,10 +54,10 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
     setContextMenuAnchorPosition({ left: event.clientX - 2, top: event.clientY - 4 });
   };
 
-  const processRowUpdate = async (series: GridRowModel<TableSeriesInterface>) => {
+  const processRowUpdate = async (series: GridRowModel<TableMovieInterface>) => {
     //TODO: here is problem is that i can remove value from cell but value should not be remove
-    await updateSeriesMutateAsync(
-      { SeriesId: series.ID },
+    await updateMovieMutateAsync(
+      { MovieId: series.ID },
       {
         AdditionalInfo: {
           Genre: series.genre,
@@ -74,19 +74,19 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
     return series;
   };
 
-  const handleOnDeleteMultipleSeries = async () => {
-    await deleteMultipleSeriesByIdzMutateAsync({ SeriesIdz: rowSelectionModel });
-    managerSeriesForTableRefetch();
+  const handleOnDeleteMultipleMovie = async () => {
+    await deleteMultipleMovieByIdzMutateAsync({ MovieIdz: rowSelectionModel });
+    managerMovieForTableRefetch();
   };
 
   const handleOnSelect = (selectedRowId: string) => {
     setRowSelectionModel((v) => [...v, selectedRowId]);
   };
 
-  const SeriesTableColumn: GridColDef[] = [
+  const MovieTableColumn: GridColDef[] = [
     {
       field: "series",
-      headerName: "Series",
+      headerName: "Movie",
       width: 500,
       renderCell: (params) => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
@@ -158,13 +158,13 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
       <DataGridPro
         pagination
         getRowHeight={() => "auto"}
-        rows={managerSeriesForTableData?.seriesList ?? []}
+        rows={managerMovieForTableData?.seriesList ?? []}
         checkboxSelection
         disableRowSelectionOnClick
-        loading={isManagerSeriesForTableLoading || isUpdateSeriesLoading || isDeleteMultipleSeriesLoading}
+        loading={isManagerMovieForTableLoading || isUpdateMovieLoading || isDeleteMultipleMovieLoading}
         getRowId={(row) => row.ID}
-        columns={SeriesTableColumn}
-        rowCount={managerSeriesForTableData?.totalRecords}
+        columns={MovieTableColumn}
+        rowCount={managerMovieForTableData?.totalRecords}
         pageSizeOptions={[7, 15, 20]}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
@@ -185,8 +185,17 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
         }}
         //TODO: one more problem is that mark is not working as expecting like its detect all rows selectiong by number of rows ot by idz
       />
-      <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={() => managerSeriesForTableRefetch()} onClose={() => setContextMenuAnchorPosition(null)} />
+      <MovieRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={() => managerMovieForTableRefetch()} onClose={() => setContextMenuAnchorPosition(null)} />
     </Suspense>
   );
 });
-export default SeriesTable;
+export default MovieTable;
+ */
+
+import React from 'react'
+
+export default function MovieTable() {
+  return (
+    <div>MovieTable</div>
+  )
+}

@@ -2,7 +2,7 @@ import { Dialog, DialogActions, DialogTitle } from "@/components/Dialog";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { ReactNode } from "react";
-import { Box, DialogContent, DialogContentText, FormHelperText, Stack, SxProps } from "@mui/material";
+import { DialogContent, DialogContentText, Divider, Stack, SxProps } from "@mui/material";
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -33,7 +33,15 @@ export default function ConfirmationModal({ isOpen, onClose, onConfirm, cancelBu
   return (
     <Dialog isDraggable open={isOpen} onClose={onClose}>
       <DialogTitle variant="h5">{title ?? t("Components.Modals.ConfirmationModal.title")}</DialogTitle>
-      <DialogContent sx={dialogContentStyle}>{children}</DialogContent>
+      <DialogContent sx={dialogContentStyle}>
+        {children}
+
+        <Divider />
+        <Stack direction={"row"} justifyContent={"flex-end"}>
+          <DialogContentText variant="caption">{footerText}</DialogContentText>
+        </Stack>
+        <Divider />
+      </DialogContent>
 
       <DialogActions>
         <Button onClick={onClose} variant="text" color={variant} disabled={disabledCancelButton} size="small">

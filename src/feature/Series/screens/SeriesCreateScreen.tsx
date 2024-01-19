@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { lazily } from "react-lazily";
+import { lazy, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CardMedia, Grid, Stack, SxProps, Typography, Paper } from "@mui/material";
+import { SxProps } from "@mui/material";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import * as yup from "yup";
 import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
-
-import Button from "@/components/Button";
-import { SaveIcon } from "@/components/icons";
-import Page from "@/components/Page";
 import useNavigation from "@/navigation/useNavigation";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
-
-import { SeriesAdditionalInfoForm, SeriesBasicInfoForm, SeriesImageSelectComponent } from "../components";
+import Page from "@/components/Page";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { useCreateImage, useCreateSeries } from "../hooks";
 import { SeriesCreateFormFieldInterface } from "../types";
+import { SeriesFinancialInfoForm } from "../components";
+
+const Button = lazy(() => import("@/components/Button"));
+const { SaveIcon } = lazily(() => import("@/components/icons"));
+const { SeriesAdditionalInfoForm, SeriesBasicInfoForm, SeriesImageSelectComponent } = lazily(() => import("../components"));
+const { CardMedia, Grid, Stack, Typography, Paper } = lazily(() => import("@mui/material"));
 
 export default function SeriesCreateScreen() {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ export default function SeriesCreateScreen() {
   const { mutateAsync: createImageMutateAsync, isPending: isCreateImageLoading } = useCreateImage();
 
   const {
-    control,
+    control: formControl,
     formState: { errors },
     register: formRegister,
     setValue: setFormValue,
@@ -62,21 +63,28 @@ export default function SeriesCreateScreen() {
         OriginCountry: input.originCountry,
         Status: input.status,
       },
+      FinancialInfo: {
+        Budget: input.budget,
+        NetProfit: input.netProfit,
+        Revenue: input.revenue,
+      },
     });
     navigation.goBack();
   };
 
   console.log({ ssss: watchFormValue("status") });
 
-  const cardStyle = useThemeStyles<SxProps>((theme) => ({
-    height: "100%",
-    minHeight: theme.spacing(16),
-    backgroundSize: "contain",
-    backgroundPosition: "top",
-  }));
+  const fileSelectInputContainerStyle: SxProps = {
+    "& .appear-item": {
+      display: "none",
+    },
+    "&:hover .appear-item": {
+      display: "block",
+    },
+  };
 
   return (
-    <Page>
+    <Page isSuspense>
       <Grid container justifyContent={"space-between"} rowGap={4}>
         <Grid xs={12} item lg={12}>
           <Stack component={Paper} p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
@@ -90,18 +98,21 @@ export default function SeriesCreateScreen() {
           </Stack>
         </Grid>
         <Grid xs={12} item lg={5.9}>
-          <SeriesBasicInfoForm control={control} formRegister={formRegister} errors={errors} />
+          <SeriesBasicInfoForm control={formControl} formRegister={formRegister} errors={errors} />
         </Grid>
         <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
-          <Grid xs={12} item lg={5.9}>
+          <Grid xs={12} item lg={5.9} sx={fileSelectInputContainerStyle} position={"relative"}>
             <SeriesImageSelectComponent errorMessage={errors.imageId?.message} onImageDrop={handleOnBackdropSelect} isLoading={isCreateImageLoading} />
-          </Grid>
-          <Grid xs={12} item lg={5.9}>
-            <CardMedia sx={cardStyle} image={backDropUrl} />
+            <CardMedia sx={{ position: "absolute" }} component="img" className="appear-item" image={backDropUrl} />
           </Grid>
         </Grid>
-        <Grid xs={12} item lg={5.9}>
-          <SeriesAdditionalInfoForm setFormValue={setFormValue} watchFormValue={watchFormValue} formRegister={formRegister} />
+        <Grid container xs={12} item lg={5.9} rowGap={4}>
+          <Grid xs={12} item>
+            <SeriesAdditionalInfoForm setFormValue={setFormValue} watchFormValue={watchFormValue} formRegister={formRegister} />
+          </Grid>
+          <Grid xs={12} item>
+            <SeriesFinancialInfoForm formControl={formControl} />
+          </Grid>
         </Grid>
       </Grid>
     </Page>

@@ -1,14 +1,17 @@
-import { useRef, useState } from "react";
+import { lazy, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Card, Hidden, Menu, MenuItem, Stack, SxProps, Typography } from "@mui/material";
+import { SxProps } from "@mui/material";
 
-import Button from "@/components/Button";
-import { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SaveIcon, SearchIcon } from "@/components/icons";
-import Page from "@/components/Page";
 import useNavigation from "@/navigation/useNavigation";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
+import { lazily } from "react-lazily";
+import { SeriesTableRefInterface } from "../components";
+import Page from "@/components/Page";
 
-import { SeriesTable, SeriesTableRefInterface } from "../components";
+const { SeriesTable } = lazily(() => import("../components"));
+const { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SaveIcon, SearchIcon } = lazily(() => import("@/components/icons"));
+const Button = lazy(() => import("@/components/Button"));
+const { Card, Hidden, Menu, MenuItem, Stack, Typography } = lazily(() => import("@mui/material"));
 
 export default function SeriesTableScreen() {
   const { t } = useTranslation();
@@ -20,7 +23,7 @@ export default function SeriesTableScreen() {
     navigation.navigate("/series/create");
   };
 
-  const cardStyle = useThemeStyles<SxProps>(theme => ({
+  const cardStyle = useThemeStyles<SxProps>((theme) => ({
     padding: theme.spacing(4),
   }));
 
@@ -42,7 +45,7 @@ export default function SeriesTableScreen() {
   );
 
   return (
-    <Page>
+    <Page isSuspense>
       <Card sx={cardStyle}>
         <Stack direction={"row"} mb={2} justifyContent={"space-between"} alignItems={"center"}>
           <Typography variant="h5">{t("Feature.Series.SeriesScreen.manageSeries")}</Typography>
@@ -60,18 +63,12 @@ export default function SeriesTableScreen() {
               <AddIcon iconButtonProps={{ color: "primary" }} onClick={handleOnCreateSeriesClick} tooltip={t("Feature.Series.SeriesScreen.createSeries")} />
             </Hidden>
             <Hidden mdUp>
-              <MoreVertIcon onClick={e => setActionMenuEnchorEl(e.currentTarget)} />
+              <MoreVertIcon onClick={(e) => setActionMenuEnchorEl(e.currentTarget)} />
               {actionMenu}
             </Hidden>
           </Stack>
         </Stack>
         <SeriesTable ref={seriesTableRef} />
-        <Stack direction={"row"} justifyContent={"end"} mt={2} gap={1}>
-          <Button variant="text">{t("Feature.Series.SeriesScreen.cancel")}</Button>
-          <Button endIcon={<SaveIcon />} variant="contained">
-            {t("Feature.Series.SeriesScreen.save")}
-          </Button>
-        </Stack>
       </Card>
     </Page>
   );

@@ -24,7 +24,7 @@ export function useErrorHandler() {
   };
 
   const handleError = (errorResponse: ImageServerErrorResponse) => {
-    // showSnackbar(getErrorMessage(errorResponse).message);
+    showSnackbar(getErrorMessage(errorResponse).message);
   };
 
   return { getErrorMessage, handleError };

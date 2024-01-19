@@ -6,5 +6,6 @@ export { default as FinancialInfoCreatePopper } from "./FinancialInfoCreatePoppe
 export { default as SeriesDetailsCardSkeleton } from "./SeriesDetailsCardSkeleton";
 export { default as SeriesImageSelectComponent } from "./SeriesImageSelectComponent";
 export { default as SeriesRowContextMenu } from "./SeriesRowContextMenu";
+export { default as SeriesFinancialInfoForm } from "./SeriesFinancialInfoForm";
 export type { SeriesTableRefInterface } from "./SeriesTable";
 export { default as SeriesTable } from "./SeriesTable";

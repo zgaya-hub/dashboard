@@ -13,7 +13,7 @@ export interface SeriesUpdateFormFieldInterface {
   title: string;
   plotSummary: string;
   releaseDate: number;
-  imageId: string;
+  image: File;
   originCountry: MediaCountriesEnum;
   originalLanguage: MediaLanguagiesEnum;
   genre: MediaGenriesEnum;

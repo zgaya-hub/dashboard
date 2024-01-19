@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { ChangeImageInput, CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, GetSeriesDetailsByIdOutput, ImageIdOutput, ImageMediaIdParams, SeriesIdParams, SuccessOutput } from "zgaya.hub-client-types/lib";
+import { ChangeImageInput, CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, GetSeriesDetailsByIdOutput, ImageIdOutput, ImageMediaIdParams, SeriesIdParams, SuccessOutput, UpdateSeriesInput } from "zgaya.hub-client-types/lib";
 
 import { CreateCineastInput } from "./queryHooks.types";
 import { useErrorHandler } from "./errorHooks";
@@ -32,11 +32,11 @@ export function useCreateImage() {
 export function useChangeImageByMediaId() {
   const { handleError } = useErrorHandler();
 
-  const [apiCaller, status] = useMutation<{ changeImageByMediaId: ImageIdOutput }, { params: ImageMediaIdParams; input: ChangeImageInput }>(
+  const [apiCaller, status] = useMutation<{ changeImageByMediaId: SuccessOutput }, { params: ImageMediaIdParams; input: ChangeImageInput }>(
     gql`
       mutation ($params: ImageMediaIdParams!, $input: ChangeImageInput!) {
         changeImageByMediaId(ImageMediaIdParams: $params, ChangeImageInput: $input) {
-          ID
+          isSuccess
         }
       }
     `
@@ -186,4 +186,29 @@ export function useGetSeriesDetailsById(param: SeriesIdParams) {
   }
 
   return { ...status, isLoading: status.loading, data: status.data?.getSeriesDetailsById };
+}
+
+export function useUpdateSeries() {
+  const seriesError = useErrorHandler();
+
+  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { param: SeriesIdParams; input: UpdateSeriesInput }>(
+    gql`
+      mutation ($param: SeriesIdParams!, $input: UpdateSeriesInput!) {
+        updateSeries(SeriesIdParams: $param, UpdateSeriesInput: $input) {
+          isSuccess
+        }
+      }
+    `
+  );
+
+  const mutateAsync = async (param: SeriesIdParams, input: UpdateSeriesInput) => {
+    try {
+      const result = await apiCaller({ variables: { input, param } });
+      return result.data?.updateSeries;
+    } catch (error) {
+      seriesError.handleError(error);
+    }
+  };
+
+  return { mutateAsync, data: status.data?.updateSeries, isPending: status.loading, ...status };
 }

@@ -1,4 +1,5 @@
-import { Alert, Snackbar } from "@mui/material";
+import { ClearIcon } from "@/components/icons";
+import { Snackbar } from "@mui/material";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface GraphQlErrorContextProps {
@@ -25,7 +26,7 @@ export function GraphQlErrorProvider({ children }: { children: ReactNode }) {
 
   return (
     <GraphQlErrorContext.Provider value={{ showGraphQlError, showSnackbar }}>
-      <Snackbar open={!!errorMessage} message={errorMessage} onClose={handleOnClose} />
+      <Snackbar open={!!errorMessage} message={errorMessage} onClose={handleOnClose} action={<ClearIcon  onClick={handleOnClose} />} />
       {children}
     </GraphQlErrorContext.Provider>
   );

@@ -60,7 +60,8 @@ export default function SeriesAdditionalInfoForm({ setFormValue, watchFormValue,
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.Series.SeriesAdditionalInfoForm.pickAGenre")} value={watchFormValue("genre")} onClick={handleOnToggleGenreModal} fullWidth />
         <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModal} onOk={handleOnSelectGenre} />
-        <SelectInput label={t("Feature.Series.SeriesAdditionalInfoForm.selectStatus")} fullWidth name="status" register={formRegister}>
+        <SelectInput label={t("Feature.Series.SeriesAdditionalInfoForm.selectStatus")} fullWidth name="status" register={formRegister} defaultValue={undefined}>
+          <MenuItem value={undefined}><em>None</em></MenuItem>
           {seriesStatusesList.map((seriesStatus) => (
             <MenuItem value={seriesStatus}>{seriesStatus}</MenuItem>
           ))}

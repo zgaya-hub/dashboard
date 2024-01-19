@@ -34,15 +34,15 @@ export default function EpisodeUploadModal({ isVisible, onClose, seasonId, onOpe
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const { handleOnToggleFeedbackSidebar } = useSidebarContext();
   const [activeStep, setActiveStep] = useState<number>(0);
+
   const { mutateAsync: getUploadEpisodeUrlMutateAsync, isPending: isGetUploadEpisodeUrlLoading, data: getSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync, progress } = useUploadVideoOnAwsS3();
-  const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisodeLoading, data: createEpisodeData } = useCreateEpisode();
+  const { mutateAsync: createEpisodeMutateAsync, isPending: isCreateEpisodeLoading } = useCreateEpisode();
 
   const isSaveButtonDisabled = useMemo(() => {
     if (progress > 0 && progress < 100) {
       return true;
     }
-
     return false;
   }, [progress]);
 
@@ -82,10 +82,10 @@ export default function EpisodeUploadModal({ isVisible, onClose, seasonId, onOpe
 
   const handleOnNextStep = () => {
     if (activeStep === 1) return;
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const dialogBoxStyle = useThemeStyles<SxProps>(theme => ({
+  const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     ".MuiDialog-paperWidthXl": {
       [theme.breakpoints.up("md")]: {
         height: theme.spacing(96),
@@ -115,7 +115,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, seasonId, onOpe
         <Divider />
         <Box p={2} bgcolor={"Background"}>
           <Stepper activeStep={activeStep}>
-            {steps.map(step => (
+            {steps.map((step) => (
               <Step key={step.label}>
                 <StepLabel>{step.label}</StepLabel>
               </Step>

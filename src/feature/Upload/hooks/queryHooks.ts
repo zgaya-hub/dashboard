@@ -171,11 +171,8 @@ export function useGetManagerSeriesWithImage() {
       query GetManagerSeriesWithImage {
         getManagerSeriesWithImage {
           ID
-          isFree
-          priceInDollar
           imageUrl
           plotSummary
-          releaseDate
           title
         }
       }

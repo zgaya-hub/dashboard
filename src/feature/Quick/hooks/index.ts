@@ -4,6 +4,7 @@ export { useGetNextSeasonNumber } from "./queryHooks";
 export { useCreateSeason } from "./queryHooks";
 export { useCreateCineast } from "./queryHooks";
 export { useGetSeriesDetailsById } from "./queryHooks";
+export { useUpdateSeries } from "./queryHooks";
 export { useChangeImageByMediaId } from "./queryHooks";
 export { useErrorHandler } from "./errorHooks";
 

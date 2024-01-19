@@ -33,9 +33,9 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
   const { handleOnToggleFeedbackSidebar } = useSidebarContext();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [activeStep, setActiveStep] = useState<number>(0);
+
   const { mutateAsync: getUploadMovieUrlMutateAsync, isPending: isGetUploadMovieUrlLoading, data: getSignedUrlData } = useGetUploadVideoSignedUrl();
   const { mutateAsync: uploadVideoOnAwsS3MutateAsync, progress } = useUploadVideoOnAwsS3();
-
   const { mutateAsync: createMovieMutateAsync, isPending: isCreateMovieLoading } = useCreateMovie();
 
   const isSaveButtonDisabled = useMemo(() => {
@@ -75,6 +75,7 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
         OriginCountry: input.originCountry,
         Status: input.status,
       },
+      FinancialInfo: {},
     });
     onOpenShareModal();
     onClose();
@@ -87,10 +88,10 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
 
   const handleOnNextStep = () => {
     if (activeStep === 2) return;
-    setActiveStep(v => v + 1);
+    setActiveStep((v) => v + 1);
   };
 
-  const dialogBoxStyle = useThemeStyles<SxProps>(theme => ({
+  const dialogBoxStyle = useThemeStyles<SxProps>((theme) => ({
     ".MuiDialog-paperWidthXl": {
       [theme.breakpoints.up("md")]: {
         height: theme.spacing(96),
@@ -120,7 +121,7 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
         <Divider />
         <Box p={2} bgcolor={"Background"}>
           <Stepper activeStep={activeStep}>
-            {steps.map(step => (
+            {steps.map((step) => (
               <Step key={step.label}>
                 <StepLabel>{step.label}</StepLabel>
               </Step>
