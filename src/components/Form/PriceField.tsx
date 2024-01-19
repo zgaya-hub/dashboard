@@ -17,27 +17,27 @@ export default function PriceField<T extends FieldValues>({ name, startIcon, end
       control={control}
       name={name}
       render={({ field: { onChange, name, value } }) => (
-          <MuiTextField
-            name={name}
-            value={value}
-            onChange={onChange}
-            autoFocus
-            type="tel"
-            InputProps={{
-              endAdornment: restProps.error ? (
-                <InputAdornment position="end">
-                  <ErrorIcon color="error" />
-                </InputAdornment>
-              ) : endIcon ? (
-                <InputAdornment position="end">{endIcon}</InputAdornment>
-              ) : null,
-              inputComponent: NumericFormat as any,
-            }}
-            inputProps={{ maxLength: 12 }}
-            {...restProps}
-          />
-        )
-      }
+        <MuiTextField
+          name={name}
+          value={value}
+          onChange={onChange}
+          autoFocus
+          type="tel"
+          //TODO: value should 0 when input will empty
+          InputProps={{
+            endAdornment: restProps.error ? (
+              <InputAdornment position="end">
+                <ErrorIcon color="error" />
+              </InputAdornment>
+            ) : endIcon ? (
+              <InputAdornment position="end">{endIcon}</InputAdornment>
+            ) : null,
+            inputComponent: NumericFormat as any,
+          }}
+          inputProps={{ maxLength: 12 }}
+          {...restProps}
+        />
+      )}
     />
   );
 }
@@ -58,7 +58,7 @@ const NumericFormat = forwardRef<ReactNumericFormatProps, NumericFormatProps>(fu
         onChange({
           target: {
             name: props.name,
-            value: values.value
+            value: values.value,
           },
         });
       }}

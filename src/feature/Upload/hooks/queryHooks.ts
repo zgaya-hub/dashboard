@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateEpisodeInput, CreateImageByUrlInput, CreateImageInput, CreateMovieInput, EpisodeIdOutput, GetImageByMediaIdParams, GetManagerSeriesWithImageOutput, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput } from "zgaya.hub-client-types/lib";
-import { Image } from "zgaya.hub-client-types/lib/videoHub";
+import { CreateEpisodeInput, CreateImageByUrlInput, CreateImageInput, CreateMovieInput, EpisodeIdOutput, GetManagerSeriesWithImageOutput, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput } from "zgaya.hub-client-types/lib";
 
 import { useCreateImageError } from "./errorHooks";
 import { UploadVideoOnAwsS3Input } from "./queryHooks.types";
@@ -215,22 +214,4 @@ export function useUploadVideoOnAwsS3() {
   };
 
   return { mutateAsync, isPending, progress };
-}
-
-export function useGetVideoResourceById(param: GetImageByMediaIdParams) {
-  const status = useQuery<{ getImageByMediaId: Image }>(
-    gql`
-      query ($param: GetImageByMediaIdParams!) {
-        getImageByMediaId(GetImageByMediaIdParams: $param) {
-          ID
-          variant
-          url
-        }
-      }
-    `,
-    {
-      variables: { param },
-    }
-  );
-  return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };
 }

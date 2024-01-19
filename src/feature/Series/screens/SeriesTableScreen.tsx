@@ -65,7 +65,7 @@ export default function SeriesTableScreen() {
             </Hidden>
           </Stack>
         </Stack>
-        <SeriesTable />
+        <SeriesTable ref={seriesTableRef} />
         <Stack direction={"row"} justifyContent={"end"} mt={2} gap={1}>
           <Button variant="text">{t("Feature.Series.SeriesScreen.cancel")}</Button>
           <Button endIcon={<SaveIcon />} variant="contained">

@@ -1,13 +1,15 @@
-import { Dialog } from "@/components/Dialog";
+import { Dialog, DialogActions, DialogTitle } from "@/components/Dialog";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import { ReactNode } from "react";
+import { Box, DialogContent, DialogContentText, FormHelperText, Stack, SxProps } from "@mui/material";
 
 interface ConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
   children?: ReactNode;
+  footerText?: string;
   title?: string;
   cancelButtonText?: string;
   disabledConfirmButton?: boolean;
@@ -16,7 +18,7 @@ interface ConfirmationModalProps {
   variant?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
 }
 
-export default function ConfirmationModal({ isOpen, onClose, onConfirm, cancelButtonText, confirmButtonText, children, title, disabledCancelButton, disabledConfirmButton, variant = "primary" }: ConfirmationModalProps) {
+export default function ConfirmationModal({ isOpen, onClose, onConfirm, cancelButtonText, footerText, confirmButtonText, children, title, disabledCancelButton, disabledConfirmButton, variant = "primary" }: ConfirmationModalProps) {
   const { t } = useTranslation();
 
   const handleOnConfirm = () => {
@@ -24,20 +26,23 @@ export default function ConfirmationModal({ isOpen, onClose, onConfirm, cancelBu
     onClose();
   };
 
-  const dialogActions = (
-    <>
-      <Button onClick={onClose} variant="text" color={variant} disabled={disabledCancelButton} size="small">
-        {cancelButtonText ?? t("Components.Modals.ConfirmationModal.cancel")}
-      </Button>
-      <Button onClick={handleOnConfirm} variant="contained" color={variant} disabled={disabledConfirmButton} size="small">
-        {confirmButtonText ?? t("Components.Modals.ConfirmationModal.confirm")}
-      </Button>
-    </>
-  );
+  const dialogContentStyle: SxProps = {
+    pb: 0,
+  };
 
   return (
-    <Dialog isDraggable dividers={false} open={isOpen} onClose={onClose} headerText={title ?? t("Components.Modals.ConfirmationModal.title")} hideCrossButton dialogAction={dialogActions}>
-      {children ?? t("Components.Modals.ConfirmationModal.question")}
+    <Dialog isDraggable open={isOpen} onClose={onClose}>
+      <DialogTitle variant="h5">{title ?? t("Components.Modals.ConfirmationModal.title")}</DialogTitle>
+      <DialogContent sx={dialogContentStyle}>{children}</DialogContent>
+
+      <DialogActions>
+        <Button onClick={onClose} variant="text" color={variant} disabled={disabledCancelButton} size="small">
+          {cancelButtonText ?? t("Components.Modals.ConfirmationModal.cancel")}
+        </Button>
+        <Button onClick={handleOnConfirm} variant="contained" color={variant} disabled={disabledConfirmButton} size="small">
+          {confirmButtonText ?? t("Components.Modals.ConfirmationModal.confirm")}
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

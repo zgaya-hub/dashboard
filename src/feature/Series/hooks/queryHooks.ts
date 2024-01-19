@@ -15,6 +15,7 @@ export function useCreateImage() {
       }
     `
   );
+
   const mutateAsync = async (input: CreateImageInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
@@ -23,8 +24,6 @@ export function useCreateImage() {
       seriesError.handleError(error);
     }
   };
-
-  status;
 
   return { mutateAsync, data: status.data?.createImage, isPending: status.loading, ...status };
 }
@@ -60,6 +59,7 @@ export function useDeleteSeriesById() {
       }
     }
   `);
+
   const mutateAsync = async (param: DeleteSeriesByIdParams) => {
     try {
       const result = await apiCaller({ variables: { param } });
@@ -85,6 +85,7 @@ export function useDeleteMultipleSeriesByIdz() {
       }
     `
   );
+
   const mutateAsync = async (param: DeleteMultipleSeriesByIdzParams) => {
     try {
       const result = await apiCaller({ variables: { param } });
@@ -99,6 +100,7 @@ export function useDeleteMultipleSeriesByIdz() {
 
 export function useUpdateSeries() {
   const seriesError = useSeriesError();
+
   const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { param: SeriesIdParams; input: UpdateSeriesInput }>(
     gql`
       mutation ($param: SeriesIdParams!, $input: UpdateSeriesInput!) {
@@ -108,6 +110,7 @@ export function useUpdateSeries() {
       }
     `
   );
+
   const mutateAsync = async (param: SeriesIdParams, input: UpdateSeriesInput) => {
     try {
       const result = await apiCaller({ variables: { input, param } });
@@ -150,6 +153,8 @@ export function useGetSeriesDetailsById(param: SeriesIdParams) {
 }
 
 export function useGetCineastsBySeriesId(param: GetCineastsBySeriesIdParams) {
+  const seriesError = useSeriesError();
+
   const status = useQuery<{ getCineastsBySeriesId: CineastEntityType[] }>(
     gql`
       query ($param: GetCineastsBySeriesIdParams!) {
@@ -168,10 +173,16 @@ export function useGetCineastsBySeriesId(param: GetCineastsBySeriesIdParams) {
       variables: { param },
     }
   );
+
+  if (status.error) {
+    seriesError.handleError(status.error);
+  }
+
   return { ...status, isLoading: status.loading, data: status.data?.getCineastsBySeriesId };
 }
 
 export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput) {
+  const seriesError = useSeriesError();
   const status = useQuery<{ getManagerSeriesForTable: GetManagerSeriesForTableOutput }, { input: GetManagerSeriesForTableInput }>(
     gql`
       query ($input: GetManagerSeriesForTableInput!) {
@@ -197,21 +208,26 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
       variables: { input },
     }
   );
+
+  if (status.error) {
+    seriesError.handleError(status.error);
+  }
+
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesForTable };
 }
-
 
 export function useCreateFinancialInfoForSeries() {
   const seriesError = useSeriesError();
   const [apiCaller, status] = useMutation<{ createFinancialInfoForSeries: SuccessOutput }, { param: SeriesIdParams; input: CreateFinancialInfoInput }>(
     gql`
-        mutation ($param: SeriesIdParams!, $input: CreateFinancialInfoInput!) {
-          createFinancialInfoForSeries(SeriesIdParams: $param, CreateFinancialInfoInput: $input) {
-            isSuccess
-          }
+      mutation ($param: SeriesIdParams!, $input: CreateFinancialInfoInput!) {
+        createFinancialInfoForSeries(SeriesIdParams: $param, CreateFinancialInfoInput: $input) {
+          isSuccess
         }
-      `
+      }
+    `
   );
+
   const mutateAsync = async (param: SeriesIdParams, input: CreateFinancialInfoInput) => {
     try {
       const result = await apiCaller({ variables: { param, input } });

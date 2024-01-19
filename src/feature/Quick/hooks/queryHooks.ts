@@ -1,9 +1,12 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, GetSeriesDetailsByIdOutput, ImageIdOutput, SeriesIdParams, SuccessOutput } from "zgaya.hub-client-types/lib";
+import { ChangeImageInput, CreateImageInput, CreateSeasonInput, CreateSeriesInput, GetNextSeasonNumberOutput, GetNextSeasonNumberParams, GetSeriesDetailsByIdOutput, ImageIdOutput, ImageMediaIdParams, SeriesIdParams, SuccessOutput } from "zgaya.hub-client-types/lib";
 
 import { CreateCineastInput } from "./queryHooks.types";
+import { useErrorHandler } from "./errorHooks";
 
 export function useCreateImage() {
+  const { handleError } = useErrorHandler();
+
   const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
       mutation ($input: CreateImageInput!) {
@@ -13,19 +16,47 @@ export function useCreateImage() {
       }
     `
   );
+
   const mutateAsync = async (input: CreateImageInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      throw new Error(error);
+      handleError(error);
     }
   };
 
   return { mutateAsync, data: status.data?.createImage, isPending: status.loading, ...status };
 }
 
+export function useChangeImageByMediaId() {
+  const { handleError } = useErrorHandler();
+
+  const [apiCaller, status] = useMutation<{ changeImageByMediaId: ImageIdOutput }, { params: ImageMediaIdParams; input: ChangeImageInput }>(
+    gql`
+      mutation ($params: ImageMediaIdParams!, $input: ChangeImageInput!) {
+        changeImageByMediaId(ImageMediaIdParams: $params, ChangeImageInput: $input) {
+          ID
+        }
+      }
+    `
+  );
+
+  const mutateAsync = async (params: ImageMediaIdParams, input: ChangeImageInput) => {
+    try {
+      const result = await apiCaller({ variables: { params, input } });
+      return result.data?.changeImageByMediaId;
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  return { mutateAsync, data: status.data?.changeImageByMediaId, isPending: status.loading, ...status };
+}
+
 export function useCreateSeries() {
+  const { handleError } = useErrorHandler();
+
   const [apiCaller, status] = useMutation<{ createSeries: SuccessOutput }, { input: CreateSeriesInput }>(
     gql`
       mutation ($input: CreateSeriesInput!) {
@@ -35,12 +66,13 @@ export function useCreateSeries() {
       }
     `
   );
+
   const mutateAsync = async (input: CreateSeriesInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createSeries;
     } catch (error) {
-      throw new Error(error);
+      handleError(error);
     }
   };
 
@@ -48,6 +80,8 @@ export function useCreateSeries() {
 }
 
 export function useGetNextSeasonNumber(param: GetNextSeasonNumberParams) {
+  const { handleError } = useErrorHandler();
+
   const status = useQuery<{ getNextSeasonNumber: GetNextSeasonNumberOutput }>(
     gql`
       query ($param: GetNextSeasonNumberParams!) {
@@ -60,10 +94,17 @@ export function useGetNextSeasonNumber(param: GetNextSeasonNumberParams) {
       variables: { param },
     }
   );
+
+  if (status.error) {
+    handleError(status.error);
+  }
+
   return { ...status, isLoading: status.loading, data: status.data?.getNextSeasonNumber };
 }
 
 export function useCreateSeason() {
+  const { handleError } = useErrorHandler();
+
   const [apiCaller, status] = useMutation<{ createSeason: SuccessOutput }, { input: CreateSeasonInput }>(
     gql`
       mutation ($input: CreateSeasonInput!) {
@@ -73,18 +114,22 @@ export function useCreateSeason() {
       }
     `
   );
+
   const mutateAsync = async (input: CreateSeasonInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createSeason;
     } catch (error) {
-      throw new Error(error);
+      handleError(error);
     }
   };
 
   return { mutateAsync, data: status.data?.createSeason, isPending: status.loading, ...status };
 }
+
 export function useCreateCineast() {
+  const { handleError } = useErrorHandler();
+
   const [apiCaller, status] = useMutation<{ createCineast: SuccessOutput }, { input: CreateCineastInput }>(
     gql`
       mutation ($input: CreateSeasonInput!) {
@@ -94,12 +139,13 @@ export function useCreateCineast() {
       }
     `
   );
+
   const mutateAsync = async (input: CreateCineastInput) => {
     try {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createCineast;
     } catch (error) {
-      throw new Error(error);
+      handleError(error);
     }
   };
 
@@ -107,6 +153,8 @@ export function useCreateCineast() {
 }
 
 export function useGetSeriesDetailsById(param: SeriesIdParams) {
+  const { handleError } = useErrorHandler();
+
   const status = useQuery<{ getSeriesDetailsById: GetSeriesDetailsByIdOutput }>(
     gql`
       query ($param: SeriesIdParams!) {
@@ -132,5 +180,10 @@ export function useGetSeriesDetailsById(param: SeriesIdParams) {
       variables: { param },
     }
   );
+
+  if (status.error) {
+    handleError(status.error);
+  }
+
   return { ...status, isLoading: status.loading, data: status.data?.getSeriesDetailsById };
 }

@@ -6,7 +6,7 @@ interface ImageServerErrorResponse {
   message: string;
 }
 
-export function useSeriesError() {
+export function useErrorHandler() {
   const { t } = useTranslation();
   const { showSnackbar } = useGraphQlError();
 
@@ -16,10 +16,6 @@ export function useSeriesError() {
         return {
           message: t("Image not found due to a server error."),
         };
-      case "FI-NF01":
-        return {
-          message: t("Series have not financial-info to update."),
-        };
       default:
         return {
           message: errorResponse.message,
@@ -28,7 +24,7 @@ export function useSeriesError() {
   };
 
   const handleError = (errorResponse: ImageServerErrorResponse) => {
-    showSnackbar(getErrorMessage(errorResponse).message);
+    // showSnackbar(getErrorMessage(errorResponse).message);
   };
 
   return { getErrorMessage, handleError };

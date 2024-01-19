@@ -25,12 +25,8 @@ export function GraphQlErrorProvider({ children }: { children: ReactNode }) {
 
   return (
     <GraphQlErrorContext.Provider value={{ showGraphQlError, showSnackbar }}>
+      <Snackbar open={!!errorMessage} message={errorMessage} onClose={handleOnClose} />
       {children}
-      <Snackbar open={!!errorMessage}>
-        <Alert onClose={handleOnClose} severity="error">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </GraphQlErrorContext.Provider>
   );
 }

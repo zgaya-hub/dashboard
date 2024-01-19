@@ -36,9 +36,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
   const { data: managerSeriesForTableData, refetch: managerSeriesForTableRefetch, isLoading: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize });
 
   useImperativeHandle(ref, () => ({
-    onRefresh: () => {
-      console.log("Refresh");
-    },
+    onRefresh: () => managerSeriesForTableRefetch(),
     onDeleteMultipleSeries: handleOnDeleteMultipleSeries,
     onEditMultipleSeries: noop,
     onSearchToogle: noop,
@@ -50,13 +48,14 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
     }
   }, [paginationModel]);
 
-  const handleOnContextMenu = (event: MouseEvent<HTMLDivElement>) => {
+  const handleOnContextMenu = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     setSelectedRowId(event.currentTarget.getAttribute("data-id") ?? "");
     setContextMenuAnchorPosition({ left: event.clientX - 2, top: event.clientY - 4 });
   };
 
   const processRowUpdate = async (series: GridRowModel<TableSeriesInterface>) => {
+    //TODO: here is problem is that i can remove value from cell but value should not be remove
     await updateSeriesMutateAsync(
       { SeriesId: series.ID },
       {
@@ -67,8 +66,6 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
           OriginCountry: series.originCountry,
         },
         ReleaseDate: +series.releaseDate,
-        Title: series.title,
-        PlotSummary: series.plotSummary,
         Image: {
           Url: series.imageUrl,
         },
@@ -83,7 +80,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
   };
 
   const handleOnSelect = (selectedRowId: string) => {
-    setRowSelectionModel(v => [...v, selectedRowId]);
+    setRowSelectionModel((v) => [...v, selectedRowId]);
   };
 
   const SeriesTableColumn: GridColDef[] = [
@@ -151,20 +148,20 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
       type: "actions",
       width: 10,
       pinnable: true,
-      getActions: () => [<GridActionsCellItem icon={<MoreVertIcon />} onClick={handleOnContextMenu} />],
+      //TODO: here is a bug those is that when i'm opening context menu by clicking on icon its not detecting target row
+      getActions: () => [<GridActionsCellItem label="" onClick={(e) => handleOnContextMenu(e)} icon={<MoreVertIcon />} />],
     },
   ];
 
   return (
     <Suspense>
-      {isUpdateSeriesLoading || isDeleteMultipleSeriesLoading ? <LinearProgress /> : null}
       <DataGridPro
         pagination
         getRowHeight={() => "auto"}
         rows={managerSeriesForTableData?.seriesList ?? []}
         checkboxSelection
         disableRowSelectionOnClick
-        loading={isManagerSeriesForTableLoading}
+        loading={isManagerSeriesForTableLoading || isUpdateSeriesLoading || isDeleteMultipleSeriesLoading}
         getRowId={(row) => row.ID}
         columns={SeriesTableColumn}
         rowCount={managerSeriesForTableData?.totalRecords}
@@ -178,11 +175,15 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
         pinnedColumns={{
           right: ["actions"],
         }}
+        slots={{
+          loadingOverlay: LinearProgress,
+        }}
         slotProps={{
           row: {
             onContextMenu: handleOnContextMenu,
           },
         }}
+        //TODO: one more problem is thatmark is not working as expecting like its detect all rows selectiong by number of rows ot by idz
       />
       <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={managerSeriesForTableRefetch} onClose={() => setContextMenuAnchorPosition(null)} />
     </Suspense>

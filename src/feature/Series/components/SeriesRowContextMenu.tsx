@@ -27,9 +27,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const handleOnEdit = () => {
-    window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=1000");
-    window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=1000");
-    window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=1000");
+    window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=800");
   };
 
   const handleOnDetails = () => {
