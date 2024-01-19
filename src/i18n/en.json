@@ -122,7 +122,7 @@
     },
     "Series": {
       "SeriesRowContextMenu": {
-        "preview": "Preview",
+        "viewOnZgayaHub": "View on Zgaya.hub",
         "refresh": "Refresh",
         "createSeason": "Create",
         "select": "Select",
@@ -130,7 +130,7 @@
         "delete": "Delete",
         "details": "Details"
       },
-      "SeriesScreen": {
+      "SeriesTableScreen": {
         "createSeries": "Create series",
         "createSeason": "Create season",
         "uploadEpisode": "Upload episode",
@@ -191,6 +191,34 @@
       "CineastContainer": {
         "title": "List of cineast",
         "search": "Search"
+      }
+    },
+    "Movie": {
+      "MovieRowContextMenu": {
+        "playOnZgayaHub": "Play on Zgaya.hub",
+        "quickPlay": "Quick play",
+        "refresh": "Refresh",
+        "select": "Select",
+        "edit": "Edit",
+        "delete": "Delete",
+        "details": "Details"
+      },
+      "MovieTableScreen": {
+        "yourMovies": "Your movies",
+        "editSelected": "Edit selected",
+        "deleteSelected": "Delete selected",
+        "refetch": "Refetch",
+        "uploadMovie": "Upload movie",
+        "search": "Search"
+      },
+      "MovieTable": {
+        "status": "Status",
+        "totalLikes": "Totel likes",
+        "movie": "Movie",
+        "avarageRatings": "Avarage ratings",
+        "releaseDate": "Release Date",
+        "imageUrl": "Image url",
+        "uploadDate": "Upload date"
       }
     },
     "Quick": {

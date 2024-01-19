@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { lazily } from "react-lazily";
 import { DevTool } from "@hookform/devtools";
@@ -14,11 +14,9 @@ import { useCreateImage, useCreateImageByUrl } from "../../hooks";
 import { CreateMovieFormFieldType } from "../../types";
 import ImageUploadComponent from "../ImageUploadComponent";
 
-
 const Button = lazy(() => import("@/components/Button"));
 const MovieCardComponent = lazy(() => import("./MovieCardComponent"));
 const { AttachFileIcon, SaveIcon } = lazily(() => import("@/components/icons"));
-const { ImageDisplay24X12Skeleton } = lazily(() => import("@/components/Cards"));
 const { DatePickerModal, Form, TextField } = lazily(() => import("@/components/Form"));
 const MovieAdditionalInfoComponent = lazy(() => import("./MovieAdditionalInfoComponent"));
 
@@ -38,7 +36,7 @@ export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisable
     control,
     formState: { errors },
     handleSubmit,
-    register,
+    register: formRegister,
     watch,
     setValue: setFormValue,
   } = useForm<CreateMovieFormFieldType>({
@@ -54,7 +52,7 @@ export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisable
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = URL.createObjectURL(image);
     setFormValue("thumbnailUrl", await extractImageUrl(image));
-    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType, Variant: ImageVariantEnum.THUMBNAIL });
+    const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType });
     setFormValue("imageId", result?.ID);
   };
 
@@ -77,21 +75,20 @@ export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisable
         </Stack>
         <Form onSubmit={handleOnSubmit} gap={2}>
           <Stack direction={{ md: "row", sm: "column" }} gap={2}>
-            <TextField register={register} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
-            <Controller control={control} name="releaseDate" rules={{ required: true }} render={({ field }) => <DatePickerModal onChange={date => field.onChange(date?.getTime())} inputRef={field.ref} value={new Date(field.value)} label="Release date" views={["year", "month"]} fullWidth />} />
+            <TextField register={formRegister} name="title" label="Title" helperText={errors.title?.message} error={!!errors.title} fullWidth required />
+            <DatePickerModal register={formRegister} name="releaseDate" label="Release date" views={["year", "month"]} fullWidth />
           </Stack>
-          <TextField register={register} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
+          <TextField register={formRegister} name="plotSummary" label="Plot summary" helperText={errors.plotSummary?.message} error={!!errors.plotSummary} multiline rows={5} fullWidth required />
           <Stack direction={"row"} alignItems={"flex-end"} gap={2}>
             <ImageUploadComponent isLoading={isCreateImageLoading} onImageSelect={handleOnThumbnailSelect} title={t("Feature.VideoUpload.MovieUploadModal.imageUploadComponentTitle")} errorMessage={errors.imageId?.message} />
-            <ImageDisplay24X12Skeleton /* src={watch("thumbnailUrl")} */ />
-            <TextField register={register} name="thumbnailUrl" size="small" endIcon={<AttachFileIcon fontSize="inherit" loading={isCreateImageByUrlLoading} />} label="Image url" />
+            <TextField register={formRegister} name="thumbnailUrl" size="small" endIcon={<AttachFileIcon fontSize="inherit" loading={isCreateImageByUrlLoading} />} label="Image url" />
           </Stack>
           <DevTool control={control} />
         </Form>
-        <MovieAdditionalInfoComponent formRegister={register} setFormValue={setFormValue} watchFormValue={watch} />
+        <MovieAdditionalInfoComponent formRegister={formRegister} setFormValue={setFormValue} watchFormValue={watch} />
         <Stack direction={"row"} mt={"auto"} justifyContent={"end"} gap={1}>
           <Button variant="text">{t("Feature.VideoUpload.MovieUploadModal.cancel")}</Button>
-          <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit} disabled={isSaveButtonDisabled}>
+          <Button loading={isLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit} disabled={isLoading || isSaveButtonDisabled}>
             {t("Feature.VideoUpload.MovieUploadModal.next")}
           </Button>
         </Stack>
@@ -107,6 +104,6 @@ const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.number().required("Release date is required"),
-  imageId: yup.string().required("We required a thumbnail which will show when displying on Zgaya.hub"),
-  thumbnailUrl: yup.number().required("Thumbail is required"),
+  imageId: yup.string().required("Thumbnail must required"),
+  status: yup.string().required("Status is required"),
 });

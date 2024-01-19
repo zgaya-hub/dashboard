@@ -1,16 +1,17 @@
-/* import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
 import { lazily } from "react-lazily";
 import { PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
 import { noop, values as convertEnumToArray } from "lodash";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
+import { MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 
 import { DEFAULT_PAGINATION_DATE } from "../constants";
 import { useDeleteMultipleMovieByIdz, useGetManagerMovieForTable, useUpdateMovie } from "../hooks";
 import { TableMovieInterface } from "../types";
+import { useTranslation } from "react-i18next";
 
 const { MovieRowContextMenu } = lazily(() => import("."));
 const { MediaTableCard } = lazily(() => import("@/components/Cards"));
@@ -26,6 +27,7 @@ export interface MovieTableRefInterface {
 }
 
 const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInterface>) {
+  const { t } = useTranslation();
   const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
@@ -54,24 +56,15 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
     setContextMenuAnchorPosition({ left: event.clientX - 2, top: event.clientY - 4 });
   };
 
-  const processRowUpdate = async (series: GridRowModel<TableMovieInterface>) => {
+  const processRowUpdate = async (movie: GridRowModel<TableMovieInterface>) => {
     //TODO: here is problem is that i can remove value from cell but value should not be remove
     await updateMovieMutateAsync(
-      { MovieId: series.ID },
       {
-        AdditionalInfo: {
-          Genre: series.genre,
-          Status: series.status,
-          OriginalLanguage: series.originalLanguage,
-          OriginCountry: series.originCountry,
-        },
-        ReleaseDate: +series.releaseDate,
-        Image: {
-          Url: series.imageUrl,
-        },
-      }
+        MovieId: "",
+      },
+      {}
     );
-    return series;
+    return movie;
   };
 
   const handleOnDeleteMultipleMovie = async () => {
@@ -85,46 +78,32 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
 
   const MovieTableColumn: GridColDef[] = [
     {
-      field: "series",
-      headerName: "Movie",
+      field: "movie",
+      headerName: t("Feature.Movie.MovieTable.movie"),
       width: 500,
       renderCell: (params) => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
-      field: "originCountry",
-      headerName: "Origin country",
-      width: 200,
-      type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaCountriesEnum),
-      editable: true,
-    },
-    {
-      field: "originalLanguage",
-      headerName: "Original language",
-      width: 200,
-      type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaLanguagiesEnum),
-      editable: true,
-    },
-    {
-      field: "genre",
-      headerName: "Genre",
-      width: 200,
-      type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaGenriesEnum),
-      editable: true,
-    },
-    {
       field: "status",
-      headerName: "Status",
+      headerName: t("Feature.Movie.MovieTable.status"),
       width: 200,
       type: "singleSelect",
       valueOptions: convertEnumToArray(MediaStatusEnum),
       editable: true,
     },
     {
+      field: "likeCount",
+      headerName: t("Feature.Movie.MovieTable.totalLikes"),
+      width: 200,
+    },
+    {
+      field: "ratings",
+      headerName: t("Feature.Movie.MovieTable.avarageRatings"),
+      width: 200,
+    },
+    {
       field: "releaseDate",
-      headerName: "Release date",
+      headerName: t("Feature.Movie.MovieTable.releaseDate"),
       width: 200,
       type: "dateTime",
       editable: true,
@@ -132,14 +111,14 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
     },
     {
       field: "imageUrl",
-      headerName: "Image url",
+      headerName: t("Feature.Movie.MovieTable.imageUrl"),
       width: 100,
       editable: true,
       renderCell: (params) => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
     },
     {
       field: "uploadDate",
-      headerName: "Upload date",
+      headerName: t("Feature.Movie.MovieTable.uploadDate"),
       width: 200,
       valueFormatter: (params) => format(params.value, DEFAULT_DATE_FORMAT),
     },
@@ -158,7 +137,7 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
       <DataGridPro
         pagination
         getRowHeight={() => "auto"}
-        rows={managerMovieForTableData?.seriesList ?? []}
+        rows={managerMovieForTableData?.movieList ?? []}
         checkboxSelection
         disableRowSelectionOnClick
         loading={isManagerMovieForTableLoading || isUpdateMovieLoading || isDeleteMultipleMovieLoading}
@@ -185,17 +164,8 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
         }}
         //TODO: one more problem is that mark is not working as expecting like its detect all rows selectiong by number of rows ot by idz
       />
-      <MovieRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={() => managerMovieForTableRefetch()} onClose={() => setContextMenuAnchorPosition(null)} />
+      <MovieRowContextMenu movieId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={() => managerMovieForTableRefetch()} onClose={() => setContextMenuAnchorPosition(null)} />
     </Suspense>
   );
 });
 export default MovieTable;
- */
-
-import React from 'react'
-
-export default function MovieTable() {
-  return (
-    <div>MovieTable</div>
-  )
-}

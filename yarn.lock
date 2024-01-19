@@ -4831,9 +4831,9 @@ zen-observable@0.8.15:
   integrity sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
 
 zgaya.hub-client-types@^1.0.8:
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/zgaya.hub-client-types/-/zgaya.hub-client-types-1.0.16.tgz#85a372b4b29cd7040c05d8333d354913331530ed"
-  integrity sha512-D0069Pa5ssIRWSyWwhuQK4sAepvc1UcfUTaFxnBDyX9PX2WeMe6HgMeT83PN0aVYv3ir6H0THI5/1zmsRQiWGg==
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/zgaya.hub-client-types/-/zgaya.hub-client-types-1.0.19.tgz#ce540c4132c194145f07de00d2e83c69841d43ef"
+  integrity sha512-aTbdo5iU8INLAUCNrYWk66Fr84kqCyUcQ4hYB+qYx9tpkbBaP01VlGJ0954eV5nvykmuCh8aiJXV8ig6kTmL+A==
 
 zip-stream@^4.1.0:
   version "4.1.1"

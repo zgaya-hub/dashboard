@@ -72,8 +72,6 @@ export default function SeriesCreateScreen() {
     navigation.goBack();
   };
 
-  console.log({ ssss: watchFormValue("status") });
-
   const fileSelectInputContainerStyle: SxProps = {
     "& .appear-item": {
       display: "none",

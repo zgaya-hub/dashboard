@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { CreateEpisodeInput, CreateImageByUrlInput, CreateImageInput, CreateMovieInput, EpisodeIdOutput, GetManagerSeriesWithImageOutput, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput } from "zgaya.hub-client-types/lib";
 
-import { useCreateImageError } from "./errorHooks";
+import { useErrorHandler } from "./useErrorHandler";
 import { UploadVideoOnAwsS3Input } from "./queryHooks.types";
 
 export function useGetUploadVideoSignedUrl() {
+  const { handleError } = useErrorHandler();
   const [apiCaller, status] = useMutation<{ getUploadVideoSignedUrl: UploadVideoSignedUrlOutput }, { input: GetUploadVideoSignedUrlInput }>(
     gql`
       mutation ($input: GetUploadVideoSignedUrlInput!) {
@@ -22,6 +23,7 @@ export function useGetUploadVideoSignedUrl() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.getUploadVideoSignedUrl;
     } catch (error) {
+      handleError(error);
       throw new Error(error);
     }
   };
@@ -30,6 +32,7 @@ export function useGetUploadVideoSignedUrl() {
 }
 
 export function useGetSeasonBySeriesId() {
+  const { handleError } = useErrorHandler();
   // TODO: this is actually a query in BE but here due to Error i have change it into mutation it will change in the future
   const [apiCaller, status] = useMutation<{ getSeasonBySeriesId: Season[] }, { param: GetSeasonBySeriesIdParams }>(
     gql`
@@ -51,6 +54,7 @@ export function useGetSeasonBySeriesId() {
       const result = await apiCaller({ variables: { param } });
       return result.data?.getSeasonBySeriesId;
     } catch (error) {
+      handleError(error);
       throw new Error(error);
     }
   };
@@ -59,6 +63,7 @@ export function useGetSeasonBySeriesId() {
 }
 
 export function useCreateEpisode() {
+  const { handleError } = useErrorHandler();
   const [apiCaller, status] = useMutation<{ createEpisode: EpisodeIdOutput }, { input: CreateEpisodeInput }>(
     gql`
       mutation ($input: CreateEpisodeInput!) {
@@ -73,6 +78,7 @@ export function useCreateEpisode() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createEpisode;
     } catch (error) {
+      handleError(error);
       throw new Error(error);
     }
   };
@@ -81,6 +87,7 @@ export function useCreateEpisode() {
 }
 
 export function useCreateMovie() {
+  const { handleError } = useErrorHandler();
   const [apiCaller, status] = useMutation<{ createEpisode: EpisodeIdOutput }, { input: CreateMovieInput }>(
     gql`
       mutation ($input: CreateMovieInput!) {
@@ -95,6 +102,7 @@ export function useCreateMovie() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createEpisode;
     } catch (error) {
+      handleError(error);
       throw new Error(error);
     }
   };
@@ -103,7 +111,7 @@ export function useCreateMovie() {
 }
 
 export function useCreateImage() {
-  const imageError = useCreateImageError();
+  const { handleError } = useErrorHandler();
   const [apiCaller, status] = useMutation<{ createImage: ImageIdOutput }, { input: CreateImageInput }>(
     gql`
       mutation ($input: CreateImageInput!) {
@@ -118,7 +126,8 @@ export function useCreateImage() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImage;
     } catch (error) {
-      imageError.handleError(error);
+      handleError(error);
+      throw new Error(error);
     }
   };
 
@@ -126,7 +135,7 @@ export function useCreateImage() {
 }
 
 export function useCreateImageByUrl() {
-  const imageError = useCreateImageError();
+  const { handleError } = useErrorHandler();
   const [apiCaller, status] = useMutation<{ createImageByUrl: ImageIdOutput }, { input: CreateImageByUrlInput }>(
     gql`
       mutation ($input: CreateImageByUrlInput!) {
@@ -141,7 +150,8 @@ export function useCreateImageByUrl() {
       const result = await apiCaller({ variables: { input } });
       return result.data?.createImageByUrl;
     } catch (error) {
-      imageError.handleError(error);
+      handleError(error);
+      throw new Error(error);
     }
   };
 
@@ -149,6 +159,7 @@ export function useCreateImageByUrl() {
 }
 
 export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
+  const { handleError } = useErrorHandler();
   const status = useQuery<{ getNextEpisodeNumber: GetNextEpisodeNumberOutput }>(
     gql`
       query ($param: GetNextEpisodeNumberParams!) {
@@ -161,10 +172,16 @@ export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
       variables: { param },
     }
   );
+
+  if (status.error) {
+    handleError(status.error);
+  }
+
   return { ...status, isLoading: status.loading, data: status.data?.getNextEpisodeNumber };
 }
 
 export function useGetManagerSeriesWithImage() {
+  const { handleError } = useErrorHandler();
   //TODO: this return type will change
   const status = useQuery<{ getManagerSeriesWithImage: GetManagerSeriesWithImageOutput[] }>(
     gql`
@@ -178,10 +195,16 @@ export function useGetManagerSeriesWithImage() {
       }
     `
   );
+
+  if (status.error) {
+    handleError(status.error);
+  }
+
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImage };
 }
 
 export function useUploadVideoOnAwsS3() {
+  const { handleError } = useErrorHandler();
   const [isPending, setIsPending] = useState(false);
   const [progress, setProgress] = useState(0);
   const xhr = new XMLHttpRequest();
@@ -203,6 +226,7 @@ export function useUploadVideoOnAwsS3() {
       xhr.open("PUT", input.SignedUrl);
       xhr.send(input.VideoBlob);
     } catch (error) {
+      handleError(error);
       throw new Error(error);
     } finally {
       setIsPending(false);

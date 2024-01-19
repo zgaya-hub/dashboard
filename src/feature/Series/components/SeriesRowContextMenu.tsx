@@ -46,7 +46,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
     <Menu id="series-context-menu" anchorReference="anchorPosition" anchorPosition={anchorPosition} onClose={onClose} open={isOpen} onClick={onClose}>
       <MenuItem sx={menuItemStyle}>
         <OpenTabIcon isListIcon />
-        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.preview")}</ListItemText>
+        <ListItemText>{t("Feature.Series.SeriesRowContextMenu.viewOnZgayaHub")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={onRefresh} sx={menuItemStyle}>

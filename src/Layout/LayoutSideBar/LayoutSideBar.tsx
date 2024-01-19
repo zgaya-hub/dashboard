@@ -74,7 +74,7 @@ export default function LayoutSidebar() {
         onClick: () => {
           navigation.navigate("/movie");
         },
-        isActive: activeItem === t("Layout.Sidebar.manageMovie"),
+        isActive: activeItem.startsWith('/movie'),
       },
       {
         icon: <PlayDoubleIcon />,

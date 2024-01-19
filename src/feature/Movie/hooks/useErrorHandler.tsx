@@ -1,27 +1,20 @@
-import { useGraphQlError } from "@/context/GraphQlErrorContext";
 import { useTranslation } from "react-i18next";
+
+import { useGraphQlError } from "@/context/GraphQlErrorContext";
 
 interface ImageServerErrorResponse {
   message: string;
 }
 
-export function useCreateImageError() {
+export function useErrorHandler() {
   const { t } = useTranslation();
-  const { showSnackbar: showImageSnackbar } = useGraphQlError();
+  const { showSnackbar } = useGraphQlError();
 
   const getErrorMessage = (errorResponse: ImageServerErrorResponse): { message: string } => {
     switch (errorResponse.message) {
-      case "I-AIU01":
-        return {
-          message: t("Image is already in use. Please upload another image or click on 'reuse'."),
-        };
       case "I-NF02":
         return {
           message: t("Image not found due to a server error."),
-        };
-      case "I-DNMT03":
-        return {
-          message: t("Please use any tool to crop or click on 'auto crop'."),
         };
       default:
         return {
@@ -31,7 +24,7 @@ export function useCreateImageError() {
   };
 
   const handleError = (errorResponse: ImageServerErrorResponse) => {
-    showImageSnackbar(getErrorMessage(errorResponse).message);
+    showSnackbar(getErrorMessage(errorResponse).message);
   };
 
   return { getErrorMessage, handleError };

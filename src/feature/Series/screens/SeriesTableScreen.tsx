@@ -30,16 +30,16 @@ export default function SeriesTableScreen() {
   const actionMenu = (
     <Menu open={!!actionMenuEnchorEl} onClose={() => setActionMenuEnchorEl(null)} anchorEl={actionMenuEnchorEl} onClick={() => setActionMenuEnchorEl(null)}>
       <MenuItem onClick={seriesTableRef.current?.onRefresh}>
-        <CachedIcon tooltip={t("Feature.Series.SeriesScreen.refetch")} />
+        <CachedIcon tooltip={t("Feature.Series.SeriesTableScreen.refetch")} />
       </MenuItem>
       <MenuItem onClick={seriesTableRef.current?.onDeleteMultipleSeries}>
-        <SearchIcon tooltip={t("Feature.Series.SeriesScreen.search")} />
+        <SearchIcon tooltip={t("Feature.Series.SeriesTableScreen.search")} />
       </MenuItem>
       <MenuItem onClick={seriesTableRef.current?.onDeleteMultipleSeries}>
-        <DeleteIcon tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" />
+        <DeleteIcon tooltip={t("Feature.Series.SeriesTableScreen.deleteSelected")} color="error" />
       </MenuItem>
       <MenuItem onClick={seriesTableRef.current?.onEditMultipleSeries}>
-        <EditIcon tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" />
+        <EditIcon tooltip={t("Feature.Series.SeriesTableScreen.editSelected")} color="primary" />
       </MenuItem>
     </Menu>
   );
@@ -48,19 +48,19 @@ export default function SeriesTableScreen() {
     <Page isSuspense>
       <Card sx={cardStyle}>
         <Stack direction={"row"} mb={2} justifyContent={"space-between"} alignItems={"center"}>
-          <Typography variant="h5">{t("Feature.Series.SeriesScreen.manageSeries")}</Typography>
+          <Typography variant="h5">{t("Feature.Series.SeriesTableScreen.manageSeries")}</Typography>
           <Stack gap={1} direction={"row"} alignItems={"center"}>
             <Hidden mdDown>
-              <CachedIcon tooltip={t("Feature.Series.SeriesScreen.refetch")} iconButton onClick={seriesTableRef.current?.onRefresh} />
-              <SearchIcon tooltip={t("Feature.Series.SeriesScreen.search")} iconButton onClick={seriesTableRef.current?.onSearchToogle} />
-              <DeleteIcon tooltip={t("Feature.Series.SeriesScreen.deleteSelected")} color="error" iconButton onClick={seriesTableRef.current?.onDeleteMultipleSeries} />
-              <EditIcon tooltip={t("Feature.Series.SeriesScreen.editSelected")} color="primary" iconButton onClick={seriesTableRef.current?.onEditMultipleSeries} />
+              <CachedIcon tooltip={t("Feature.Series.SeriesTableScreen.refetch")} iconButton onClick={seriesTableRef.current?.onRefresh} />
+              <SearchIcon tooltip={t("Feature.Series.SeriesTableScreen.search")} iconButton onClick={seriesTableRef.current?.onSearchToogle} />
+              <DeleteIcon tooltip={t("Feature.Series.SeriesTableScreen.deleteSelected")} color="error" iconButton onClick={seriesTableRef.current?.onDeleteMultipleSeries} />
+              <EditIcon tooltip={t("Feature.Series.SeriesTableScreen.editSelected")} color="primary" iconButton onClick={seriesTableRef.current?.onEditMultipleSeries} />
             </Hidden>
             <Hidden smDown>
-              <Button onClick={handleOnCreateSeriesClick}>{t("Feature.Series.SeriesScreen.createSeries")}</Button>
+              <Button onClick={handleOnCreateSeriesClick}>{t("Feature.Series.SeriesTableScreen.createSeries")}</Button>
             </Hidden>
             <Hidden smUp>
-              <AddIcon iconButtonProps={{ color: "primary" }} onClick={handleOnCreateSeriesClick} tooltip={t("Feature.Series.SeriesScreen.createSeries")} />
+              <AddIcon iconButtonProps={{ color: "primary" }} onClick={handleOnCreateSeriesClick} tooltip={t("Feature.Series.SeriesTableScreen.createSeries")} />
             </Hidden>
             <Hidden mdUp>
               <MoreVertIcon onClick={(e) => setActionMenuEnchorEl(e.currentTarget)} />

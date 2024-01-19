@@ -8,7 +8,7 @@ const Page = lazy(() => import("@/components/Page"));
 const { MovieUploadModal } = lazily(() => import("../components"));
 
 export default function MovieUploadScreen() {
-  const [isMovieUploadModalVisible, setIsMovieUploadModalVisible] = useState(false);
+  const [isMovieUploadModalVisible, setIsMovieUploadModalVisible] = useState(true);
   const [isVideoShareModalVisible, setIsVideoShareModalVisible] = useState(false);
 
   const handleOnToggleMovieUploadModal = () => {
