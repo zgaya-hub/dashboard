@@ -169,9 +169,6 @@ export function useGetSeriesDetailsById(params: SeriesIdParams) {
           releaseDate
           imageUrl
           uploadDate
-          netProfit
-          budget
-          revenue
           isFree
         }
       }

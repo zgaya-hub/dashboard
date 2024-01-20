@@ -16,10 +16,6 @@ export function useSeriesError() {
         return {
           message: t("Image not found due to a server error."),
         };
-      case "FI-NF01":
-        return {
-          message: t("Series have not financial-info to update."),
-        };
       default:
         return {
           message: errorResponse.message,

@@ -37,10 +37,6 @@ export default function SeriesDetailsCardSkeleton() {
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"))}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"))}
-        <Typography variant="h5" py={1}>{t("Feature.Series.SeriesDetailsCard.financialInfo")}</Typography>
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.netProfit"))}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.revenue"))}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.budget"))}
       </CardContent>
     </Card>
   );

@@ -12,7 +12,6 @@ import Page from "@/components/Page";
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../constants";
 import { useCreateImage, useCreateSeries } from "../hooks";
 import { SeriesCreateFormFieldInterface } from "../types";
-import { SeriesFinancialInfoForm } from "../components";
 
 const Button = lazy(() => import("@/components/Button"));
 const { SaveIcon } = lazily(() => import("@/components/icons"));
@@ -63,11 +62,6 @@ export default function SeriesCreateScreen() {
         OriginCountry: input.originCountry,
         Status: input.status,
       },
-      FinancialInfo: {
-        Budget: input.budget,
-        NetProfit: input.netProfit,
-        Revenue: input.revenue,
-      },
     });
     navigation.goBack();
   };
@@ -105,13 +99,8 @@ export default function SeriesCreateScreen() {
             <CardMedia sx={{ position: "absolute" }} component="img" className="appear-item" image={backDropUrl} />
           </Grid>
         </Grid>
-        <Grid container xs={12} item lg={5.9} rowGap={2}>
-          <Grid xs={12} item>
-            <SeriesAdditionalInfoForm setFormValue={setFormValue} watchFormValue={watchFormValue} formRegister={formRegister} />
-          </Grid>
-          <Grid xs={12} item>
-            <SeriesFinancialInfoForm formControl={formControl} />
-          </Grid>
+        <Grid xs={12} item lg={5.9} rowGap={2}>
+          <SeriesAdditionalInfoForm setFormValue={setFormValue} watchFormValue={watchFormValue} formRegister={formRegister} />
         </Grid>
       </Grid>
     </Page>

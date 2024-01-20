@@ -18,9 +18,6 @@ export interface SeriesUpdateFormFieldInterface {
   originalLanguage: MediaLanguagiesEnum;
   genre: MediaGenriesEnum;
   status: MediaStatusEnum;
-  netProfit: number
-  revenue: number
-  budget: number
 }
 
 export interface CineastCreateFormFieldInterface {

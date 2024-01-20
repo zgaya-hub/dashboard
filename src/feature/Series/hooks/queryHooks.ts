@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateFinancialInfoInput, CreateImageInput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, GetSeriesDetailsByIdOutput, ImageIdOutput, SeriesIdParams, SuccessOutput, UpdateSeriesInput } from "zgaya.hub-client-types/lib";
+import { CreateImageInput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, GetSeriesDetailsByIdOutput, ImageIdOutput, SeriesIdParams, SuccessOutput, UpdateSeriesInput } from "zgaya.hub-client-types/lib";
 
 import { useSeriesError } from "./errorHooks";
 import { GetCineastsBySeriesIdParams } from "./queryHooks.types";
@@ -138,9 +138,6 @@ export function useGetSeriesDetailsById(params: SeriesIdParams) {
           releaseDate
           imageUrl
           uploadDate
-          netProfit
-          budget
-          revenue
           isFree
         }
       }
@@ -214,28 +211,4 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
   }
 
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesForTable };
-}
-
-export function useCreateFinancialInfoForSeries() {
-  const seriesError = useSeriesError();
-  const [apiCaller, status] = useMutation<{ createFinancialInfoForSeries: SuccessOutput }, { params: SeriesIdParams; input: CreateFinancialInfoInput }>(
-    gql`
-      mutation ($params: SeriesIdParams!, $input: CreateFinancialInfoInput!) {
-        createFinancialInfoForSeries(SeriesIdParams: $params, CreateFinancialInfoInput: $input) {
-          isSuccess
-        }
-      }
-    `
-  );
-
-  const mutateAsync = async (params: SeriesIdParams, input: CreateFinancialInfoInput) => {
-    try {
-      const result = await apiCaller({ variables: { params, input } });
-      return result.data?.createFinancialInfoForSeries;
-    } catch (error) {
-      seriesError.handleError(error);
-    }
-  };
-
-  return { mutateAsync, data: status.data?.createFinancialInfoForSeries, isPending: status.loading, ...status };
 }

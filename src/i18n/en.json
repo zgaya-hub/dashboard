@@ -156,15 +156,11 @@
         "title": "Title",
         "plotSummary": "Plot summary",
         "releaseDate": "Release date",
-        "netProfit": "Net profit",
-        "revenue": "Revenue",
-        "budget": "Budget",
         "save": "Save",
         "cancel": "Cancel",
         "add": "Add",
         "seriesDetails": "Series details",
-        "additionalInfo": "Additional info",
-        "financialInfo": "Financial info"
+        "additionalInfo": "Additional info"
       },
       "SeriesBasicInfoForm": {
         "addBasicInfo": "Add basic Info",
@@ -181,12 +177,6 @@
         "originalLanguage": "Original language",
         "pickAGenre": "Pick a genre",
         "selectStatus": "Select status"
-      },
-      "SeriesFinancialInfoForm": {
-        "addFinancialInfo": "Add financial Info",
-        "revenue": "Revenue",
-        "budget": "Budget",
-        "netProfit": "Net profit"
       },
       "SeriesCreateScreen": {
         "createASeries": "Create a series",
@@ -276,11 +266,7 @@
         "originalLanguage": "Original language",
         "pickAGenre": "Pick a genre",
         "selectStatus": "Select status",
-        "netProfit": "Net profit",
-        "revenue": "Revenue",
-        "budget": "Budget",
         "selectBackdropImage": "Upload backdrop image",
-        "financialInfo": "Financial info",
         "additionalInfo": "Additional info",
         "changeImageWarningModalTitle": "Important",
         "changeImageWarningModalMessage": "Modifying the image won't be need to save form",

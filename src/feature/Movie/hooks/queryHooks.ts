@@ -128,9 +128,6 @@ export function useGetMovieDetailsById(params: MovieIdParams) {
           releaseDate
           imageUrl
           uploadDate
-          netProfit
-          budget
-          revenue
           isFree
         }
       }

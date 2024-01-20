@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { CachedIcon } from "@/components/icons";
 import { DEFAULT_DATE_FORMAT } from "@/mock/constants";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { handleOnFormatPrice, handleOnTruncateText } from "@/utils";
+import { handleOnTruncateText } from "@/utils";
 
 import { useGetSeriesDetailsById } from "../hooks";
 
@@ -65,11 +65,6 @@ export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) 
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.status"), seriesDetailsData?.status)}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originCountry"), seriesDetailsData?.originCountry)}
         {renderEditableText(t("Feature.Series.SeriesDetailsCard.originalLanguage"), seriesDetailsData?.originalLanguage)}
-
-        <Typography variant="h5" py={1}>{t("Feature.Series.SeriesDetailsCard.financialInfo")}</Typography>
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.netProfit"), `${handleOnFormatPrice(seriesDetailsData?.netProfit)} $`)}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.revenue"), `${handleOnFormatPrice(seriesDetailsData?.revenue)} $`)}
-        {renderEditableText(t("Feature.Series.SeriesDetailsCard.budget"), `${handleOnFormatPrice(seriesDetailsData?.budget)} $`)}
       </CardContent>
     </Card>
   );

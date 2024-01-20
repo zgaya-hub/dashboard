@@ -9,9 +9,6 @@ export interface SeriesCreateFormFieldInterface {
   originalLanguage: MediaLanguagiesEnum;
   genre: MediaGenriesEnum;
   status: MediaStatusEnum;
-  netProfit: number;
-  revenue: number;
-  budget: number;
 }
 
 export interface TableSeriesInterface {
@@ -26,9 +23,4 @@ export interface TableSeriesInterface {
   imageUrl: string;
   createdAt: number;
   updatedAt: number;
-}
-export interface FinancialInfoCreateFormFieldInterface {
-  revenue: number;
-  netProfit: number;
-  budget: number;
 }

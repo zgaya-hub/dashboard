@@ -75,7 +75,6 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
         OriginCountry: input.originCountry,
         Status: input.status,
       },
-      FinancialInfo: {},
     });
     onOpenShareModal();
     onClose();

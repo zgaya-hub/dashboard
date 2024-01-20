@@ -1,4 +1,4 @@
-import { DatePickerModal, FileSelectInput, Form, ModalSelectInput, PriceField, SelectInput, TextField } from "@/components/Form";
+import { DatePickerModal, FileSelectInput, Form, ModalSelectInput, SelectInput, TextField } from "@/components/Form";
 import { DevTool } from "@hookform/devtools";
 import Stack from "@mui/material/Stack";
 import { useForm } from "react-hook-form";
@@ -36,19 +36,7 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
     onSave: formSubmit(handleOnUpdateSeries),
   }));
 
-  const {
-    control: formControl,
-    register: formRegister,
-    setValue: setFormValue,
-    watch: watchFormValue,
-    handleSubmit: formSubmit,
-  } = useForm<SeriesUpdateFormFieldInterface>({
-    defaultValues: {
-      budget: seriesDetailsData?.budget,
-      netProfit: seriesDetailsData?.netProfit,
-      revenue: seriesDetailsData?.revenue,
-    },
-  });
+  const { control: formControl, register: formRegister, setValue: setFormValue, watch: watchFormValue, handleSubmit: formSubmit } = useForm<SeriesUpdateFormFieldInterface>({});
 
   useEffect(() => {
     if (seriesDetailsData) {
@@ -59,9 +47,6 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
       setFormValue("originalLanguage", seriesDetailsData?.originalLanguage);
       setFormValue("genre", seriesDetailsData?.genre);
       setFormValue("status", seriesDetailsData?.status);
-      setFormValue("netProfit", seriesDetailsData?.netProfit);
-      setFormValue("revenue", seriesDetailsData?.revenue);
-      setFormValue("budget", seriesDetailsData?.budget);
       setBackdropImageUrl(seriesDetailsData?.imageUrl);
     }
   }, [seriesDetailsData]);
@@ -86,11 +71,6 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
         ReleaseDate: +input.releaseDate,
         PlotSummary: input.plotSummary,
         Title: input.title,
-        FinancialInfo: {
-          Budget: input.budget,
-          NetProfit: input.netProfit,
-          Revenue: input.revenue,
-        },
       }
     );
   };
@@ -197,13 +177,6 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
             return <MenuItem value={movieStatus}>{movieStatus}</MenuItem>;
           })}
         </SelectInput>
-      </Stack>
-
-      <Stack gap={2}>
-        <Typography variant="h5">{t("Feature.Quick.SeriesUpdateForm.financialInfo")}</Typography>
-        <PriceField label={t("Feature.Quick.SeriesUpdateForm.netProfit")} control={formControl} name="netProfit" />
-        <PriceField label={t("Feature.Quick.SeriesUpdateForm.revenue")} control={formControl} name="revenue" />
-        <PriceField label={t("Feature.Quick.SeriesUpdateForm.budget")} control={formControl} name="budget" />
       </Stack>
 
       <DevTool control={formControl} />
