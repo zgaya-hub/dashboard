@@ -1,9 +1,9 @@
-import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState, useCallback } from "react";
+import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState, useId, useCallback } from "react";
 import { lazily } from "react-lazily";
-import { PopoverPosition, Rating } from "@mui/material";
+import { PopoverPosition, Rating, Stack } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
-import { noop, values as convertEnumToArray } from "lodash";
+import { noop, values as convertEnumToArray, debounce } from "lodash";
 import { GetManagerTableMovieListOutput, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
@@ -54,9 +54,9 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
     }
   }, [paginationModel]);
 
-  const handleOnSearchChange = useCallback((text: string) => {
+  const handleOnSearchChange = debounce((text) => {
     setSearchText(text);
-  }, []);
+  }, 1000);
 
   const handleOnContextMenu = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();

@@ -3,7 +3,7 @@ import { lazily } from "react-lazily";
 import { DialogContentText, PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
-import { noop, values as convertEnumToArray } from "lodash";
+import { noop, values as convertEnumToArray, debounce } from "lodash";
 import { GetManagerTableOutputSeriesList, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
@@ -12,6 +12,7 @@ import { DEFAULT_PAGINATION_DATE } from "../constants";
 import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks";
 import { ConfirmationModal } from "@/components/Modals";
 import { useTranslation } from "react-i18next";
+import { SearchInput } from "@/components/Form";
 
 const { SeriesRowContextMenu } = lazily(() => import("."));
 const { MediaTableCard } = lazily(() => import("@/components/Cards"));
@@ -28,22 +29,24 @@ export interface SeriesTableRefInterface {
 
 const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefInterface>) {
   const { t } = useTranslation();
-  const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
+  const [searchText, setSearchText] = useState("");
+  const [selectedRowId, setSelectedRowId] = useState("");
+  const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
-  const [selectedRowId, setSelectedRowId] = useState("");
+  const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
   const [isMultipleSeriesDeleteConfirmationModalVisible, setIsMultipleSeriesDeleteConfirmationModalVisible] = useState(false);
 
   const { mutateAsync: deleteMultipleSeriesByIdzMutateAsync, isPending: isDeleteMultipleSeriesLoading } = useDeleteMultipleSeriesByIdz();
   const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
-  const { data: managerSeriesForTableData, refetch: managerSeriesForTableRefetch, isLoading: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize });
+  const { data: managerSeriesForTableData, refetch: managerSeriesForTableRefetch, isLoading: isManagerSeriesForTableLoading } = useGetManagerSeriesForTable({ Page: paginationModel.page, PageSize: paginationModel.pageSize, SearchText: searchText });
 
   useImperativeHandle(ref, () => ({
     onRefresh: () => managerSeriesForTableRefetch(),
     //TODO:  its calling when no series selected it should not able to call when series not selected
     onDeleteMultipleSeries: handleOnToggleMultipleSeriesDeleteConfirmationModal,
     onEditMultipleSeries: noop,
-    onSearchToogle: noop,
+    onSearchToogle: handleOnToggleSearchBox,
   }));
 
   useEffect(() => {
@@ -90,6 +93,14 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
   const handleOnToggleMultipleSeriesDeleteConfirmationModal = () => {
     setIsMultipleSeriesDeleteConfirmationModalVisible(!isMultipleSeriesDeleteConfirmationModalVisible);
   };
+
+  const handleOnToggleSearchBox = () => {
+    setIsSearchBoxVisible(!isSearchBoxVisible);
+  };
+
+  const handleOnSearchChange = debounce((text) => {
+    setSearchText(text);
+  }, 1000);
 
   // TODO: columns should change with likes, ratings, clicks etc
   const SeriesTableColumn: GridColDef[] = [
@@ -164,6 +175,8 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
 
   return (
     <Suspense>
+      {/* TODO: should change with own i18n */}
+      {isSearchBoxVisible ? <SearchInput placeholder={t("Feature.Movie.MovieTable.searchInputPlaceholder")} autoFocus size="small" onChange={handleOnSearchChange} /> : null}
       <DataGridPro
         pagination
         getRowHeight={() => "auto"}

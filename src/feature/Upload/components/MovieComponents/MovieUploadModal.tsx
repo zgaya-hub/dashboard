@@ -144,8 +144,8 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
           <Button onClick={() => navigate.navigate("/upload/trailer")} startIcon={<UploadIcon />}>
             {t("Feature.VideoUpload.MovieUploadModal.trailer")}
           </Button>
-          <Button onClick={() => navigate.navigate("/upload/movie")} startIcon={<UploadIcon />}>
-            {t("Feature.VideoUpload.MovieUploadModal.movie")}
+          <Button onClick={() => navigate.navigate("/upload/episode")} startIcon={<UploadIcon />}>
+            {t("Feature.VideoUpload.MovieUploadModal.episode")}
           </Button>
         </DialogActions>
       </Dialog>
