@@ -11,6 +11,7 @@ interface DatePickerModalProps<T extends FieldValues> extends DatePickerProps<Da
   name: Path<T>;
 }
 
+//TODO: default values not set properly means not working this field properly
 export default function DatePickerModal<T extends FieldValues>({ name, fullWidth, register, helperText, error, ...restProps }: DatePickerModalProps<T>) {
   return (
     <MobileDatePicker

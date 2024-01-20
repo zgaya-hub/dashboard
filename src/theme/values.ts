@@ -52,6 +52,7 @@ export const lightThemeComponents: ThemeOptions["components"] = {
     styleOverrides: {
       root: {
         background: "#ffffff",
+        color: '#1c1b1b'
       },
     },
   },

@@ -1,17 +1,16 @@
 import { lazy, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SxProps } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 
 import useNavigation from "@/navigation/useNavigation";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { lazily } from "react-lazily";
 import { SeriesTableRefInterface } from "../components";
 import Page from "@/components/Page";
 
 const { SeriesTable } = lazily(() => import("../components"));
-const { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SaveIcon, SearchIcon } = lazily(() => import("@/components/icons"));
+const { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SearchIcon } = lazily(() => import("@/components/icons"));
 const Button = lazy(() => import("@/components/Button"));
-const { Card, Hidden, Menu, MenuItem, Stack, Typography } = lazily(() => import("@mui/material"));
+const { Hidden, Menu, MenuItem, Stack, Typography } = lazily(() => import("@mui/material"));
 
 export default function SeriesTableScreen() {
   const { t } = useTranslation();
@@ -22,10 +21,6 @@ export default function SeriesTableScreen() {
   const handleOnCreateSeriesClick = () => {
     navigation.navigate("/series/create");
   };
-
-  const cardStyle = useThemeStyles<SxProps>((theme) => ({
-    padding: theme.spacing(4),
-  }));
 
   const actionMenu = (
     <Menu open={!!actionMenuEnchorEl} onClose={() => setActionMenuEnchorEl(null)} anchorEl={actionMenuEnchorEl} onClick={() => setActionMenuEnchorEl(null)}>
@@ -46,14 +41,14 @@ export default function SeriesTableScreen() {
 
   return (
     <Page isSuspense>
-      <Card sx={cardStyle}>
-        <Stack direction={"row"} mb={2} justifyContent={"space-between"} alignItems={"center"}>
+      <Box component={Paper} p={2}>
+        <Stack direction={"row"} mb={1} justifyContent={"space-between"} alignItems={"center"}>
           <Typography variant="h5">{t("Feature.Series.SeriesTableScreen.manageSeries")}</Typography>
           <Stack gap={1} direction={"row"} alignItems={"center"}>
             <Hidden mdDown>
               <CachedIcon tooltip={t("Feature.Series.SeriesTableScreen.refetch")} iconButton onClick={seriesTableRef.current?.onRefresh} />
               <SearchIcon tooltip={t("Feature.Series.SeriesTableScreen.search")} iconButton onClick={seriesTableRef.current?.onSearchToogle} />
-              <DeleteIcon tooltip={t("Feature.Series.SeriesTableScreen.deleteSelected")} color="error" iconButton onClick={seriesTableRef.current?.onDeleteMultipleSeries} />
+              <DeleteIcon tooltip={t("Feature.Series.SeriesTableScreen.deleteSelected")} color="error" iconButton onClick={() => seriesTableRef.current?.onDeleteMultipleSeries()} />
               <EditIcon tooltip={t("Feature.Series.SeriesTableScreen.editSelected")} color="primary" iconButton onClick={seriesTableRef.current?.onEditMultipleSeries} />
             </Hidden>
             <Hidden smDown>
@@ -69,7 +64,7 @@ export default function SeriesTableScreen() {
           </Stack>
         </Stack>
         <SeriesTable ref={seriesTableRef} />
-      </Card>
+      </Box>
     </Page>
   );
 }

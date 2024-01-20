@@ -39,6 +39,7 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
 
   useImperativeHandle(ref, () => ({
     onRefresh: () => managerMovieForTableRefetch(),
+    //TODO: should show confirmation modal to delete multiple movies and also i will not call when movies not selected
     onDeleteMultipleMovie: handleOnDeleteMultipleMovie,
     onEditMultipleMovie: noop,
     onSearchToogle: noop,
@@ -93,6 +94,7 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
     },
     {
       field: "likeCount",
+      // TODO: typo for totel
       headerName: t("Feature.Movie.MovieTable.totalLikes"),
       width: 200,
     },

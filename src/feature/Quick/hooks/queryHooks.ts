@@ -79,19 +79,19 @@ export function useCreateSeries() {
   return { mutateAsync, data: status.data?.createSeries, isPending: status.loading, ...status };
 }
 
-export function useGetNextSeasonNumber(param: GetNextSeasonNumberParams) {
+export function useGetNextSeasonNumber(params: GetNextSeasonNumberParams) {
   const { handleError } = useErrorHandler();
 
   const status = useQuery<{ getNextSeasonNumber: GetNextSeasonNumberOutput }>(
     gql`
-      query ($param: GetNextSeasonNumberParams!) {
-        getNextSeasonNumber(GetNextSeasonNumberParams: $param) {
+      query ($params: GetNextSeasonNumberParams!) {
+        getNextSeasonNumber(GetNextSeasonNumberParams: $params) {
           number
         }
       }
     `,
     {
-      variables: { param },
+      variables: { params },
     }
   );
 
@@ -152,13 +152,13 @@ export function useCreateCineast() {
   return { mutateAsync, data: status.data?.createCineast, isPending: status.loading, ...status };
 }
 
-export function useGetSeriesDetailsById(param: SeriesIdParams) {
+export function useGetSeriesDetailsById(params: SeriesIdParams) {
   const { handleError } = useErrorHandler();
 
   const status = useQuery<{ getSeriesDetailsById: GetSeriesDetailsByIdOutput }>(
     gql`
-      query ($param: SeriesIdParams!) {
-        getSeriesDetailsById(SeriesIdParams: $param) {
+      query ($params: SeriesIdParams!) {
+        getSeriesDetailsById(SeriesIdParams: $params) {
           ID
           originCountry
           originalLanguage
@@ -177,7 +177,7 @@ export function useGetSeriesDetailsById(param: SeriesIdParams) {
       }
     `,
     {
-      variables: { param },
+      variables: { params },
     }
   );
 
@@ -191,19 +191,19 @@ export function useGetSeriesDetailsById(param: SeriesIdParams) {
 export function useUpdateSeries() {
   const seriesError = useErrorHandler();
 
-  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { param: SeriesIdParams; input: UpdateSeriesInput }>(
+  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { params: SeriesIdParams; input: UpdateSeriesInput }>(
     gql`
-      mutation ($param: SeriesIdParams!, $input: UpdateSeriesInput!) {
-        updateSeries(SeriesIdParams: $param, UpdateSeriesInput: $input) {
+      mutation ($params: SeriesIdParams!, $input: UpdateSeriesInput!) {
+        updateSeries(SeriesIdParams: $params, UpdateSeriesInput: $input) {
           isSuccess
         }
       }
     `
   );
 
-  const mutateAsync = async (param: SeriesIdParams, input: UpdateSeriesInput) => {
+  const mutateAsync = async (params: SeriesIdParams, input: UpdateSeriesInput) => {
     try {
-      const result = await apiCaller({ variables: { input, param } });
+      const result = await apiCaller({ variables: { input, params } });
       return result.data?.updateSeries;
     } catch (error) {
       seriesError.handleError(error);

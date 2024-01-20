@@ -5,9 +5,9 @@ import { lazily } from "react-lazily";
 import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Hidden, Stack } from "@mui/material";
-import { extractImageMetadata, extractImageUrl } from "metalyzer";
+import { extractImageMetadata } from "metalyzer";
 import * as yup from "yup";
-import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
+import { ImageVariantEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { DEFAULT_PLOT_SUMMARY, DEFAULT_RELEASE_DATE } from "../../constants";
 import { useCreateImage, useCreateImageByUrl } from "../../hooks";
@@ -42,16 +42,14 @@ export default function MovieCreateStep({ onSave, isLoading, isSaveButtonDisable
   } = useForm<CreateMovieFormFieldType>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      title: "",
       plotSummary: DEFAULT_PLOT_SUMMARY,
-      releaseDate: DEFAULT_RELEASE_DATE,
+      releaseDate: DEFAULT_RELEASE_DATE
     },
   });
 
   const handleOnThumbnailSelect = async (image: File) => {
     const { mimeType } = await extractImageMetadata(image);
     const imageBase64 = URL.createObjectURL(image);
-    setFormValue("thumbnailUrl", await extractImageUrl(image));
     const result = await createImageMutateAsync({ Base64: imageBase64, Mime: mimeType });
     setFormValue("imageId", result?.ID);
   };
@@ -105,5 +103,4 @@ const validationSchema = yup.object().shape({
   plotSummary: yup.string().required("Plot summary is required"),
   releaseDate: yup.number().required("Release date is required"),
   imageId: yup.string().required("Thumbnail must required"),
-  status: yup.string().required("Status is required"),
 });

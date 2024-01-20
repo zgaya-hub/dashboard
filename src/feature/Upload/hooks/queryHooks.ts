@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { CreateEpisodeInput, CreateImageByUrlInput, CreateImageInput, CreateMovieInput, EpisodeIdOutput, GetManagerSeriesWithImageOutput, GetNextEpisodeNumberOutput, GetNextEpisodeNumberParams, GetSeasonBySeriesIdParams, GetUploadVideoSignedUrlInput, ImageIdOutput, Season, UploadVideoSignedUrlOutput } from "zgaya.hub-client-types/lib";
 
@@ -34,10 +34,10 @@ export function useGetUploadVideoSignedUrl() {
 export function useGetSeasonBySeriesId() {
   const { handleError } = useErrorHandler();
   // TODO: this is actually a query in BE but here due to Error i have change it into mutation it will change in the future
-  const [apiCaller, status] = useMutation<{ getSeasonBySeriesId: Season[] }, { param: GetSeasonBySeriesIdParams }>(
+  const [apiCaller, status] = useMutation<{ getSeasonBySeriesId: Season[] }, { params: GetSeasonBySeriesIdParams }>(
     gql`
-      mutation ($param: GetSeasonBySeriesIdParams!) {
-        getSeasonBySeriesId(GetSeasonBySeriesIdParams: $param) {
+      mutation ($params: GetSeasonBySeriesIdParams!) {
+        getSeasonBySeriesId(GetSeasonBySeriesIdParams: $params) {
           ID
           number
           mediaBasicInfo {
@@ -49,9 +49,9 @@ export function useGetSeasonBySeriesId() {
       }
     `
   );
-  const mutateAsync = async (param: GetSeasonBySeriesIdParams) => {
+  const mutateAsync = async (params: GetSeasonBySeriesIdParams) => {
     try {
-      const result = await apiCaller({ variables: { param } });
+      const result = await apiCaller({ variables: { params } });
       return result.data?.getSeasonBySeriesId;
     } catch (error) {
       handleError(error);
@@ -158,18 +158,18 @@ export function useCreateImageByUrl() {
   return { ...status, mutateAsync, data: status.data?.createImageByUrl, isPending: status.loading };
 }
 
-export function useGetNextEpisodeNumber(param: GetNextEpisodeNumberParams) {
+export function useGetNextEpisodeNumber(params: GetNextEpisodeNumberParams) {
   const { handleError } = useErrorHandler();
   const status = useQuery<{ getNextEpisodeNumber: GetNextEpisodeNumberOutput }>(
     gql`
-      query ($param: GetNextEpisodeNumberParams!) {
-        getNextEpisodeNumber(GetNextEpisodeNumberParams: $param) {
+      query ($params: GetNextEpisodeNumberParams!) {
+        getNextEpisodeNumber(GetNextEpisodeNumberParams: $params) {
           number
         }
       }
     `,
     {
-      variables: { param },
+      variables: { params },
     }
   );
 
@@ -204,15 +204,16 @@ export function useGetManagerSeriesWithImage() {
 }
 
 export function useUploadVideoOnAwsS3() {
+  const progress = useRef<number>(0);
   const { handleError } = useErrorHandler();
   const [isPending, setIsPending] = useState(false);
-  const [progress, setProgress] = useState(0);
+
   const xhr = new XMLHttpRequest();
 
   const onProgress = (event: ProgressEvent) => {
     if (event.lengthComputable) {
       const percentComplete = (event.loaded / event.total) * 100;
-      setProgress(+percentComplete.toFixed(1));
+      progress.current = +percentComplete.toFixed(1);
     }
   };
 
@@ -230,9 +231,9 @@ export function useUploadVideoOnAwsS3() {
       throw new Error(error);
     } finally {
       setIsPending(false);
-      setProgress(0);
+      progress.current = 0;
     }
   };
 
-  return { mutateAsync, isPending, progress };
+  return { mutateAsync, isPending, progress: progress.current };
 }

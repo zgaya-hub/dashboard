@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Stack, Typography, Paper } from "@mui/material";
+import { Stack, Typography, Paper, Toolbar } from "@mui/material";
 import { extractImageBase64, extractImageMetadata } from "metalyzer";
 import * as yup from "yup";
 import { ImageVariantEnum } from "zgaya.hub-client-types/lib";

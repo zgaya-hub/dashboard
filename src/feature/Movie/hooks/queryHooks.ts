@@ -4,22 +4,23 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 
 export function useDeleteMultipleMovieByIdz() {
   const seriesError = useErrorHandler();
-  const [apiCaller, status] = useMutation<{ deleteMultipleMovieByIdz: SuccessOutput }, { param: DeleteMultipleMovieByIdzParams }>(
+  const [apiCaller, status] = useMutation<{ deleteMultipleMovieByIdz: SuccessOutput }, { params: DeleteMultipleMovieByIdzParams }>(
     gql`
-      mutation ($param: DeleteMultipleMovieByIdzParams!) {
-        deleteMultipleMovieByIdz(DeleteMultipleMovieByIdzParams: $param) {
+      mutation ($params: DeleteMultipleMovieByIdzParams!) {
+        deleteMultipleMovieByIdz(DeleteMultipleMovieByIdzParams: $params) {
           isSuccess
         }
       }
     `
   );
 
-  const mutateAsync = async (param: DeleteMultipleMovieByIdzParams) => {
+  const mutateAsync = async (params: DeleteMultipleMovieByIdzParams) => {
     try {
-      const result = await apiCaller({ variables: { param } });
+      const result = await apiCaller({ variables: { params } });
       return result.data?.deleteMultipleMovieByIdz;
     } catch (error) {
       seriesError.handleError(error);
+      throw new Error(error);
     }
   };
 
@@ -29,22 +30,23 @@ export function useDeleteMultipleMovieByIdz() {
 export function useUpdateMovie() {
   const seriesError = useErrorHandler();
 
-  const [apiCaller, status] = useMutation<{ updateMovie: SuccessOutput }, { param: MovieIdParams; input: UpdateMovieInput }>(
+  const [apiCaller, status] = useMutation<{ updateMovie: SuccessOutput }, { params: MovieIdParams; input: UpdateMovieInput }>(
     gql`
-      mutation ($param: MovieIdParams!, $input: UpdateMovieInput!) {
-        updateMovie(MovieIdParams: $param, UpdateMovieInput: $input) {
+      mutation ($params: MovieIdParams!, $input: UpdateMovieInput!) {
+        updateMovie(MovieIdParams: $params, UpdateMovieInput: $input) {
           isSuccess
         }
       }
     `
   );
 
-  const mutateAsync = async (param: MovieIdParams, input: UpdateMovieInput) => {
+  const mutateAsync = async (params: MovieIdParams, input: UpdateMovieInput) => {
     try {
-      const result = await apiCaller({ variables: { input, param } });
+      const result = await apiCaller({ variables: { input, params } });
       return result.data?.updateMovie;
     } catch (error) {
       seriesError.handleError(error);
+      throw new Error(error);
     }
   };
 
@@ -86,24 +88,61 @@ export function useGetManagerMovieForTable(input: GetManagerMovieForTableInput) 
 
 export function useDeleteMovieById() {
   const seriesError = useErrorHandler();
-  const [apiCaller, status] = useMutation<{ deleteMovieById: SuccessOutput }, { param: DeleteMovieByIdParams }>(gql`
-    mutation ($param: DeleteMovieByIdParams!) {
-      deleteMovieById(DeleteMovieByIdParams: $param) {
+  const [apiCaller, status] = useMutation<{ deleteMovieById: SuccessOutput }, { params: DeleteMovieByIdParams }>(gql`
+    mutation ($params: DeleteMovieByIdParams!) {
+      deleteMovieById(DeleteMovieByIdParams: $params) {
         isSuccess
       }
     }
   `);
 
-  const mutateAsync = async (param: DeleteMovieByIdParams) => {
+  const mutateAsync = async (params: DeleteMovieByIdParams) => {
     try {
-      const result = await apiCaller({ variables: { param } });
+      const result = await apiCaller({ variables: { params } });
       return result.data?.deleteMovieById;
     } catch (error) {
       seriesError.handleError(error);
+      throw new Error(error);
     }
   };
 
   status;
 
   return { mutateAsync, data: status.data?.deleteMovieById, isPending: status.loading, ...status };
+}
+
+export function useGetMovieDetailsById(params: MovieIdParams) {
+  const { handleError } = useErrorHandler();
+
+  const status = useQuery<{ getMovieDetailsById: GetMovieDetailsByIdOutput }>(
+    gql`
+      query ($params: MovieIdParams!) {
+        getMovieDetailsById(MovieIdParams: $params) {
+          ID
+          originCountry
+          originalLanguage
+          genre
+          status
+          title
+          plotSummary
+          releaseDate
+          imageUrl
+          uploadDate
+          netProfit
+          budget
+          revenue
+          isFree
+        }
+      }
+    `,
+    {
+      variables: { params },
+    }
+  );
+
+  if (status.error) {
+    handleError(status.error);
+  }
+
+  return { ...status, isLoading: status.loading, data: status.data?.getMovieDetailsById };
 }

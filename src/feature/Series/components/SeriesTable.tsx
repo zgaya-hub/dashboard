@@ -1,6 +1,6 @@
 import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
 import { lazily } from "react-lazily";
-import { PopoverPosition } from "@mui/material";
+import { DialogContentText, PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
 import { noop, values as convertEnumToArray } from "lodash";
@@ -11,6 +11,8 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants
 import { DEFAULT_PAGINATION_DATE } from "../constants";
 import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks";
 import { TableSeriesInterface } from "../types";
+import { ConfirmationModal } from "@/components/Modals";
+import { useTranslation } from "react-i18next";
 
 const { SeriesRowContextMenu } = lazily(() => import("."));
 const { MediaTableCard } = lazily(() => import("@/components/Cards"));
@@ -26,10 +28,12 @@ export interface SeriesTableRefInterface {
 }
 
 const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefInterface>) {
+  const { t } = useTranslation();
   const [contextMenuAnchorPosition, setContextMenuAnchorPosition] = useState<PopoverPosition | null>(null);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(DEFAULT_PAGINATION_DATE);
   const [selectedRowId, setSelectedRowId] = useState("");
+  const [isMultipleSeriesDeleteConfirmationModalVisible, setIsMultipleSeriesDeleteConfirmationModalVisible] = useState(false);
 
   const { mutateAsync: deleteMultipleSeriesByIdzMutateAsync, isPending: isDeleteMultipleSeriesLoading } = useDeleteMultipleSeriesByIdz();
   const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
@@ -37,7 +41,8 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
 
   useImperativeHandle(ref, () => ({
     onRefresh: () => managerSeriesForTableRefetch(),
-    onDeleteMultipleSeries: handleOnDeleteMultipleSeries,
+    //TODO:  its calling when no series selected it should not able to call when series not selected
+    onDeleteMultipleSeries: handleOnToggleMultipleSeriesDeleteConfirmationModal,
     onEditMultipleSeries: noop,
     onSearchToogle: noop,
   }));
@@ -83,6 +88,11 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
     setRowSelectionModel((v) => [...v, selectedRowId]);
   };
 
+  const handleOnToggleMultipleSeriesDeleteConfirmationModal = () => {
+    setIsMultipleSeriesDeleteConfirmationModalVisible(!isMultipleSeriesDeleteConfirmationModalVisible);
+  };
+
+  // TODO: columns should change with likes, ratings, clicks etc
   const SeriesTableColumn: GridColDef[] = [
     {
       field: "series",
@@ -186,6 +196,9 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
         //TODO: one more problem is that mark is not working as expecting like its detect all rows selectiong by number of rows ot by idz
       />
       <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={() => managerSeriesForTableRefetch()} onClose={() => setContextMenuAnchorPosition(null)} />
+      <ConfirmationModal onConfirm={handleOnDeleteMultipleSeries} isOpen={isMultipleSeriesDeleteConfirmationModalVisible} onClose={handleOnToggleMultipleSeriesDeleteConfirmationModal} footerText={t("Feature.Series.SeriesTable.deleteMultipleSeriesConfirmationSuggestion")} title={t("Feature.Series.SeriesTable.alert")}>
+        <DialogContentText mb={2}>{t("Feature.Series.SeriesTable.deleteMultipleSeriesConfirmationMessage")}</DialogContentText>
+      </ConfirmationModal>
     </Suspense>
   );
 });

@@ -13,6 +13,8 @@ import { queryClient } from "./api/queryClient";
 import "./i18n";
 import { SidebarContextProvider } from "./context/SidebarContext";
 import { FirebaseProvider } from "./context/FirebaseContext";
+import KeyboardShortcutsContext from "./context/KeyboardShortCutsContext";
+import { BrowserRouter } from "react-router-dom";
 
 /* const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,21 +34,25 @@ function App() {
   return (
     <ApolloProvider client={queryClient}>
       <FirebaseProvider>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <I18nextProvider i18n={i18n}>
-            <AuthContextProvider>
-              <ThemeProvider>
-                <UserDetailProvider>
-                  <GraphQlErrorProvider>
-                    <SidebarContextProvider>
-                      <MainStack />
-                    </SidebarContextProvider>
-                  </GraphQlErrorProvider>
-                </UserDetailProvider>
-              </ThemeProvider>
-            </AuthContextProvider>
-          </I18nextProvider>
-        </LocalizationProvider>
+        <BrowserRouter>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <I18nextProvider i18n={i18n}>
+              <AuthContextProvider>
+                <ThemeProvider>
+                  <UserDetailProvider>
+                    <GraphQlErrorProvider>
+                      <SidebarContextProvider>
+                        <KeyboardShortcutsContext>
+                          <MainStack />
+                        </KeyboardShortcutsContext>
+                      </SidebarContextProvider>
+                    </GraphQlErrorProvider>
+                  </UserDetailProvider>
+                </ThemeProvider>
+              </AuthContextProvider>
+            </I18nextProvider>
+          </LocalizationProvider>
+        </BrowserRouter>
       </FirebaseProvider>
     </ApolloProvider>
   );

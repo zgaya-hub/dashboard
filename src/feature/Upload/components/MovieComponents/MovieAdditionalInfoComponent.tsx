@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MenuItem, Stack, Typography, Paper } from "@mui/material";
+import { MenuItem, Select, Stack, Typography } from "@mui/material";
 import { values } from "lodash";
 import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
-import { ModalSelectInput, SelectInput } from "@/components/Form";
+import { ModalSelectInput, SelectInput, TextField } from "@/components/Form";
 import { CountryPickerModal, GenrePickerModal, LanguagePickerModal } from "@/components/Modals";
 
 import { CreateMovieFormFieldType } from "../../types";
@@ -50,7 +50,7 @@ export default function MovieAdditionalInfoComponent({ setFormValue, watchFormVa
   };
 
   return (
-    <Stack component={Paper} gap={2} elevation={0}>
+    <Stack gap={2}>
       <Typography variant="h5">{t("Feature.VideoUpload.MovieUploadModal.addAdditionalInfo")}</Typography>
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <ModalSelectInput isModalVisible={isCountryModalVisible} label={t("Feature.VideoUpload.MovieUploadModal.originCountry")} value={watchFormValue("originCountry")} onClick={handleOnToggleCountryModal} fullWidth />
@@ -61,7 +61,15 @@ export default function MovieAdditionalInfoComponent({ setFormValue, watchFormVa
       <Stack direction={{ md: "row", sm: "column" }} gap={2}>
         <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.VideoUpload.MovieUploadModal.pickAGenre")} value={watchFormValue("genre")} onClick={handleOnToggleGenreModal} fullWidth />
         <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModal} onOk={handleOnSelectGenre} />
-        <SelectInput label={t("Feature.VideoUpload.MovieUploadModal.selectStatus")} fullWidth name="status" register={formRegister} defaultValue={MediaStatusEnum.RELEASED}>
+
+        <SelectInput
+          label={t("Feature.VideoUpload.MovieUploadModal.selectStatus")}
+          fullWidth
+          register={formRegister}
+          name="status"
+          // TODO: this default value set by a problem its set empty string "" if not set any value it will fix in future
+          defaultValue={MediaStatusEnum.RELEASED}
+        >
           {movieStatusesList.map((movieStatus) => (
             <MenuItem value={movieStatus}>{movieStatus}</MenuItem>
           ))}

@@ -31,6 +31,7 @@
     "i18next": "^23.7.16",
     "lodash": "^4.17.21",
     "metalyzer": "^1.0.13",
+    "mousetrap": "^1.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
+    "@types/mousetrap": "^1.6.15",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.18.1",

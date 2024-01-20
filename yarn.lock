@@ -2327,6 +2327,11 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.202.tgz#f09dbd2fb082d507178b2f2a5c7e74bd72ff98f8"
   integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
 
+"@types/mousetrap@^1.6.15":
+  version "1.6.15"
+  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.15.tgz#f144a0c539a4cef553a631824651d48267e53c86"
+  integrity sha512-qL0hyIMNPow317QWW/63RvL1x5MVMV+Ru3NaY9f/CuEpCqrmb7WeuK2071ZY5hczOnm38qExWM2i2WtkXLSqFw==
+
 "@types/node@>=12.12.47", "@types/node@>=13.7.0", "@types/node@^20.11.0":
   version "20.11.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.5.tgz#be10c622ca7fcaa3cf226cf80166abc31389d86e"
@@ -3862,6 +3867,11 @@ minimist@^1.2.6:
   dependencies:
     minimist "^1.2.6"
 
+mousetrap@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
+  integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -4831,9 +4841,9 @@ zen-observable@0.8.15:
   integrity sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
 
 zgaya.hub-client-types@^1.0.8:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/zgaya.hub-client-types/-/zgaya.hub-client-types-1.0.19.tgz#ce540c4132c194145f07de00d2e83c69841d43ef"
-  integrity sha512-aTbdo5iU8INLAUCNrYWk66Fr84kqCyUcQ4hYB+qYx9tpkbBaP01VlGJ0954eV5nvykmuCh8aiJXV8ig6kTmL+A==
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/zgaya.hub-client-types/-/zgaya.hub-client-types-1.0.21.tgz#f04a2394103fc84f83ab6f2a0b3999d38493a647"
+  integrity sha512-oHiNemo+dtvcEdQoL8G49FruJku4nNvRrO4NE5V6iTsVdTWJ2krDhV2fiQNdMC1IVfh/iM3PEHRXfeCCRSkIXw==
 
 zip-stream@^4.1.0:
   version "4.1.1"

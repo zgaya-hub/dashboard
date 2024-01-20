@@ -8,7 +8,7 @@ export default function MovieDetailsScreen() {
 
   return (
     <Page>
-      <Grid container justifyContent={"space-between"} rowGap={4}>
+      <Grid container justifyContent={"space-between"} rowGap={2}>
         <Grid xs={12} md={5.9} item lg={4}>
           {/* <MovieDetailsCard seriesId={location.seriesId} />
         </Grid>

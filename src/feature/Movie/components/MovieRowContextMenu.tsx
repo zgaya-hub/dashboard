@@ -1,4 +1,4 @@
-import { CheckBoxIcon, DeleteIcon, DetailsIcon, EditIcon, OpenTabIcon, PlayArrowIcon, PlaySquareIcon, RefreshIcon } from "@/components/icons";
+import { CheckBoxIcon, DeleteIcon, DetailsIcon, EditIcon, OpenTabIcon, PlayArrowIcon, RefreshIcon } from "@/components/icons";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import { Divider, ListItemText, PopoverPosition, SxProps } from "@mui/material";
 import Menu from "@mui/material/Menu";
@@ -22,24 +22,22 @@ export default function MovieRowContextMenu({ isOpen, onClose, onRefresh, onSele
   const { mutateAsync: deleteMovieByIdMutateAsync } = useDeleteMovieById();
 
   const handleOnDeleteMovie = async () => {
+    // TODO: should show confirmaion modal
     await deleteMovieByIdMutateAsync({ MovieId: movieId });
     onRefresh();
   };
 
   const handleOnEdit = () => {
-    window.open(`/quick/movie-update/${movieId}`, "_blank", "width=500,height=800");
+    navigation.navigate("/movie/update", { movieId });
+    // window.open(`/quick/movie-update/${movieId}`, "_blank", "width=500,height=800");
   };
 
   const handleOnDetails = () => {
     navigation.navigate(`/movie/details`, { movieId });
   };
 
-  const handleOnCreateSeason = () => {
-    alert("Edit clicked for row ID:" + movieId);
-  };
-
   const menuItemStyle = useThemeStyles<SxProps>((theme) => ({
-    width: theme.spacing(24),
+    width: theme.spacing(32),
   }));
 
   return (
@@ -57,13 +55,9 @@ export default function MovieRowContextMenu({ isOpen, onClose, onRefresh, onSele
         <RefreshIcon isListIcon />
         <ListItemText>{t("Feature.Movie.MovieRowContextMenu.refresh")}</ListItemText>
       </MenuItem>
-      <MenuItem sx={menuItemStyle} onClick={handleOnCreateSeason}>
-        <PlayArrowIcon isListIcon />
-        <ListItemText>{t("Feature.Movie.MovieRowContextMenu.playOnZgayaHub")}</ListItemText>
-      </MenuItem>
-      <MenuItem sx={menuItemStyle} onClick={handleOnCreateSeason}>
-        <PlaySquareIcon isListIcon />
-        <ListItemText>{t("Feature.Movie.MovieRowContextMenu.createSeason")}</ListItemText>
+      <MenuItem onClick={onSelect} sx={menuItemStyle}>
+        <CheckBoxIcon isListIcon />
+        <ListItemText>{t("Feature.Movie.MovieRowContextMenu.select")}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem onClick={handleOnEdit} sx={menuItemStyle}>

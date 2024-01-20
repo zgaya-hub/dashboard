@@ -48,7 +48,7 @@ export default function FinancialInfoCreatePopper({ anchorEl, onClose, seriesId,
 
   return (
     <Popover onClose={onClose} open={!!anchorEl} anchorEl={anchorEl}>
-      <Stack p={4} gap={2}>
+      <Stack p={2} gap={2}>
         <Typography variant="h5">Financial info</Typography>
         <Form rowGap={2} onSubmit={submitForm(handleOnSubmit)}>
           <PriceField control={formControl} name="netProfit" label="netProfit" error={!!formErrors.netProfit} helperText={formErrors.netProfit?.message} />

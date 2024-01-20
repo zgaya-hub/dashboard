@@ -143,6 +143,11 @@
         "save": "Save",
         "cancel": "Cancel"
       },
+      "SeriesTable": {
+        "deleteMultipleSeriesConfirmationMessage": "Are you sure you want to delete selected series it will delete forever",
+        "deleteMultipleSeriesConfirmationSuggestion": "Click 'OK' to proceed for delete series",
+        "alert": "Alert"
+      },
       "SeriesDetailsCard": {
         "originCountry": "Origin country",
         "originalLanguage": "Original language",

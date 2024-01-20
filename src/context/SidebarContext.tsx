@@ -1,13 +1,19 @@
+import { noop } from "lodash";
+import Mousetrap from "mousetrap";
 import React, { createContext, useContext, useMemo, useState } from "react";
 
 interface SidebarContextProps {
   isFeedbackSidebarOpen: boolean;
   handleOnToggleFeedbackSidebar: () => void;
+  isRootSidebarOpen: boolean;
+  handleOnToggleRootSidebar: () => void;
 }
 
 const defaultContextValue: SidebarContextProps = {
   isFeedbackSidebarOpen: false,
-  handleOnToggleFeedbackSidebar: () => {},
+  isRootSidebarOpen: false,
+  handleOnToggleRootSidebar: noop,
+  handleOnToggleFeedbackSidebar: noop,
 };
 
 const SidebarContext = createContext<SidebarContextProps>(defaultContextValue);
@@ -23,10 +29,15 @@ export function SidebarContextProvider({ children }: SidebarContextProviderProps
     setState({ ...state, isFeedbackSidebarOpen: !state.isFeedbackSidebarOpen });
   };
 
+  const handleOnToggleRootSidebar = () => {
+    setState({ ...state, isRootSidebarOpen: !state.isRootSidebarOpen });
+  };
+
   const contextValue = useMemo(
     () => ({
       ...state,
-      handleOnToggleFeedbackSidebar: handleOnToggleFeedbackSidebar,
+      handleOnToggleFeedbackSidebar,
+      handleOnToggleRootSidebar,
     }),
     [state]
   );

@@ -28,11 +28,11 @@ export function useGetSharelink(_input: GetSharelinkInput) {
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesWithImage };
 }
 
-export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
+export function useGetImageByMediaId(params: GetImageByMediaIdParams) {
   const status = useQuery<{ getImageByMediaId: Image }>(
     gql`
-      query ($param: GetImageByMediaIdParams!) {
-        getImageByMediaId(GetImageByMediaIdParams: $param) {
+      query ($params: GetImageByMediaIdParams!) {
+        getImageByMediaId(GetImageByMediaIdParams: $params) {
           ID
           variant
           url
@@ -40,7 +40,7 @@ export function useGetImageByMediaId(param: GetImageByMediaIdParams) {
       }
     `,
     {
-      variables: { param },
+      variables: { params },
     }
   );
   return { ...status, isLoading: status.loading, data: status.data?.getImageByMediaId };

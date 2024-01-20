@@ -52,17 +52,17 @@ export function useCreateSeries() {
 
 export function useDeleteSeriesById() {
   const seriesError = useSeriesError();
-  const [apiCaller, status] = useMutation<{ deleteSeriesById: SuccessOutput }, { param: DeleteSeriesByIdParams }>(gql`
-    mutation ($param: DeleteSeriesByIdParams!) {
-      deleteSeriesById(DeleteSeriesByIdParams: $param) {
+  const [apiCaller, status] = useMutation<{ deleteSeriesById: SuccessOutput }, { params: DeleteSeriesByIdParams }>(gql`
+    mutation ($params: DeleteSeriesByIdParams!) {
+      deleteSeriesById(DeleteSeriesByIdParams: $params) {
         isSuccess
       }
     }
   `);
 
-  const mutateAsync = async (param: DeleteSeriesByIdParams) => {
+  const mutateAsync = async (params: DeleteSeriesByIdParams) => {
     try {
-      const result = await apiCaller({ variables: { param } });
+      const result = await apiCaller({ variables: { params } });
       return result.data?.deleteSeriesById;
     } catch (error) {
       seriesError.handleError(error);
@@ -76,19 +76,19 @@ export function useDeleteSeriesById() {
 
 export function useDeleteMultipleSeriesByIdz() {
   const seriesError = useSeriesError();
-  const [apiCaller, status] = useMutation<{ deleteMultipleSeriesByIdz: SuccessOutput }, { param: DeleteMultipleSeriesByIdzParams }>(
+  const [apiCaller, status] = useMutation<{ deleteMultipleSeriesByIdz: SuccessOutput }, { params: DeleteMultipleSeriesByIdzParams }>(
     gql`
-      mutation ($param: DeleteMultipleSeriesByIdzParams!) {
-        deleteMultipleSeriesByIdz(DeleteMultipleSeriesByIdzParams: $param) {
+      mutation ($params: DeleteMultipleSeriesByIdzParams!) {
+        deleteMultipleSeriesByIdz(DeleteMultipleSeriesByIdzParams: $params) {
           isSuccess
         }
       }
     `
   );
 
-  const mutateAsync = async (param: DeleteMultipleSeriesByIdzParams) => {
+  const mutateAsync = async (params: DeleteMultipleSeriesByIdzParams) => {
     try {
-      const result = await apiCaller({ variables: { param } });
+      const result = await apiCaller({ variables: { params } });
       return result.data?.deleteMultipleSeriesByIdz;
     } catch (error) {
       seriesError.handleError(error);
@@ -101,19 +101,19 @@ export function useDeleteMultipleSeriesByIdz() {
 export function useUpdateSeries() {
   const seriesError = useSeriesError();
 
-  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { param: SeriesIdParams; input: UpdateSeriesInput }>(
+  const [apiCaller, status] = useMutation<{ updateSeries: SuccessOutput }, { params: SeriesIdParams; input: UpdateSeriesInput }>(
     gql`
-      mutation ($param: SeriesIdParams!, $input: UpdateSeriesInput!) {
-        updateSeries(SeriesIdParams: $param, UpdateSeriesInput: $input) {
+      mutation ($params: SeriesIdParams!, $input: UpdateSeriesInput!) {
+        updateSeries(SeriesIdParams: $params, UpdateSeriesInput: $input) {
           isSuccess
         }
       }
     `
   );
 
-  const mutateAsync = async (param: SeriesIdParams, input: UpdateSeriesInput) => {
+  const mutateAsync = async (params: SeriesIdParams, input: UpdateSeriesInput) => {
     try {
-      const result = await apiCaller({ variables: { input, param } });
+      const result = await apiCaller({ variables: { input, params } });
       return result.data?.updateSeries;
     } catch (error) {
       seriesError.handleError(error);
@@ -123,11 +123,11 @@ export function useUpdateSeries() {
   return { mutateAsync, data: status.data?.updateSeries, isPending: status.loading, ...status };
 }
 
-export function useGetSeriesDetailsById(param: SeriesIdParams) {
+export function useGetSeriesDetailsById(params: SeriesIdParams) {
   const status = useQuery<{ getSeriesDetailsById: GetSeriesDetailsByIdOutput }>(
     gql`
-      query ($param: SeriesIdParams!) {
-        getSeriesDetailsById(SeriesIdParams: $param) {
+      query ($params: SeriesIdParams!) {
+        getSeriesDetailsById(SeriesIdParams: $params) {
           ID
           originCountry
           originalLanguage
@@ -146,19 +146,19 @@ export function useGetSeriesDetailsById(param: SeriesIdParams) {
       }
     `,
     {
-      variables: { param },
+      variables: { params },
     }
   );
   return { ...status, isLoading: status.loading, data: status.data?.getSeriesDetailsById };
 }
 
-export function useGetCineastsBySeriesId(param: GetCineastsBySeriesIdParams) {
+export function useGetCineastsBySeriesId(params: GetCineastsBySeriesIdParams) {
   const seriesError = useSeriesError();
 
   const status = useQuery<{ getCineastsBySeriesId: CineastEntityType[] }>(
     gql`
-      query ($param: GetCineastsBySeriesIdParams!) {
-        getCineastsBySeriesId(GetCineastsBySeriesIdParams: $param) {
+      query ($params: GetCineastsBySeriesIdParams!) {
+        getCineastsBySeriesId(GetCineastsBySeriesIdParams: $params) {
           fullName
           profession
           dateOfBirth
@@ -170,7 +170,7 @@ export function useGetCineastsBySeriesId(param: GetCineastsBySeriesIdParams) {
       }
     `,
     {
-      variables: { param },
+      variables: { params },
     }
   );
 
@@ -218,19 +218,19 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
 
 export function useCreateFinancialInfoForSeries() {
   const seriesError = useSeriesError();
-  const [apiCaller, status] = useMutation<{ createFinancialInfoForSeries: SuccessOutput }, { param: SeriesIdParams; input: CreateFinancialInfoInput }>(
+  const [apiCaller, status] = useMutation<{ createFinancialInfoForSeries: SuccessOutput }, { params: SeriesIdParams; input: CreateFinancialInfoInput }>(
     gql`
-      mutation ($param: SeriesIdParams!, $input: CreateFinancialInfoInput!) {
-        createFinancialInfoForSeries(SeriesIdParams: $param, CreateFinancialInfoInput: $input) {
+      mutation ($params: SeriesIdParams!, $input: CreateFinancialInfoInput!) {
+        createFinancialInfoForSeries(SeriesIdParams: $params, CreateFinancialInfoInput: $input) {
           isSuccess
         }
       }
     `
   );
 
-  const mutateAsync = async (param: SeriesIdParams, input: CreateFinancialInfoInput) => {
+  const mutateAsync = async (params: SeriesIdParams, input: CreateFinancialInfoInput) => {
     try {
-      const result = await apiCaller({ variables: { param, input } });
+      const result = await apiCaller({ variables: { params, input } });
       return result.data?.createFinancialInfoForSeries;
     } catch (error) {
       seriesError.handleError(error);

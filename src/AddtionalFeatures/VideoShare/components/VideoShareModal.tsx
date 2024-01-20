@@ -29,7 +29,7 @@ export default function VideoShareModal({ mediaId, mediaType, isVisible, onClose
 
   return (
     <Dialog isDraggable open={isVisible} onClose={onClose}>
-      <DialogTitle>{"Share " + mediaType}</DialogTitle>
+      <DialogTitle variant="h5">{"Share " + mediaType}</DialogTitle>
       <DialogContent dividers>
         <VideoShareModalCard imageSrc={"http://res.cloudinary.com/dqcevzkt9/image/upload/v1704085540/efbd2aad-ab28-490a-8d93-7e84456c2e2e.jpg"} title={"Money heist"} runTime={1704257934852} releaseDate={1704257934852} />
         <List sx={listStyle}>

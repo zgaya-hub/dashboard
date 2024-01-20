@@ -8,6 +8,7 @@ import useNavigation from "@/navigation/useNavigation";
 import SidebarItem, { SidebarItemProps } from "./SidebarItem";
 import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
 import { AuthenticatedRouteParams, useLocation } from "@/navigation";
+import { useSidebarContext } from "@/context/SidebarContext";
 
 interface SidebarSectionProps {
   listItems: SidebarItemProps[];
@@ -43,6 +44,7 @@ export default function LayoutSidebar() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigation = useNavigation();
+  const { isRootSidebarOpen } = useSidebarContext();
   const [activeItem, setActiveItem] = useState<keyof AuthenticatedRouteParams>("/home");
   const [isHovered] = useState(false);
 
@@ -58,7 +60,7 @@ export default function LayoutSidebar() {
         onClick: () => {
           navigation.navigate("/home");
         },
-        isActive: activeItem.startsWith('/home'),
+        isActive: activeItem.startsWith("/home"),
       },
       {
         icon: <AnalyticsIcon />,
@@ -74,7 +76,7 @@ export default function LayoutSidebar() {
         onClick: () => {
           navigation.navigate("/movie");
         },
-        isActive: activeItem.startsWith('/movie'),
+        isActive: activeItem.startsWith("/movie"),
       },
       {
         icon: <PlayDoubleIcon />,
@@ -82,7 +84,7 @@ export default function LayoutSidebar() {
         onClick: () => {
           navigation.navigate("/series");
         },
-        isActive: activeItem.startsWith('/series'),
+        isActive: activeItem.startsWith("/series"),
       },
       {
         icon: <LinkIcon />,
@@ -102,7 +104,7 @@ export default function LayoutSidebar() {
             onClick: () => {
               navigation.navigate("/upload/movie");
             },
-            isActive: activeItem.startsWith('/upload/movie'),
+            isActive: activeItem.startsWith("/upload/movie"),
           },
           {
             icon: <UploadIcon />,
@@ -110,7 +112,7 @@ export default function LayoutSidebar() {
             onClick: () => {
               navigation.navigate("/upload/trailer");
             },
-            isActive: activeItem.startsWith('/upload/trailer'),
+            isActive: activeItem.startsWith("/upload/trailer"),
           },
           {
             icon: <UploadIcon />,
@@ -118,7 +120,7 @@ export default function LayoutSidebar() {
             onClick: () => {
               navigation.navigate("/upload/episode");
             },
-            isActive: activeItem.startsWith('/upload/episode'),
+            isActive: activeItem.startsWith("/upload/episode"),
           },
         ],
       },
@@ -153,10 +155,10 @@ export default function LayoutSidebar() {
   const sideBarBackground = useThemeStyles((theme) => theme.palette.background.default);
 
   return (
-    <Sidebar collapsed={!isHovered} style={containerStyle} backgroundColor={sideBarBackground}>
+    <Sidebar collapsed={!isRootSidebarOpen} style={containerStyle} backgroundColor={sideBarBackground}>
       <Stack justifyContent={"space-between"} height={"100vh"}>
         <Stack gap={1}>
-          {!isHovered ? <CollapsedSidebarUserCard /> : <ExpandSidebarUserCard />}
+          {isRootSidebarOpen ? <ExpandSidebarUserCard /> : <CollapsedSidebarUserCard />}
           <SidebarSection listItems={sections.sidebar} />
         </Stack>
         <Stack sx={footerStyles}>

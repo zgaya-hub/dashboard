@@ -48,7 +48,7 @@ export default function SeriesDetailsCard({ seriesId }: SeriesDetailsCardProps) 
     <Card sx={cardStyle}>
       <CardHeader action={<CachedIcon onClick={() => seriesDetailsRefetch()} />} />
 
-      <CardMedia sx={cardMediaStyle} image={seriesDetailsData?.imageUrl} />
+      <CardMedia sx={cardMediaStyle} image={seriesDetailsData?.backdropImageUrl} />
 
       <CardContent>
         <Typography variant="h5" py={1}>

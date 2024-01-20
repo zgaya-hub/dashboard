@@ -22,17 +22,18 @@ export interface SeriesTableRefInterface {
 
 const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: SeriesUpdateFormProps, ref: Ref<SeriesTableRefInterface>) {
   const { t } = useTranslation();
+  const [backdropImageUrl, setBackdropImageUrl] = useState("");
+  const [isGenreModalVisible, setIsGenreModalVisible] = useState(false);
   const [isCountryModalVisible, setIsCountryModalVisible] = useState(false);
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
-  const [isGenreModalVisible, setIsGenreModalVisible] = useState(false);
   const [isImageChangeConfirmationModalVisible, setisImageChangeConfirmationModalVisible] = useState(false);
-  const [backdropImageUrl, setBackdropImageUrl] = useState("");
+
   const { data: seriesDetailsData, isLoading: isSeriesDetailsLoading } = useGetSeriesDetailsById({ SeriesId: seriesId });
   const { mutateAsync: updateSeriesMutateAsync, isPending: isUpdateSeriesLoading } = useUpdateSeries();
   const { mutateAsync: changeImageMutateAsync, isPending: isChangeImageLoading } = useChangeImageByMediaId();
 
   useImperativeHandle(ref, () => ({
-    onSave: formSubmit(handleOnUpdateSeries)
+    onSave: formSubmit(handleOnUpdateSeries),
   }));
 
   const {
@@ -40,7 +41,7 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
     register: formRegister,
     setValue: setFormValue,
     watch: watchFormValue,
-    handleSubmit: formSubmit
+    handleSubmit: formSubmit,
   } = useForm<SeriesUpdateFormFieldInterface>({
     defaultValues: {
       budget: seriesDetailsData?.budget,

@@ -5,12 +5,15 @@ import Stack from "@mui/material/Stack";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
 import useTheme from "@/theme/Theme.context";
 import useNavigation from "@/navigation/useNavigation";
-import { MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
+import { MenuOpenIcon, MoonSunIcon, SearchIcon, UploadIcon } from "@/components/icons";
 import UserAvatar from "./UserAvatar";
 import { AppBar, Fab } from "@mui/material";
+import { useSidebarContext } from "@/context/SidebarContext";
+import Mousetrap from "mousetrap";
 
 export default function LayoutAppBar() {
   const navigation = useNavigation();
+  const { handleOnToggleRootSidebar } = useSidebarContext();
   const { toggleTheme } = useTheme();
 
   const handleOnClickUpload = () => {
@@ -30,10 +33,12 @@ export default function LayoutAppBar() {
     marginX: "auto",
   }));
 
+  Mousetrap.bind("shift+[", handleOnToggleRootSidebar);
   return (
     <AppBar sx={appBarStyle}>
       <CssBaseline />
       <Toolbar>
+        <MenuOpenIcon tooltip="shift + [" onClick={handleOnToggleRootSidebar} />
         <Stack width="100%" justifyContent="center" direction="row" gap={3} alignItems="center" sx={fabContainerStyle}>
           <Fab onClick={handleOnClickUpload}>
             <UploadIcon />

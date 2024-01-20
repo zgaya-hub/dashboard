@@ -3,7 +3,7 @@ import { lazy, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SxProps } from "@mui/material";
+import { Box, SxProps, Toolbar } from "@mui/material";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
 import * as yup from "yup";
 import { ImageVariantEnum } from "zgaya.hub-client-types/lib";
@@ -83,28 +83,29 @@ export default function SeriesCreateScreen() {
 
   return (
     <Page isSuspense>
-      <Grid container justifyContent={"space-between"} rowGap={4}>
+      <Grid container justifyContent={"space-between"} rowGap={2}>
         <Grid xs={12} item lg={12}>
-          <Stack component={Paper} p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
+          <Toolbar component={Paper}>
             <Typography variant="h5">{t("Feature.Series.SeriesCreateScreen.createASeries")}</Typography>
+            <Box flex="1 0 0" />
             <Stack direction={"row"} gap={1}>
               <Button variant="text">{t("Feature.Series.SeriesCreateScreen.back")}</Button>
               <Button loading={isCreateSeriesLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
                 {t("Feature.Series.SeriesCreateScreen.save")}
               </Button>
             </Stack>
-          </Stack>
+          </Toolbar>
         </Grid>
         <Grid xs={12} item lg={5.9}>
           <SeriesBasicInfoForm control={formControl} formRegister={formRegister} errors={errors} />
         </Grid>
-        <Grid container justifyContent={"space-between"} rowGap={4} xs={12} lg={5.9}>
+        <Grid container justifyContent={"space-between"} rowGap={2} xs={12} lg={5.9}>
           <Grid xs={12} item lg={5.9} sx={fileSelectInputContainerStyle} position={"relative"}>
             <SeriesImageSelectComponent errorMessage={errors.imageId?.message} onImageDrop={handleOnBackdropSelect} isLoading={isCreateImageLoading} />
             <CardMedia sx={{ position: "absolute" }} component="img" className="appear-item" image={backDropUrl} />
           </Grid>
         </Grid>
-        <Grid container xs={12} item lg={5.9} rowGap={4}>
+        <Grid container xs={12} item lg={5.9} rowGap={2}>
           <Grid xs={12} item>
             <SeriesAdditionalInfoForm setFormValue={setFormValue} watchFormValue={watchFormValue} formRegister={formRegister} />
           </Grid>

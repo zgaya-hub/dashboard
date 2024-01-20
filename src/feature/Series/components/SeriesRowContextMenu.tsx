@@ -22,6 +22,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   const { mutateAsync: deleteSeriesByIdMutateAsync } = useDeleteSeriesById();
 
   const handleOnDeleteSeries = async () => {
+    // TODO: should show confirmaion modal
     await deleteSeriesByIdMutateAsync({ SeriesId: seriesId });
     onRefresh();
   };
@@ -39,7 +40,7 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   };
 
   const menuItemStyle = useThemeStyles<SxProps>((theme) => ({
-    width: theme.spacing(24),
+    width: theme.spacing(32),
   }));
 
   return (
