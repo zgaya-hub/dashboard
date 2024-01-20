@@ -55,6 +55,10 @@ import { default as MuiSdOutlinedIcon } from "@mui/icons-material/SdOutlined";
 import { default as AttachMoneyOutlinedIcon } from "@mui/icons-material/AttachMoneyOutlined";
 import { default as MuiReportProblemOutlineIcon } from "@mui/icons-material/ReportProblemOutlined";
 import { default as MuiCheckOutlineIcon } from "@mui/icons-material/CheckOutlined";
+import { default as MuiStopOutlinedIcon } from "@mui/icons-material/StopOutlined";
+import {default as MuiHourglassFullOutlinedIcon} from '@mui/icons-material/HourglassFullOutlined';
+import {default as MuiNewReleasesOutlinedIcon} from '@mui/icons-material/NewReleasesOutlined';
+import {default as MuiCheckCircleOutlineIcon} from '@mui/icons-material/CheckCircleOutline';
 
 import { default as MuiAddIcon } from "@mui/icons-material/Add";
 import { default as MuiBrightness4Icon } from "@mui/icons-material/Brightness4";
@@ -113,6 +117,10 @@ import { default as MuiAddPhotoAlternateIcon } from "@mui/icons-material/AddPhot
 import { default as AttachMoneyIcon } from "@mui/icons-material/AttachMoney";
 import { default as MuiReportProblemIcon } from "@mui/icons-material/ReportProblem";
 import { default as MuiCheckIcon } from "@mui/icons-material/Check";
+import { default as MuiStopIcon } from "@mui/icons-material/Stop";
+import {default as MuiHourglassFullIcon} from '@mui/icons-material/HourglassFull';
+import {default as MuiNewReleasesIcon} from '@mui/icons-material/NewReleases';
+import {default as MuiCheckCircleIcon} from '@mui/icons-material/CheckCircle';
 
 export interface IconWrapperProps extends SvgIconProps {
   iconButton?: boolean;
@@ -192,7 +200,7 @@ export const SelectAllIcon = withIconWrapper(MuiSelecOutlinedtAll, MuiSelectAll)
 export const SignalBarIcon = withIconWrapper(MuiSignalCellularAlt1BarOutlinedIcon, MuiSignalCellularAlt1BarIcon);
 export const DoneIcon = withIconWrapper(MuiDoneOutlinedIcon, MuiDoneIcon);
 export const CaretDownIcon = withIconWrapper(MuiArrowDropDownOutlinedIcon, MuiArrowDropDownIcon);
-export const ClearCircleIcon = withIconWrapper(MuiCancelOutlinedIcon, MuiCancelIcon);
+export const CancelCircleIcon = withIconWrapper(MuiCancelOutlinedIcon, MuiCancelIcon);
 export const StreetViewIcon = withIconWrapper(MuiStreetviewOutlinedIcon, MuiStreetviewIcon);
 export const AttachFileIcon = withIconWrapper(MuiAttachFileOutlinedIcon, MuiAttachFileIcon);
 export const CheckBoxIcon = withIconWrapper(MuiCheckBoxOutlinedIcon, MuiCheckBoxIcon);
@@ -209,3 +217,8 @@ export const AddImageIcon = withIconWrapper(MuiAddPhotoAlternateOutlinedIcon, Mu
 export const DollarIcon = withIconWrapper(AttachMoneyOutlinedIcon, AttachMoneyIcon);
 export const ProblemIcon = withIconWrapper(MuiReportProblemOutlineIcon, MuiReportProblemIcon);
 export const CheckIcon = withIconWrapper(MuiCheckOutlineIcon, MuiCheckIcon);
+export const StopIcon = withIconWrapper(MuiStopOutlinedIcon, MuiStopIcon);
+export const HourglassIcon = withIconWrapper(MuiHourglassFullOutlinedIcon, MuiHourglassFullIcon);
+export const NewReleasesIcon = withIconWrapper(MuiNewReleasesOutlinedIcon, MuiNewReleasesIcon);
+export const CheckCircleIcon = withIconWrapper(MuiCheckCircleOutlineIcon, MuiCheckCircleIcon);
+

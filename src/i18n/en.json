@@ -208,12 +208,13 @@
       },
       "MovieTable": {
         "status": "Status",
-        "totalLikes": "Totel likes",
+        "totalLikes": "Total likes",
         "movie": "Movie",
         "avarageRatings": "Avarage ratings",
         "releaseDate": "Release Date",
         "thumbnailUrl": "Thumbnail url",
-        "uploadDate": "Upload date"
+        "uploadDate": "Upload date",
+        "searchInputPlaceholder": "Search by title, status, likes count or any thing..."
       }
     },
     "Quick": {

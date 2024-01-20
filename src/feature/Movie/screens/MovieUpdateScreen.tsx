@@ -10,10 +10,9 @@ import { MovieUpdateFormFieldInterface } from "../types";
 import { useForm } from "react-hook-form";
 import useNavigation from "@/navigation/useNavigation";
 import { FileSelectInput } from "@/components/Form";
-import { CardMedia, DialogContentText, LinearProgress, SxProps } from "@mui/material";
+import { CardMedia, DialogContentText, LinearProgress } from "@mui/material";
 import { ConfirmationModal } from "@/components/Modals";
 import { extractImageBase64, extractImageMetadata, extractImageUrl } from "metalyzer";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 const Button = lazy(() => import("@/components/Button"));
 const { SaveIcon } = lazily(() => import("@/components/icons"));
