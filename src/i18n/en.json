@@ -212,7 +212,7 @@
         "movie": "Movie",
         "avarageRatings": "Avarage ratings",
         "releaseDate": "Release Date",
-        "imageUrl": "Image url",
+        "thumbnailUrl": "Thumbnail url",
         "uploadDate": "Upload date"
       }
     },

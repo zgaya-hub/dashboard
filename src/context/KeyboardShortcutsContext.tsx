@@ -38,7 +38,7 @@ export default function KeyboardShortcutsContext({ children }: KeyboardShortcuts
   return (
     <>
       <Dialog fullWidth maxWidth="sm" onClose={toggleDialog} open={isDialogOpen}>
-        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} >
           Keyboard Shortcuts
           <ClearIcon onClick={toggleDialog} iconButton={false} />
         </DialogTitle>

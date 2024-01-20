@@ -108,7 +108,7 @@ export default function EpisodeUploadModal({ isVisible, onClose, seasonId, onOpe
   return (
     <Suspense>
       <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible}>
-        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} >
           {steps[activeStep].label}
           <ClearIcon iconButton={false} onClick={onClose} />
         </DialogTitle>

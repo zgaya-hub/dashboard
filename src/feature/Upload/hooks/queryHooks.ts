@@ -188,7 +188,7 @@ export function useGetManagerSeriesWithImage() {
       query GetManagerSeriesWithImage {
         getManagerSeriesWithImage {
           ID
-          imageUrl
+          backdropImageUrl
           plotSummary
           title
         }

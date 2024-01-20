@@ -1,15 +1,13 @@
 import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
-export interface TableMovieInterface {
-  ID: string;
-  originCountry: MediaCountriesEnum;
-  originalLanguage: MediaLanguagiesEnum;
-  genre: MediaGenriesEnum;
-  status: MediaStatusEnum;
+export interface MovieUpdateFormFieldInterface {
   title: string;
   plotSummary: string;
   releaseDate: number;
-  imageUrl: string;
-  createdAt: number;
-  updatedAt: number;
+  genre: MediaGenriesEnum;
+  status: MediaStatusEnum;
+  originCountry: MediaCountriesEnum;
+  originalLanguage: MediaLanguagiesEnum;
+  thumbnailUrl: string;
+  image: File;
 }

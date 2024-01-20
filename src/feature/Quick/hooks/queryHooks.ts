@@ -167,7 +167,7 @@ export function useGetSeriesDetailsById(params: SeriesIdParams) {
           title
           plotSummary
           releaseDate
-          imageUrl
+          backdropImageUrl
           uploadDate
           isFree
         }

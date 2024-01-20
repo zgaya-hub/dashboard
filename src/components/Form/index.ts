@@ -7,3 +7,5 @@ export { default as ModalSelectInput } from "./ModalSelectInput";
 export { default as FileSelectInput } from "./FileSelectInput";
 export { default as GenderSelector } from "./GenderSelector";
 export { default as PriceField } from "./PriceField";
+
+export type { TextFieldProps } from "./TextField";

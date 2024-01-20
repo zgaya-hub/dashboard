@@ -1,17 +1,17 @@
-import { FieldValues, Path, UseFormRegister } from "react-hook-form";
-import { TextField } from ".";
-import { TextFieldProps } from "./TextField";
+import { Control, FieldValues, Path, UseFormRegister } from "react-hook-form";
+import { TextField, TextFieldProps } from ".";
 
 interface SelectInputProps<T extends FieldValues> extends Omit<TextFieldProps<T>, "name"> {
-  register: UseFormRegister<T>;
+  control?: Control<T>;
+  register?: UseFormRegister<T>;
   name: Path<T>;
   helperText?: string;
   label?: string;
 }
 
-export default function SelectInput<T extends FieldValues>({ name, children, register, ...restProps }: SelectInputProps<T>) {
+export default function SelectInput<T extends FieldValues>({ children, ...restProps }: SelectInputProps<T>) {
   return (
-    <TextField register={register} name={name} {...restProps} select>
+    <TextField {...restProps} select>
       {children}
     </TextField>
   );

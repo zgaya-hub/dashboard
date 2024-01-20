@@ -4,13 +4,12 @@ import { DialogContentText, PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
 import { noop, values as convertEnumToArray } from "lodash";
-import { MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
+import { GetManagerTableOutputSeriesList, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 
 import { DEFAULT_PAGINATION_DATE } from "../constants";
 import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSeries } from "../hooks";
-import { TableSeriesInterface } from "../types";
 import { ConfirmationModal } from "@/components/Modals";
 import { useTranslation } from "react-i18next";
 
@@ -59,7 +58,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
     setContextMenuAnchorPosition({ left: event.clientX - 2, top: event.clientY - 4 });
   };
 
-  const processRowUpdate = async (series: GridRowModel<TableSeriesInterface>) => {
+  const processRowUpdate = async (series: GridRowModel<GetManagerTableOutputSeriesList>) => {
     //TODO: here is problem is that i can remove value from cell but value should not be remove
     await updateSeriesMutateAsync(
       { SeriesId: series.ID },
@@ -72,7 +71,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
         },
         ReleaseDate: +series.releaseDate,
         Image: {
-          Url: series.imageUrl,
+          Url: series.backdropImageUrl,
         },
       }
     );
@@ -98,7 +97,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
       field: "series",
       headerName: "Series",
       width: 500,
-      renderCell: (params) => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
+      renderCell: (params) => <MediaTableCard imageSrc={params.row.backdropImageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
       field: "originCountry",
@@ -141,8 +140,8 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
       valueFormatter: (params) => format(params.value, DEFAULT_MONTH_YEAR_FORMAT),
     },
     {
-      field: "imageUrl",
-      headerName: "Image url",
+      field: "backdropImageUrl",
+      headerName: "Backdrop Url",
       width: 100,
       editable: true,
       renderCell: (params) => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
@@ -193,8 +192,9 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
             onContextMenu: handleOnContextMenu,
           },
         }}
-        //TODO: one more problem is that mark is not working as expecting like its detect all rows selectiong by number of rows ot by idz
       />
+
+      {/* TODO: one more problem is that mark is not working as expecting like its detect all rows selectiong by number of rows ot by idz */}
       <SeriesRowContextMenu seriesId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={() => managerSeriesForTableRefetch()} onClose={() => setContextMenuAnchorPosition(null)} />
       <ConfirmationModal onConfirm={handleOnDeleteMultipleSeries} isOpen={isMultipleSeriesDeleteConfirmationModalVisible} onClose={handleOnToggleMultipleSeriesDeleteConfirmationModal} footerText={t("Feature.Series.SeriesTable.deleteMultipleSeriesConfirmationSuggestion")} title={t("Feature.Series.SeriesTable.alert")}>
         <DialogContentText mb={2}>{t("Feature.Series.SeriesTable.deleteMultipleSeriesConfirmationMessage")}</DialogContentText>

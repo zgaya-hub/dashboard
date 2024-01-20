@@ -101,7 +101,7 @@ export default function SelectSeriesAndSeasonModal({ isVisible, onNext, onClose 
   return (
     <Suspense fallback={<CircularProgress />}>
       <Dialog onClose={handleOnClose} open={isVisible}>
-        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} >
           {selectedSeries ? selectedSeries.title : t("Feature.VideoUpload.SelectSeriesAndSeasonModal.headerText")}
           <ClearIcon iconButton={false} onClick={onClose} />
         </DialogTitle>

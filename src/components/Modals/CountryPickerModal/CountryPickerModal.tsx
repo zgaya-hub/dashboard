@@ -61,7 +61,7 @@ export default function CountryPickerModal({ isOpen, onClose, onOk, defaultValue
 
   return (
     <Dialog open={isOpen} onClose={onClose} sx={dialogBoxStyle}>
-      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+      <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} >
         {t("Components.Modals.CountryPickerModal.pickACountry")}
         <ClearIcon iconButton={false} onClick={handleOnClose} />
       </DialogTitle>

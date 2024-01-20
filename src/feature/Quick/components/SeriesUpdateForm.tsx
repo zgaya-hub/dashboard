@@ -47,7 +47,7 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
       setFormValue("originalLanguage", seriesDetailsData?.originalLanguage);
       setFormValue("genre", seriesDetailsData?.genre);
       setFormValue("status", seriesDetailsData?.status);
-      setBackdropImageUrl(seriesDetailsData?.imageUrl);
+      setBackdropImageUrl(seriesDetailsData?.backdropImageUrl);
     }
   }, [seriesDetailsData]);
 
@@ -125,37 +125,20 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
       <Backdrop open={isSeriesDetailsLoading || isUpdateSeriesLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <TextField
-        // TODO: label not shrink when value set with setState on init
-        register={formRegister}
-        name="title"
-        label={t("Feature.Quick.SeriesUpdateForm.title")}
-        fullWidth
-        autoFocus
-      />
-      <DatePickerModal
-        // TODO: values not set when set with setState
-        label={t("Feature.Quick.SeriesUpdateForm.releaseDate")}
-        views={["year", "month"]}
-        fullWidth
-        register={formRegister}
-        name={"releaseDate"}
-      />
+
+      {/* TODO: label not shrink when value set with setState on init */}
+      <TextField register={formRegister} name="title" label={t("Feature.Quick.SeriesUpdateForm.title")} fullWidth autoFocus />
+
+      {/* TODO: values not set when set with setState */}
+      <DatePickerModal label={t("Feature.Quick.SeriesUpdateForm.releaseDate")} views={["year", "month"]} fullWidth register={formRegister} name={"releaseDate"} />
 
       <Stack sx={fileSelectInputContainerStyle}>
         <FileSelectInput loading={isChangeImageLoading} label={t("Feature.Quick.SeriesUpdateForm.selectBackdropImage")} fullWidth onFileSelect={handleOnImageSelect} />
         <CardMedia component="img" className="appear-item" image={backdropImageUrl} />
       </Stack>
 
-      <TextField
-        // TODO: label not shrink when value set with setState on init
-        register={formRegister}
-        name="plotSummary"
-        label={t("Feature.Quick.SeriesUpdateForm.plotSummary")}
-        multiline
-        rows={5}
-        fullWidth
-      />
+      {/* TODO: label not shrink when value set with setState on init */}
+      <TextField register={formRegister} name="plotSummary" label={t("Feature.Quick.SeriesUpdateForm.plotSummary")} multiline rows={5} fullWidth />
       <Stack gap={2} py={1}>
         <Typography variant="h5">{t("Feature.Quick.SeriesUpdateForm.additionalInfo")}</Typography>
 
@@ -166,13 +149,8 @@ const SeriesUpdateForm = forwardRef(function SeriesUpdateForm({ seriesId }: Seri
         <ModalSelectInput isModalVisible={isGenreModalVisible} label={t("Feature.Quick.SeriesUpdateForm.pickAGenre")} value={watchFormValue("genre")} onClick={handleOnToggleGenreModal} fullWidth />
         <GenrePickerModal isOpen={isGenreModalVisible} onClose={handleOnToggleGenreModal} onOk={handleOnSelectGenre} />
 
-        <SelectInput
-          // TODO: values not set when set with setState
-          label={t("Feature.Quick.SeriesUpdateForm.selectStatus")}
-          fullWidth
-          name="status"
-          register={formRegister}
-        >
+        {/* // TODO: values not set when set with setState */}
+        <SelectInput label={t("Feature.Quick.SeriesUpdateForm.selectStatus")} fullWidth name="status" register={formRegister}>
           {seriesStatusesList.map((movieStatus) => {
             return <MenuItem value={movieStatus}>{movieStatus}</MenuItem>;
           })}

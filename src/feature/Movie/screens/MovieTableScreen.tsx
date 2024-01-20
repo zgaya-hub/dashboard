@@ -1,12 +1,11 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Card, CardActions, Hidden, Menu, MenuItem, Paper, Stack, SxProps, Toolbar, Typography } from "@mui/material";
+import { Box, Hidden, Menu, MenuItem, Paper, Stack, Typography } from "@mui/material";
 
 import Button from "@/components/Button";
 import { AddIcon, CachedIcon, DeleteIcon, EditIcon, MoreVertIcon, SearchIcon } from "@/components/icons";
 import Page from "@/components/Page";
 import useNavigation from "@/navigation/useNavigation";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
 
 import { MovieTable, MovieTableRefInterface } from "../components";
 

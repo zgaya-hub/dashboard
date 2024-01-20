@@ -46,19 +46,19 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
     return false;
   }, [progress]);
 
-  const handleOnMovieSelect = async (episode: File) => {
-    const episodeMetadata = await extractVideoMetadata(episode);
-    movieRef.current = await extractVideoUrl(episode);
+  const handleOnMovieSelect = async (movie: File) => {
+    const movieMetadata = await extractVideoMetadata(movie);
+    movieRef.current = await extractVideoUrl(movie);
     const result = await getUploadMovieUrlMutateAsync({
-      Height: episodeMetadata.videoHeight!,
-      Width: episodeMetadata.videoWidth!,
+      Height: movieMetadata.videoHeight!,
+      Width: movieMetadata.videoWidth!,
       MediaType: ZgayaHubMediaEnum.EPISODE,
-      Mime: episodeMetadata.mimeType,
-      RunTime: episodeMetadata.videoDuration,
-      SizeInKb: episodeMetadata.fileSizeKB,
+      Mime: movieMetadata.mimeType,
+      RunTime: movieMetadata.videoDuration,
+      SizeInKb: movieMetadata.fileSizeKB,
     });
     handleOnNextStep();
-    handleOnUploadOnAwsS3(episode, result?.signedUrl!);
+    handleOnUploadOnAwsS3(movie, result?.signedUrl!);
   };
 
   const handleOnCreateMovie = async (input: CreateMovieFormFieldType) => {
@@ -80,8 +80,8 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
     onClose();
   };
 
-  const handleOnUploadOnAwsS3 = async (episode: File, signedUrl: string) => {
-    const videoBlob = await convertVideoInBlob(episode);
+  const handleOnUploadOnAwsS3 = async (movie: File, signedUrl: string) => {
+    const videoBlob = await convertVideoInBlob(movie);
     await uploadVideoOnAwsS3MutateAsync({ SignedUrl: signedUrl, VideoBlob: videoBlob });
   };
 
@@ -113,7 +113,7 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
   return (
     <Suspense>
       <Dialog maxWidth="xl" sx={dialogBoxStyle} fullScreen={fullScreen} open={isVisible}>
-        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} displayPrint={"block"}>
+        <DialogTitle variant="h5" flexDirection={"row"} justifyContent={"space-between"} display={"flex"} alignItems={"center"} >
           {steps[activeStep].label}
           <ClearIcon iconButton={false} onClick={onClose} />
         </DialogTitle>
@@ -144,8 +144,8 @@ export default function MovieUploadModal({ isVisible, onClose, onOpenShareModal 
           <Button onClick={() => navigate.navigate("/upload/trailer")} startIcon={<UploadIcon />}>
             {t("Feature.VideoUpload.MovieUploadModal.trailer")}
           </Button>
-          <Button onClick={() => navigate.navigate("/upload/episode")} startIcon={<UploadIcon />}>
-            {t("Feature.VideoUpload.MovieUploadModal.episode")}
+          <Button onClick={() => navigate.navigate("/upload/movie")} startIcon={<UploadIcon />}>
+            {t("Feature.VideoUpload.MovieUploadModal.movie")}
           </Button>
         </DialogActions>
       </Dialog>

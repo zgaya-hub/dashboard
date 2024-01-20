@@ -1,16 +1,15 @@
-import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState, useId } from "react";
 import { lazily } from "react-lazily";
 import { PopoverPosition } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
 import { noop, values as convertEnumToArray } from "lodash";
-import { MediaStatusEnum } from "zgaya.hub-client-types/lib";
+import { GetManagerTableMovieListOutput, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 
 import { DEFAULT_PAGINATION_DATE } from "../constants";
 import { useDeleteMultipleMovieByIdz, useGetManagerMovieForTable, useUpdateMovie } from "../hooks";
-import { TableMovieInterface } from "../types";
 import { useTranslation } from "react-i18next";
 
 const { MovieRowContextMenu } = lazily(() => import("."));
@@ -57,7 +56,7 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
     setContextMenuAnchorPosition({ left: event.clientX - 2, top: event.clientY - 4 });
   };
 
-  const processRowUpdate = async (movie: GridRowModel<TableMovieInterface>) => {
+  const processRowUpdate = async (movie: GridRowModel<GetManagerTableMovieListOutput>) => {
     //TODO: here is problem is that i can remove value from cell but value should not be remove
     await updateMovieMutateAsync(
       {
@@ -82,7 +81,7 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
       field: "movie",
       headerName: t("Feature.Movie.MovieTable.movie"),
       width: 500,
-      renderCell: (params) => <MediaTableCard imageSrc={params.row.imageUrl} title={params.row.title} description={params.row.plotSummary} />,
+      renderCell: (params) => <MediaTableCard imageSrc={params.row.thumbnailUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
       field: "status",
@@ -112,8 +111,8 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
       valueFormatter: (params) => format(params.value, DEFAULT_MONTH_YEAR_FORMAT),
     },
     {
-      field: "imageUrl",
-      headerName: t("Feature.Movie.MovieTable.imageUrl"),
+      field: "thumbnailUrl",
+      headerName: t("Feature.Movie.MovieTable.thumbnailUrl"),
       width: 100,
       editable: true,
       renderCell: (params) => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
@@ -164,8 +163,8 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
             onContextMenu: handleOnContextMenu,
           },
         }}
-        //TODO: one more problem is that mark is not working as expecting like its detect all rows selectiong by number of rows ot by idz
       />
+      {/*TODO: one more problem is that mark is not working as expecting like its detect all rows selectiong by number of rows ot by idz */}
       <MovieRowContextMenu movieId={selectedRowId} isOpen={!!contextMenuAnchorPosition} anchorPosition={contextMenuAnchorPosition!} onSelect={() => handleOnSelect(selectedRowId)} onRefresh={() => managerMovieForTableRefetch()} onClose={() => setContextMenuAnchorPosition(null)} />
     </Suspense>
   );

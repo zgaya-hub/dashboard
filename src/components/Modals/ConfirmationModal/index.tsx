@@ -31,7 +31,7 @@ export default function ConfirmationModal({ isOpen, onClose, onConfirm, cancelBu
   };
 
   return (
-    <Dialog isDraggable open={isOpen} onClose={onClose}>
+    <Dialog isDraggable open={isOpen} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogTitle variant="h5">{title ?? t("Components.Modals.ConfirmationModal.title")}</DialogTitle>
       <DialogContent sx={dialogContentStyle}>
         {children}

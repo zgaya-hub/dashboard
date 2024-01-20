@@ -136,7 +136,7 @@ export function useGetSeriesDetailsById(params: SeriesIdParams) {
           title
           plotSummary
           releaseDate
-          imageUrl
+          backdropImageUrl
           uploadDate
           isFree
         }
@@ -189,7 +189,7 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
             ID
             uploadDate
             genre
-            imageUrl
+            backdropImageUrl
             originCountry
             originalLanguage
             plotSummary
