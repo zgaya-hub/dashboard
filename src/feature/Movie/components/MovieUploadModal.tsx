@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import { Dialog, DialogActions, DialogTitle } from "@/components/Dialog";
-import { ClearIcon, FeedbackIcon } from "@/components/icons";
+import { AddIcon, ClearIcon, FeedbackIcon } from "@/components/icons";
 import { DialogContent, Stack, SxProps, Typography } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 import { useChangeMovie, useGetUploadVideoSignedUrl, useUploadVideoOnAwsS3 } from "../hooks";

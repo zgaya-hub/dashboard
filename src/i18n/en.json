@@ -154,11 +154,9 @@
         "genre": "Genre",
         "status": "Status",
         "title": "Title",
+        "refetch": "Refetch",
         "plotSummary": "Plot summary",
         "releaseDate": "Release date",
-        "save": "Save",
-        "cancel": "Cancel",
-        "add": "Add",
         "seriesDetails": "Series details",
         "additionalInfo": "Additional info"
       },
@@ -215,6 +213,18 @@
         "thumbnailUrl": "Thumbnail url",
         "uploadDate": "Upload date",
         "searchInputPlaceholder": "Search by title, status, likes count or any thing..."
+      },
+      "MovieDetailsCard": {
+        "originCountry": "Origin country",
+        "originalLanguage": "Original language",
+        "genre": "Genre",
+        "status": "Status",
+        "refetch": "Refetch",
+        "title": "Title",
+        "plotSummary": "Plot summary",
+        "releaseDate": "Release date",
+        "movieDetails": "Movie details",
+        "additionalInfo": "Additional info"
       }
     },
     "Quick": {
@@ -277,19 +287,19 @@
   },
   "Layout": {
     "Sidebar": {
-      "dashboard": "Dashboard",
+      "home": "Home",
       "content": "Content",
       "analytics": "Analytics",
       "copyright": "Copyright",
-      "manageMovie": "Manage movies",
-      "manageSeries": "Manage series",
-      "manageUpload": "Manage uploads",
-      "socialLinking": "Social linking",
-      "uploadEpisode": "Upload episode",
-      "uploadMovie": "Upload movie",
-      "uploadTrailer": "Upload trailer",
+      "movies": "Movies",
+      "series": "Series",
+      "uploads": "Uploads",
+      "links": "Links",
+      "episode": "Episode",
+      "movie": "Movie",
+      "trailer": "Trailer",
       "settings": "Settings",
-      "askAnyQuestion": "Ask any question"
+      "feedback": "Feedback"
     },
     "AppHeader": {
       "uploadVideo": "Upload video"

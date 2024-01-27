@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CreateImageInput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, GetSeriesDetailsByIdOutput, ImageIdOutput, SeriesIdParams, SuccessOutput, UpdateSeriesInput } from "zgaya.hub-client-types/lib";
+import { CreateImageInput, CreateSeriesInput, DeleteMultipleSeriesByIdzParams, DeleteSeriesByIdParams, GetManagerSeriesForTableInput, GetManagerSeriesForTableOutput, GetSeasonBySeriesIdOutput, GetSeriesDetailsByIdOutput, ImageIdOutput, SeriesIdParams, SuccessOutput, UpdateSeriesInput } from "zgaya.hub-client-types/lib";
 
 import { useSeriesError } from "./errorHooks";
 import { GetCineastsBySeriesIdParams } from "./queryHooks.types";
@@ -187,15 +187,13 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
           totalRecords
           seriesList {
             ID
-            uploadDate
-            genre
-            backdropImageUrl
-            originCountry
-            originalLanguage
-            plotSummary
-            releaseDate
             status
             title
+            plotSummary
+            releaseDate
+            backdropImageUrl
+            likeCount
+            avarageRating
             uploadDate
           }
         }
@@ -211,4 +209,32 @@ export function useGetManagerSeriesForTable(input: GetManagerSeriesForTableInput
   }
 
   return { ...status, isLoading: status.loading, data: status.data?.getManagerSeriesForTable };
+}
+
+export function useGetSeasonBySeriesId(params: SeriesIdParams) {
+  const seriesError = useSeriesError();
+
+  const status = useQuery<{ getSeasonBySeriesId: GetSeasonBySeriesIdOutput[] }, { params: SeriesIdParams }>(
+    gql`
+      query ($params: SeriesIdParams!) {
+        getSeasonBySeriesId(SeriesIdParams: $params) {
+          ID
+          plotSummary
+          title
+          releaseDate
+          number
+          backdropImageUrl
+        }
+      }
+    `,
+    {
+      variables: { params },
+    }
+  );
+
+  if (status.error) {
+    seriesError.handleError(status.error);
+  }
+
+  return { ...status, isLoading: status.loading, data: status.data?.getSeasonBySeriesId };
 }

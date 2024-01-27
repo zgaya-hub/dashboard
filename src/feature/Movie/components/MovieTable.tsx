@@ -103,7 +103,6 @@ const MovieTable = forwardRef(function MovieTable(_, ref: Ref<MovieTableRefInter
       field: "thumbnailUrl",
       headerName: t("Feature.Movie.MovieTable.thumbnailUrl"),
       width: 150,
-      editable: true,
       renderCell: (params) => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
     },
     {

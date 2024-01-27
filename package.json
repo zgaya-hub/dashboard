@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tauri": "tauri"
   },
   "dependencies": {
     "@apollo/client": "^3.8.9",
@@ -22,6 +23,7 @@
     "@mui/x-data-grid-pro": "^6.18.7",
     "@mui/x-date-pickers-pro": "^6.19.0",
     "@ngneat/falso": "^7.1.1",
+    "@tauri-apps/api": "^1.5.2",
     "@types/node": "^20.11.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
@@ -48,12 +50,14 @@
     "zgaya.hub-client-types": "^1.0.8"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^1.5.8",
     "@types/lodash": "^4.14.202",
     "@types/mousetrap": "^1.6.15",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
+    "@vitejs/plugin-react": "^4.2.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "babel-plugin-import": "^1.13.8",
     "babel-plugin-module-resolver": "^5.0.0",

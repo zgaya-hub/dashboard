@@ -4,5 +4,5 @@ import UnAuthenticatedRoutes from "./UnAuthenticated.routes";
 
 export default function MainStack() {
   const { isAuthenticated } = useAuthContext();
-  return isAuthenticated ? <AuthenticatedRoutes /> : <UnAuthenticatedRoutes />;
+  return !isAuthenticated ? <AuthenticatedRoutes /> : <UnAuthenticatedRoutes />;
 }

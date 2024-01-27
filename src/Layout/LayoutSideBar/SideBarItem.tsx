@@ -1,8 +1,6 @@
-import { CSSProperties, cloneElement } from "react";
-import { ReactElement } from "react";
+import { cloneElement, ReactElement } from "react";
 import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { MenuItem } from "react-pro-sidebar";
-import { Stack, Tooltip } from "@mui/material";
+import { ListItem, ListItemButton, Stack, SxProps, Tooltip, Typography } from "@mui/material";
 import { IconWrapperProps } from "@/components/icons";
 
 export interface SidebarItemProps {
@@ -13,10 +11,14 @@ export interface SidebarItemProps {
   childrens?: SidebarItemProps[];
 }
 
-export default function SidebarItem({ icon, label, onClick, isActive }: SidebarItemProps) {
-  const containerStyle = useThemeStyles<CSSProperties>((theme) => ({
+export default function SidebarItem({ icon, label, onClick, isActive }: Readonly<SidebarItemProps>) {
+  const listItemButtonStyle = useThemeStyles<SxProps>((theme) => ({
     cursor: "pointer",
     background: isActive ? theme.palette.action.selected : "",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: theme.spacing(1 / 4),
   }));
 
   const activeLineStyle = useThemeStyles((theme) => ({
@@ -31,18 +33,16 @@ export default function SidebarItem({ icon, label, onClick, isActive }: SidebarI
 
   return (
     <Tooltip title={label} placement="left">
-      <MenuItem
-        style={containerStyle}
-        onClick={onClick}
-        icon={cloneElement(icon, {
-          fontSize: "small",
-          solid: isActive,
-          color: isActive ? "primary" : "inherit",
-        })}
-      >
-        {isActive ? <Stack sx={activeLineStyle} /> : null}
-        {label}
-      </MenuItem>
+      <ListItem onClick={onClick} disablePadding>
+        <ListItemButton sx={listItemButtonStyle}>
+          {cloneElement(icon, {
+            solid: isActive,
+            color: isActive ? "primary" : "inherit",
+          })}
+          <Typography variant="caption">{label}</Typography>
+          {isActive ? <Stack sx={activeLineStyle} /> : null}
+        </ListItemButton>
+      </ListItem>
     </Tooltip>
   );
 }

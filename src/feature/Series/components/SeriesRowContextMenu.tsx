@@ -30,13 +30,13 @@ export default function SeriesRowContextMenu({ isOpen, onClose, onRefresh, onSel
   const handleOnEdit = () => {
     window.open(`/quick/series-update/${seriesId}`, "_blank", "width=500,height=800");
   };
-
+  
   const handleOnDetails = () => {
     navigation.navigate(`/series/details`, { seriesId });
   };
-
+  
   const handleOnCreateSeason = () => {
-    alert("Edit clicked for row ID:" + seriesId);
+    window.open(`/quick/season-create/${seriesId}`, "_blank", "width=500,height=600");
   };
 
   const menuItemStyle = useThemeStyles<SxProps>((theme) => ({

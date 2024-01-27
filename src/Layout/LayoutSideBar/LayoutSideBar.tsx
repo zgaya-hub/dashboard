@@ -1,42 +1,24 @@
-import { Stack, SxProps } from "@mui/material";
+import { Drawer, List, Stack, SxProps, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Menu, Sidebar, SubMenu } from "react-pro-sidebar";
 import { AnalyticsIcon, DashboardIcon, LinkIcon, PlayDoubleIcon, PlaySquareIcon, QuestionAnswerIcon, SettingIcon, UploadIcon } from "@/components/icons";
-import useThemeStyles from "@/theme/hooks/useThemeStyles";
-import { CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useNavigation from "@/navigation/useNavigation";
-import SidebarItem, { SidebarItemProps } from "./SidebarItem";
-import { CollapsedSidebarUserCard, ExpandSidebarUserCard } from "./SidebarUserCard";
+import { SidebarItem, SidebarItemProps } from ".";
 import { AuthenticatedRouteParams, useLocation } from "@/navigation";
 import { useSidebarContext } from "@/context/SidebarContext";
+import useTheme from "@/theme/Theme.context";
 
 interface SidebarSectionProps {
   listItems: SidebarItemProps[];
 }
 
-function SidebarSection({ listItems }: SidebarSectionProps) {
-  const subMenuSection = (item: SidebarItemProps) => {
-    return (
-      <SubMenu label={item.label} icon={item.icon}>
-        {item.childrens?.map((item) => {
-          if (item.childrens) {
-            subMenuSection(item);
-          }
-          return <SidebarItem key={item.label} label={item.label} onClick={item.onClick} isActive={item.isActive} icon={item.icon} />;
-        })}
-      </SubMenu>
-    );
-  };
-
+function SidebarSection({ listItems }: Readonly<SidebarSectionProps>) {
   return (
-    <Menu>
+    <Stack component={List} rowGap={1}>
       {listItems.map((item) => {
-        if (item.childrens) {
-          return subMenuSection(item);
-        }
         return <SidebarItem key={item.label} label={item.label} onClick={item.onClick} isActive={item.isActive} icon={item.icon} />;
       })}
-    </Menu>
+    </Stack>
   );
 }
 
@@ -44,9 +26,11 @@ export default function LayoutSidebar() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigation = useNavigation();
-  const { isRootSidebarOpen } = useSidebarContext();
+  const { isRootSidebarOpen, handleOnToggleRootSidebar } = useSidebarContext();
+  const { theme } = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   const [activeItem, setActiveItem] = useState<keyof AuthenticatedRouteParams>("/home");
-  const [isHovered] = useState(false);
 
   useEffect(() => {
     setActiveItem(location.pathname);
@@ -56,7 +40,7 @@ export default function LayoutSidebar() {
     sidebar: [
       {
         icon: <DashboardIcon />,
-        label: t("Layout.Sidebar.dashboard"),
+        label: t("Layout.Sidebar.home"),
         onClick: () => {
           navigation.navigate("/home");
         },
@@ -66,13 +50,13 @@ export default function LayoutSidebar() {
         icon: <AnalyticsIcon />,
         label: t("Layout.Sidebar.analytics"),
         onClick: () => {
-          alert("Analytics");
+          console.log("Analytics");
         },
         isActive: activeItem === t("Layout.Sidebar.analytics"),
       },
       {
         icon: <PlaySquareIcon />,
-        label: t("Layout.Sidebar.manageMovie"),
+        label: t("Layout.Sidebar.movies"),
         onClick: () => {
           navigation.navigate("/movie");
         },
@@ -80,7 +64,7 @@ export default function LayoutSidebar() {
       },
       {
         icon: <PlayDoubleIcon />,
-        label: t("Layout.Sidebar.manageSeries"),
+        label: t("Layout.Sidebar.series"),
         onClick: () => {
           navigation.navigate("/series");
         },
@@ -88,19 +72,19 @@ export default function LayoutSidebar() {
       },
       {
         icon: <LinkIcon />,
-        label: t("Layout.Sidebar.socialLinking"),
-        onClick: () => alert(t("Layout.Sidebar.socialLinking")),
-        isActive: activeItem === t("Layout.Sidebar.socialLinking"),
+        label: t("Layout.Sidebar.links"),
+        onClick: () => alert(t("Layout.Sidebar.links")),
+        isActive: activeItem === t("Layout.Sidebar.links"),
       },
       {
         icon: <UploadIcon />,
-        label: t("Layout.Sidebar.manageUpload"),
+        label: t("Layout.Sidebar.uploads"),
         onClick: () => {},
-        isActive: activeItem === t("Layout.Sidebar.manageUpload"),
+        isActive: activeItem === t("Layout.Sidebar.uploads"),
         childrens: [
           {
             icon: <UploadIcon />,
-            label: t("Layout.Sidebar.uploadMovie"),
+            label: t("Layout.Sidebar.movie"),
             onClick: () => {
               navigation.navigate("/upload/movie");
             },
@@ -108,7 +92,7 @@ export default function LayoutSidebar() {
           },
           {
             icon: <UploadIcon />,
-            label: t("Layout.Sidebar.uploadTrailer"),
+            label: t("Layout.Sidebar.trailer"),
             onClick: () => {
               navigation.navigate("/upload/trailer");
             },
@@ -116,7 +100,7 @@ export default function LayoutSidebar() {
           },
           {
             icon: <UploadIcon />,
-            label: t("Layout.Sidebar.uploadEpisode"),
+            label: t("Layout.Sidebar.episode"),
             onClick: () => {
               navigation.navigate("/upload/episode");
             },
@@ -134,37 +118,28 @@ export default function LayoutSidebar() {
       },
       {
         icon: <QuestionAnswerIcon />,
-        label: t("Layout.Sidebar.askAnyQuestion"),
-        onClick: () => alert(t("Layout.Sidebar.askAnyQuestion")),
-        isActive: activeItem === t("Layout.Sidebar.askAnyQuestion"),
+        label: t("Layout.Sidebar.feedback"),
+        onClick: () => alert(t("Layout.Sidebar.feedback")),
+        isActive: activeItem === t("Layout.Sidebar.feedback"),
       },
     ],
   };
 
-  const containerStyle: CSSProperties = {
+  const containerStyle: SxProps = {
     zIndex: 2,
     position: "fixed",
     top: 0,
     left: 0,
   };
 
-  const footerStyles = useThemeStyles<SxProps>((theme) => ({
-    paddingBottom: theme.spacing(12),
-  }));
-
-  const sideBarBackground = useThemeStyles((theme) => theme.palette.background.default);
-
   return (
-    <Sidebar collapsed={!isRootSidebarOpen} style={containerStyle} backgroundColor={sideBarBackground}>
+    <Drawer variant={isSmallScreen ? "persistent" : "permanent"} sx={containerStyle} open={isRootSidebarOpen} onClose={handleOnToggleRootSidebar}>
       <Stack justifyContent={"space-between"} height={"100vh"}>
-        <Stack gap={1}>
-          {isRootSidebarOpen ? <ExpandSidebarUserCard /> : <CollapsedSidebarUserCard />}
-          <SidebarSection listItems={sections.sidebar} />
-        </Stack>
-        <Stack sx={footerStyles}>
+        <SidebarSection listItems={sections.sidebar} />
+        <Stack pb={8}>
           <SidebarSection listItems={sections.footer} />
         </Stack>
       </Stack>
-    </Sidebar>
+    </Drawer>
   );
 }

@@ -1,5 +1,4 @@
 import { noop } from "lodash";
-import Mousetrap from "mousetrap";
 import React, { createContext, useContext, useMemo, useState } from "react";
 
 interface SidebarContextProps {

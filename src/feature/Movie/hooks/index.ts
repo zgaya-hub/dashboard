@@ -8,3 +8,4 @@ export { useGetMovieDataForUpdateForm } from "./queryHooks";
 export { useGetUploadVideoSignedUrl } from "./queryHooks";
 export { useUploadVideoOnAwsS3 } from "./queryHooks";
 export { useChangeMovie } from "./queryHooks";
+export { useGetMovieDetailsById } from "./queryHooks";

@@ -13,7 +13,7 @@ import { queryClient } from "./api/queryClient";
 import "./i18n";
 import { SidebarContextProvider } from "./context/SidebarContext";
 import { FirebaseProvider } from "./context/FirebaseContext";
-import KeyboardShortcutsContext from "./context/KeyboardShortCutsContext";
+import KeyboardShortcutsContext from "./context/KeyboardShortcutsContext";
 import { BrowserRouter } from "react-router-dom";
 
 /* const queryClient = new QueryClient({

@@ -30,16 +30,15 @@ export default function SeasonCreateScreen() {
   }, [nextSeasonNumberData]);
 
   const {
-    control,
-    formState: { errors },
-    register,
+    control: formControl,
+    formState: { errors: formErrors },
+    register: formRegister,
     watch: seasonFormWatch,
     handleSubmit: handleOnSubmit,
     setValue: setSeasonFormValue,
   } = useForm<SeasonCreateFormFieldInterface>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      title: "",
       plotSummary: DEFAULT_PLOT_SUMMARY,
       releaseDate: DEFAULT_RELEASE_DATE,
       number: nextSeasonNumberData?.number,
@@ -69,16 +68,16 @@ export default function SeasonCreateScreen() {
 
   return (
     <Stack>
-      <Stack component={ Paper } p={ 2 } justifyContent={ "space-between" } direction={ "row" } gap={ 1 } alignItems={ "center" }>
-        <Typography variant="h5">{ t("Feature.Quick.SeasonCreateScreen.createASeason") }</Typography>
-        <Stack direction={ "row" } gap={ 1 }>
-          <Button variant="text">{ t("Feature.Quick.SeasonCreateScreen.back") }</Button>
-          <Button loading={ isCreateSeasonLoading } endIcon={ <SaveIcon /> } variant="contained" onClick={ handleOnSubmit(handleOnCreateEpisode) }>
-            { t("Feature.Quick.SeasonCreateScreen.save") }
+      <Stack component={Paper} p={2} justifyContent={"space-between"} direction={"row"} gap={1} alignItems={"center"}>
+        <Typography variant="h5">{t("Feature.Quick.SeasonCreateScreen.createASeason")}</Typography>
+        <Stack direction={"row"} gap={1}>
+          <Button variant="text">{t("Feature.Quick.SeasonCreateScreen.back")}</Button>
+          <Button loading={isCreateSeasonLoading} endIcon={<SaveIcon />} variant="contained" onClick={handleOnSubmit(handleOnCreateEpisode)}>
+            {t("Feature.Quick.SeasonCreateScreen.save")}
           </Button>
         </Stack>
       </Stack>
-      <SeasonCreateForm control={ control } errors={ errors } register={ register } onImageSelect={ handleOnImageSelect } isLoading={ isCreateImageLoading } watch={ seasonFormWatch } />
+      <SeasonCreateForm formControl={formControl} formErrors={formErrors} formRegister={formRegister} onImageSelect={handleOnImageSelect} isLoading={isCreateImageLoading} formWatch={seasonFormWatch} />
     </Stack>
   );
 }

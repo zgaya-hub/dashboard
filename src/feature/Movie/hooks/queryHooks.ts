@@ -1,4 +1,4 @@
-import { ChangeImageInput, DeleteMovieByIdParams, DeleteMultipleMovieByIdzParams, GetManagerMovieForTableInput, GetManagerMovieForTableOutput, GetMovieDataForUpdateFormOutput, GetUploadVideoSignedUrlInput, ImageMediaIdParams, MovieIdParams, SuccessOutput, UpdateMovieInput, UploadVideoSignedUrlOutput, ChangeMovieInput } from "zgaya.hub-client-types/lib";
+import { ChangeImageInput, DeleteMovieByIdParams, DeleteMultipleMovieByIdzParams, GetManagerMovieForTableInput, GetManagerMovieForTableOutput, GetMovieDataForUpdateFormOutput, GetUploadVideoSignedUrlInput, ImageMediaIdParams, MovieIdParams, SuccessOutput, UpdateMovieInput, UploadVideoSignedUrlOutput, ChangeMovieInput, GetMovieDetailsByIdOutput } from "zgaya.hub-client-types/lib";
 import { useErrorHandler } from ".";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -254,4 +254,30 @@ export function useUploadVideoOnAwsS3() {
   };
 
   return { mutateAsync, isPending, progress };
+}
+
+export function useGetMovieDetailsById(params: MovieIdParams) {
+  const status = useQuery<{ getMovieDetailsById: GetMovieDetailsByIdOutput }>(
+    gql`
+      query ($params: MovieIdParams!) {
+        getMovieDetailsById(MovieIdParams: $params) {
+          ID
+          originCountry
+          originalLanguage
+          genre
+          status
+          title
+          plotSummary
+          releaseDate
+          thumbnailUrl
+          uploadDate
+          isFree
+        }
+      }
+    `,
+    {
+      variables: { params },
+    }
+  );
+  return { ...status, isLoading: status.loading, data: status.data?.getMovieDetailsById };
 }

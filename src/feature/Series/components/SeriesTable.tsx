@@ -1,10 +1,10 @@
 import { forwardRef, MouseEvent, Ref, Suspense, useEffect, useImperativeHandle, useState } from "react";
 import { lazily } from "react-lazily";
-import { DialogContentText, PopoverPosition } from "@mui/material";
+import { DialogContentText, PopoverPosition, Rating } from "@mui/material";
 import { GridActionsCellItem, GridColDef, GridPaginationModel, GridRowModel, GridRowSelectionModel } from "@mui/x-data-grid-pro";
 import { format } from "date-fns";
 import { noop, values as convertEnumToArray, debounce } from "lodash";
-import { GetManagerTableOutputSeriesList, MediaCountriesEnum, MediaGenriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
+import { GetManagerTableOutputSeriesList, MediaCountriesEnum, MediaLanguagiesEnum, MediaStatusEnum } from "zgaya.hub-client-types/lib";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_MONTH_YEAR_FORMAT } from "@/mock/constants";
 
@@ -13,6 +13,7 @@ import { useDeleteMultipleSeriesByIdz, useGetManagerSeriesForTable, useUpdateSer
 import { ConfirmationModal } from "@/components/Modals";
 import { useTranslation } from "react-i18next";
 import { SearchInput } from "@/components/Form";
+import { SeriesStatusChip } from ".";
 
 const { SeriesRowContextMenu } = lazily(() => import("."));
 const { MediaTableCard } = lazily(() => import("@/components/Cards"));
@@ -63,21 +64,7 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
 
   const processRowUpdate = async (series: GridRowModel<GetManagerTableOutputSeriesList>) => {
     //TODO: here is problem is that i can remove value from cell but value should not be remove
-    await updateSeriesMutateAsync(
-      { SeriesId: series.ID },
-      {
-        AdditionalInfo: {
-          Genre: series.genre,
-          Status: series.status,
-          OriginalLanguage: series.originalLanguage,
-          OriginCountry: series.originCountry,
-        },
-        ReleaseDate: +series.releaseDate,
-        Image: {
-          Url: series.backdropImageUrl,
-        },
-      }
-    );
+    await updateSeriesMutateAsync({ SeriesId: series.ID }, { AdditionalInfo: { Status: series.status }, ReleaseDate: +series.releaseDate });
     return series;
   };
 
@@ -111,38 +98,6 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
       renderCell: (params) => <MediaTableCard imageSrc={params.row.backdropImageUrl} title={params.row.title} description={params.row.plotSummary} />,
     },
     {
-      field: "originCountry",
-      headerName: "Origin country",
-      width: 200,
-      type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaCountriesEnum),
-      editable: true,
-    },
-    {
-      field: "originalLanguage",
-      headerName: "Original language",
-      width: 200,
-      type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaLanguagiesEnum),
-      editable: true,
-    },
-    {
-      field: "genre",
-      headerName: "Genre",
-      width: 200,
-      type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaGenriesEnum),
-      editable: true,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 200,
-      type: "singleSelect",
-      valueOptions: convertEnumToArray(MediaStatusEnum),
-      editable: true,
-    },
-    {
       field: "releaseDate",
       headerName: "Release date",
       width: 200,
@@ -153,15 +108,34 @@ const SeriesTable = forwardRef(function SeriesTable(_, ref: Ref<SeriesTableRefIn
     {
       field: "backdropImageUrl",
       headerName: "Backdrop Url",
-      width: 100,
-      editable: true,
+      width: 150,
       renderCell: (params) => <OpenTabIcon fontSize="small" onClick={() => window.open(params.value, "_blank", "width=600,height=350")} />,
     },
     {
       field: "uploadDate",
       headerName: "Upload date",
-      width: 200,
+      width: 150,
       valueFormatter: (params) => format(params.value, DEFAULT_DATE_FORMAT),
+    },
+    {
+      field: "avarageRating",
+      headerName: "Avarage ratings",
+      width: 200,
+      renderCell: (params) => <Rating value={params.row.avarageRating} precision={0.5} readOnly />,
+    },
+    {
+      field: "likeCount",
+      headerName: "Total likes",
+      width: 120,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 200,
+      type: "singleSelect",
+      valueOptions: convertEnumToArray(MediaStatusEnum),
+      editable: true,
+      renderCell: (params) => <SeriesStatusChip status={params.row.status} />,
     },
     {
       field: "actions",

@@ -39,7 +39,7 @@ export default function CineastContainer({ seriesId }: CineastContainerProps) {
   );
 
   if (error) {
-    return <ErrorCard errorMessage={error.message} action={<CachedIcon onClick={refetch} />}  />
+    return <ErrorCard errorMessage={error.message} action={<CachedIcon onClick={refetch} />} />;
   }
 
   const cineastList = (
@@ -54,8 +54,6 @@ export default function CineastContainer({ seriesId }: CineastContainerProps) {
     </List>
   );
 
-  
-
   return (
     <Card>
       <CardHeader title={t("Feature.Series.CineastContainer.title")} sx={cardHeaderStyle} action={[<SearchIcon onClick={handleOnToggleSearchInput} />, <AddIcon onClick={() => window.open("/quick/cineast-create", "_blank", "width=500,height=800")} />, <CachedIcon onClick={refetch} />]} />
@@ -64,5 +62,3 @@ export default function CineastContainer({ seriesId }: CineastContainerProps) {
     </Card>
   );
 }
-
-// error ? <ErrorIcon color="error" tooltip={error.message} iconButton /> : null

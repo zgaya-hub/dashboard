@@ -2,12 +2,14 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { Theme, ThemeProvider as MuiThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import { darkTheme,lightTheme } from "./theme";
+import { darkTheme, lightTheme } from "./theme";
 
 interface ThemeContextProps {
   theme: Theme;
   isDarkMode: boolean;
-  toggleTheme: () => void;
+  handleOnToggleTheme: () => void;
+  handleOnToDarkTheme: () => void;
+  handleOnToLightTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
@@ -19,7 +21,7 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [currentTheme, setCurrentTheme] = useState<Theme>(lightTheme);
 
-  const toggleTheme = () => {
+  const handleOnToggleTheme = () => {
     if (currentTheme.palette.mode === "light") {
       setCurrentTheme(darkTheme);
     } else {
@@ -27,12 +29,22 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
   };
 
+  const handleOnToDarkTheme = () => {
+    setCurrentTheme(darkTheme);
+  };
+
+  const handleOnToLightTheme = () => {
+    setCurrentTheme(lightTheme);
+  };
+
   return (
     <ThemeContext.Provider
       value={{
         theme: currentTheme,
         isDarkMode: currentTheme.palette.mode === "dark",
-        toggleTheme,
+        handleOnToggleTheme,
+        handleOnToDarkTheme,
+        handleOnToLightTheme,
       }}
     >
       <MuiThemeProvider theme={currentTheme}>
