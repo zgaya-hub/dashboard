@@ -10,24 +10,11 @@ import { AdapterDateFns } from "@mui/x-date-pickers-pro/AdapterDateFns";
 import { LicenseInfo as DataGridLicenseInfo } from "@mui/x-data-grid-pro";
 import { ApolloProvider } from "@apollo/client";
 import { queryClient } from "./api/queryClient";
-import "./i18n";
 import { SidebarContextProvider } from "./context/SidebarContext";
 import { FirebaseProvider } from "./context/FirebaseContext";
 import KeyboardShortcutsContext from "./context/KeyboardShortcutsContext";
 import { BrowserRouter } from "react-router-dom";
 
-/* const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: 10000,
-    },
-    mutations: {},
-  },
-  queryCache: new QueryCache(),
-  mutationCache: new MutationCache(),
-});
- */
 DataGridLicenseInfo.setLicenseKey("76c34ab47f811b623345476a6f326e4aTz01NzA5OSxFPTE3MDQ0NzYyNjQyODMsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=");
 DatePickerLicenseInfo.setLicenseKey("76c34ab47f811b623345476a6f326e4aTz01NzA5OSxFPTE3MDQ0NzYyNjQyODMsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=");
 function App() {
