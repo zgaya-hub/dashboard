@@ -11,7 +11,7 @@ export interface TextFieldProps<T extends FieldValues> extends Omit<MuiTextField
   name: Path<T>;
 }
 
-export default function TextField<T extends FieldValues>({ register, name, startIcon, endIcon, control, ...restProps }: TextFieldProps<T>) {
+export default function TextField<T extends FieldValues>({ register, name, startIcon, endIcon, control, ...restProps }: Readonly<TextFieldProps<T>>) {
   const inputProps = {
     endAdornment: restProps.error && (
       <InputAdornment position="end">

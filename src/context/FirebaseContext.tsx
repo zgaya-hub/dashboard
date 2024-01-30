@@ -28,7 +28,7 @@ const defaultValue = {
 
 const FirebaseContext = createContext<FirebaseContextProps | undefined>(undefined);
 
-export function FirebaseProvider({ children }: FirebaseProviderProps) {
+export function FirebaseProvider({ children }: Readonly<FirebaseProviderProps>) {
   const [state, setState] = useState<FirebaseContextProps>(defaultValue);
 
   useEffect(() => {
